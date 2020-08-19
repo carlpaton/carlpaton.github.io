@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Serialization (JSON) | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="You can serialize to JSON using the .net core framework: 12345678910111213141516171819202122232425262728using System.Runtime.Serialization.Json;public string Serialize&amp;lt;T&amp;gt;(object obj)&amp;#123;   var">
+<meta name="keywords" content="C#,Serialization">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Serialization (JSON)">
+<meta property="og:url" content="https://carlpaton.github.io/2018/06/serialization-json/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="You can serialize to JSON using the .net core framework: 12345678910111213141516171819202122232425262728using System.Runtime.Serialization.Json;public string Serialize&amp;lt;T&amp;gt;(object obj)&amp;#123;   var">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-05-18T03:03:46.948Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Serialization (JSON)">
+<meta name="twitter:description" content="You can serialize to JSON using the .net core framework: 12345678910111213141516171819202122232425262728using System.Runtime.Serialization.Json;public string Serialize&amp;lt;T&amp;gt;(object obj)&amp;#123;   var">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/AWS/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/C/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+        <a class="main-nav-link" href="/tags/AWS/">AWS</a>
+        
+        <a class="main-nav-link" href="/tags/C/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-serialization-json" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/serialization-json/" class="article-date">
+  <time datetime="2018-06-08T00:08:24.000Z" itemprop="datePublished">2018-Jun</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Serialization (JSON)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>You can serialize to JSON using the .net core framework:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">using System.Runtime.Serialization.Json;</span><br><span class="line"></span><br><span class="line">public string Serialize&lt;T&gt;(object obj)</span><br><span class="line">&#123;</span><br><span class="line">   var json = &quot;[]&quot;;</span><br><span class="line">   var js = new DataContractJsonSerializer(typeof(T));</span><br><span class="line">   using (var ms = new MemoryStream())</span><br><span class="line">   &#123;</span><br><span class="line">      js.WriteObject(ms, obj);</span><br><span class="line">      ms.Position = 0;</span><br><span class="line">      using (var sr = new StreamReader(ms))</span><br><span class="line">      &#123;</span><br><span class="line">         json = sr.ReadToEnd();</span><br><span class="line">         sr.Close();</span><br><span class="line">      &#125;</span><br><span class="line">      ms.Close();</span><br><span class="line">    &#125;</span><br><span class="line">    return json;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">--- CALL IT</span><br><span class="line">var obj = new FizzbuzzEventBody() &#123;</span><br><span class="line">   buzz_at = BuzzAt,</span><br><span class="line">   fizz_at = FizzAt,</span><br><span class="line">   lower_bound = LowerBound,</span><br><span class="line">   upper_bound = UpperBound</span><br><span class="line">&#125;;</span><br><span class="line">var json = Serialize&lt;FizzbuzzEventBody&gt;(obj);</span><br></pre></td></tr></table></figure>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/how-to-serialize-and-deserialize-json-data" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/how-to-serialize-and-deserialize-json-data</a></li>
+<li><a href="https://www.c-sharpcorner.com/article/json-serialization-and-deserialization-in-c-sharp/" target="_blank" rel="noopener">https://www.c-sharpcorner.com/article/json-serialization-and-deserialization-in-c-sharp/</a></li>
+</ul>
+<h3 id="Newtonsoft-Framework"><a href="#Newtonsoft-Framework" class="headerlink" title="Newtonsoft Framework"></a>Newtonsoft Framework</h3><ul>
+<li><a href="https://www.newtonsoft.com/json" target="_blank" rel="noopener">https://www.newtonsoft.com/json</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Product product = new Product();</span><br><span class="line">product.Name = &quot;Apple&quot;;</span><br><span class="line">product.Expiry = new DateTime(2008, 12, 28);</span><br><span class="line">product.Sizes = new string[] &#123; &quot;Small&quot; &#125;;</span><br><span class="line"></span><br><span class="line">string json = JsonConvert.SerializeObject(product);</span><br><span class="line">// &#123;</span><br><span class="line">//   &quot;Name&quot;: &quot;Apple&quot;,</span><br><span class="line">//   &quot;Expiry&quot;: &quot;2008-12-28T00:00:00&quot;,</span><br><span class="line">//   &quot;Sizes&quot;: [</span><br><span class="line">//     &quot;Small&quot;</span><br><span class="line">//   ]</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">string json = @&quot;&#123;</span><br><span class="line">  &apos;Name&apos;: &apos;Bad Boys&apos;,</span><br><span class="line">  &apos;ReleaseDate&apos;: &apos;1995-4-7T00:00:00&apos;,</span><br><span class="line">  &apos;Genres&apos;: [</span><br><span class="line">    &apos;Action&apos;,</span><br><span class="line">    &apos;Comedy&apos;</span><br><span class="line">  ]</span><br><span class="line">&#125;&quot;;</span><br><span class="line"></span><br><span class="line">Movie m = JsonConvert.DeserializeObject&lt;Movie&gt;(json);</span><br><span class="line"></span><br><span class="line">string name = m.Name;</span><br><span class="line">// Bad Boys</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/06/serialization-json/" data-id="ckabwmnto00a78gnthyfottd6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Serialization/">Serialization</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/06/calling-restful-endpoints/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Calling RESTful endpoints
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/value-type-vs-reference-type/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Value Type vs Reference Type</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/05/copy-constructors/">Copy Constructors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/explicit-deep-copy-interface/">Explicit Deep Copy Interface</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/icloneable/">ICloneable</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/prototype-pattern/">Prototype Pattern</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/open-source/">Open Source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET-library/" style="font-size: 11.43px;">.NET library</a> <a href="/tags/AWS/" style="font-size: 15px;">AWS</a> <a href="/tags/C/" style="font-size: 19.29px;">C#</a> <a href="/tags/CSV/" style="font-size: 10px;">CSV</a> <a href="/tags/DDD/" style="font-size: 10.71px;">DDD</a> <a href="/tags/ELK-stack/" style="font-size: 10px;">ELK stack</a> <a href="/tags/IDE/" style="font-size: 12.86px;">IDE</a> <a href="/tags/MVC/" style="font-size: 14.29px;">MVC</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/Serialization/" style="font-size: 13.57px;">Serialization</a> <a href="/tags/agile/" style="font-size: 10.71px;">agile</a> <a href="/tags/angular/" style="font-size: 16.43px;">angular</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/client-side-scripting/" style="font-size: 11.43px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.71px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.43px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.86px;">css</a> <a href="/tags/dependency-injection/" style="font-size: 13.57px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.14px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.43px;">docker compose</a> <a href="/tags/food/" style="font-size: 10px;">food</a> <a href="/tags/git/" style="font-size: 12.14px;">git</a> <a href="/tags/hexo/" style="font-size: 10.71px;">hexo</a> <a href="/tags/jquery/" style="font-size: 10.71px;">jquery</a> <a href="/tags/json/" style="font-size: 11.43px;">json</a> <a href="/tags/kibana/" style="font-size: 10.71px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 14.29px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 10.71px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.43px;">linux</a> <a href="/tags/logging/" style="font-size: 11.43px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 18.57px;">model airplanes</a> <a href="/tags/mysql/" style="font-size: 10.71px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.86px;">net core</a> <a href="/tags/nuget/" style="font-size: 11.43px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/patterns-principles/" style="font-size: 17.86px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.71px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.14px;">python</a> <a href="/tags/random/" style="font-size: 10px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 15px;">raspberry-pi</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/software-testing/" style="font-size: 15.71px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 11.43px;">sql</a> <a href="/tags/static-code-analysis/" style="font-size: 10.71px;">static code analysis</a> <a href="/tags/utilities/" style="font-size: 20px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.71px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.86px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

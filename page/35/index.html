@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Carl Paton</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There are no silly questions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carl Paton">
+<meta property="og:url" content="https://carlpaton.github.io/page/35/index.html">
+<meta property="og:site_name" content="Carl Paton">
+<meta property="og:description" content="There are no silly questions">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Carl Paton">
+<meta name="twitter:description" content="There are no silly questions">
+  
+    <link rel="alternate" href="/atom.xml" title="Carl Paton" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags/C/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/MVC/" class="mobile-nav-link">MVC</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/archives/">Archives</a>
+        
+        <a class="main-nav-link" href="/tags/C/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/MVC/">MVC</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-adding-appsettings-json-to-a-net-core-console-application" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/adding-appsettings-json-to-a-net-core-console-application/" class="article-date">
+  <time datetime="2018-04-02T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/adding-appsettings-json-to-a-net-core-console-application/">Add appsettings.json to a .Net Core Console Application</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Firstly add the appsettings.json file to the solution</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   &quot;AppSettings&quot;: &#123;</span><br><span class="line">   &quot;Key1&quot;: &quot;This is the value for Key1&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Set the .json file to copy to the output directory (this is the bin folder)</p>
+<p><img src="/d/adding-appsettings-json-to-a-net-core-console-application/appsettings 1.png" alt="Copy if newer"></p>
+<p>Add Microsoft.Extensions.Configuration.Json from Nuget</p>
+<p><img src="/d/adding-appsettings-json-to-a-net-core-console-application/appsettings 2.png" alt="Microsoft.Extensions.Configuration.Json"></p>
+<p>The read the file</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">IConfiguration config = new ConfigurationBuilder()</span><br><span class="line"> .AddJsonFile(&quot;appsettings.json&quot;, true, true)</span><br><span class="line"> .Build();</span><br><span class="line"></span><br><span class="line">var key1 = config[&quot;AppSettings:Key1&quot;];</span><br><span class="line">Console.WriteLine(key1);</span><br></pre></td></tr></table></figure>
+<p>Run the code!</p>
+<p><img src="/d/adding-appsettings-json-to-a-net-core-console-application/appsettings 3.png" alt="Run the code"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/adding-appsettings-json-to-a-net-core-console-application/" data-id="ck9rzlcp40004q0ntopo4v4qm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/net-core/">net core</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-setup-docker-on-linux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/setup-docker-on-linux/" class="article-date">
+  <time datetime="2018-04-02T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/setup-docker-on-linux/">Setup Docker on Linux</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>NOTE – if you are going to run <a href="/2018/04/setup-kubernetes-local-machine-solutions/">kubernetes</a> then you will need Hyper-V which will fight with VMWare, rather use <a href="/2018/03/virtual-box/">virtual-box</a>.</p>
+<p>Steps to install #docker on Ubuntu</p>
+<ol>
+<li>Download <a href="/2018/04/vmware-workstation-player/">VMWare Workstation Player</a></li>
+<li>Download linux ISO<ol>
+<li>ubuntu-17.10.1-desktop-amd64.iso</li>
+<li>ubuntu-17.10.1-server-amd64.iso (GUIs face :D)</li>
+</ol>
+</li>
+<li>Add to VMware-player<ol>
+<li>(Docker VM) un/pw carl/carl</li>
+<li>(PSQL VM) un/pw carl/carl</li>
+</ol>
+</li>
+<li>After the install, allow Putty Session for remote management<ol>
+<li><a href="http://linux-sys-adm.com/how-to-install-and-configure-ssh-on-ubuntu-server-14.04-lts-step-by-step/" target="_blank" rel="noopener">How to install and configure SSH on Ubuntu (Server) 14.04 LTS Step-by-Step</a></li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br><span class="line">sudo apt-get install openssh-server</span><br><span class="line">ip addr show</span><br></pre></td></tr></table></figure>
+<p><a href="https://help.ubuntu.com/lts/serverguide/ftp-server.html.en" target="_blank" rel="noopener"><strong> Also see other FTP Server Options </strong></a></p>
+<ol start="5">
+<li><a href="/2018/04/putty/">Putty</a> to the server on the IP from the above command, then run the following commands</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#(1) Set up the docker repository</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</span><br></pre></td></tr></table></figure>
+<p>If you are running ‘artful’ you will need to use this repository</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu artful stable&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#(2) Install Docker CE</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install docker-ce</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#(3) Verify the installation</span><br><span class="line">sudo docker run hello-world</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/setup-docker-on-linux/" data-id="ck9rzlct4009tq0ntakoxyes6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-senior-telemaster" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/senior-telemaster/" class="article-date">
+  <time datetime="2018-04-01T12:00:00.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/senior-telemaster/">Senior Telemaster</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/senior-telemaster/senior-telemaster.jpg" alt="Senior Telemaster"></p>
+<p>Based on suggestions by domain experts the wing should be built with zero dihedral: <a href="https://en.wikipedia.org/wiki/Dihedral_(aeronautics)" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Dihedral_(aeronautics)</a></p>
+<p><em>Wing Construction (2 piece, removable spar):</em></p>
+<ul>
+<li>Wing ribs, stab ribs &amp; tips are 7~OF <a href="http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html" target="_blank" rel="noopener">3.0mm x 100mm x 915mm ~ 1/8”</a> </li>
+<li>Spars are spruce/basswood 4~OF <a href="http://www.hangarone.co.nz/spruce-stick-95mm-125mm-915mm-38-12-p-5903.html" target="_blank" rel="noopener">9.5mm x 12.5mm x 915mm (3/8” x 1/2”)</a></li>
+<li>Center ribs where wings join 1~OF <a href="http://www.hangarone.co.nz/poplar-plywood-30mm-300mm-300mm-18-p-2942.html" target="_blank" rel="noopener">Poplar Plywood 3.0mm x 300mm x 300mm (1/8”)</a></li>
+</ul>
+<p><em>Wing Construction (1 piece):</em></p>
+<ul>
+<li>Spar is balsa 1~OF <a href="http://www.hangarone.co.nz/balsa-sheet-125mm-100mm-915mm-12-p-1740.html" target="_blank" rel="noopener">9.5mm x 12.7mm x 121.92cm (3/8” x 1/2” x 48”)</a> cut into strips 9.5mm x 19 mm (3/8” x 3/4”)</li>
+</ul>
+<p><em>Fuselage Construction:</em></p>
+<ul>
+<li>TBA</li>
+</ul>
+<h3 id="Size-Conversions"><a href="#Size-Conversions" class="headerlink" title="Size Conversions"></a>Size Conversions</h3><p><img src="/d/senior-telemaster/size-conversions.jpg" alt="Size Conversions, Inches upset me!"></p>
+<h3 id="Downloaded-Plans-outerzone"><a href="#Downloaded-Plans-outerzone" class="headerlink" title="Downloaded Plans (outerzone)"></a>Downloaded Plans (outerzone)</h3><ul>
+<li><a href="https://drive.google.com/open?id=1gU3CzGUCB7fbwq_sdx9nckl4LB4rSPy2" target="_blank" rel="noopener">Senior_Telemaster_oz5044.pdf</a></li>
+<li><a href="https://drive.google.com/open?id=1qr8jtGDC8Aga9VZYb8otmgPfkFqUfAr0" target="_blank" rel="noopener">Senior_Telemaster_oz5044_review.pdf</a></li>
+<li><a href="https://drive.google.com/open?id=1csRCnNbPrn07F1McOedZVvsDwcJVfU6L" target="_blank" rel="noopener">Senior_Telemaster_oz5044_article.pdf</a></li>
+</ul>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://www.rcgroups.com/forums/showthread.php?1068781-senior-telemaster-2-piece-wing" target="_blank" rel="noopener">https://www.rcgroups.com/forums/showthread.php?1068781-senior-telemaster-2-piece-wing</a></li>
+<li><a href="https://outerzone.co.uk/plan_details.asp?ID=5044" target="_blank" rel="noopener">https://outerzone.co.uk/plan_details.asp?ID=5044</a></li>
+<li><a href="http://www.hangarone.co.nz/senior-telemaster-plan-94-span-60-size-by-alex-angel-p-6089.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/senior-telemaster-plan-94-span-60-size-by-alex-angel-p-6089.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/senior-telemaster/" data-id="ck9rzlcsv0097q0ntd6t0yegh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model-airplanes/">model airplanes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-wot4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/wot4/" class="article-date">
+  <time datetime="2018-04-01T12:00:00.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/wot4/">Wot 4</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>Wingspan 1205mm / 47.4’</li>
+<li>Length 1050mm / 41’</li>
+<li>3536 820kv motor with 40 amp ESC</li>
+</ul>
+<p><img src="/d/wot4/wot 1.jpg" alt="Wot4"></p>
+<p><img src="/d/wot4/wot 2.jpg" alt="Wot4"></p>
+<p><img src="/d/wot4/wot 3.jpg" alt="Wot4"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/wot4/" data-id="ck9rzlcu400ceq0nt0fn37tqm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model-airplanes/">model airplanes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-c-sharp-enum" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/c-sharp-enum/" class="article-date">
+  <time datetime="2018-04-01T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/c-sharp-enum/">C# Enum</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Enumeration-types"><a href="#Enumeration-types" class="headerlink" title="Enumeration types"></a>Enumeration types</h3><p>The <code>enum</code> keyword is used to declare an enumeration, a distinct type that consists of a set of named constants called the enumerator list.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public static class GenericStatus</span><br><span class="line">&#123;</span><br><span class="line">   public enum GenStatusEnum</span><br><span class="line">   &#123;</span><br><span class="line">      Pending,</span><br><span class="line">      Approved,</span><br><span class="line">      Declined</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public static string ReadStatus(int id)</span><br><span class="line">   &#123;</span><br><span class="line">      GenStatus s;</span><br><span class="line">      Enum.TryParse&lt;GenStatus&gt;(id.ToString(), out s);</span><br><span class="line">      return s.ToString();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/enum" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/enum</a></li>
+</ul>
+<h3 id="Enumeration-types-as-bit-flags"><a href="#Enumeration-types-as-bit-flags" class="headerlink" title="Enumeration types as bit flags"></a>Enumeration types as bit flags</h3><ul>
+<li><a href="https://github.com/carlpaton/EnumDemo" target="_blank" rel="noopener">https://github.com/carlpaton/EnumDemo</a></li>
+</ul>
+<p>You can use an enumeration type to define bit flags</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line"></span><br><span class="line">namespace EnumDemo.Enum</span><br><span class="line">&#123;</span><br><span class="line">    [Flags]</span><br><span class="line">    public enum Days</span><br><span class="line">    &#123;</span><br><span class="line">        None = 0,</span><br><span class="line">        Sunday = 1,</span><br><span class="line">        Monday = 2,</span><br><span class="line">        Tuesday = 4,</span><br><span class="line">        Wednesday = 8,</span><br><span class="line">        Thursday = 16,</span><br><span class="line">        Friday = 32,</span><br><span class="line">        Saturday = 64</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>You create a bit flags enum by applying the System.FlagsAttribute attribute and defining the values appropriately so that AND, OR, NOT and XOR <strong>bitwise operations</strong> can be performed on them.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">using EnumDemo.Enum;</span><br><span class="line">using System;</span><br><span class="line"></span><br><span class="line">namespace EnumDemo</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            // Initialize with two flags using bitwise OR.</span><br><span class="line">            var meetingDays = Days.Tuesday | Days.Thursday | Days.Friday;</span><br><span class="line">            Console.WriteLine($&quot;Meeting days are &#123;meetingDays&#125; with flag value &#123;(int)meetingDays&#125;&quot;);</span><br><span class="line">            // Meeting days are Tuesday, Thursday, Friday with flag value 52</span><br><span class="line"></span><br><span class="line">            // Toggle a flag using bitwise XOR, this will remove `Days.Tuesday` from `meetingDays`</span><br><span class="line">            meetingDays = meetingDays ^ Days.Tuesday;</span><br><span class="line">            Console.WriteLine($&quot;Meeting days are &#123;meetingDays&#125; with flag value &#123;(int)meetingDays&#125;&quot;);</span><br><span class="line">            // Meeting days are Thursday, Friday with flag value 48</span><br><span class="line"></span><br><span class="line">            // Test value of flags using bitwise AND, this is checking for the existance of `Days.Thursday` in `meetingDays`</span><br><span class="line">            bool test = (meetingDays &amp; Days.Thursday) == Days.Thursday;</span><br><span class="line">            Console.WriteLine($&quot;Thursday &#123;(test == true ? &quot;is&quot; : &quot;is not&quot;)&#125; a meeting day.&quot;);</span><br><span class="line">            // Thursday is a meeting day.</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/enumeration-types#enumeration-types-as-bit-flags" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/enumeration-types#enumeration-types-as-bit-flags</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/c-sharp-enum/" data-id="ck9rzlcpu001lq0nt2ga113qp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/34/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><a class="page-number" href="/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="extend next" rel="next" href="/page/36/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/jquery-examples/">jQuery Examples</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/web-api-controller-example/">Web API Controller Example</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-custom-exception/">C# Custom Exception</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/builder-pattern/">Builder Pattern</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-delegates/">C# Delegates</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET-library/" style="font-size: 11.54px;">.NET library</a> <a href="/tags/AWS/" style="font-size: 15.38px;">AWS</a> <a href="/tags/C/" style="font-size: 18.46px;">C#</a> <a href="/tags/CSV/" style="font-size: 10px;">CSV</a> <a href="/tags/DDD/" style="font-size: 10.77px;">DDD</a> <a href="/tags/ELK-stack/" style="font-size: 10px;">ELK stack</a> <a href="/tags/IDE/" style="font-size: 13.08px;">IDE</a> <a href="/tags/MVC/" style="font-size: 14.62px;">MVC</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/agile/" style="font-size: 10.77px;">agile</a> <a href="/tags/angular/" style="font-size: 16.92px;">angular</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/client-side-scripting/" style="font-size: 11.54px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.77px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 10.77px;">creational patterns</a> <a href="/tags/css/" style="font-size: 13.08px;">css</a> <a href="/tags/dependency-injection/" style="font-size: 13.85px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.69px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.54px;">docker compose</a> <a href="/tags/food/" style="font-size: 10px;">food</a> <a href="/tags/git/" style="font-size: 12.31px;">git</a> <a href="/tags/hexo/" style="font-size: 10.77px;">hexo</a> <a href="/tags/jquery/" style="font-size: 10.77px;">jquery</a> <a href="/tags/json/" style="font-size: 11.54px;">json</a> <a href="/tags/kibana/" style="font-size: 10.77px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.85px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 10.77px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.54px;">linux</a> <a href="/tags/logging/" style="font-size: 11.54px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 19.23px;">model airplanes</a> <a href="/tags/mysql/" style="font-size: 10.77px;">mysql</a> <a href="/tags/net-core/" style="font-size: 13.08px;">net core</a> <a href="/tags/nuget/" style="font-size: 11.54px;">nuget</a> <a href="/tags/patterns-principles/" style="font-size: 18.46px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.77px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/random/" style="font-size: 10px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 11.54px;">raspberry-pi</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/software-testing/" style="font-size: 16.15px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/static-code-analysis/" style="font-size: 10.77px;">static code analysis</a> <a href="/tags/utilities/" style="font-size: 20px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.77px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.31px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

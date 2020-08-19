@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Csv Helper (.NET library) | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="If you have ever tried to manually read a CSV (Comma-separated values) file using the .NET Framework’s File and StreamReader classes you may have run into issues such as:  Out of range exceptions Enc">
+<meta name="keywords" content="utilities,csv,.net library">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Csv Helper (.NET library)">
+<meta property="og:url" content="https://carlpaton.github.io/2017/06/csv-helper-dot-net-library/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="If you have ever tried to manually read a CSV (Comma-separated values) file using the .NET Framework’s File and StreamReader classes you may have run into issues such as:  Out of range exceptions Enc">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://carlpaton.github.io/d/csv-helper-dot-net-library/csv-helper.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/csv-helper-dot-net-library/csv-helper-object.jpg">
+<meta property="og:updated_time" content="2020-08-06T05:05:10.541Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Csv Helper (.NET library)">
+<meta name="twitter:description" content="If you have ever tried to manually read a CSV (Comma-separated values) file using the .NET Framework’s File and StreamReader classes you may have run into issues such as:  Out of range exceptions Enc">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/csv-helper-dot-net-library/csv-helper.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+        <a class="main-nav-link" href="/tags/aws/">AWS</a>
+        
+        <a class="main-nav-link" href="/tags/c/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-csv-helper-dot-net-library" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/csv-helper-dot-net-library/" class="article-date">
+  <time datetime="2017-06-22T12:00:00.000Z" itemprop="datePublished">2017-Jun</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Csv Helper (.NET library)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/csv-helper-dot-net-library/csv-helper.jpg" alt="Csv Helper"></p>
+<p>If you have ever tried to manually read a CSV (Comma-separated values) file using the .NET Framework’s File and StreamReader classes you may have run into issues such as:</p>
+<ul>
+<li>Out of range exceptions</li>
+<li>Encoding issues</li>
+<li>Column order changes ect</li>
+</ul>
+<p>There are probably many more depending on the files size and complexity.</p>
+<p>First prize is to read the CSV file and map the columns to a POCO object (Plain Old CLR) </p>
+<blockquote>
+<p><em>In software engineering, a plain old CLR object (POCO) is a simple object created in the Common Language Runtime (CLR) of the .NET Framework which is unencumbered by inheritance or attributes.</em></p>
+</blockquote>
+<p>Enter the CsvHelper library to help reading and writing CSV files by Josh Close.</p>
+<blockquote>
+<p><em>CsvHelper is a .NET library for reading and writing CSV files. Extremely fast, flexible and easy to use. Supports reading and writing of custom class objects.</em></p>
+</blockquote>
+<p>Consider the following CSV file with headings Internal Id,Activity,Project Name,Date,Time Spent In Hours,User</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Internal Id,Activity,Project Name,Date,Time Spent In Hours,User</span><br><span class="line"></span><br><span class="line">123,Cloned repository and familiarize with code base,Accounts Project,01-01-2017,2,Joe Soap</span><br><span class="line"></span><br><span class="line">124,Refactor class a for xyz,Accounts Project,01-01-2017,1,Joe Soap</span><br><span class="line"></span><br><span class="line">89,Complete task xyz,Accounts Project,01-01-2017,4,Sue Skye</span><br><span class="line"></span><br><span class="line">55,Complete task abc,Accounts Project,01-01-2017,1,Sue Skye</span><br></pre></td></tr></table></figure>
+<p><em>(You can check your system separator under ‘Region’ -&gt; ‘Additional settings…’ -&gt; ‘Numbers’ -&gt; ‘List separator’)</em></p>
+<p>Create your POCO class:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class CsvContentModel</span><br><span class="line">&#123;</span><br><span class="line">  public string User &#123; get; set; &#125;</span><br><span class="line">  public string InternalId &#123; get; set; &#125;</span><br><span class="line">  public string Activity &#123; get; set; &#125;</span><br><span class="line">  public string ProjectName &#123; get; set; &#125;</span><br><span class="line">  public string Date &#123; get; set; &#125;</span><br><span class="line">  public string TimeSpentInHours&#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>*<em> For simplicity I made all the properties of type string. You can use CsvHelper’s type converter if you want to convert the integer/dates automatically.</em></p>
+<p>Create a DefinitionMap to help map the columns with spaces in the names.</p>
+<p>If you don’t supply a mapping file, auto mapping will be used. Auto mapping will map the properties in your class in the order they appear in.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sealed class CsvContentModelDefinitionMap : CsvClassMap&lt;CsvContentModel&gt;</span><br><span class="line">&#123;</span><br><span class="line">  public CsvContentModelDefinitionMap()</span><br><span class="line">  &#123;</span><br><span class="line">    Map(m =&gt; m.User).Name(&quot;User&quot;);</span><br><span class="line">    Map(m =&gt; m.InternalId).Name(&quot;Internal Id&quot;);</span><br><span class="line">    Map(m =&gt; m.Activity).Name(&quot;Activity&quot;);</span><br><span class="line">    Map(m =&gt; m.ProjectName).Name(&quot;Project Name&quot;);</span><br><span class="line">    Map(m =&gt; m.Date).Name(&quot;Date&quot;);</span><br><span class="line">    Map(m =&gt; m.TimeSpentInHours).Name(&quot;Time Spent In Hours&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Organize your CsvHelper logic into a class.</p>
+<p>Your catch blocks should do something more helpful with the Exceptions :)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">public class ReadFile</span><br><span class="line">&#123;</span><br><span class="line">  string FilePath;</span><br><span class="line"></span><br><span class="line">  public ReadFile(string filePath)</span><br><span class="line">  &#123;</span><br><span class="line">    FilePath = filePath;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public List&lt;CsvContentModel&gt; Get()</span><br><span class="line">  &#123;</span><br><span class="line">    if (FilePath == null)</span><br><span class="line">      return new List&lt;CsvContentModel&gt;();</span><br><span class="line"></span><br><span class="line">    if (FilePath == &quot;&quot;)</span><br><span class="line">      return new List&lt;CsvContentModel&gt;();</span><br><span class="line"></span><br><span class="line">    List&lt;CsvContentModel&gt; records = new List&lt;CsvContentModel&gt;();</span><br><span class="line"></span><br><span class="line">    using (TextReader reader = File.OpenText(FilePath))</span><br><span class="line">    &#123;</span><br><span class="line">      try</span><br><span class="line">      &#123;</span><br><span class="line">        var csv = new CsvReader(reader);</span><br><span class="line">        csv.Configuration.RegisterClassMap&lt;CsvContentModelDefinitionMap&gt;();</span><br><span class="line">        records = csv.GetRecords&lt;CsvContentModel&gt;().ToList();</span><br><span class="line">      &#125;</span><br><span class="line">      catch (CsvMissingFieldException ex)</span><br><span class="line">      &#123;</span><br><span class="line">        Console.WriteLine(ex.Message);</span><br><span class="line">        Console.WriteLine(ex.StackTrace);</span><br><span class="line">      &#125;</span><br><span class="line">      catch (Exception ex)</span><br><span class="line">      &#123;</span><br><span class="line">        Console.WriteLine(ex.Message);</span><br><span class="line">        Console.WriteLine(ex.StackTrace);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return records;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Then call the class</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var data = new ReadFile(&quot;sample.csv&quot;).Get();</span><br></pre></td></tr></table></figure>
+<p>The instance of data will now have a reference to a list of type CsvContentModel for your business logic.</p>
+<p><img src="/d/csv-helper-dot-net-library/csv-helper-object.jpg" alt="Csv Helper"></p>
+<p>CsvHelper has several other powerful features such as Type Converter and Configuration Delimiter.</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://joshclose.github.io/CsvHelper/" target="_blank" rel="noopener">https://joshclose.github.io/CsvHelper/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Plain_old_CLR_object" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Plain_old_CLR_object</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Comma-separated_values</a></li>
+<li><a href="https://github.com/carlpaton/CsvHelperDemo" target="_blank" rel="noopener">https://github.com/carlpaton/CsvHelperDemo</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2017/06/csv-helper-dot-net-library/" data-id="cke0rg3m1003tloonmnl0gtfv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/net-library/">.net library</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csv/">csv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/">utilities</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/loader-client-side/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Loader - Client Side
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/jsonnet-dot-net-library/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Json.NET (.NET library)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/event-sourcing/">Event Sourcing</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/functional-vs-imperative-programming/">Functional vs. Imperative Programming</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/reactjs-reference/">React JS Reference</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/reactjs-hooks/">React JS Hooks</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/tslint/">tslint</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.33px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.67px;">agile</a> <a href="/tags/angular/" style="font-size: 16.67px;">angular</a> <a href="/tags/architecture/" style="font-size: 11.33px;">architecture</a> <a href="/tags/aws/" style="font-size: 14.67px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 16px;">behavioural patterns</a> <a href="/tags/c/" style="font-size: 18.67px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.33px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.67px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 12px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.67px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 10.67px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 14px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.33px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.33px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 10.67px;">food</a> <a href="/tags/git/" style="font-size: 12px;">git</a> <a href="/tags/hexo/" style="font-size: 10.67px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.67px;">ide</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.67px;">jquery</a> <a href="/tags/json/" style="font-size: 11.33px;">json</a> <a href="/tags/kibana/" style="font-size: 10.67px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 14.67px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.33px;">linux</a> <a href="/tags/logging/" style="font-size: 11.33px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 18px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 14px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.67px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.67px;">net core</a> <a href="/tags/nuget/" style="font-size: 11.33px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.33px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/random/" style="font-size: 11.33px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 14.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 10.67px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/serialization/" style="font-size: 13.33px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 15.33px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 14px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/static-code-analysis/" style="font-size: 10.67px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 14px;">structural patterns</a> <a href="/tags/typescript/" style="font-size: 10.67px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.33px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.67px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.67px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

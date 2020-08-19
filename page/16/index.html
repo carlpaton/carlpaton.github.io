@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Carl Paton</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There are no silly questions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carl Paton">
+<meta property="og:url" content="https://carlpaton.github.io/page/16/index.html">
+<meta property="og:site_name" content="Carl Paton">
+<meta property="og:description" content="There are no silly questions">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Carl Paton">
+<meta name="twitter:description" content="There are no silly questions">
+  
+    <link rel="alternate" href="/atom.xml" title="Carl Paton" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags/C/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/MVC/" class="mobile-nav-link">MVC</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/archives/">Archives</a>
+        
+        <a class="main-nav-link" href="/tags/C/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/MVC/">MVC</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-unit-testing-with-nunit" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/unit-testing-with-nunit/" class="article-date">
+  <time datetime="2018-11-30T12:01:01.000Z" itemprop="datePublished">2018-Dec</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/unit-testing-with-nunit/">Unit testing with NUnit</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Install from Nuget <code>3.12.0</code>, the <code>Mock</code> references below are from <a href="/2018/09/mocking-frameworks/">Moq</a> and the example’s <code>Unit Of Work</code> is <code>SomeMethod</code>.</p>
+<h3 id="Assert-AreEqual"><a href="#Assert-AreEqual" class="headerlink" title="Assert.AreEqual"></a>Assert.AreEqual</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">using Moq;</span><br><span class="line">using NUnit.Framework;</span><br><span class="line"></span><br><span class="line">[TestFixture]</span><br><span class="line">public class MyClassTest</span><br><span class="line">&#123;</span><br><span class="line">    private Mock&lt;ISomeService&gt; _someServiceMock;</span><br><span class="line">	</span><br><span class="line">    [SetUp]</span><br><span class="line">    public void SetUp()</span><br><span class="line">    &#123;</span><br><span class="line">    	_someServiceMock = new Mock&lt;ISomeService&gt;();    	</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    [Test]</span><br><span class="line">    public void SomeMethod_initialCondition_expectedResult()</span><br><span class="line">    &#123;</span><br><span class="line">        // Arrange</span><br><span class="line">        var expected = &quot;hoe&quot;;</span><br><span class="line"></span><br><span class="line">        _someServiceMock</span><br><span class="line">        	.Setup(x =&gt; x.SomeServiceMethod(someValue))</span><br><span class="line">        	.Returns(true);</span><br><span class="line">        	</span><br><span class="line">        var classUnderTest = new MyClass(_someServiceMock.Object);	</span><br><span class="line"></span><br><span class="line">        // Act</span><br><span class="line">        var actual = classUnderTest.SomeMethod(..parms);</span><br><span class="line"></span><br><span class="line">        // Assert</span><br><span class="line">        Assert.AreEqual(expected, actual);</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Assert-Throws"><a href="#Assert-Throws" class="headerlink" title="Assert.Throws"></a>Assert.Throws</h3><p>Assert type of <code>MyException</code> was thrown.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// Assert</span><br><span class="line">Assert.Throws&lt;MyException&gt;(() =&gt; classUnderTest.SomeMethod(paramValue1, paramValue2));</span><br></pre></td></tr></table></figure>
+<h3 id="Verify"><a href="#Verify" class="headerlink" title=".Verify"></a>.Verify</h3><p>Assert a method in the mocked service was called once.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Assert</span><br><span class="line">_someServiceMock.Verify(</span><br><span class="line">   x =&gt; x.SomeOtherServiceMethod(paramValue1),</span><br><span class="line">   Times.Once());</span><br></pre></td></tr></table></figure>
+<h3 id="TestCase"><a href="#TestCase" class="headerlink" title="TestCase"></a>TestCase</h3><p>Pass parameters to a test</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[TestCase(-1, &quot;hoe&quot;)]</span><br><span class="line">[TestCase(42, &quot;foo&quot;)]</span><br><span class="line">public void SomeMethod_initialCondition_expectedResult(int someId, string someText)</span><br><span class="line">&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="TestCaseSource"><a href="#TestCaseSource" class="headerlink" title="TestCaseSource"></a>TestCaseSource</h3><p>Pass the test an array of data.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[TestCaseSource(&quot;GetSweetData&quot;)]</span><br><span class="line">public void SomeMethod_initial_condition_expected_result(int someId, string someText)</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static readonly object[] GetSweetData = new List&lt;object&gt;()</span><br><span class="line">&#123;</span><br><span class="line">   new object[]&#123; 123, &quot;Some Data&quot; &#125;,</span><br><span class="line">   new object[]&#123; 456, &quot;Some Other Data&quot; &#125;,</span><br><span class="line">&#125;.ToArray();</span><br></pre></td></tr></table></figure>
+<h3 id="Fluent-Assertions"><a href="#Fluent-Assertions" class="headerlink" title="Fluent Assertions"></a>Fluent Assertions</h3><p><code>FluentAssertions</code> provides extension methods for your assets, I used Nuget version <code>5.9.0</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">v5.9.0</span><br><span class="line">actual.Should().BeEquivalentTo(expectedModel);</span><br><span class="line"></span><br><span class="line">v2.2.0</span><br><span class="line">`ShouldBeEquivalentTo` asserts that an object is equivalent to another object.</span><br><span class="line">objectA.ShouldBeEquivalentTo(objectB);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://fluentassertions.com/introduction" target="_blank" rel="noopener">https://fluentassertions.com/introduction</a></li>
+</ul>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://www.nuget.org/packages/NUnit/" target="_blank" rel="noopener">https://www.nuget.org/packages/NUnit/</a></li>
+<li><a href="https://ardalis.com/unit-test-naming-convention" target="_blank" rel="noopener">https://ardalis.com/unit-test-naming-convention</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-nunit" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-nunit</a></li>
+<li><a href="https://github.com/nunit/docs/wiki/TestCaseSource-Attribute" target="_blank" rel="noopener">TestCaseSource Attribute</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/12/unit-testing-with-nunit/" data-id="ck9rzlctt00blq0ntj3jtnyz1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-test-runners" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/test-runners/" class="article-date">
+  <time datetime="2018-09-27T00:08:24.000Z" itemprop="datePublished">2018-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/test-runners/">Test Runners</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Resharper-–-Unit-Test-Sessions"><a href="#Resharper-–-Unit-Test-Sessions" class="headerlink" title="Resharper – Unit Test Sessions"></a>Resharper – Unit Test Sessions</h3><ul>
+<li><a href="https://www.jetbrains.com/help/resharper/Reference__Windows__Unit_Test_Sessions.html" target="_blank" rel="noopener">Unit Test Sessions window</a></li>
+<li><a href="https://www.jetbrains.com/help/resharper/Using_Unit_Test_Sessions.html" target="_blank" rel="noopener">Using Unit Test Sessions</a></li>
+</ul>
+<h3 id="Dotnet-Watch"><a href="#Dotnet-Watch" class="headerlink" title="Dotnet Watch"></a>Dotnet Watch</h3><p><code>dotnet-watch</code> is a file watcher for <code>dotnet</code> that restarts the specified application when changes in the source code are detected.</p>
+<ul>
+<li>CS to solution directory</li>
+<li>dotnet build<ul>
+<li>dotnet test (run once)</li>
+<li>dotnet watch test (watch for changes)</li>
+</ul>
+</li>
+</ul>
+<p><img src="/d/test-runners/dotnet-watch.png" alt="Dotnet Watch"></p>
+<ul>
+<li><a href="https://www.pluralsight.com/courses/test-driven-development-big-picture" target="_blank" rel="noopener">https://www.pluralsight.com/courses/test-driven-development-big-picture</a></li>
+<li><a href="https://github.com/aspnet/Docs/blob/master/aspnetcore/tutorials/dotnet-watch.md" target="_blank" rel="noopener">https://github.com/aspnet/Docs/blob/master/aspnetcore/tutorials/dotnet-watch.md</a></li>
+<li><a href="https://github.com/aspnet/DotNetTools/blob/master/src/dotnet-watch/README.md" target="_blank" rel="noopener">https://github.com/aspnet/DotNetTools/blob/master/src/dotnet-watch/README.md</a></li>
+</ul>
+<h3 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h3><p>These 3 are listed in <a href="http://www.wrox.com/WileyCDA/WroxTitle/Professional-Test-Driven-Development-with-C-Developing-Real-World-Applications-with-TDD.productCd-047064320X.html" target="_blank" rel="noopener">Professional Test Driven Development with C#: Developing Real World Applications with TDD</a></p>
+<ul>
+<li>TestDriven.NET</li>
+<li>Developer Express Test Runner</li>
+<li>Gallio</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/09/test-runners/" data-id="ck9rzlctk00azq0ntj2lepvjn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-unit-testing-frameworks" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/unit-testing-frameworks/" class="article-date">
+  <time datetime="2018-09-27T00:08:24.000Z" itemprop="datePublished">2018-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/unit-testing-frameworks/">Unit Testing Frameworks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="NUnit"><a href="#NUnit" class="headerlink" title="NUnit"></a>NUnit</h3><ul>
+<li>See <a href="/2018/12/unit-testing-with-nunit/">Unit testing with NUnit</a></li>
+</ul>
+<h3 id="MSTest"><a href="#MSTest" class="headerlink" title="MSTest"></a>MSTest</h3><ul>
+<li>See <a href="/2018/12/unit-testing-with-mstest/">Unit testing with MSTest</a></li>
+</ul>
+<h3 id="xUnit-net"><a href="#xUnit-net" class="headerlink" title="xUnit.net"></a>xUnit.net</h3><ul>
+<li>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework</li>
+<li>See <a href="https://xunit.github.io/" target="_blank" rel="noopener">https://xunit.github.io</a></li>
+</ul>
+<h3 id="MbUnit"><a href="#MbUnit" class="headerlink" title="MbUnit"></a>MbUnit</h3><ul>
+<li><a href="https://www.nuget.org/packages/mbunit/" target="_blank" rel="noopener">https://www.nuget.org/packages/mbunit/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/09/unit-testing-frameworks/" data-id="ck9rzlcts00bjq0ntqbcfbsil" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-mocking-frameworks" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/mocking-frameworks/" class="article-date">
+  <time datetime="2018-09-26T00:08:24.000Z" itemprop="datePublished">2018-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/mocking-frameworks/">Mocking Frameworks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Moq"><a href="#Moq" class="headerlink" title="Moq"></a>Moq</h3><p>Moq is intended to be simple to use, strongly typed (no magic strings!, and therefore full compiler-verified and refactoring-friendly) and minimalistic (while still fully functional!).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">using Moq;</span><br><span class="line"></span><br><span class="line">var mockClientRepository = new Mock&lt;IClientRepository&gt;();</span><br><span class="line"></span><br><span class="line">mockClientRepository</span><br><span class="line">   .Setup(x =&gt; x.SelectList())</span><br><span class="line">   .Returns(new List&lt;ClientModel&gt; &#123; new ClientModel(&quot;Name&quot;, &quot;Surname&quot;) &#125;);</span><br><span class="line">  </span><br><span class="line">// then inject as `mockClientRepository.Object`</span><br></pre></td></tr></table></figure>
+<p>If the method being mocked (<code>SelectList</code>) has parameters you don’t care about then you can mock them with <code>It.IsAny</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">It.IsAny&lt;string&gt;()</span><br><span class="line">It.IsAny&lt;int&gt;()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="/2018/12/unit-testing-with-nunit/">See Unit testing with NUnit</a> </li>
+<li><a href="https://github.com/Moq/moq4/wiki/Quickstart" target="_blank" rel="noopener">https://github.com/Moq/moq4/wiki/Quickstart</a></li>
+<li><a href="https://developerhandbook.com/unit-testing/writing-unit-tests-with-nunit-and-moq/" target="_blank" rel="noopener">https://developerhandbook.com/unit-testing/writing-unit-tests-with-nunit-and-moq/</a></li>
+<li><a href="http://www.aamiraftab.com/unit-testing-repository-pattern-using-moq-shouldly-in-xunit-framework/" target="_blank" rel="noopener">http://www.aamiraftab.com/unit-testing-repository-pattern-using-moq-shouldly-in-xunit-framework/</a></li>
+<li><a href="https://www.codeproject.com/Articles/47603/Mock-a-Database-Repository-using-Moq" target="_blank" rel="noopener">https://www.codeproject.com/Articles/47603/Mock-a-Database-Repository-using-Moq</a></li>
+<li><a href="https://www.pluralsight.com/courses/aspdotnet-core-mvc-testing-fundamentals" target="_blank" rel="noopener">https://www.pluralsight.com/courses/aspdotnet-core-mvc-testing-fundamentals</a></li>
+<li><a href="https://www.pluralsight.com/courses/mocking-with-moq" target="_blank" rel="noopener">https://www.pluralsight.com/courses/mocking-with-moq</a></li>
+</ul>
+<h3 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h3><ul>
+<li><a href="https://nsubstitute.github.io/" target="_blank" rel="noopener">NSubstitute</a></li>
+<li>Rhino Mocks</li>
+<li>Type Mock</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/09/mocking-frameworks/" data-id="ck9rzlcrs006iq0nttz9364dj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-dependency-injection-frameworks" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/dependency-injection-frameworks/" class="article-date">
+  <time datetime="2018-09-25T00:08:24.000Z" itemprop="datePublished">2018-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/dependency-injection-frameworks/">Dependency Injection Frameworks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Also see <a href="/2018/04/dependency-inversion-principle-dip/">Dependency Inversion Principle (DIP)</a>.</p>
+<ul>
+<li><a href="/2018/09/unity/">Unity (MVC Example)</a></li>
+<li><a href="/2018/09/ninject/">Ninject</a></li>
+<li><a href="/2018/09/autofac/">Autofac (Webforms Example)</a></li>
+</ul>
+<h3 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h3><ul>
+<li>Structure Map</li>
+<li>Windsor</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/09/dependency-injection-frameworks/" data-id="ck9rzlcq8002rq0nt7dg641g4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dependency-injection/">dependency injection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/15/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="extend next" rel="next" href="/page/17/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/jquery-examples/">jQuery Examples</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/web-api-controller-example/">Web API Controller Example</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-custom-exception/">C# Custom Exception</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/builder-pattern/">Builder Pattern</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-delegates/">C# Delegates</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET-library/" style="font-size: 11.54px;">.NET library</a> <a href="/tags/AWS/" style="font-size: 15.38px;">AWS</a> <a href="/tags/C/" style="font-size: 18.46px;">C#</a> <a href="/tags/CSV/" style="font-size: 10px;">CSV</a> <a href="/tags/DDD/" style="font-size: 10.77px;">DDD</a> <a href="/tags/ELK-stack/" style="font-size: 10px;">ELK stack</a> <a href="/tags/IDE/" style="font-size: 13.08px;">IDE</a> <a href="/tags/MVC/" style="font-size: 14.62px;">MVC</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/agile/" style="font-size: 10.77px;">agile</a> <a href="/tags/angular/" style="font-size: 16.92px;">angular</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/client-side-scripting/" style="font-size: 11.54px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.77px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 10.77px;">creational patterns</a> <a href="/tags/css/" style="font-size: 13.08px;">css</a> <a href="/tags/dependency-injection/" style="font-size: 13.85px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.69px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.54px;">docker compose</a> <a href="/tags/food/" style="font-size: 10px;">food</a> <a href="/tags/git/" style="font-size: 12.31px;">git</a> <a href="/tags/hexo/" style="font-size: 10.77px;">hexo</a> <a href="/tags/jquery/" style="font-size: 10.77px;">jquery</a> <a href="/tags/json/" style="font-size: 11.54px;">json</a> <a href="/tags/kibana/" style="font-size: 10.77px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.85px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 10.77px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.54px;">linux</a> <a href="/tags/logging/" style="font-size: 11.54px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 19.23px;">model airplanes</a> <a href="/tags/mysql/" style="font-size: 10.77px;">mysql</a> <a href="/tags/net-core/" style="font-size: 13.08px;">net core</a> <a href="/tags/nuget/" style="font-size: 11.54px;">nuget</a> <a href="/tags/patterns-principles/" style="font-size: 18.46px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.77px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/random/" style="font-size: 10px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 11.54px;">raspberry-pi</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/software-testing/" style="font-size: 16.15px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/static-code-analysis/" style="font-size: 10.77px;">static code analysis</a> <a href="/tags/utilities/" style="font-size: 20px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.77px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.31px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

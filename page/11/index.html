@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Carl Paton</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There are no silly questions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carl Paton">
+<meta property="og:url" content="https://carlpaton.github.io/page/11/index.html">
+<meta property="og:site_name" content="Carl Paton">
+<meta property="og:description" content="There are no silly questions">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Carl Paton">
+<meta name="twitter:description" content="There are no silly questions">
+  
+    <link rel="alternate" href="/atom.xml" title="Carl Paton" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags/C/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/MVC/" class="mobile-nav-link">MVC</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/archives/">Archives</a>
+        
+        <a class="main-nav-link" href="/tags/C/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/MVC/">MVC</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-mvc-tag-helpers" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/mvc-tag-helpers/" class="article-date">
+  <time datetime="2019-04-25T21:57:55.000Z" itemprop="datePublished">2019-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/mvc-tag-helpers/">MVC Tag Helpers</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>MVC tag helpers and their Razor equivalent.</p>
+<p>To get these new tag helpers to work you need to add the following to your <code>\Views\_ViewImports.cshtml</code> file.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers</span><br></pre></td></tr></table></figure>
+<p>All of the CSS class references below are from bootstrap.</p>
+<h2 id="Anchor"><a href="#Anchor" class="headerlink" title="Anchor"></a>Anchor</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;a asp-action=&quot;Delete&quot; asp-route-id=&quot;@item.Id&quot;&gt;Edit&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">@Html.ActionLink(&quot;Delete&quot;, &quot;Delete&quot;, new &#123; id = item.Id &#125;, new &#123; onclick = &quot;return confirm(&apos;Are you sure you want to delete this entry?&apos;);&quot; &#125;)</span><br></pre></td></tr></table></figure>
+<p>The above is pretty bad as it will allow a <code>GET</code> to a delete action that should rather only accept a <code>POST</code>.<br>To refactor this to a better design, rather add this to your view:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;form asp-action=&quot;Delete&quot; asp-route-id=&quot;@item.Id&quot;&gt;</span><br><span class="line">    &lt;a asp-action=&quot;Edit&quot; asp-route-id=&quot;@item.Id&quot;&gt;Edit&lt;/a&gt; |</span><br><span class="line">    &lt;a asp-action=&quot;Index&quot; asp-route-id=&quot;@item.Id&quot; asp-controller=&quot;EntryPlatform&quot;&gt;Platform&lt;/a&gt; |</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;Delete&quot; class=&quot;btn-link&quot; onclick=&quot;return confirm(&apos;Are you sure you want to delete this entry?&apos;);&quot; /&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<p>Then in your controller add:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// POST: LexiconEntry/Delete/5</span><br><span class="line">[HttpPost, ActionName(&quot;Delete&quot;)]</span><br><span class="line">[ValidateAntiForgeryToken]</span><br><span class="line">public IActionResult Delete(int id)</span><br><span class="line">&#123;</span><br><span class="line">    _repository.Delete(id);</span><br><span class="line">    TempData[&quot;message&quot;] = &quot;Entry deleted successfully.&quot;;</span><br><span class="line">    return RedirectToAction(&quot;Index&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h2><p>Works with anything like string, datetime, double</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;input asp-for=&quot;Name&quot; class=&quot;form-control&quot; /&gt;</span><br><span class="line">&lt;input asp-for=&quot;Salary&quot; class=&quot;form-control&quot; /&gt;</span><br><span class="line">&lt;input asp-for=&quot;SomeDate&quot; class=&quot;form-control&quot; /&gt;</span><br><span class="line"></span><br><span class="line">@Html.TextBox(&quot;Description&quot;, null, new &#123; @class = &quot;form-control&quot; &#125;)</span><br></pre></td></tr></table></figure>
+<p>You can also store this as a cookie or session.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;hidden&quot; asp-for=&quot;Id&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Span-Validation-For"><a href="#Span-Validation-For" class="headerlink" title="Span Validation For"></a>Span Validation For</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span asp-validation-for=&quot;Description&quot; class=&quot;text-danger&quot;&gt;&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Lable-for"><a href="#Lable-for" class="headerlink" title="Lable for"></a>Lable for</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;label asp-for=&quot;Recommendation&quot; class=&quot;control-label&quot;&gt;&lt;/label&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Display"><a href="#Display" class="headerlink" title="Display"></a>Display</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Html.DisplayNameFor(model =&gt; model.Name)</span><br><span class="line"></span><br><span class="line">@foreach (var item in Model) &#123;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;</span><br><span class="line">                @Html.DisplayFor(modelItem =&gt; item.Name)</span><br></pre></td></tr></table></figure>
+<h2 id="DropDown-List-For"><a href="#DropDown-List-For" class="headerlink" title="DropDown List For"></a>DropDown List For</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Html.DropDownListFor(Model =&gt; Model.SubCategoryId, (List&lt;SelectListItem&gt;)ViewData[&quot;SubCategory_SelectList&quot;], &quot;-- Please Select --&quot;, new &#123; @class = &quot;form-control&quot; &#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Partial"><a href="#Partial" class="headerlink" title="Partial"></a>Partial</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;divResults&quot;&gt;</span><br><span class="line">    &lt;partial name=&quot;~/Views/Entry/_Table.cshtml&quot; model=&quot;Model&quot; /&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div id=&quot;divResults&quot;&gt;</span><br><span class="line">    @&#123;</span><br><span class="line">        @Html.Partial(&quot;~/Views/Entry/_Table.cshtml&quot;, Model);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://getbootstrap.com/docs/4.3/" target="_blank" rel="noopener">getbootstrap.com/docs/4.3/</a></li>
+<li><a href="https://blogs.msdn.microsoft.com/cdndevs/2015/08/06/a-complete-guide-to-the-mvc-6-tag-helpers/" target="_blank" rel="noopener">blogs.msdn.microsoft.com</a></li>
+<li><a href="https://github.com/carlpaton/lexicon" target="_blank" rel="noopener">lexicon code</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/04/mvc-tag-helpers/" data-id="ck9rzlcrw006sq0ntskrzwxtp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVC/">MVC</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-configure-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/configure-hexo/" class="article-date">
+  <time datetime="2019-04-17T23:08:41.000Z" itemprop="datePublished">2019-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/configure-hexo/">Configure Hexo</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Sweet plugins and configuration settings for Hexo.</p>
+<h3 id="hexo-deployer-git"><a href="#hexo-deployer-git" class="headerlink" title="hexo-deployer-git"></a>hexo-deployer-git</h3><p><code>yarn add hexo-deployer-git</code></p>
+<p>Once installed add the following to the root <code>_config.yml</code></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repo:</span> <span class="attr">https://github.com/carlpaton/carlpaton.github.io.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">carlpaton</span></span><br><span class="line"><span class="attr">  email:</span> <span class="string">carl.paton@gmail.com</span></span><br></pre></td></tr></table></figure>
+<p>This then works with the commands:</p>
+<ul>
+<li><code>hexo generate</code> (short hand <code>hexo g</code>)</li>
+<li><code>hexo deploy</code> (short hand <code>hexo d</code>)</li>
+</ul>
+<h3 id="hexo-browsersync"><a href="#hexo-browsersync" class="headerlink" title="hexo-browsersync"></a>hexo-browsersync</h3><p><code>yarn add hexo-browsersync</code></p>
+<p>This then works with the command <code>hexo serve</code> (short hand <code>hexo s</code>)</p>
+<h3 id="Google-Analytics"><a href="#Google-Analytics" class="headerlink" title="Google Analytics"></a>Google Analytics</h3><p>Then go to your theme’s main <code>_config.yml</code> and look for a property called google_analytics. Fill in your tracking ID.</p>
+<p>google_analytics: UA-0000000-0</p>
+<ul>
+<li><a href="http://www.codeblocq.com/2015/12/Add-Google-Analytics-to-your-hexo-blog/" target="_blank" rel="noopener">http://www.codeblocq.com/2015/12/Add-Google-Analytics-to-your-hexo-blog/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/04/configure-hexo/" data-id="ck9rzlcpy001zq0ntej5vim1l" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-adding-local-code-to-git" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/adding-local-code-to-git/" class="article-date">
+  <time datetime="2019-04-17T02:16:28.000Z" itemprop="datePublished">2019-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/adding-local-code-to-git/">Adding local code to git</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>Create the new repository: <a href="https://github.com/new" target="_blank" rel="noopener">https://github.com/new</a><br>1.1 Example name <code>EventLogger</code><br>1.2 Create as Public and dont add a README yet</p>
+</li>
+<li><p>Locate your folder in a command terminal: example <code>C:\Dev\EventLogger</code><br>2.1 run <code>git init</code>, this will create a <code>.git</code> folder</p>
+</li>
+<li><p>Set the <code>Git commit user setting</code><br>3.1 <code>C:\Dev\EventLogger\.git\config</code><br>3.2 Add as follows</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[user]</span><br><span class="line">name = Carl</span><br><span class="line">email = carl.paton@gmail.com</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><p>Run <code>git add .</code> to stage your local files<br>4.1 Run <code>git status</code> to confirm your files are added/staged</p>
+</li>
+<li><p>Run <code>git commit -m &quot;first commit&quot;</code><br>5.1 Run <code>git log</code> to confirm your user setting`</p>
+</li>
+<li><p>Run <code>git remote add origin https://github.com/carlpaton/EventLogger.git</code></p>
+</li>
+<li><p>Run <code>git push -u origin master</code></p>
+</li>
+</ol>
+<h2 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h2><ol>
+<li>Update the <code>config</code> to include your credentials</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[remote &quot;origin&quot;]</span><br><span class="line">url = &quot;https://USERNAME:PASSWORD@github.com/carlpaton/EventLogger.git&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>NOTE: Credentials are stored in plain text!</li>
+</ul>
+<p>test</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/04/adding-local-code-to-git/" data-id="ck9rzlcp60006q0ntrsxr327x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/hello-hexo/" class="article-date">
+  <time datetime="2019-04-17T01:37:52.095Z" itemprop="datePublished">2019-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/hello-hexo/">Hello Hexo</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I used <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> as my blogs framework and the theme is <a href="https://github.com/frostfan/hexo-theme-polarbear" target="_blank" rel="noopener">polarbear</a>, its really simple to use and integrate changes.</p>
+<h3 id="Hexo-Installation"><a href="#Hexo-Installation" class="headerlink" title="Hexo Installation"></a>Hexo Installation</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Verify required software for Hexo is installed, if not check the sweet video below</span></span><br><span class="line">node -V</span><br><span class="line">git version</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install hexo</span></span><br><span class="line">npm install -g hexo-cli</span><br><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://hexo.io/docs/" target="_blank" rel="noopener">https://hexo.io/docs/</a></li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ARted4RniaU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h3 id="Create-Hexo-Site"><a href="#Create-Hexo-Site" class="headerlink" title="Create Hexo Site"></a>Create Hexo Site</h3><p>This is done via the Hexo CLI</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># barebones hexo, this will create the folder `myblog` and initialize hexo blogging framework </span></span><br><span class="line">hexo init myblog</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://hexo.io/docs/setup" target="_blank" rel="noopener">https://hexo.io/docs/setup</a></li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0m2HnATkHOk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>Configuration Files:</p>
+<ul>
+<li>“<strong>blog config</strong>“ refer to the <code>_config.yml</code> in the blog root directory.</li>
+<li>“<strong>theme config</strong>“ refer to the path <code>theme/landscape/_config.yml</code></li>
+</ul>
+<h3 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h3><p>Original links from the frameworks <a href="https://github.com/techlahoma/Hexo-Workshop/blob/master/source/_posts/hello-world.md" target="_blank" rel="noopener">hello world</a> starter post.</p>
+<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info:</p>
+<ul>
+<li><a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></li>
+<li><a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a></li>
+<li><a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a></li>
+<li><a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/04/hello-hexo/" data-id="ck9rzlcqz004gq0nt7uo07qh5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-reporting-frameworks" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/reporting-frameworks/" class="article-date">
+  <time datetime="2019-03-04T23:08:24.000Z" itemprop="datePublished">2019-Mar</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/reporting-frameworks/">Reporting Frameworks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>BIRT Reports</p>
+<ul>
+<li><a href="https://www.eclipse.org/birt/" target="_blank" rel="noopener">https://www.eclipse.org/birt/</a></li>
+</ul>
+<p>Crystal Reports</p>
+<ul>
+<li><a href="https://www.crystalreports.com/resources/" target="_blank" rel="noopener">https://www.crystalreports.com/resources/</a></li>
+<li><a href="https://www.tektutorialshub.com/crystal-reports/how-to-download-and-install-crystal-report-runtime/" target="_blank" rel="noopener">https://www.tektutorialshub.com/crystal-reports/how-to-download-and-install-crystal-report-runtime/</a></li>
+</ul>
+<p>Visual Studio reporting</p>
+<ul>
+<li>?</li>
+</ul>
+<p>PDFSharp</p>
+<ul>
+<li><a href="https://github.com/empira/PDFsharp" target="_blank" rel="noopener">https://github.com/empira/PDFsharp</a></li>
+</ul>
+<p>iTextSharp</p>
+<ul>
+<li><a href="https://github.com/itext/itextsharp" target="_blank" rel="noopener">https://github.com/itext/itextsharp</a></li>
+</ul>
+<p>xsPDF</p>
+<ul>
+<li><a href="https://www.xspdf.com/" target="_blank" rel="noopener">https://www.xspdf.com/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/03/reporting-frameworks/" data-id="ck9rzlcsq008uq0nte3u7kwb2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/">utilities</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/jquery-examples/">jQuery Examples</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/web-api-controller-example/">Web API Controller Example</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-custom-exception/">C# Custom Exception</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/builder-pattern/">Builder Pattern</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-delegates/">C# Delegates</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET-library/" style="font-size: 11.54px;">.NET library</a> <a href="/tags/AWS/" style="font-size: 15.38px;">AWS</a> <a href="/tags/C/" style="font-size: 18.46px;">C#</a> <a href="/tags/CSV/" style="font-size: 10px;">CSV</a> <a href="/tags/DDD/" style="font-size: 10.77px;">DDD</a> <a href="/tags/ELK-stack/" style="font-size: 10px;">ELK stack</a> <a href="/tags/IDE/" style="font-size: 13.08px;">IDE</a> <a href="/tags/MVC/" style="font-size: 14.62px;">MVC</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/agile/" style="font-size: 10.77px;">agile</a> <a href="/tags/angular/" style="font-size: 16.92px;">angular</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/client-side-scripting/" style="font-size: 11.54px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.77px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 10.77px;">creational patterns</a> <a href="/tags/css/" style="font-size: 13.08px;">css</a> <a href="/tags/dependency-injection/" style="font-size: 13.85px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.69px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.54px;">docker compose</a> <a href="/tags/food/" style="font-size: 10px;">food</a> <a href="/tags/git/" style="font-size: 12.31px;">git</a> <a href="/tags/hexo/" style="font-size: 10.77px;">hexo</a> <a href="/tags/jquery/" style="font-size: 10.77px;">jquery</a> <a href="/tags/json/" style="font-size: 11.54px;">json</a> <a href="/tags/kibana/" style="font-size: 10.77px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.85px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 10.77px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.54px;">linux</a> <a href="/tags/logging/" style="font-size: 11.54px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 19.23px;">model airplanes</a> <a href="/tags/mysql/" style="font-size: 10.77px;">mysql</a> <a href="/tags/net-core/" style="font-size: 13.08px;">net core</a> <a href="/tags/nuget/" style="font-size: 11.54px;">nuget</a> <a href="/tags/patterns-principles/" style="font-size: 18.46px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.77px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/random/" style="font-size: 10px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 11.54px;">raspberry-pi</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/software-testing/" style="font-size: 16.15px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/static-code-analysis/" style="font-size: 10.77px;">static code analysis</a> <a href="/tags/utilities/" style="font-size: 20px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.77px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.31px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

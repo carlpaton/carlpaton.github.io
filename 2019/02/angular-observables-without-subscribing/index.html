@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Angular Observables Without Subscribing | Carl Paton</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Observables provide support for passing messages between publishers and subscribers in your application. In the example below parent-search.component would be a collection of html controls and child-c">
+<meta name="keywords" content="angular">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular Observables Without Subscribing">
+<meta property="og:url" content="https://carlpaton.github.io/2019/02/angular-observables-without-subscribing/index.html">
+<meta property="og:site_name" content="Carl Paton">
+<meta property="og:description" content="Observables provide support for passing messages between publishers and subscribers in your application. In the example below parent-search.component would be a collection of html controls and child-c">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-09-02T20:25:04.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular Observables Without Subscribing">
+<meta name="twitter:description" content="Observables provide support for passing messages between publishers and subscribers in your application. In the example below parent-search.component would be a collection of html controls and child-c">
+  
+    <link rel="alternate" href="/atom.xml" title="Carl Paton" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags/C/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/MVC/" class="mobile-nav-link">MVC</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/archives/">Archives</a>
+        
+        <a class="main-nav-link" href="/tags/C/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/MVC/">MVC</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-angular-observables-without-subscribing" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/angular-observables-without-subscribing/" class="article-date">
+  <time datetime="2019-01-31T11:00:00.000Z" itemprop="datePublished">2019-Feb</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Angular Observables Without Subscribing
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Observables provide support for passing messages between publishers and subscribers in your application. In the example below <code>parent-search.component</code> would be a collection of html controls and <code>child-control-search.component</code> is one control, in this case a checkbox. An observable is used here to pass a message to the child components input - this is not however a subscription.</p>
+<p>It is common practice for the observable to be suffixed with $, so here the observable is <code>showControl$</code></p>
+<h3 id="parent-search-component"><a href="#parent-search-component" class="headerlink" title="parent-search.component"></a>parent-search.component</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">parent-search.component.ts</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> ...</span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ParentSearchComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">	<span class="string">' you can also use `new BehaviorSubject(initialValue)` and give its ctr an initial value</span></span><br><span class="line"><span class="string">    public showControl$ = new Subject();</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">    public ngOnInit () &#123;</span></span><br><span class="line"><span class="string">        '</span> Here you could use data passed into ParentSearchComponent instead of the <span class="number">1</span>=<span class="number">1</span></span><br><span class="line">		<span class="string">' You could also do this on some other event binding such as a button click</span></span><br><span class="line"><span class="string">		'</span> here .next is the handler <span class="keyword">for</span> the notification <span class="keyword">type</span></span><br><span class="line">		<span class="keyword">this</span>.showControl$.next( <span class="number">1</span>=<span class="number">1</span> );</span><br><span class="line">    &#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">parent-search.component.html</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">child-control-search</span></span></span><br><span class="line"><span class="tag">		[<span class="attr">showControl</span>]=<span class="string">"showControl$ | async"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">child-control-search</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="child-control-search-component"><a href="#child-control-search-component" class="headerlink" title="child-control-search.component"></a>child-control-search.component</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">child-control-search.component.ts</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> ...</span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">    selector: <span class="string">'child-control-search'</span>,</span><br><span class="line">	...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ChildSearchControlComponent &#123;</span><br><span class="line">    <span class="meta">@Input</span>() <span class="keyword">public</span> showControl: <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">child-control-search.component.html</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mat-checkbox</span></span></span><br><span class="line"><span class="tag">    *<span class="attr">ngIf</span>=<span class="string">"showControl"</span>&gt;</span></span><br><span class="line">	Check me!</span><br><span class="line"><span class="tag">&lt;/<span class="name">mat-checkbox</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="https://angular.io/guide/observables" target="_blank" rel="noopener">https://angular.io/guide/observables</a></li>
+<li><a href="https://material.angular.io/components/checkbox/overview" target="_blank" rel="noopener">https://material.angular.io/components/checkbox/overview</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/02/angular-observables-without-subscribing/" data-id="ck02vbgco000hkontctpnikbv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/02/stack-query-string-params-vertically/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Stack query string params vertically
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/front-end-technologies/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Front End Technologies</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 17.27px;">C#</a> <a href="/tags/ELK-stack/" style="font-size: 10px;">ELK stack</a> <a href="/tags/MVC/" style="font-size: 14.55px;">MVC</a> <a href="/tags/agile/" style="font-size: 10.91px;">agile</a> <a href="/tags/angular/" style="font-size: 13.64px;">angular</a> <a href="/tags/client-side-scripting/" style="font-size: 10.91px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10px;">continuous integration</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/docker/" style="font-size: 18.18px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.82px;">docker compose</a> <a href="/tags/git/" style="font-size: 12.73px;">git</a> <a href="/tags/hexo/" style="font-size: 10.91px;">hexo</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/kibana/" style="font-size: 10.91px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 15.45px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 10.91px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 10.91px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 19.09px;">model airplanes</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nuget/" style="font-size: 10.91px;">nuget</a> <a href="/tags/patterns-principles/" style="font-size: 18.18px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/random/" style="font-size: 10px;">random</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/software-testing/" style="font-size: 16.36px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/static-code-analysis/" style="font-size: 10.91px;">static code analysis</a> <a href="/tags/utilities/" style="font-size: 20px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.91px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 11.82px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

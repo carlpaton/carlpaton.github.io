@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Carl Paton</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There are no silly questions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carl Paton">
+<meta property="og:url" content="https://carlpaton.github.io/page/31/index.html">
+<meta property="og:site_name" content="Carl Paton">
+<meta property="og:description" content="There are no silly questions">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Carl Paton">
+<meta name="twitter:description" content="There are no silly questions">
+  
+    <link rel="alternate" href="/atom.xml" title="Carl Paton" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags/C/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/MVC/" class="mobile-nav-link">MVC</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/archives/">Archives</a>
+        
+        <a class="main-nav-link" href="/tags/C/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/MVC/">MVC</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-open-closed-principle-ocp" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/open-closed-principle-ocp/" class="article-date">
+  <time datetime="2018-04-18T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/open-closed-principle-ocp/">Open/Closed Principle (OCP)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>This is the ‘O’ in <a href="/2018/04/solid-object-oriented-design/">SOLID</a></p>
+<p>Simply put:</p>
+<ul>
+<li>Open to extension is to allow new behavior to be added in the future</li>
+<li>Closed to modification is not to change the source/binary code</li>
+</ul>
+<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>“<em>The Open / Closed Principle states that software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification.</em>” – Wikipedia</p>
+<ul>
+<li>Dr. Bertrand Meyer originated the term in his 1988 book, Object-Oriented Software Construction</li>
+</ul>
+<h3 id="How-do-we-open-things-for-extension"><a href="#How-do-we-open-things-for-extension" class="headerlink" title="How do we open things for extension?"></a>How do we open things for extension?</h3><p>The key is to rely on abstractions, so this is interfaces or an abstract base class. Its however very important <strong>not</strong> to simply apply OCP to every class unless you know based that the business rules are likely to change.</p>
+<p>Its best to focus on “Refactoring to a better design”, this means you should write your code with the least amount of complexity first and when needed refactor it and apply a principal such as OCP. So if it changes once, accept it. If it changes again consider refactoring.</p>
+<h4 id="PROS"><a href="#PROS" class="headerlink" title="PROS"></a>PROS</h4><ul>
+<li>Existing core classes are not changed so you are less likely to introduce regression bugs</li>
+<li>You are adding new classes each time, so you can test and have faith you will not upset things</li>
+</ul>
+<h4 id="CONS"><a href="#CONS" class="headerlink" title="CONS"></a>CONS</h4><ul>
+<li>This add complexity and must be used with caution, dont use OCP to try impress your boss</li>
+</ul>
+<h3 id="Typical-Approaches"><a href="#Typical-Approaches" class="headerlink" title="Typical Approaches"></a>Typical Approaches</h3><ul>
+<li>Parameters<ul>
+<li>By passing parameters to your methods you allow their behavior to change.</li>
+</ul>
+</li>
+<li><a href="/2018/03/pillars-of-object-oriented-programming-oop/">Inheritance</a><ul>
+<li>By using the <code>override</code> keyword in a concrete class you can over-ride the behavior of <code>virtual</code> or <code>abstract</code> methods. </li>
+</ul>
+</li>
+<li>Composition /  <a href="/2018/04/dependency-inversion-principle-dip/">Dependency Injection</a> <ul>
+<li>By injecting an instance of a service defined by its <code>interface</code> the consumer is open to extension but closed for modification.</li>
+<li>A great way to define a list of possible instances to be injected is the <a href="/2020/02/factory-pattern/">Factory Pattern</a>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Sample-Code"><a href="#Sample-Code" class="headerlink" title="Sample Code"></a>Sample Code</h3><p>Shopping cart examples based on work from Steve Smith</p>
+<ul>
+<li><a href="https://github.com/carlpaton/Boilerplate/tree/master/Class Library/PatternsAndPrinciples" target="_blank" rel="noopener">https://github.com/carlpaton/Boilerplate/tree/master/Class%20Library/PatternsAndPrinciples</a></li>
+</ul>
+<p>Great examples by <a href="https://ardalis.com/?s=solid" target="_blank" rel="noopener">Steve Smith aka Ardalis</a></p>
+<ul>
+<li><a href="https://github.com/carlpaton/SolidSample" target="_blank" rel="noopener">https://github.com/carlpaton/SolidSample</a></li>
+<li><a href="https://www.pluralsight.com/courses/csharp-solid-principles" target="_blank" rel="noopener">https://www.pluralsight.com/courses/csharp-solid-principles</a></li>
+</ul>
+<p>Other Examples from <a href="https://github.com/bradvin" target="_blank" rel="noopener">Brad Vincent</a></p>
+<ul>
+<li><a href="https://github.com/carlpaton/SOLID/blob/master/2_OCP_code_problem.md" target="_blank" rel="noopener">https://github.com/carlpaton/SOLID/blob/master/2_OCP_code_problem.md</a></li>
+</ul>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://hackernoon.com/why-the-open-closed-principle-is-the-one-you-need-to-know-but-dont-176f7e4416d" target="_blank" rel="noopener">https://hackernoon.com/why-the-open-closed-principle-is-the-one-you-need-to-know-but-dont-176f7e4416d</a></li>
+<li><a href="https://blog.cleancoder.com/uncle-bob/2014/05/12/TheOpenClosedPrinciple.html" target="_blank" rel="noopener">https://blog.cleancoder.com/uncle-bob/2014/05/12/TheOpenClosedPrinciple.html</a></li>
+<li><a href="https://codeblog.jonskeet.uk/2013/03/15/the-open-closed-principle-in-review/" target="_blank" rel="noopener">https://codeblog.jonskeet.uk/2013/03/15/the-open-closed-principle-in-review/</a></li>
+<li><a href="http://joelabrahamsson.com/a-simple-example-of-the-openclosed-principle/" target="_blank" rel="noopener">http://joelabrahamsson.com/a-simple-example-of-the-openclosed-principle/</a></li>
+<li><a href="http://www.debugosaurus.com/solid/2017/03/18/Open-closed.html" target="_blank" rel="noopener">http://www.debugosaurus.com/solid/2017/03/18/Open-closed.html</a></li>
+<li><a href="https://code-maze.com/open-closed-principle/" target="_blank" rel="noopener">https://code-maze.com/open-closed-principle/</a></li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VFlk43QGEgc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/open-closed-principle-ocp/" data-id="ck9rzlcs8007jq0ntu9hxn2h6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/">patterns principles</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-tell-dont-ask" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/tell-dont-ask/" class="article-date">
+  <time datetime="2018-04-18T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/tell-dont-ask/">Tell, Dont Ask</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>Tell-Don’t-Ask is a principle that helps people remember that object-orientation is about bundling data with the functions that operate on that data. It reminds us that rather than asking an object for data and acting on that data, we should instead tell an object what to do. This encourages to move behavior into an object to go with the data.</em></p>
+<ul>
+<li>Don’t interrogate objects for their internals – move behavior to the object</li>
+<li>Tell the object what you want it to do</li>
+</ul>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://www.martinfowler.com/bliki/TellDontAsk.html" target="_blank" rel="noopener">https://www.martinfowler.com/bliki/TellDontAsk.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/tell-dont-ask/" data-id="ck9rzlctf00apq0nt1gsbimle" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/">patterns principles</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-model-airplanes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/model-airplanes/" class="article-date">
+  <time datetime="2018-04-17T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/model-airplanes/">Model Airplanes</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I fly model airplanes in mode 2 (this mean the throttle and rudder controls are on the left with elevator and aileron control on the right)</p>
+<h3 id="Build-Logs"><a href="#Build-Logs" class="headerlink" title="Build Logs"></a>Build Logs</h3><ul>
+<li><a href="http://avcom.co.za/phpBB3/viewtopic.php?f=16&amp;t=197680" target="_blank" rel="noopener">Shotgun scratch build</a></li>
+<li><a href="http://www.avcom.co.za/phpBB3/viewtopic.php?f=16&amp;t=152011" target="_blank" rel="noopener">Pilot Extra 260 Repair</a></li>
+<li><a href="http://avcom.co.za/phpBB3/viewtopic.php?f=16&amp;t=154155" target="_blank" rel="noopener">Mini Ultra Stick Rebuild / Repair</a></li>
+<li><a href="http://avcom.co.za/phpBB3/viewtopic.php?f=16&amp;t=178725" target="_blank" rel="noopener">vmar 60 stick recover</a></li>
+<li><a href="http://avcom.co.za/phpBB3/viewtopic.php?f=16&amp;t=150617" target="_blank" rel="noopener">40 Size Stick Rebuild</a></li>
+<li><a href="http://www.avcom.co.za/phpBB3/viewtopic.php?f=16&amp;t=160836" target="_blank" rel="noopener">Depron twin motor stick – Silly stick</a></li>
+<li><a href="http://www.avcom.co.za/phpBB3/viewtopic.php?f=16&amp;t=155970&amp;start=45" target="_blank" rel="noopener">Depron Cargo Plane Build (ft-guinea)</a></li>
+</ul>
+<h3 id="Online-PDF-Plans"><a href="#Online-PDF-Plans" class="headerlink" title="Online PDF Plans"></a>Online PDF Plans</h3><ul>
+<li><a href="https://outerzone.co.uk/" target="_blank" rel="noopener">https://outerzone.co.uk</a></li>
+<li><a href="https://aerofred.com/" target="_blank" rel="noopener">https://aerofred.com/</a></li>
+</ul>
+<h3 id="Fond-Memory’s-with-a-foamy-trainer"><a href="#Fond-Memory’s-with-a-foamy-trainer" class="headerlink" title="Fond Memory’s with a foamy trainer"></a>Fond Memory’s with a foamy trainer</h3><iframe width="560" height="315" src="https://www.youtube.com/embed/i45KT8ag-h8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/model-airplanes/" data-id="ck9rzlcrn0066q0ntbi1w4tkw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model-airplanes/">model airplanes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-solid-object-oriented-design" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/solid-object-oriented-design/" class="article-date">
+  <time datetime="2018-04-17T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/solid-object-oriented-design/">SOLID (object-oriented design)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="SOLID-object-oriented-design"><a href="#SOLID-object-oriented-design" class="headerlink" title="SOLID (object-oriented design)"></a>SOLID (object-oriented design)</h3><p>In object-oriented computer programming, the term SOLID is a <a href="https://en.wikipedia.org/wiki/Mnemonic" target="_blank" rel="noopener">mnemonic acronym</a> for five design principles intended to make software designs more understandable, flexible and maintainable.</p>
+<p>These patterns and principles work together and each problem domain will require a different approach and implementation (or no implementation of the principle at all)</p>
+<ul>
+<li><a href="/2018/05/single-responsibility-principle-srp/">Single responsibility principle (SRP)</a></li>
+<li><a href="/2018/04/open-closed-principle-ocp/">Open/Closed Principle (OCP)</a></li>
+<li><a href="/2018/04/liskov-substitution-principle-lsp/">Liskov substitution principle (LSP)</a></li>
+<li><a href="/2018/04/interface-segregation-principle-isp/">Interface segregation principle (ISP)</a></li>
+<li><a href="/2018/04/dependency-inversion-principle-dip/">Dependency Inversion Principle (DIP)</a></li>
+</ul>
+<h3 id="References-amp-Influences"><a href="#References-amp-Influences" class="headerlink" title="References &amp; Influences"></a>References &amp; Influences</h3><ul>
+<li><a href="https://www.pluralsight.com/courses/principles-oo-design" target="_blank" rel="noopener">https://www.pluralsight.com/courses/principles-oo-design (Steve Smith)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)</a></li>
+<li><a href="https://github.com/charleyza/SOLID" target="_blank" rel="noopener">https://github.com/charleyza/SOLID</a></li>
+<li><a href="https://www.youtube.com/playlist?list=PLlbvMh5cf97P0jGgh9Csxg5m-KCM021ZI" target="_blank" rel="noopener">https://www.youtube.com/playlist?list=PLlbvMh5cf97P0jGgh9Csxg5m-KCM021ZI</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/solid-object-oriented-design/" data-id="ck9rzlct900a5q0ntnc1v3npu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/">patterns principles</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-stick-sizes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/stick-sizes/" class="article-date">
+  <time datetime="2018-04-17T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/stick-sizes/">Stick sizes</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Sizes"><a href="#Sizes" class="headerlink" title="Sizes"></a>Sizes</h3><p>These sizes have never made any sense to me as I had an <a href="https://www.horizonhobby.com/apprentice-s-15e-rtf-with-safe-reg%3B-technology-efl3100" target="_blank" rel="noopener">e flite apprentice</a> which had a 1500mm wing but Horizonhobby say its a 15 size, it was electric so who knows! (15-size, 840Kv brushless, 30A ESC, 3S 3200mAh)</p>
+<p>I think the sizes come from the older balsa models so the pilot knew which size <a href="/2018/04/glow-engines/">internal combustion glow engine</a> to use, though it was and still is common for pilots to fit a BIGGER engine :D</p>
+<ul>
+<li><a href="/2018/04/stick-micro/">800mm and 400mm span (Micro)</a></li>
+<li><a href="/2018/04/stick-mini/">980mm span (Mini)</a></li>
+<li><a href="/2018/04/stick-25/">25 Size</a></li>
+<li><a href="/2018/04/stick-40/">1480mm span (40 Size)</a></li>
+<li><a href="/2018/04/stick-60/">1680mm span (60 Size)</a></li>
+<li><a href="/2018/04/stick-120/">120 Size</a></li>
+<li><a href="/2018/04/stick-160/">160 Size</a></li>
+</ul>
+<p>A ‘stick’ is a shoulder wing sport / trainer model aircraft originally designed by Phil Kraft in 1966, his was called the Das Ugly Stick and had a round cowl.</p>
+<p>“<em>The original concept of the Ugly Stik was to design a radio controlled aircraft which could be built in an absolute minimum of time. Its purpose was towards a flying test bed for new proportional control developments and an all around shop airplane which could be used as a loaner for visiting flyers, testing repaired equipment, and any use which required an airplane which could be considered as expendable</em>.”</p>
+<p><img src="/d/stick-sizes/stick 1.jpg" alt="June 1966"></p>
+<p>Notable difference between the Das Ugly and a modern Ultra stick is the shape of the tail, the flat trailing edges on the ailerons and elevator &amp; it has no cowling.</p>
+<p><img src="/d/stick-sizes/stick 2.jpg" alt="Ultra Stick"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/stick-sizes/" data-id="ck9rzlctb00adq0ntdbd50yyk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model-airplanes/">model airplanes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/30/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="extend next" rel="next" href="/page/32/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/jquery-examples/">jQuery Examples</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/web-api-controller-example/">Web API Controller Example</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-custom-exception/">C# Custom Exception</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/builder-pattern/">Builder Pattern</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-delegates/">C# Delegates</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET-library/" style="font-size: 11.54px;">.NET library</a> <a href="/tags/AWS/" style="font-size: 15.38px;">AWS</a> <a href="/tags/C/" style="font-size: 18.46px;">C#</a> <a href="/tags/CSV/" style="font-size: 10px;">CSV</a> <a href="/tags/DDD/" style="font-size: 10.77px;">DDD</a> <a href="/tags/ELK-stack/" style="font-size: 10px;">ELK stack</a> <a href="/tags/IDE/" style="font-size: 13.08px;">IDE</a> <a href="/tags/MVC/" style="font-size: 14.62px;">MVC</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/agile/" style="font-size: 10.77px;">agile</a> <a href="/tags/angular/" style="font-size: 16.92px;">angular</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/client-side-scripting/" style="font-size: 11.54px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.77px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 10.77px;">creational patterns</a> <a href="/tags/css/" style="font-size: 13.08px;">css</a> <a href="/tags/dependency-injection/" style="font-size: 13.85px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.69px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.54px;">docker compose</a> <a href="/tags/food/" style="font-size: 10px;">food</a> <a href="/tags/git/" style="font-size: 12.31px;">git</a> <a href="/tags/hexo/" style="font-size: 10.77px;">hexo</a> <a href="/tags/jquery/" style="font-size: 10.77px;">jquery</a> <a href="/tags/json/" style="font-size: 11.54px;">json</a> <a href="/tags/kibana/" style="font-size: 10.77px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.85px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 10.77px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.54px;">linux</a> <a href="/tags/logging/" style="font-size: 11.54px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 19.23px;">model airplanes</a> <a href="/tags/mysql/" style="font-size: 10.77px;">mysql</a> <a href="/tags/net-core/" style="font-size: 13.08px;">net core</a> <a href="/tags/nuget/" style="font-size: 11.54px;">nuget</a> <a href="/tags/patterns-principles/" style="font-size: 18.46px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.77px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/random/" style="font-size: 10px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 11.54px;">raspberry-pi</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/software-testing/" style="font-size: 16.15px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/static-code-analysis/" style="font-size: 10.77px;">static code analysis</a> <a href="/tags/utilities/" style="font-size: 20px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.77px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.31px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Carl Paton</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There are no silly questions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carl Paton">
+<meta property="og:url" content="https://carlpaton.github.io/page/39/index.html">
+<meta property="og:site_name" content="Carl Paton">
+<meta property="og:description" content="There are no silly questions">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Carl Paton">
+<meta name="twitter:description" content="There are no silly questions">
+  
+    <link rel="alternate" href="/atom.xml" title="Carl Paton" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags/C/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/MVC/" class="mobile-nav-link">MVC</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/archives/">Archives</a>
+        
+        <a class="main-nav-link" href="/tags/C/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/MVC/">MVC</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-csv-helper-dot-net-library" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/csv-helper-dot-net-library/" class="article-date">
+  <time datetime="2017-06-22T12:00:00.000Z" itemprop="datePublished">2017-Jun</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/csv-helper-dot-net-library/">Csv Helper (.NET library)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/csv-helper-dot-net-library/csv-helper.jpg" alt="Csv Helper"></p>
+<p>If you have ever tried to manually read a CSV (Comma-separated values) file using the .NET Framework’s File and StreamReader classes you may have run into issues such as:</p>
+<ul>
+<li>Out of range exceptions</li>
+<li>Encoding issues</li>
+<li>Column order changes ect</li>
+</ul>
+<p>There are probably many more depending on the files size and complexity.</p>
+<p>First prize is to read the CSV file and map the columns to a POCO object (Plain Old CLR) </p>
+<blockquote>
+<p><em>In software engineering, a plain old CLR object (POCO) is a simple object created in the Common Language Runtime (CLR) of the .NET Framework which is unencumbered by inheritance or attributes.</em></p>
+</blockquote>
+<p>Enter the CsvHelper library to help reading and writing CSV files by Josh Close.</p>
+<blockquote>
+<p><em>CsvHelper is a .NET library for reading and writing CSV files. Extremely fast, flexible and easy to use. Supports reading and writing of custom class objects.</em></p>
+</blockquote>
+<p>Consider the following CSV file with headings Internal Id,Activity,Project Name,Date,Time Spent In Hours,User</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Internal Id,Activity,Project Name,Date,Time Spent In Hours,User</span><br><span class="line"></span><br><span class="line">123,Cloned repository and familiarize with code base,Accounts Project,01-01-2017,2,Joe Soap</span><br><span class="line"></span><br><span class="line">124,Refactor class a for xyz,Accounts Project,01-01-2017,1,Joe Soap</span><br><span class="line"></span><br><span class="line">89,Complete task xyz,Accounts Project,01-01-2017,4,Sue Skye</span><br><span class="line"></span><br><span class="line">55,Complete task abc,Accounts Project,01-01-2017,1,Sue Skye</span><br></pre></td></tr></table></figure>
+<p><em>(You can check your system separator under ‘Region’ -&gt; ‘Additional settings…’ -&gt; ‘Numbers’ -&gt; ‘List separator’)</em></p>
+<p>Create your POCO class:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class CsvContentModel</span><br><span class="line">&#123;</span><br><span class="line">  public string User &#123; get; set; &#125;</span><br><span class="line">  public string InternalId &#123; get; set; &#125;</span><br><span class="line">  public string Activity &#123; get; set; &#125;</span><br><span class="line">  public string ProjectName &#123; get; set; &#125;</span><br><span class="line">  public string Date &#123; get; set; &#125;</span><br><span class="line">  public string TimeSpentInHours&#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>*<em> For simplicity I made all the properties of type string. You can use CsvHelper’s type converter if you want to convert the integer/dates automatically.</em></p>
+<p>Create a DefinitionMap to help map the columns with spaces in the names.</p>
+<p>If you don’t supply a mapping file, auto mapping will be used. Auto mapping will map the properties in your class in the order they appear in.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sealed class CsvContentModelDefinitionMap : CsvClassMap&lt;CsvContentModel&gt;</span><br><span class="line">&#123;</span><br><span class="line">  public CsvContentModelDefinitionMap()</span><br><span class="line">  &#123;</span><br><span class="line">    Map(m =&gt; m.User).Name(&quot;User&quot;);</span><br><span class="line">    Map(m =&gt; m.InternalId).Name(&quot;Internal Id&quot;);</span><br><span class="line">    Map(m =&gt; m.Activity).Name(&quot;Activity&quot;);</span><br><span class="line">    Map(m =&gt; m.ProjectName).Name(&quot;Project Name&quot;);</span><br><span class="line">    Map(m =&gt; m.Date).Name(&quot;Date&quot;);</span><br><span class="line">    Map(m =&gt; m.TimeSpentInHours).Name(&quot;Time Spent In Hours&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Organize your CsvHelper logic into a class.</p>
+<p>Your catch blocks should do something more helpful with the Exceptions :)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">public class ReadFile</span><br><span class="line">&#123;</span><br><span class="line">  string FilePath;</span><br><span class="line"></span><br><span class="line">  public ReadFile(string filePath)</span><br><span class="line">  &#123;</span><br><span class="line">    FilePath = filePath;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public List&lt;CsvContentModel&gt; Get()</span><br><span class="line">  &#123;</span><br><span class="line">    if (FilePath == null)</span><br><span class="line">      return new List&lt;CsvContentModel&gt;();</span><br><span class="line"></span><br><span class="line">    if (FilePath == &quot;&quot;)</span><br><span class="line">      return new List&lt;CsvContentModel&gt;();</span><br><span class="line"></span><br><span class="line">    List&lt;CsvContentModel&gt; records = new List&lt;CsvContentModel&gt;();</span><br><span class="line"></span><br><span class="line">    using (TextReader reader = File.OpenText(FilePath))</span><br><span class="line">    &#123;</span><br><span class="line">      try</span><br><span class="line">      &#123;</span><br><span class="line">        var csv = new CsvReader(reader);</span><br><span class="line">        csv.Configuration.RegisterClassMap&lt;CsvContentModelDefinitionMap&gt;();</span><br><span class="line">        records = csv.GetRecords&lt;CsvContentModel&gt;().ToList();</span><br><span class="line">      &#125;</span><br><span class="line">      catch (CsvMissingFieldException ex)</span><br><span class="line">      &#123;</span><br><span class="line">        Console.WriteLine(ex.Message);</span><br><span class="line">        Console.WriteLine(ex.StackTrace);</span><br><span class="line">      &#125;</span><br><span class="line">      catch (Exception ex)</span><br><span class="line">      &#123;</span><br><span class="line">        Console.WriteLine(ex.Message);</span><br><span class="line">        Console.WriteLine(ex.StackTrace);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return records;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Then call the class</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var data = new ReadFile(&quot;sample.csv&quot;).Get();</span><br></pre></td></tr></table></figure>
+<p>The instance of data will now have a reference to a list of type CsvContentModel for your business logic.</p>
+<p><img src="/d/csv-helper-dot-net-library/csv-helper-object.jpg" alt="Csv Helper"></p>
+<p>CsvHelper has several other powerful features such as Type Converter and Configuration Delimiter.</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://joshclose.github.io/CsvHelper/" target="_blank" rel="noopener">https://joshclose.github.io/CsvHelper/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Plain_old_CLR_object" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Plain_old_CLR_object</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Comma-separated_values</a></li>
+<li><a href="https://github.com/carlpaton/CsvHelperDemo" target="_blank" rel="noopener">https://github.com/carlpaton/CsvHelperDemo</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2017/06/csv-helper-dot-net-library/" data-id="ck9rzlcq9002tq0nt22opwafh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET-library/">.NET library</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSV/">CSV</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/">utilities</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jsonnet-dot-net-library" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/jsonnet-dot-net-library/" class="article-date">
+  <time datetime="2017-06-22T12:00:00.000Z" itemprop="datePublished">2017-Jun</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/jsonnet-dot-net-library/">Json.NET (.NET library)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/jsonnet-dot-net-library/jsonnet.jpg" alt="Json.NET"></p>
+<p>Json.NET is a popular high-performance JSON framework for .NET available via Nuget as <code>Newtonsoft.Json</code></p>
+<p>JSON (JavaScript Object Notation) is widely used and I find it easier to read than XML (eXtensible Markup Language.) I doubt XML is going anywhere and the differences will be opinion based so I have no intention to insinuate JSON is better.</p>
+<blockquote>
+<p><strong>JSON</strong> <em>is a lightweight data-interchange format. It is easy for humans to read and write. It is easy for machines to parse and generate. It is based on a subset of the JavaScript Programming Language, Standard ECMA-262 3rd Edition - December 1999.</em></p>
+</blockquote>
+<p>Modern Web API projects can be configured to automatically return JSON with the JsonFormatter class however there are plenty legacy systems that will still follow the below structure so it’s good to understand them anyway.</p>
+<p>In some cases your class instances need to be persisted to a log file or database, the simplest way to do this is with the JsonConvert class from Json.Net and it is faster than the JavaScriptSerializer class normally used in older .ASMX files.</p>
+<blockquote>
+<p><em>.ASMX is an abbreviation for Active Server Method File, a file with the</em> <strong>ASMX</strong> <em>file extension is an ASP.NET Web Service Source file.</em></p>
+</blockquote>
+<p>The below is a pre Web API example of web a web service called ‘AjaxServer.asmx’ that uses JavaScriptSerializer</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">using Newtonsoft.Json;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using System.Web.Script.Serialization;</span><br><span class="line">using System.Web.Services;</span><br><span class="line"> </span><br><span class="line">namespace JsonNetWebAppDemo</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// Summary description for AjaxServer</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    [WebService(Namespace = &quot;http://tempuri.org/&quot;)]</span><br><span class="line">    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]</span><br><span class="line">    [System.ComponentModel.ToolboxItem(false)]</span><br><span class="line">    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. </span><br><span class="line">    // [System.Web.Script.Services.ScriptService]</span><br><span class="line">    public class AjaxServer : System.Web.Services.WebService</span><br><span class="line">    &#123;</span><br><span class="line">        [WebMethod(EnableSession = true)]</span><br><span class="line">        public string DoSomething(string param1, string param2)</span><br><span class="line">        &#123;</span><br><span class="line">            if (param1 == &quot;&quot; &amp;&amp; param2 == &quot;&quot;)</span><br><span class="line">                return &quot;[]&quot;;</span><br><span class="line"> </span><br><span class="line">            var list = new List&lt;string&gt;();</span><br><span class="line">            list.Add(&quot;some string value&quot;);</span><br><span class="line"> </span><br><span class="line">            if (Session[&quot;someSessionValue&quot;] != null)</span><br><span class="line">                list.Add(Session[&quot;someSessionValue&quot;].ToString());</span><br><span class="line"> </span><br><span class="line">            //slower built in &apos;JavaScriptSerializer&apos;</span><br><span class="line">            var json = new JavaScriptSerializer().Serialize(list);</span><br><span class="line">            return json;</span><br><span class="line"> </span><br><span class="line">            //faster &apos;JsonConvert&apos;</span><br><span class="line">            //var json2 = JsonConvert.SerializeObject(list);</span><br><span class="line">            //return json2;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This can then be consumed from the client side. The simplest way is with jQuery’s $.ajax to post to the service and $.parseJSON to de-serialize the response. </p>
+<blockquote>
+<p><em>NOTE: As of jQuery 3.0, $.parseJSON is deprecated. To parse JSON strings use the native JSON.parse method instead.</em></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = jQuery.parseJSON( <span class="string">'&#123; "name": "John" &#125;'</span> );</span><br><span class="line">alert( obj.name === <span class="string">"John"</span> );</span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> obj2 = <span class="built_in">JSON</span>.parse( <span class="string">'&#123; "name": "John" &#125;'</span> );</span><br><span class="line">alert( obj2.name === <span class="string">"John"</span> );</span><br></pre></td></tr></table></figure>
+<h3 id="Json-NET"><a href="#Json-NET" class="headerlink" title="Json.NET"></a>Json.NET</h3><p>The json object instance from the ‘AjaxServer.asmx’ example above can then be replaced with JsonConvert.SerializeObject(list)</p>
+<p>JsonConvert.DeserializeAnonymousType is also very helpful for unit testing Web API projects.</p>
+<p>The examples from newtonsoft.com are very simple and clearly show how to Serialize and Deserialize json notation.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">//******* Serialize JSON</span><br><span class="line"> </span><br><span class="line">Product product = new Product();</span><br><span class="line">product.Name = &quot;Apple&quot;;</span><br><span class="line">product.Expiry = new DateTime(2008, 12, 28);</span><br><span class="line">product.Sizes = new string[] &#123; &quot;Small&quot; &#125;;</span><br><span class="line"> </span><br><span class="line">string json = JsonConvert.SerializeObject(product);</span><br><span class="line">// &#123;</span><br><span class="line">//   &quot;Name&quot;: &quot;Apple&quot;,</span><br><span class="line">//   &quot;Expiry&quot;: &quot;2008-12-28T00:00:00&quot;,</span><br><span class="line">//   &quot;Sizes&quot;: [</span><br><span class="line">//     &quot;Small&quot;</span><br><span class="line">//   ]</span><br><span class="line">// &#125;</span><br><span class="line"></span><br><span class="line">﻿</span><br><span class="line">//******* Deserialize JSON </span><br><span class="line">string json = @&quot;&#123;</span><br><span class="line">  &apos;Name&apos;: &apos;Bad Boys&apos;,</span><br><span class="line">  &apos;ReleaseDate&apos;: &apos;1995-4-7T00:00:00&apos;,</span><br><span class="line">  &apos;Genres&apos;: [</span><br><span class="line">    &apos;Action&apos;,</span><br><span class="line">    &apos;Comedy&apos;</span><br><span class="line">  ]</span><br><span class="line">&#125;&quot;;</span><br><span class="line"> </span><br><span class="line">Movie m = JsonConvert.DeserializeObject&lt;Movie&gt;(json);</span><br><span class="line"> </span><br><span class="line">string name = m.Name;</span><br><span class="line">// Bad Boys</span><br></pre></td></tr></table></figure>
+<p>Some humour instead of closing thoughts as I really enjoyed ‘The Transporter’ movies :D</p>
+<p><img src="/d/jsonnet-dot-net-library/json-statham.jpg" alt="JSON Statham :D"></p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://www.newtonsoft.com/json" target="_blank" rel="noopener">https://www.newtonsoft.com/json</a></li>
+<li><a href="https://www.nuget.org/packages/Newtonsoft.Json/" target="_blank" rel="noopener">https://www.nuget.org/packages/Newtonsoft.Json/</a></li>
+<li><a href="https://github.com/JamesNK/Newtonsoft.Json" target="_blank" rel="noopener">https://github.com/JamesNK/Newtonsoft.Json</a></li>
+<li><a href="https://api.jquery.com/jquery.parsejson/" target="_blank" rel="noopener">https://api.jquery.com/jquery.parsejson/</a></li>
+<li><a href="http://www.json.org/" target="_blank" rel="noopener">http://www.json.org/</a></li>
+<li><a href="https://github.com/carlpaton/JsonNetWebAppDemo" target="_blank" rel="noopener">https://github.com/carlpaton/JsonNetWebAppDemo</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2017/06/jsonnet-dot-net-library/" data-id="ck9rzlcrc005cq0ntaf7mcig7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET-library/">.NET library</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/json/">json</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/">utilities</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-log-parser" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/log-parser/" class="article-date">
+  <time datetime="2017-05-18T12:00:00.000Z" itemprop="datePublished">2017-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/log-parser/">Log Parser</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/log-parser/log-parser.jpg" alt="Log Parser"></p>
+<p>Log parser is a powerful tool by Microsoft that can be used to import log files from several applications. In the past I have found it extremely useful when debugging IIS (Internet Information Services) logs for an array of issues including slow web page response to memory leaks.</p>
+<blockquote>
+<p><em>Log parser is a powerful, versatile tool that provides universal query access to text-based data such as log files, XML files and CSV files, as well as key data sources on the Windows® operating system such as the Event Log, the Registry, the file system, and Active Directory®.</em></p>
+</blockquote>
+<p>For this article I will focus on importing and manipulating IIS logs. I assume you have access to the webserver, have installed Log Parser, SQL Server express and SQL Server Management studio. If you have not please see “References” below for download links.</p>
+<h3 id="Locate-IIS-log-files"><a href="#Locate-IIS-log-files" class="headerlink" title="Locate IIS log files"></a>Locate IIS log files</h3><p>By default the IIS logs are stored on the webserver in W3C format in the location <code>%SystemDrive%\inetpub\logs\LogFiles\</code></p>
+<p>This can be checked from IIS by selecting the “host instance” and then double clicking on “Logging”</p>
+<p><img src="/d/log-parser/iis-logging.jpg" alt="IIS Logging"></p>
+<p>The folders inside “LogFiles” correspond to the site instance ID which can be checked by selecting “Sites” then the “Site Name” and selecting “Advanced Settings…”</p>
+<p><img src="/d/log-parser/iis-logging-1.jpg" alt="IIS Logging"></p>
+<p>For the above example the folder would be “W3SVC3” where “VC3” matches the ID 3. The files inside the folder are then stored by date stamp yyMMdd</p>
+<p><img src="/d/log-parser/iis-logging-2.jpg" alt="IIS Logging"></p>
+<h3 id="Import-Logs"><a href="#Import-Logs" class="headerlink" title="Import Logs"></a>Import Logs</h3><p>Firstly create the SQL database <code>webLog</code> on your local instance, the import will automatically create the tables for you if you include the <code>-createTable:ON</code> parameter.</p>
+<p><img src="/d/log-parser/sql.jpg" alt="SQL"></p>
+<p>You can add Log Parser to your environmental variables or simply run it from “C:\Program Files (x86)\Log Parser 2.2”. I prefer to copy the files one at a time to the above location and run the import from command prompt. Once I’m done I delete the .log file to avoid confusion.</p>
+<p>For the below example I copied “u_ex161129.log” to C:\Program Files (x86)\Log Parser 2.2” from the webserver at “C:\inetpub\logs\LogFiles\W3SVC3”</p>
+<p>The import command would then be:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">LOGPARSER &quot;SELECT * INTO webLog2 FROM u_ex161129.log&quot; </span><br><span class="line">-i:W3C </span><br><span class="line">-o:SQL </span><br><span class="line">-server: DESKTOP-EBV6Q8D </span><br><span class="line">-database:webLog </span><br><span class="line">-driver:&quot;SQL Server&quot; </span><br><span class="line">-createTable:ON </span><br><span class="line">-username:sa </span><br><span class="line">-password:sasa</span><br></pre></td></tr></table></figure>
+<p>The successful import will then show statistics of elements processed and execution time.</p>
+<p><img src="/d/log-parser/import.jpg" alt="Import"></p>
+<p>The data can then be seen in SQL Management Studio</p>
+<p><img src="/d/log-parser/sql-1.jpg" alt="SQL"></p>
+<h3 id="Query-data-by-status-code"><a href="#Query-data-by-status-code" class="headerlink" title="Query data by status code"></a>Query data by status code</h3><p>From here you can check the status codes and their counts by date. This can help you determine pages or elements such as images that your site is having issues with.</p>
+<p>Examples:</p>
+<h3 id="404-Not-Found"><a href="#404-Not-Found" class="headerlink" title="404 Not Found"></a>404 Not Found</h3><p><em>The server has not found anything matching the Request-URI. No indication is given of whether the condition is temporary or permanent. The 410 (Gone) status code SHOULD be used if the server knows, through some internally configurable mechanism, that an old resource is permanently unavailable and has no forwarding address. This status code is commonly used when the server does not wish to reveal exactly why the request has been refused, or when no other response is applicable.</em></p>
+<h3 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500 Internal Server Error"></a>500 Internal Server Error</h3><p><em>The server encountered an unexpected condition which prevented it from fulfilling the request.</em></p>
+<p>Sample SQL statement to sort by status:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">count([csUriStem]) as cnt, [csUriStem]</span><br><span class="line">FROM [webLog].[dbo].[webLog2]</span><br><span class="line">where scStatus = 404</span><br><span class="line">and date = &apos;2016-11-29 00:00:00.000&apos;</span><br><span class="line">group by [csUriStem]</span><br><span class="line">order by cnt desc</span><br></pre></td></tr></table></figure>
+<p>Sample results</p>
+<p><img src="/d/log-parser/sql-2.jpg" alt="SQL"></p>
+<p>This means the code looked for “/images/ui-bg_inset-soft_50_fff_1x100.png” 143 times and error 404 file not found was returned.</p>
+<p>The above can be repeated for server error 500 but additional information such as the query string can be helpful</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">[csUriStem]</span><br><span class="line">,[csUriQuery]</span><br><span class="line">,[timeTaken]</span><br><span class="line">,[timeTaken] / 60000 as timeTakenInMin</span><br><span class="line">FROM [webLog].[dbo].[webLog2]</span><br><span class="line">where scStatus = 500</span><br><span class="line">and date = &apos;2016-11-29 00:00:00.000&apos;</span><br><span class="line">order by timeTaken desc</span><br></pre></td></tr></table></figure>
+<p>This would then show pages that are broken or break under different conditions. You can also use the timeTaken field to understand how long a page is taking to break or even time out.</p>
+<h3 id="Query-data-by-execution-time"><a href="#Query-data-by-execution-time" class="headerlink" title="Query data by execution time"></a>Query data by execution time</h3><p>As mentioned above you can query the logs to see how long pages are taking to respond, this is helpful for pages that work but users complain it takes a long time to respond. Often you will get tasks such as “The website is slow” which is not very helpful so you need to figure things out for yourself.</p>
+<p>Sample SQL statement:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">[csUriStem]</span><br><span class="line">,[csUriQuery]</span><br><span class="line">,[timeTaken]</span><br><span class="line">,[timeTaken] / 60000 as timeTakenInMin</span><br><span class="line">FROM [webLog].[dbo].[webLog2]</span><br><span class="line">where scStatus = 200</span><br><span class="line">and date = &apos;2016-11-29 00:00:00.000&apos;</span><br><span class="line">order by timeTaken desc</span><br></pre></td></tr></table></figure>
+<p>Sample results:</p>
+<p><img src="/d/log-parser/sql-3.jpg" alt="SQL"></p>
+<p>From the above results you can see that “/Payments.aspx” is the slowest page for the period taking 3 minutes to respond with status 200. It’s not broken, it’s just slow – so you may need to optimize your code or possibly index the database.</p>
+<p>The second slowest page is <code>/PrintStatement.aspx</code> with the query string <code>type=43</code> this means you can debug this page with these parameters to see why it takes 3 minutes to respond.</p>
+<p>I hope this article is useful to other software developers trying to make sense of their IIS logs. If anybody has other tips or advice on how to query the imported data please comment below.</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html" target="_blank" rel="noopener">W3 Web Status codes</a></li>
+<li><a href="https://technet.microsoft.com/en-us/scriptcenter/dd919274.aspx" target="_blank" rel="noopener">Log Parser 2.2 (technet.microsoft.com)</a></li>
+<li><a href="https://www.microsoft.com/en-za/download/details.aspx?id=24659" target="_blank" rel="noopener">Download Log Parser 2.2</a></li>
+<li><a href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads" target="_blank" rel="noopener">Download Microsoft SQL Server express</a></li>
+<li><a href="https://www.microsoft.com/en-za/download/details.aspx?id=8961" target="_blank" rel="noopener">Download Microsoft SQL Server Management</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2017/05/log-parser/" data-id="ck9rzlcrj005wq0ntugv9kuxw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/">utilities</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ubiquitous-language-ul" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/ubiquitous-language-ul/" class="article-date">
+  <time datetime="2017-04-10T12:00:00.000Z" itemprop="datePublished">2017-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/ubiquitous-language-ul/">Ubiquitous Language (UL)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/ubiquitous-language-ul/ubiquitous-language-ul 1.jpg" alt="Ubiquitous Language (UL)"></p>
+<p>I have been interacting with clients for years and each client in their respective industry is always a learning curve. It would be an insult to your client if you assume you understand their industry as well as they do, they are running the business while you are simply there to facilitate automation based on their existing knowledge.</p>
+<p>As Software Developers we must never forget that our clients are not interested in our software, the language its written in or which patterns &amp; principles we used. They are interested in what it can do for them and which problems it solves within their respective business domain.</p>
+<p>The problem is always translating the business domain to the code domain in an effective manner and understanding what your client is talking about.</p>
+<p>Enter the Ubiquitous Language (UL)…</p>
+<blockquote>
+<p><em>Ubiquitous Language is the term Eric Evans uses in Domain Driven Design for the practice of building up a common, rigorous language between developers and users.</em></p>
+</blockquote>
+<p>This is a common and business orientated language; the primary goal of the language is to mitigate misunderstandings and bad assumptions. Concretely the Ubiquitous Language (UL) is a vocabulary of domain-specific terms sharer by all parties involved in the project.</p>
+<p>Domain specific terms translate the business domain to the code domain.</p>
+<blockquote>
+<p><em>“A simple definition of a ubiquitous language is to come up with terms that’ll be commonly used when discussing a particular subdomain.” – Steve Smith</em></p>
+</blockquote>
+<p>This includes but is not limited to nouns, verbs, adjectives, idiomatic expressions and even adverbs. Once defined the language should be used in all forms of written and spoken communication thus becoming the universal language of the business.</p>
+<p>In other words a common terminology helps making sense of the user requirements and maintenance of the software. This UL is not static and is continuously updated and refined as the project matures.</p>
+<p>It would be advisable to add an “APPENDIX x, Ubiquitous Language” to your specification document or the client’s collaborations tool, such as their wiki or intranet.</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="http://blog.carbonfive.com/2016/10/04/ubiquitous-language-the-joy-of-naming/" target="_blank" rel="noopener">Ubiquitous-language-the-joy-of-naming (Andrew Hao)</a></li>
+<li><a href="https://www.linkedin.com/pulse/ubiquitous-language-serpent-many-heads-javier-hern%C3%A1ndez?articleId=6227452220296691712" target="_blank" rel="noopener">Ubiquitous language, a serpent of many heads (Javier Hernández)</a></li>
+<li><a href="https://app.pluralsight.com/player?course=domain-driven-design-fundamentals&amp;author=julie-lerman&amp;name=domain-driven-design-fundamentals-m1&amp;clip=11&amp;mode=live&amp;start=108.236" target="_blank" rel="noopener">Domain-Driven Design Fundamentals (Julie Lerman and Steve Smith)</a></li>
+<li><a href="https://www.pluralsight.com/courses/modern-software-architecture-domain-models-cqrs-event-sourcing" target="_blank" rel="noopener">Modern-software-architecture-domain-models-cqrs-event-sourcing</a></li>
+<li><a href="https://www.pluralsight.com/courses/domain-driven-design-fundamentals" target="_blank" rel="noopener">Domain-driven-design-fundamentals</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2017/04/ubiquitous-language-ul/" data-id="ck9rzlctp00b9q0ntertmj0no" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DDD/">DDD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agile/">agile</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-zucchini" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/1970/01/zucchini/" class="article-date">
+  <time datetime="1969-12-31T12:00:00.000Z" itemprop="datePublished">1970-Jan</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/1970/01/zucchini/">Zucchini</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/zucchini/zucchini.jpg" alt="Ya Zucchini"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/1970/01/zucchini/" data-id="ck9rzlcu700clq0ntxojb6i2b" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/random/">random</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/38/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><a class="page-number" href="/page/38/">38</a><span class="page-number current">39</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/jquery-examples/">jQuery Examples</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/web-api-controller-example/">Web API Controller Example</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-custom-exception/">C# Custom Exception</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/builder-pattern/">Builder Pattern</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-delegates/">C# Delegates</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET-library/" style="font-size: 11.54px;">.NET library</a> <a href="/tags/AWS/" style="font-size: 15.38px;">AWS</a> <a href="/tags/C/" style="font-size: 18.46px;">C#</a> <a href="/tags/CSV/" style="font-size: 10px;">CSV</a> <a href="/tags/DDD/" style="font-size: 10.77px;">DDD</a> <a href="/tags/ELK-stack/" style="font-size: 10px;">ELK stack</a> <a href="/tags/IDE/" style="font-size: 13.08px;">IDE</a> <a href="/tags/MVC/" style="font-size: 14.62px;">MVC</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/agile/" style="font-size: 10.77px;">agile</a> <a href="/tags/angular/" style="font-size: 16.92px;">angular</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/client-side-scripting/" style="font-size: 11.54px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.77px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 10.77px;">creational patterns</a> <a href="/tags/css/" style="font-size: 13.08px;">css</a> <a href="/tags/dependency-injection/" style="font-size: 13.85px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.69px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.54px;">docker compose</a> <a href="/tags/food/" style="font-size: 10px;">food</a> <a href="/tags/git/" style="font-size: 12.31px;">git</a> <a href="/tags/hexo/" style="font-size: 10.77px;">hexo</a> <a href="/tags/jquery/" style="font-size: 10.77px;">jquery</a> <a href="/tags/json/" style="font-size: 11.54px;">json</a> <a href="/tags/kibana/" style="font-size: 10.77px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.85px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 10.77px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.54px;">linux</a> <a href="/tags/logging/" style="font-size: 11.54px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 19.23px;">model airplanes</a> <a href="/tags/mysql/" style="font-size: 10.77px;">mysql</a> <a href="/tags/net-core/" style="font-size: 13.08px;">net core</a> <a href="/tags/nuget/" style="font-size: 11.54px;">nuget</a> <a href="/tags/patterns-principles/" style="font-size: 18.46px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.77px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/random/" style="font-size: 10px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 11.54px;">raspberry-pi</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/software-testing/" style="font-size: 16.15px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/static-code-analysis/" style="font-size: 10.77px;">static code analysis</a> <a href="/tags/utilities/" style="font-size: 20px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.77px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.31px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

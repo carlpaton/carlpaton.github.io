@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Carl Paton</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There are no silly questions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carl Paton">
+<meta property="og:url" content="https://carlpaton.github.io/page/10/index.html">
+<meta property="og:site_name" content="Carl Paton">
+<meta property="og:description" content="There are no silly questions">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Carl Paton">
+<meta name="twitter:description" content="There are no silly questions">
+  
+    <link rel="alternate" href="/atom.xml" title="Carl Paton" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags/C/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/MVC/" class="mobile-nav-link">MVC</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/archives/">Archives</a>
+        
+        <a class="main-nav-link" href="/tags/C/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/MVC/">MVC</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-web-forms-load-file" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/web-forms-load-file/" class="article-date">
+  <time datetime="2019-07-21T12:00:00.000Z" itemprop="datePublished">2019-Jul</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/web-forms-load-file/">WebForms Load File</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Although MVC is my framework of choice Legacy <code>WebForms</code> applications still exist in the world.</p>
+<h3 id="ASPX-file"><a href="#ASPX-file" class="headerlink" title=".ASPX file"></a>.ASPX file</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">label</span>&gt;</span>File<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">asp:FileUpload</span> <span class="attr">id</span>=<span class="string">"FileUploadControl"</span> <span class="attr">runat</span>=<span class="string">"server"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form form-buttons"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">label</span>&gt;</span><span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">asp:Button</span> <span class="attr">ID</span>=<span class="string">"ImportButton"</span> <span class="attr">Text</span>=<span class="string">"Import"</span> <span class="attr">runat</span>=<span class="string">"server"</span> <span class="attr">OnClick</span>=<span class="string">"ImportButton_Click"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Code-Behind"><a href="#Code-Behind" class="headerlink" title="Code Behind"></a>Code Behind</h3><p>Here <code>_importFromExcelFileService</code> is the injected service.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ImportButton_Click </span><br><span class="line"></span><br><span class="line">if (!Validation())</span><br><span class="line">	return;</span><br><span class="line">	</span><br><span class="line">var savePath = _importFromExcelFileService.SaveFile(FileUploadControl, Server);</span><br></pre></td></tr></table></figure>
+<p>Validation method to separate the concearns using the same <code>_importFromExcelFileService</code> service.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">private bool Validation()</span><br><span class="line">&#123;</span><br><span class="line">	var validationMessage = _importFromExcelFileService.Validate(FileUploadControl);</span><br><span class="line">	if (validationMessage != &quot;&quot;)</span><br><span class="line">	&#123;</span><br><span class="line">		Tools.ShowMessage(message, validationMessage, messageType.red);</span><br><span class="line">		return false;</span><br><span class="line">	&#125;</span><br><span class="line">	return true;</span><br></pre></td></tr></table></figure>
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>Although this did create a dependancys on <code>System.Web.UI.WebControls.FileUpload</code> and <code>System.IO.FileInfo</code> I felt this to be a better design.</p>
+<p>Its possible to mock these with <code>SystemWrapper</code> ~ <a href="https://stackoverflow.com/questions/1582596/how-do-i-moq-the-system-io-fileinfo-class-or-any-other-class-without-an-inter" target="_blank" rel="noopener">https://stackoverflow.com/questions/1582596/how-do-i-moq-the-system-io-fileinfo-class-or-any-other-class-without-an-inter</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public class ImportFromExcelFileService : IImportFromExcelFileService</span><br><span class="line">&#123;</span><br><span class="line">	private readonly string _allowedExtension = &quot;.xlsx&quot;;</span><br><span class="line"></span><br><span class="line">	public string SaveFile(FileUpload fileUploadControl, HttpServerUtility server)</span><br><span class="line">	&#123;</span><br><span class="line">		string filename = Path.GetFileName(fileUploadControl.FileName);</span><br><span class="line">		var path = server.MapPath(&quot;~/WhyIsThisNotBeingReadFromConfig/Tmp&quot;);</span><br><span class="line"></span><br><span class="line">		if (!Directory.Exists(path))</span><br><span class="line">			Directory.CreateDirectory(path);</span><br><span class="line"></span><br><span class="line">		var savePath = Path.Combine(path, Guid.NewGuid() + filename);</span><br><span class="line">		fileUploadControl.SaveAs(savePath);</span><br><span class="line"></span><br><span class="line">		return savePath;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public string Validate(FileUpload fileUploadControl)</span><br><span class="line">	&#123;</span><br><span class="line">		if (!fileUploadControl.HasFile)</span><br><span class="line">			return &quot;Please select a file.&quot;;</span><br><span class="line">		</span><br><span class="line">		// DI -_-</span><br><span class="line">		if (new FileInfo(fileUploadControl.FileName).Extension != _allowedExtension)</span><br><span class="line">			return $&quot;Please supply a file in the format &#123;_allowedExtension&#125;&quot;;</span><br><span class="line"></span><br><span class="line">		return &quot;&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/07/web-forms-load-file/" data-id="ck9rzlctz00c0q0ntn42uo54v" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web-forms/">web forms</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-futaba-10j" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/futaba-10j/" class="article-date">
+  <time datetime="2019-07-06T12:00:00.000Z" itemprop="datePublished">2019-Jul</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/futaba-10j/">Futaba 10j</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Aux-Chan"><a href="#Aux-Chan" class="headerlink" title="Aux-Chan"></a>Aux-Chan</h3><p>To assign a switch to a channel, here I use CH6 / SwC for flaps.</p>
+<p><code>Menu 1</code> – <code>AUX-CHAN</code> – <code>CH6</code> – <code>SwC</code></p>
+<ul>
+<li>Manual page 56</li>
+</ul>
+<h3 id="End-Point"><a href="#End-Point" class="headerlink" title="End Point"></a>End Point</h3><p>To set servo end points if they are mechanically too far for the current TX/RX.</p>
+<p><code>Menu 1</code> – <code>END POINT</code> – <code>6:FLP</code> (on pg2) – <code>&lt;-</code> =72</p>
+<ul>
+<li>Manual page 112</li>
+</ul>
+<h3 id="Dual-Rate-EXPO"><a href="#Dual-Rate-EXPO" class="headerlink" title="Dual Rate / EXPO"></a>Dual Rate / EXPO</h3><p><code>Menu 3</code> – <code>D/R EXPO</code></p>
+<p>These are conservative settings that worked well with my apprentice and H9-40 stick.</p>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Function</th>
+<th>Low</th>
+<th>High</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>D/R</td>
+<td>40%</td>
+<td>70%</td>
+</tr>
+<tr>
+<td>1</td>
+<td>EXP</td>
+<td>-30%</td>
+<td>-40%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>D/R</td>
+<td>45%</td>
+<td>65%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>EXP</td>
+<td>-30%</td>
+<td>-40%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>D/R</td>
+<td>60%</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>EXP</td>
+<td>-40%</td>
+<td>-70%</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Manual page 104</li>
+</ul>
+<h3 id="Mixing-flaps-to-work-with-aileron"><a href="#Mixing-flaps-to-work-with-aileron" class="headerlink" title="Mixing flaps to work with aileron"></a>Mixing flaps to work with aileron</h3><p>My <code>H9-40 sticks</code> flaps travel was the same as the ailerons so this would effectively create larger ailerons.</p>
+<ol>
+<li><p>Set all <code>AUX-CHAN</code> 5to10 to NULL, this released/centered the servos</p>
+</li>
+<li><p>Enable <code>FLAPARONS</code> (Menu 3), this mixed 1 &amp; 7 in opposite directions (Could also be done with mixing)</p>
+</li>
+<li><p>Enable under menu 1 <code>P.MIX 1-6</code> two mixes</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">NOR 1 AIL-&gt;GER</span><br><span class="line">      RATE 100%</span><br><span class="line">	  MASTER AIL</span><br><span class="line">	  SLAVE GER</span><br><span class="line"></span><br><span class="line">NOR 2 AIL-&gt;AUX	  </span><br><span class="line">      RATE 100%</span><br><span class="line">	  MASTER AIL</span><br><span class="line">	  SLAVE AUX (ch8)</span><br></pre></td></tr></table></figure>
+<h3 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h3><table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Timber</th>
+<th>H9-40</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Aileron (Y-reverese-cable)</td>
+<td>Left Aileron</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Elevator</td>
+<td>Elevator</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Throttle</td>
+<td>Throttle</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Rudder</td>
+<td>Rudder</td>
+</tr>
+<tr>
+<td>5</td>
+<td>NULL</td>
+<td>Left Flap (GER)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Flaps (Y-straight-cable) on SwC</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>NULL</td>
+<td>Right Aileron</td>
+</tr>
+<tr>
+<td>8</td>
+<td>NULL</td>
+<td>Right Flap</td>
+</tr>
+<tr>
+<td>9</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>10</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Switches"><a href="#Switches" class="headerlink" title="Switches"></a>Switches</h3><table>
+<thead>
+<tr>
+<th>Switch Letter</th>
+<th>Timber</th>
+<th>H9-40</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Elevator dual rate</td>
+<td>Elevator dual rate</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Rudder dual rate</td>
+<td>Rudder dual rate</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Flaps half/full</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>D</td>
+<td>Aileron dual rates</td>
+<td>Aileron dual rates</td>
+</tr>
+<tr>
+<td>E</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>F</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>G</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>H</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>VR</td>
+<td>NULL</td>
+<td>Ignition On</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/07/futaba-10j/" data-id="ck9rzlcqq003wq0nthsii6ot1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model-airplanes/">model airplanes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-regex" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/regex/" class="article-date">
+  <time datetime="2019-07-03T12:00:00.000Z" itemprop="datePublished">2019-Jul</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/regex/">Regular expressions</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Matching-in-a-query-string-parameter"><a href="#Matching-in-a-query-string-parameter" class="headerlink" title="Matching in a query string parameter"></a>Matching in a query string parameter</h3><p>I feel documentation on any regex is important and they are super hard to read / understand.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// $                                        -&gt; String interpolation</span><br><span class="line">/// @&quot;                                       -&gt; Starts a verbatim string literal.</span><br><span class="line">/// (                                        -&gt; Logical grouping of part of an expression.</span><br><span class="line">/// (\&amp;|\?)                                  -&gt; Start with `&amp;` or `?`</span><br><span class="line">/// ?                                        -&gt; Result of `(\&amp;|\?)` must be 0 or 1</span><br><span class="line">/// \b                                       -&gt; Matches a word boundary</span><br><span class="line">/// &#123;SomeAttribute.Hoe&#125;=1                    -&gt; String interpolation, if `SomeAttribute.Hoe` was `42` then this would add `42=1`</span><br><span class="line">/// \b                                       -&gt; Matches a word boundary</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">private readonly string MyQueryStringParamRegex = $@&quot;((\&amp;|\?)?)\b&#123;SomeAttribute.Hoe&#125;=1\b&quot;;</span><br></pre></td></tr></table></figure>
+<p>You could then use this in code as</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (new Regex(MyQueryStringParamRegex).IsMatch(query))</span><br><span class="line">&#123;</span><br><span class="line">     // do something based on the match</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Matching-email-address"><a href="#Matching-email-address" class="headerlink" title="Matching email address"></a>Matching email address</h3><p>Sweet example from <a href="https://www.computerhope.com/unix/regex-quickref.htm" target="_blank" rel="noopener">computerhope.com</a> to match an Email address.</p>
+<p><img src="/d/regex/regex 1.gif" alt="Email Matching Example"></p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://www.computerhope.com/unix/regex-quickref.htm" target="_blank" rel="noopener">https://www.computerhope.com/unix/regex-quickref.htm</a></li>
+<li><a href="https://www.dotnetperls.com/regex" target="_blank" rel="noopener">https://www.dotnetperls.com/regex</a></li>
+<li><a href="http://regexlib.com/cheatsheet.aspx" target="_blank" rel="noopener">http://regexlib.com/cheatsheet.aspx</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/07/regex/" data-id="ck9rzlcsj008dq0ntd9g5yvlh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-kibana" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/kibana/" class="article-date">
+  <time datetime="2019-06-30T12:00:00.000Z" itemprop="datePublished">2019-Jul</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/kibana/">Kibana</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>Kibana</em> lets you visualize your Elasticsearch data and navigate the Elastic Stack, also see <a href="/2018/04/elk-stack/">ELK Stack</a></p>
+<h3 id="Stand-Alone-Containers"><a href="#Stand-Alone-Containers" class="headerlink" title="Stand Alone Containers"></a>Stand Alone Containers</h3><p><code>V7</code><br><code>docker run -d --name kibana-v7 -p 5607:5601 -e &quot;ELASTICSEARCH_HOSTS={host}:{port}&quot; kibana:7.2.0</code></p>
+<p><code>V5</code><br><code>docker run -d --name kibana-v5 -p 5605:5601 -e &quot;ELASTICSEARCH_URL={host}:{port}&quot; kibana:5</code></p>
+<h3 id="Environment-variables-translation"><a href="#Environment-variables-translation" class="headerlink" title="Environment variables translation"></a>Environment variables translation</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Kibana Version         Kibana Setting              Docker Dev Env</span><br><span class="line">------------------------------------------------------------------------</span><br><span class="line">V7                     elasticsearch.hosts         ELASTICSEARCH_HOSTS</span><br><span class="line">V5.6.4                 elasticsearch.url           ELASTICSEARCH_URL</span><br></pre></td></tr></table></figure>
+<h3 id="Elastic-Ports"><a href="#Elastic-Ports" class="headerlink" title="Elastic Ports"></a>Elastic Ports</h3><p>9200 is for REST<br>9300 for nodes communication</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><p>V7 Current, yeah this will change in 5 minutes :D</p>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/kibana/current/settings.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/kibana/current/settings.html</a></li>
+<li><a href="https://www.elastic.co/guide/en/kibana/current/docker.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/kibana/current/docker.html</a></li>
+</ul>
+<p>V6</p>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/kibana/5.6/settings.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/kibana/5.6/settings.html</a></li>
+<li><a href="https://www.elastic.co/guide/en/kibana/5.2/_configuring_kibana_on_docker.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/kibana/5.2/_configuring_kibana_on_docker.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/07/kibana/" data-id="ck9rzlcre005fq0ntntt4tox4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kibana/">kibana</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/">utilities</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-redis" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/redis/" class="article-date">
+  <time datetime="2019-05-02T03:42:16.000Z" itemprop="datePublished">2019-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/redis/">Redis</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Redis is an open source (BSD licensed), in-memory <strong>data structure store</strong>, used as a database, cache and message broker. You can quickly spin up a container and have a hoon:</p>
+<ol>
+<li>Create a network for the containers to connect to.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create --driver bridge redis-bridge-network</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Bring up the Redis Server</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name red-srv -d -p 6379:6379 --network redis-bridge-network redis:4.0.5-alpine redis-server --appendonly yes</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Bring up <code>redis administrator</code> which is my open source UI for Redis</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name red-admin -d -p 8080:80 --network redis-bridge-network --env REDIS_CONNECTION=red-srv,allowAdmin=true  carlpaton/redis-administrator:latest</span><br></pre></td></tr></table></figure>
+<p>This UI can then be seen at - <a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a></p>
+<ul>
+<li><a href="https://github.com/carlpaton/RedisAdministrator" target="_blank" rel="noopener">https://github.com/carlpaton/RedisAdministrator</a></li>
+<li><a href="https://hub.docker.com/r/carlpaton/redis-administrator" target="_blank" rel="noopener">https://hub.docker.com/r/carlpaton/redis-administrator</a></li>
+</ul>
+<ol start="4">
+<li>Bring up <code>redis commander</code> which is an open source UI for Redis written by <a href="https://github.com/joeferner/redis-commander" target="_blank" rel="noopener">Joe Ferner</a>.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name red-com -d -p 8081:8081 --network redis-bridge-network --env REDIS_HOSTS=red-srv  rediscommander/redis-commander:latest</span><br></pre></td></tr></table></figure>
+<p>This UI can then be seen at - <a href="http://localhost:8081/" target="_blank" rel="noopener">http://localhost:8081/</a></p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://redislabs.com/blog/so-youre-looking-for-the-redis-gui/" target="_blank" rel="noopener">https://redislabs.com/blog/so-youre-looking-for-the-redis-gui/</a></li>
+<li><a href="https://www.npmjs.com/package/redis-commander/" target="_blank" rel="noopener">https://www.npmjs.com/package/redis-commander/</a></li>
+<li>[<a href="https://hub.docker.com/_/redis?tab=description(https://hub.docker.com/_/redis?tab=description)" target="_blank" rel="noopener">https://hub.docker.com/_/redis?tab=description(https://hub.docker.com/_/redis?tab=description)</a></li>
+<li><a href="https://redis.io/topics/rediscli/" target="_blank" rel="noopener">https://redis.io/topics/rediscli/</a></li>
+<li><a href="https://redis.io/topics/introduction" target="_blank" rel="noopener">Introduction to Redis</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/05/redis/" data-id="ck9rzlcsj008fq0ntuh6i2t5k" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="extend next" rel="next" href="/page/11/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/jquery-examples/">jQuery Examples</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/web-api-controller-example/">Web API Controller Example</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-custom-exception/">C# Custom Exception</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/builder-pattern/">Builder Pattern</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-delegates/">C# Delegates</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET-library/" style="font-size: 11.54px;">.NET library</a> <a href="/tags/AWS/" style="font-size: 15.38px;">AWS</a> <a href="/tags/C/" style="font-size: 18.46px;">C#</a> <a href="/tags/CSV/" style="font-size: 10px;">CSV</a> <a href="/tags/DDD/" style="font-size: 10.77px;">DDD</a> <a href="/tags/ELK-stack/" style="font-size: 10px;">ELK stack</a> <a href="/tags/IDE/" style="font-size: 13.08px;">IDE</a> <a href="/tags/MVC/" style="font-size: 14.62px;">MVC</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/agile/" style="font-size: 10.77px;">agile</a> <a href="/tags/angular/" style="font-size: 16.92px;">angular</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/client-side-scripting/" style="font-size: 11.54px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.77px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 10.77px;">creational patterns</a> <a href="/tags/css/" style="font-size: 13.08px;">css</a> <a href="/tags/dependency-injection/" style="font-size: 13.85px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.69px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.54px;">docker compose</a> <a href="/tags/food/" style="font-size: 10px;">food</a> <a href="/tags/git/" style="font-size: 12.31px;">git</a> <a href="/tags/hexo/" style="font-size: 10.77px;">hexo</a> <a href="/tags/jquery/" style="font-size: 10.77px;">jquery</a> <a href="/tags/json/" style="font-size: 11.54px;">json</a> <a href="/tags/kibana/" style="font-size: 10.77px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.85px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 10.77px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.54px;">linux</a> <a href="/tags/logging/" style="font-size: 11.54px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 19.23px;">model airplanes</a> <a href="/tags/mysql/" style="font-size: 10.77px;">mysql</a> <a href="/tags/net-core/" style="font-size: 13.08px;">net core</a> <a href="/tags/nuget/" style="font-size: 11.54px;">nuget</a> <a href="/tags/patterns-principles/" style="font-size: 18.46px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.77px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/random/" style="font-size: 10px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 11.54px;">raspberry-pi</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/software-testing/" style="font-size: 16.15px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/static-code-analysis/" style="font-size: 10.77px;">static code analysis</a> <a href="/tags/utilities/" style="font-size: 20px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.77px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.31px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

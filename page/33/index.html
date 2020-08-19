@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Carl Paton</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There are no silly questions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carl Paton">
+<meta property="og:url" content="https://carlpaton.github.io/page/33/index.html">
+<meta property="og:site_name" content="Carl Paton">
+<meta property="og:description" content="There are no silly questions">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Carl Paton">
+<meta name="twitter:description" content="There are no silly questions">
+  
+    <link rel="alternate" href="/atom.xml" title="Carl Paton" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags/C/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/MVC/" class="mobile-nav-link">MVC</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/archives/">Archives</a>
+        
+        <a class="main-nav-link" href="/tags/C/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/MVC/">MVC</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-putty" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/putty/" class="article-date">
+  <time datetime="2018-04-12T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/putty/">Putty</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><strong>” PuTTY</strong> (/ˈpʌti/) is a free and open-source terminal emulator, serial console and network file transfer application. It supports several network protocols, including SCP, <strong>SSH</strong>, Telnet, rlogin, and raw socket connection. It can also connect to a serial port. “</p>
+</blockquote>
+<ul>
+<li><a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" target="_blank" rel="noopener">https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html</a></li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7YNd1tFJfwc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h3 id="Copy-Files"><a href="#Copy-Files" class="headerlink" title="Copy Files"></a>Copy Files</h3><p>You can copy files to/from the Linux host with batch scripts:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set PATH=C:\Program Files\PuTTY</span><br><span class="line"></span><br><span class="line">pscp C:\Dev\obfuscation\publish.zip carl@192.168.31.129:/home/carl/obfuscation/publish.zip</span><br><span class="line"></span><br><span class="line">echo &quot;DONE&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://community.nxp.com/thread/220596" target="_blank" rel="noopener">https://community.nxp.com/thread/220596</a></li>
+</ul>
+<h2 id="Tunneling"><a href="#Tunneling" class="headerlink" title="Tunneling"></a>Tunneling</h2><p>If ports on you network are closed off you can use putty to tunnel to the box and hit the intended port, example if your container is running on port 7000:</p>
+<ol>
+<li>open putty, select the entry for your session and click load</li>
+<li>then on the left go to tunnels</li>
+<li>in the bottom half…<ol>
+<li>enter a source port 7000</li>
+</ol>
+</li>
+<li>in destination enter 127.0.0.1:7000<ol>
+<li>click add</li>
+</ol>
+</li>
+<li>You should see it listed in forwarded ports</li>
+<li>go back to sessions (right at the top in the left section)<ol>
+<li>click save</li>
+<li>now when you connected, go to <a href="http://localhost:7000" target="_blank" rel="noopener">http://localhost:7000</a> in your browser</li>
+</ol>
+</li>
+</ol>
+<h3 id="Check-SSH-Server-Running-Is-Running"><a href="#Check-SSH-Server-Running-Is-Running" class="headerlink" title="Check SSH Server Running Is Running"></a>Check SSH Server Running Is Running</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep openssh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>openssh is the server</li>
+<li><a href="https://ubuntuforums.org/showthread.php?t=979955" target="_blank" rel="noopener">https://ubuntuforums.org/showthread.php?t=979955</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/putty/" data-id="ck9rzlcsd007yq0nt42a9dqdq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/">utilities</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-electric-motors" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/electric-motors/" class="article-date">
+  <time datetime="2018-04-11T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/electric-motors/">Electric Motors</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>The numbers on brushless electric motors vary so much between manufacturers that they are pretty meaningless. The only real way to compare motors is on:</p>
+<ul>
+<li>Stator dimensions (should be specified as diameter, length or height)</li>
+<li>When comparing motors of the same or almost the same Kv, look at the Rm (resistance). That determines how much heat will be generated. Copper loss = Rm x amps².<ul>
+<li>I² x Rm = copper loss (Watts)</li>
+<li>Iron loss = Io x volts (Watts) ~ Io is no-load current.</li>
+</ul>
+</li>
+</ul>
+<p>It doesn’t matter if one motor is fat and short and the other longer and thinner. If the Kv is the same, the torque per amp will be the same.</p>
+<p><img src="/d/electric-motors/electric 1.jpg" alt="Brushless electric"></p>
+<h3 id="Software-Utilities"><a href="#Software-Utilities" class="headerlink" title="Software Utilities"></a>Software Utilities</h3><ul>
+<li><a href="https://www.ecalc.ch/" target="_blank" rel="noopener">https://www.ecalc.ch/</a></li>
+<li><a href="https://www.scorpionsystem.com/support/downloads/" target="_blank" rel="noopener">https://www.scorpionsystem.com/support/downloads/</a></li>
+</ul>
+<p>Below are the motors I’ve used/researched and information about their possible uses:</p>
+<h3 id="Turnigy-NTM-Prop-Drive-3536-1400KV"><a href="#Turnigy-NTM-Prop-Drive-3536-1400KV" class="headerlink" title="Turnigy NTM Prop Drive 3536 1400KV"></a>Turnigy NTM Prop Drive 3536 1400KV</h3><p><a href="https://www.youtube.com/watch?v=2fv41XSx4YM&amp;t=4s" target="_blank" rel="noopener">Experimental Airlines</a> refer to this motor as ‘the powerhouse’</p>
+<p><img src="/d/electric-motors/electric 2.jpg" alt="Prop Drive 3536 1400KV"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/electric-motors/" data-id="ck9rzlcqm003nq0ntz0pxuctw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model-airplanes/">model airplanes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-batteries-and-chargers" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/batteries-and-chargers/" class="article-date">
+  <time datetime="2018-04-10T12:00:00.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/batteries-and-chargers/">Batteries and Chargers</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Lithium-Polymer"><a href="#Lithium-Polymer" class="headerlink" title="Lithium Polymer"></a>Lithium Polymer</h3><p><em>Aka Lipo</em></p>
+<ul>
+<li>Typically a full charge is 4.2v per cell</li>
+<li>Avoid discharge below 3.4v per cell</li>
+<li>Storage voltage is 3.70v to 3.85v per cell</li>
+<li>Store at room temperature</li>
+</ul>
+<p>Storing in a fridge does slow the chemical reaction taking place which can prolong lifespan, however taking a battery out from a cold fridge can cause condensation to occur on the inside of the battery. This can make it short.</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="http://thedronegirl.com/2015/02/07/lipo-battery/" target="_blank" rel="noopener">http://thedronegirl.com/2015/02/07/lipo-battery/</a></li>
+<li><a href="https://www.rcgroups.com/forums/showthread.php?1436092-Lipo-storage-voltage" target="_blank" rel="noopener">https://www.rcgroups.com/forums/showthread.php?1436092-Lipo-storage-voltage</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/batteries-and-chargers/" data-id="ck9rzlcpn0014q0ntq7csmf0m" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model-airplanes/">model airplanes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-model-tools-and-spares" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/model-tools-and-spares/" class="article-date">
+  <time datetime="2018-04-10T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/model-tools-and-spares/">Model tools and spares</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I can never remember the names of a lot of these things and I don’t like bothering domain experts with the same question just because I was too lazy to make my own notes.</p>
+<h3 id="Blind-Nut-Nutsert"><a href="#Blind-Nut-Nutsert" class="headerlink" title="Blind Nut / Nutsert"></a>Blind Nut / Nutsert</h3><p>This gives your cap-screw or bolt a solid thread to screw into – useful for mounting motors and to attach a wing to the fuselage with nylon wing bolts.</p>
+<p><img src="/d/model-tools-and-spares/blind nut.png" alt="Blind Nut / Nutsert"></p>
+<h3 id="Razor-Saw"><a href="#Razor-Saw" class="headerlink" title="Razor Saw"></a>Razor Saw</h3><p>This saw has many teeth and gives a nice fine cut, helpful when cutting notches into ribs for spars / stringers. Ive also seen it called a mitre saw (I think its because it can be used with a mitrebox to hold the material you are cutting)</p>
+<p>54 or 42 Teeth Per Inch (TPI) will give a nice clean cut.</p>
+<p><img src="/d/model-tools-and-spares/razor saw.jpg" alt="Razor Saw"></p>
+<h3 id="Nylon-Steel-Landing-Gear-Staps"><a href="#Nylon-Steel-Landing-Gear-Staps" class="headerlink" title="Nylon/Steel Landing Gear Staps"></a>Nylon/Steel Landing Gear Staps</h3><p><img src="/d/model-tools-and-spares/wire landing 1.jpg" alt="Landing Gear Staps"></p>
+<p><img src="/d/model-tools-and-spares/wire landing 2.jpg" alt="Landing Gear Staps"></p>
+<h3 id="Wire-landing-Gear-Small-push-rods"><a href="#Wire-landing-Gear-Small-push-rods" class="headerlink" title="Wire landing Gear / Small push rods"></a>Wire landing Gear / Small push rods</h3><p>This is called Piano wire / music wire also known as <a href="https://en.wikipedia.org/wiki/Spring_steel" target="_blank" rel="noopener">spring steel</a></p>
+<p>Small models (25 size and under) would use 1mm (0.39 inch) as pushrods and 2mm for landing gear</p>
+<p>40 to 60 size you can use 5 or 6 mm for landing gear.</p>
+<p><img src="/d/model-tools-and-spares/pianno wire.jpg" alt="Pianno Wire"></p>
+<h3 id="Drill-amp-Tap"><a href="#Drill-amp-Tap" class="headerlink" title="Drill &amp; Tap"></a>Drill &amp; Tap</h3><p><strong>10</strong>–<strong>32</strong> threads are historically the original rack screw type. The term <strong>10</strong>–<strong>32</strong> comes from Unified and American Screw Threads for Bolts, Nuts, and Machine Screws standards published by ANSI B1.1-1974. The number “<strong>10</strong>” is simply a size designator with no numerical <strong>meaning</strong>. The number “<strong>32</strong>” refers to <strong>32</strong> threads per inch.</p>
+<p>Steel tap and drill bit for preparing holes to accept bolts</p>
+<p><img src="/d/model-tools-and-spares/tap.jpg" alt="Drill &amp; Tap"></p>
+<h4 id="Reamer"><a href="#Reamer" class="headerlink" title="Reamer"></a>Reamer</h4><p>I’ve used these to ream a new prop hole bigger to suite an engine.</p>
+<p><img src="/d/model-tools-and-spares/reamer 1.jpg" alt="Great Planes Precision Prop Reamer – (5/16″ &amp; 3/8″)"></p>
+<p><img src="/d/model-tools-and-spares/reamer 2.jpg" alt="General purpose reamer, also used with rc car bodys"></p>
+<h3 id="Pin-Vice"><a href="#Pin-Vice" class="headerlink" title="Pin Vice"></a>Pin Vice</h3><p>I have used these to manually (by hand) drill holes in models.</p>
+<p><img src="/d/model-tools-and-spares/pin vice.jpg" alt="Pin vice"></p>
+<h4 id="Laser-Cutting"><a href="#Laser-Cutting" class="headerlink" title="Laser Cutting"></a>Laser Cutting</h4><p>Max Cutting Area 1200x900mm, materials would be 3,4mm ply and balsa</p>
+<h4 id="Wood-Glue"><a href="#Wood-Glue" class="headerlink" title="Wood Glue"></a>Wood Glue</h4><p>This is the recommended glue for all models.</p>
+<p><img src="/d/model-tools-and-spares/wood glue.jpg" alt="Wood Glue"></p>
+<h4 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h4><ul>
+<li><a href="https://www.firebrandaerorc.co.nz/ignition-glow-system-items" target="_blank" rel="noopener">Sullivan On-board Glow Driver</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/model-tools-and-spares/" data-id="ck9rzlcrp006bq0nt4d0dhnce" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model-airplanes/">model airplanes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-git-commands" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/git-commands/" class="article-date">
+  <time datetime="2018-04-09T12:00:00.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/git-commands/">GIT Commands</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Clone a branch</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/carlpaton/RedisAdministrator.git</span><br></pre></td></tr></table></figure>
+<p><strong>Display the current local branches and the head you are on</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
+<p><strong>Checkout</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git checkout cool-branch-name          ~ Switch to another branch</span><br><span class="line">git checkout -- *                      ~ Clear tracked modified files not committed</span><br><span class="line">git checkout [revision]                ~ Fall back to revision </span><br><span class="line">                                         (run &apos;git log&apos; to see commits)</span><br></pre></td></tr></table></figure>
+<p><strong>Remote repository</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git pull                               ~ Get anything new from remote server</span><br><span class="line">git push                               ~ Push staged and committed to remote</span><br></pre></td></tr></table></figure>
+<p><strong>Clean</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clean -d --dry-run                 ~ Purge untracked files/dirs</span><br><span class="line">git clean -d -f                        ~ -f is required if clean.requireForce is not </span><br><span class="line">                                         set to false</span><br></pre></td></tr></table></figure>
+<p><strong>Show local changes</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+<p><strong>Add anything new</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+<p><strong>Commit locally, view diff</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git diff</span><br><span class="line">git commit -m &quot;commit message&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>Delete branch</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -d origin [BRANCH NAME]</span><br></pre></td></tr></table></figure>
+<p><strong>Update to self signed certificate</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.sslCAinfo &quot;c:/data/certs/certname.crt&quot;</span><br><span class="line"></span><br><span class="line">--back to default if the above plows</span><br><span class="line">git config --global http.sslCAInfo &quot;C:\Program Files\Git\etc\pki\ca-trust\extracted\openssl\ca-bundle.trust.crt&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://www.freecodecamp.org/news/10-important-git-commands-that-every-developer-should-know/" target="_blank" rel="noopener">https://www.freecodecamp.org/news/10-important-git-commands-that-every-developer-should-know/</a></li>
+<li><a href="https://git-scm.com/docs/git-clean" target="_blank" rel="noopener">https://git-scm.com/docs/git-clean</a></li>
+<li><a href="https://education.github.com/git-cheat-sheet-education.pdf" target="_blank" rel="noopener">https://education.github.com/git-cheat-sheet-education.pdf</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/git-commands/" data-id="ck9rzlcqt0044q0ntrcm448jc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/32/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="page-number" href="/page/32/">32</a><span class="page-number current">33</span><a class="page-number" href="/page/34/">34</a><a class="page-number" href="/page/35/">35</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="extend next" rel="next" href="/page/34/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/jquery-examples/">jQuery Examples</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/web-api-controller-example/">Web API Controller Example</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-custom-exception/">C# Custom Exception</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/builder-pattern/">Builder Pattern</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-delegates/">C# Delegates</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET-library/" style="font-size: 11.54px;">.NET library</a> <a href="/tags/AWS/" style="font-size: 15.38px;">AWS</a> <a href="/tags/C/" style="font-size: 18.46px;">C#</a> <a href="/tags/CSV/" style="font-size: 10px;">CSV</a> <a href="/tags/DDD/" style="font-size: 10.77px;">DDD</a> <a href="/tags/ELK-stack/" style="font-size: 10px;">ELK stack</a> <a href="/tags/IDE/" style="font-size: 13.08px;">IDE</a> <a href="/tags/MVC/" style="font-size: 14.62px;">MVC</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/agile/" style="font-size: 10.77px;">agile</a> <a href="/tags/angular/" style="font-size: 16.92px;">angular</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/client-side-scripting/" style="font-size: 11.54px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.77px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 10.77px;">creational patterns</a> <a href="/tags/css/" style="font-size: 13.08px;">css</a> <a href="/tags/dependency-injection/" style="font-size: 13.85px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.69px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.54px;">docker compose</a> <a href="/tags/food/" style="font-size: 10px;">food</a> <a href="/tags/git/" style="font-size: 12.31px;">git</a> <a href="/tags/hexo/" style="font-size: 10.77px;">hexo</a> <a href="/tags/jquery/" style="font-size: 10.77px;">jquery</a> <a href="/tags/json/" style="font-size: 11.54px;">json</a> <a href="/tags/kibana/" style="font-size: 10.77px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.85px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 10.77px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.54px;">linux</a> <a href="/tags/logging/" style="font-size: 11.54px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 19.23px;">model airplanes</a> <a href="/tags/mysql/" style="font-size: 10.77px;">mysql</a> <a href="/tags/net-core/" style="font-size: 13.08px;">net core</a> <a href="/tags/nuget/" style="font-size: 11.54px;">nuget</a> <a href="/tags/patterns-principles/" style="font-size: 18.46px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.77px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/random/" style="font-size: 10px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 11.54px;">raspberry-pi</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/software-testing/" style="font-size: 16.15px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/static-code-analysis/" style="font-size: 10.77px;">static code analysis</a> <a href="/tags/utilities/" style="font-size: 20px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.77px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.31px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

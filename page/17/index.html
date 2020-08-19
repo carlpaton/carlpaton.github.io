@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Carl Paton</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There are no silly questions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carl Paton">
+<meta property="og:url" content="https://carlpaton.github.io/page/17/index.html">
+<meta property="og:site_name" content="Carl Paton">
+<meta property="og:description" content="There are no silly questions">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Carl Paton">
+<meta name="twitter:description" content="There are no silly questions">
+  
+    <link rel="alternate" href="/atom.xml" title="Carl Paton" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags/C/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/MVC/" class="mobile-nav-link">MVC</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/archives/">Archives</a>
+        
+        <a class="main-nav-link" href="/tags/C/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/MVC/">MVC</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-autofac" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/autofac/" class="article-date">
+  <time datetime="2018-09-24T12:00:00.000Z" itemprop="datePublished">2018-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/autofac/">Autofac</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Autofac-Webforms-Example"><a href="#Autofac-Webforms-Example" class="headerlink" title="Autofac (Webforms Example)"></a>Autofac (Webforms Example)</h3><p>Uses an IOC (Inversion of control) container. This was useful in a legacy Web Forms application (Autofac, Version=4.8.1.0) however it would have worked just as well in the MVC application I used Unity in.</p>
+<p>install <code>Autofac</code> 4.9.1 and <code>Autofac.Web</code> 4.0.0</p>
+<p>Update web.config to include this below <code>system.webServer</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;modules&gt;</span><br><span class="line">  &lt;add</span><br><span class="line">    name=&quot;ContainerDisposal&quot;</span><br><span class="line">    type=&quot;Autofac.Integration.Web.ContainerDisposalModule, Autofac.Integration.Web&quot;</span><br><span class="line">    preCondition=&quot;managedHandler&quot;/&gt;</span><br><span class="line">  &lt;add</span><br><span class="line">    name=&quot;PropertyInjection&quot;</span><br><span class="line">    type=&quot;Autofac.Integration.Web.Forms.PropertyInjectionModule, Autofac.Integration.Web&quot;</span><br><span class="line">    preCondition=&quot;managedHandler&quot;/&gt;</span><br><span class="line">&lt;/modules&gt;</span><br></pre></td></tr></table></figure>
+<p>Add <code>Global.asax</code> if it doesn’t already exist, implement <code>IContainerProviderAccessor</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class Global : System.Web.HttpApplication, IContainerProviderAccessor</span><br></pre></td></tr></table></figure>
+<p>Add some crap</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// Provider that holds the application container.</span><br><span class="line">static IContainerProvider _containerProvider;</span><br><span class="line"></span><br><span class="line">// Instance property that will be used by Autofac HttpModules</span><br><span class="line">// to resolve and inject dependencies.</span><br><span class="line">public IContainerProvider ContainerProvider</span><br><span class="line">&#123;</span><br><span class="line">	get &#123; return _containerProvider; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">protected void Application_Start(object sender, EventArgs e)</span><br><span class="line">&#123;</span><br><span class="line">	// Build up your application container and register your dependencies.</span><br><span class="line">	var builder = new ContainerBuilder();</span><br><span class="line">	var connectionString = Tools.GetConnectionString(&quot;conn&quot;);</span><br><span class="line"></span><br><span class="line">	// Your DI :D</span><br><span class="line">	builder.Register(c =&gt; new MaterialRepository(connectionString))</span><br><span class="line">		   .As&lt;IMaterialRepository&gt;();</span><br><span class="line"></span><br><span class="line">	// Once you&apos;re done registering things, set the container</span><br><span class="line">	// provider up with your registrations.</span><br><span class="line">	_containerProvider = new ContainerProvider(builder.Build());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In your page code behind</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">namespace MyNameSpace</span><br><span class="line">&#123;</span><br><span class="line">    public partial class SomePage : System.Web.UI.Page</span><br><span class="line">    &#123;</span><br><span class="line">        public ISomeRepository _someRepository &#123; get; set; &#125;</span><br></pre></td></tr></table></figure>
+<p>Boom, pay the WEB FORMS man :D</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://autofac.org/" target="_blank" rel="noopener">https://autofac.org/</a></li>
+<li><a href="https://autofaccn.readthedocs.io/en/latest/integration/webforms.html" target="_blank" rel="noopener">https://autofaccn.readthedocs.io/en/latest/integration/webforms.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/09/autofac/" data-id="ck9rzlcpe000kq0ntn3z9tpeh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dependency-injection/">dependency injection</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ninject" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/ninject/" class="article-date">
+  <time datetime="2018-09-24T12:00:00.000Z" itemprop="datePublished">2018-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/ninject/">Ninject</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Nuget packages: Ninject, Version 3.2.2</p>
+<p>An obsessive focus on <em>simplicity</em> and <em>ease of use</em>. An example from their site:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class Samurai &#123;</span><br><span class="line">    public IWeapon Weapon &#123; get; private set; &#125;</span><br><span class="line">    public Samurai(IWeapon weapon) </span><br><span class="line">    &#123;</span><br><span class="line">        this.Weapon = weapon;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Then in the module</span><br><span class="line">// I would put this `WarriorModule` in `Business/Plumbing/Ninject` </span><br><span class="line">public class WarriorModule : NinjectModule</span><br><span class="line">&#123;</span><br><span class="line">    public override void Load() </span><br><span class="line">    &#123;</span><br><span class="line">        this.Bind&lt;IWeapon&gt;().To&lt;Sword&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This binding also allows you to bind an exact instance of something <code>WhenInjectedExactlyInto</code> so if you have a set of rules and your class needs a specific rule, you can inject it:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Bind&lt;IRules&gt;().To&lt;SomeRule&gt;().WhenInjectedExactlyInto&lt;ConsumerClass&gt;();</span><br></pre></td></tr></table></figure>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="http://www.ninject.org/" target="_blank" rel="noopener">http://www.ninject.org/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/09/ninject/" data-id="ck9rzlcs40079q0nt76lunxw9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dependency-injection/">dependency injection</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-unity" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/unity/" class="article-date">
+  <time datetime="2018-09-24T12:00:00.000Z" itemprop="datePublished">2018-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/unity/">Unity</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Unity-MVC-Example"><a href="#Unity-MVC-Example" class="headerlink" title="Unity (MVC Example)"></a>Unity (MVC Example)</h3><p><em>“The Unity Container (Unity) is a lightweight, extensible dependency injection container. It facilitates building loosely coupled applications”</em></p>
+<p>This was very simple to setup for an ASP.NET MVC project (net461) using the nuget packages:</p>
+<ul>
+<li>Unity.Container, Version=5.7.0</li>
+<li>Unity.Abstractions, Version=3.3.0</li>
+<li>Unity.Mvc, Version=5.0.13</li>
+</ul>
+<p>Implementation is as simple as this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">~ /App_Start/UnityConfig.cs</span><br><span class="line">public static void RegisterComponents()</span><br><span class="line">&#123;</span><br><span class="line">     var container = new UnityContainer();</span><br><span class="line">     container.RegisterType&lt;IClientRepository, ClientRepository&gt;();</span><br><span class="line">     DependencyResolver.SetResolver(new UnityDependencyResolver(container));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">~/Global.asax.cs</span><br><span class="line">UnityConfig.RegisterComponents();</span><br><span class="line"></span><br><span class="line">~/Controllers/KiefController.cs</span><br><span class="line">Constructor signature can then include `IClientRepository clientRepository`</span><br></pre></td></tr></table></figure>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://www.codeproject.com/Articles/988257/Dependency-Injection-using-Unity-container" target="_blank" rel="noopener">https://www.codeproject.com/Articles/988257/Dependency-Injection-using-Unity-container</a></li>
+<li><a href="https://msdn.microsoft.com/en-us/library/dn223671(v=pandp.30).aspx" target="_blank" rel="noopener">https://msdn.microsoft.com/en-us/library/dn223671(v=pandp.30).aspx</a></li>
+<li><a href="https://github.com/unitycontainer/unity" target="_blank" rel="noopener">https://github.com/unitycontainer/unity</a></li>
+<li><a href="https://github.com/unitycontainer/aspnet-mvc" target="_blank" rel="noopener">https://github.com/unitycontainer/aspnet-mvc</a></li>
+<li><a href="https://www.c-sharpcorner.com/article/dependency-injection-in-asp-net-mvc-5/" target="_blank" rel="noopener">https://www.c-sharpcorner.com/article/dependency-injection-in-asp-net-mvc-5/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/09/unity/" data-id="ck9rzlctq00bbq0ntvd54rya9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dependency-injection/">dependency injection</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-how-to-dual-boot-windows-10-and-ubuntu" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/how-to-dual-boot-windows-10-and-ubuntu/" class="article-date">
+  <time datetime="2018-09-01T12:00:00.000Z" itemprop="datePublished">2018-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/how-to-dual-boot-windows-10-and-ubuntu/">Dual-Boot Windows 10 &amp; Ubuntu 18.04 - 16.04</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>The steps are summarized as follows:</p>
+<ol>
+<li>Install windows 10 first<ol>
+<li>Use the maximum disk space for the volume as NTFS</li>
+<li><a href="https://www.microsoft.com/en-us/download/windows-usb-dvd-download-tool" target="_blank" rel="noopener">Windows USB/DVD Tool</a></li>
+</ol>
+</li>
+<li>Install Ubuntu second<ol>
+<li>At the disk/volume option choose ‘alongside’ windows 10</li>
+<li>Create a new ‘ext4’ partition using the wizard.</li>
+<li><a href="https://unetbootin.github.io/" target="_blank" rel="noopener">UNetbootin</a></li>
+</ol>
+</li>
+</ol>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://builtvisible.com/the-ubuntu-installation-guide/" target="_blank" rel="noopener">https://builtvisible.com/the-ubuntu-installation-guide/</a></li>
+<li><a href="https://www.youtube.com/watch?v=qNeJvujdB-0" target="_blank" rel="noopener">https://www.youtube.com/watch?v=qNeJvujdB-0</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/09/how-to-dual-boot-windows-10-and-ubuntu/" data-id="ck9rzlcr0004jq0ntmmv96emr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-json-utilities" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/json-utilities/" class="article-date">
+  <time datetime="2018-08-28T12:00:00.000Z" itemprop="datePublished">2018-Aug</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/json-utilities/">JSON Utilities</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Generate-C-classes-from-JSON"><a href="#Generate-C-classes-from-JSON" class="headerlink" title="Generate C# classes from JSON"></a>Generate C# classes from JSON</h3><ul>
+<li><a href="http://json2csharp.com/" target="_blank" rel="noopener">http://json2csharp.com</a></li>
+</ul>
+<h3 id="Validator"><a href="#Validator" class="headerlink" title="Validator"></a>Validator</h3><ul>
+<li><a href="https://jsonlint.com/" target="_blank" rel="noopener">https://jsonlint.com</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/08/json-utilities/" data-id="ck9rzlcre005hq0ntls5pkolm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/json/">json</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/">utilities</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/16/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="extend next" rel="next" href="/page/18/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/jquery-examples/">jQuery Examples</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/web-api-controller-example/">Web API Controller Example</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-custom-exception/">C# Custom Exception</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/builder-pattern/">Builder Pattern</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-delegates/">C# Delegates</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET-library/" style="font-size: 11.54px;">.NET library</a> <a href="/tags/AWS/" style="font-size: 15.38px;">AWS</a> <a href="/tags/C/" style="font-size: 18.46px;">C#</a> <a href="/tags/CSV/" style="font-size: 10px;">CSV</a> <a href="/tags/DDD/" style="font-size: 10.77px;">DDD</a> <a href="/tags/ELK-stack/" style="font-size: 10px;">ELK stack</a> <a href="/tags/IDE/" style="font-size: 13.08px;">IDE</a> <a href="/tags/MVC/" style="font-size: 14.62px;">MVC</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/agile/" style="font-size: 10.77px;">agile</a> <a href="/tags/angular/" style="font-size: 16.92px;">angular</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/client-side-scripting/" style="font-size: 11.54px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.77px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 10.77px;">creational patterns</a> <a href="/tags/css/" style="font-size: 13.08px;">css</a> <a href="/tags/dependency-injection/" style="font-size: 13.85px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.69px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.54px;">docker compose</a> <a href="/tags/food/" style="font-size: 10px;">food</a> <a href="/tags/git/" style="font-size: 12.31px;">git</a> <a href="/tags/hexo/" style="font-size: 10.77px;">hexo</a> <a href="/tags/jquery/" style="font-size: 10.77px;">jquery</a> <a href="/tags/json/" style="font-size: 11.54px;">json</a> <a href="/tags/kibana/" style="font-size: 10.77px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.85px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 10.77px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.54px;">linux</a> <a href="/tags/logging/" style="font-size: 11.54px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 19.23px;">model airplanes</a> <a href="/tags/mysql/" style="font-size: 10.77px;">mysql</a> <a href="/tags/net-core/" style="font-size: 13.08px;">net core</a> <a href="/tags/nuget/" style="font-size: 11.54px;">nuget</a> <a href="/tags/patterns-principles/" style="font-size: 18.46px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.77px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/random/" style="font-size: 10px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 11.54px;">raspberry-pi</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/software-testing/" style="font-size: 16.15px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/static-code-analysis/" style="font-size: 10.77px;">static code analysis</a> <a href="/tags/utilities/" style="font-size: 20px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.77px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.31px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

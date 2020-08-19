@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Carl Paton</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There are no silly questions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carl Paton">
+<meta property="og:url" content="https://carlpaton.github.io/page/26/index.html">
+<meta property="og:site_name" content="Carl Paton">
+<meta property="og:description" content="There are no silly questions">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Carl Paton">
+<meta name="twitter:description" content="There are no silly questions">
+  
+    <link rel="alternate" href="/atom.xml" title="Carl Paton" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags/C/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/MVC/" class="mobile-nav-link">MVC</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+    <a href="/tags/utilities/" class="mobile-nav-link">Utilities</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/archives/">Archives</a>
+        
+        <a class="main-nav-link" href="/tags/C/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/MVC/">MVC</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+        <a class="main-nav-link" href="/tags/utilities/">Utilities</a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-mvc-custom-data-annotations" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/mvc-custom-data-annotations/" class="article-date">
+  <time datetime="2018-05-06T00:08:24.000Z" itemprop="datePublished">2018-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/mvc-custom-data-annotations/">MVC Custom Data Annotations</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Custom-Annotation"><a href="#Custom-Annotation" class="headerlink" title="Custom Annotation"></a>Custom Annotation</h3><p>/CustomValidation/ValidateAgeAttribute.cs</p>
+<p>This can be used to apply a custom range validation to the given date time value.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using System.ComponentModel.DataAnnotations;</span><br><span class="line">using System.Web.Mvc;</span><br><span class="line"></span><br><span class="line">namespace PROJECTNAMESPACE.CustomValidation</span><br><span class="line">&#123;</span><br><span class="line"> [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]</span><br><span class="line"> public class ValidateAgeAttribute : ValidationAttribute, IClientValidatable</span><br><span class="line"> &#123;</span><br><span class="line"> private const string DefaultErrorMessage = &quot;Your age is invalid, your &#123;0&#125; should fall between &#123;1&#125; and &#123;2&#125;&quot;;</span><br><span class="line"></span><br><span class="line">public DateTime MinimumDateProperty &#123; get; private set; &#125;</span><br><span class="line"> public DateTime MaximumDateProperty &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">public ValidateAgeAttribute(</span><br><span class="line"> int minimumAgeProperty,</span><br><span class="line"> int maximumAgeProperty)</span><br><span class="line"> : base(DefaultErrorMessage)</span><br><span class="line"> &#123;</span><br><span class="line"> MaximumDateProperty = DateTime.Now.AddYears(minimumAgeProperty * -1);</span><br><span class="line"> MinimumDateProperty = DateTime.Now.AddYears(maximumAgeProperty * -1);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">protected override ValidationResult IsValid(object value, ValidationContext validationContext)</span><br><span class="line"> &#123;</span><br><span class="line"> if (value != null)</span><br><span class="line"> &#123;</span><br><span class="line"> DateTime parsedValue = (DateTime)value;</span><br><span class="line"></span><br><span class="line">if (parsedValue &lt;= MinimumDateProperty || parsedValue &gt;= MaximumDateProperty)</span><br><span class="line"> &#123;</span><br><span class="line"> return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> return ValidationResult.Success;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"> public IEnumerable&lt;ModelClientValidationRule&gt; GetClientValidationRules(ModelMetadata metadata, ControllerContext context)</span><br><span class="line"> &#123;</span><br><span class="line"> var rule = new ModelClientValidationRule()</span><br><span class="line"> &#123;</span><br><span class="line"> ValidationType = &quot;validateage&quot;,</span><br><span class="line"> ErrorMessage = FormatErrorMessage(metadata.GetDisplayName()),</span><br><span class="line"> &#125;;</span><br><span class="line"></span><br><span class="line">rule.ValidationParameters.Add(&quot;minumumdate&quot;, MinimumDateProperty.ToShortDateString());</span><br><span class="line"> rule.ValidationParameters.Add(&quot;maximumdate&quot;, MaximumDateProperty.ToShortDateString());</span><br><span class="line"></span><br><span class="line">yield return rule;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public override string FormatErrorMessage(string name)</span><br><span class="line"> &#123;</span><br><span class="line"> return string.Format(ErrorMessageString, name, MinimumDateProperty.ToShortDateString(), MaximumDateProperty.ToShortDateString());</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Applied-to-Model"><a href="#Applied-to-Model" class="headerlink" title="Applied to Model"></a>Applied to Model</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Required]</span><br><span class="line">[Display(Name = &quot;Effective From&quot;)]</span><br><span class="line">[DisplayFormat(DataFormatString = &quot;&#123;0:dd/MM/yyyy&#125;&quot;, ApplyFormatInEditMode = true)]</span><br><span class="line">[ValidateAge(15, 65)]</span><br><span class="line">public DateTime DateOfBirth &#123; get; set; &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="http://www.macaalay.com/2014/02/24/unobtrusive-client-and-server-side-age-validation-in-mvc-using-custom-data-annotations/" target="_blank" rel="noopener">Unobtrusive Client and Server Side Age Validation in MVC using Custom Data Annotations (http://www.macaalay.com)</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/05/mvc-custom-data-annotations/" data-id="ck9rzlcrt006lq0nttmrjaa62" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVC/">MVC</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-modifying-posted-variable-value-in-controller-action" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/modifying-posted-variable-value-in-controller-action/" class="article-date">
+  <time datetime="2018-05-05T00:08:24.000Z" itemprop="datePublished">2018-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/modifying-posted-variable-value-in-controller-action/">Modifying Posted Variable Value In Controller Action</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Generally this is not something I would do as the data the user captures is what they intend to persist or send. I have however seen use cases where the controller has a bool field that determines if an UPDATE or INSERT is required.</p>
+<h3 id="Scenario"><a href="#Scenario" class="headerlink" title="Scenario"></a>Scenario</h3><ol>
+<li>A user partially fills out a form that persists the data to more than one table, each table schema is defined by a property class on the view model</li>
+<li>The user clicks save, the data is then persisted to the database (INSERT required)</li>
+<li>The user then fills out more of the form and then clicks save again (UPDATE required)</li>
+</ol>
+<p>The class could look something like this</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class ClientScheduleViewModel</span><br><span class="line">&#123;</span><br><span class="line">   [Required(ErrorMessage = &quot;Client required.&quot;)]</span><br><span class="line">    public string ClientId &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">    public UserInformationViewModel DisplayInfo &#123; get; set; &#125;</span><br><span class="line">    public UserCaptureModel CaptureInfo &#123; get; set; &#125;</span><br><span class="line">    public bool DoInsert&#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The DisplayInfo and CaptureInfo property’s could be passed to a partial view, one to display and one to capture.</p>
+<p>When the view model data is posted back to the controller, DoInsert being true would indicate a new record is required and false means an update where the lookup on both tables could be done by ClientId.</p>
+<p>When ActionResult returns controls and data binds to the view, DoInsert would still display the value that was posted. This is probably a security thing.</p>
+<p>There are 3 shims to get around this as suggested by <a href="https://stackoverflow.com/users/29407/darin-dimitrov" target="_blank" rel="noopener">Darin Dimitrov</a> on stack overflow. (the below has been adapted for my example)</p>
+<ol>
+<li>Remove the value from the modelstate:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[HttpPost]</span><br><span class="line">public ActionResult Foo(SomeModel model)</span><br><span class="line">&#123;</span><br><span class="line">    ModelState.Remove(&quot;DoInsert&quot;);            </span><br><span class="line">    model.DoInsert = false; //change after doing the insert</span><br><span class="line">    return View(model);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Manually generate the hidden field</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;hidden&quot; name=&quot;DoInsert&quot; value=&quot;&lt;%= Model.DoInsert %&gt;&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Write a custom helper which will use the value of your model and not the one that’s being POSTed</li>
+</ol>
+<p>Option 2 is probably the best route as there is no hard coding.</p>
+<h3 id="Alternative-Solutions"><a href="#Alternative-Solutions" class="headerlink" title="Alternative Solutions"></a>Alternative Solutions</h3><ol>
+<li>Include the database id as a hidden field (additional validations will be needed to ensure the user did not maliciously change values)</li>
+<li>Store the id in a session or cookie (for the cookie option you should obfuscate or encode the data)</li>
+</ol>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://stackoverflow.com/questions/4837744/hiddenfor-not-getting-correct-value-from-view-model" target="_blank" rel="noopener">Hiddenfor not getting correct value from view model</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/05/modifying-posted-variable-value-in-controller-action/" data-id="ck9rzlcrv006qq0nts2dz3ssp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVC/">MVC</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-salted-hash" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/salted-hash/" class="article-date">
+  <time datetime="2018-05-02T00:08:24.000Z" itemprop="datePublished">2018-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/salted-hash/">Salted Hash</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>In <a href="https://en.wikipedia.org/wiki/Cryptography" target="_blank" rel="noopener">cryptography</a>, a <strong>salt</strong> is <a href="https://en.wikipedia.org/wiki/Random_Number_Generator" target="_blank" rel="noopener">random</a> data that is used as an additional input to a <a href="https://en.wikipedia.org/wiki/One-way_function" target="_blank" rel="noopener">one-way function</a> that “<a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function" target="_blank" rel="noopener">hashes</a>” <a href="https://en.wikipedia.org/wiki/Data_(computing" target="_blank" rel="noopener">data</a>), a <a href="https://en.wikipedia.org/wiki/Password" target="_blank" rel="noopener">password</a> or <a href="https://en.wikipedia.org/wiki/Passphrase" target="_blank" rel="noopener">passphrase</a>. Salts are closely related to the concept of <a href="https://en.wikipedia.org/wiki/Cryptographic_nonce" target="_blank" rel="noopener">nonce</a>. The primary function of salts is to defend against <a href="https://en.wikipedia.org/wiki/Dictionary_attacks" target="_blank" rel="noopener">dictionary attacks</a> or against its hashed equivalent, a pre-computed <a href="https://en.wikipedia.org/wiki/Rainbow_table" target="_blank" rel="noopener">rainbow table</a> attack.</p>
+<p>This can be visually demonstrated as:</p>
+<p><img src="/d/salted-hash/password-hash-salt 1.png" alt="visually demonstrated"></p>
+<h3 id="Cool-how-do-we-do-this-in-code"><a href="#Cool-how-do-we-do-this-in-code" class="headerlink" title="Cool, how do we do this in code?"></a>Cool, how do we do this in code?</h3><p>Consider the following username and password:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var email = &quot;howdy@carlpaton.co.za&quot;;</span><br><span class="line">var password = &quot;qwerty&quot;;</span><br></pre></td></tr></table></figure>
+<p>The password value needs to be hashed and then persisted to the database.</p>
+<ol>
+<li>Create the salt by getting the byte array values of the email, the assumption would be that an email address is unique.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var salt = Encoding.ASCII.GetBytes(username);</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Create a byte array of the password and concatenate the two into one byte array</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var _value = Encoding.UTF8.GetBytes(password);</span><br><span class="line">var saltedValue = _value.Concat(salt).ToArray();</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Create a MD5 hash from the ‘salted value’</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// need MD5 to calculate the hash</span><br><span class="line"> byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName(&quot;MD5&quot;)).ComputeHash(saltedValue);</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>Encode and to string the hash</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  // string representation (similar to UNIX format)</span><br><span class="line">string encoded = BitConverter.ToString(hash)</span><br><span class="line">// without dashes</span><br><span class="line">.Replace(&quot;-&quot;, string.Empty)</span><br><span class="line">// make lowercase</span><br><span class="line">//.ToLower();</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+<p>This would then result in a value of A9419D55933FBCF43BA46087F8F20B22</p>
+<p>You can also create a random byte array using RNGCryptoServiceProvider but you would then need to persist that byte array to the database and use it in your user authentication challenge routine.</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://en.wikipedia.org/wiki/Salt_(cryptography)" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Salt_(cryptography)</a></li>
+<li><a href="http://blogs.quickheal.com/password-security-a-dash-of-salt-and-little-of-hash-to-go-please/" target="_blank" rel="noopener">http://blogs.quickheal.com/password-security-a-dash-of-salt-and-little-of-hash-to-go-please/</a></li>
+<li><a href="https://github.com/charleyza/HashDemo" target="_blank" rel="noopener">Functional examples of the above can be found here</a>.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/05/salted-hash/" data-id="ck9rzlcst0094q0ntzt3ukl04" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-unit-tests-overview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/unit-tests-overview/" class="article-date">
+  <time datetime="2018-05-02T00:08:24.000Z" itemprop="datePublished">2018-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/unit-tests-overview/">Unit Tests Overview</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>“<em>UNIT TESTING is a level of software testing where individual units/ components of a software are tested. The purpose is to validate that each unit of the software performs as designed. A unit is the smallest testable part of any software. It usually has one or a few inputs and usually a single output</em>.”</p>
+<p><img src="/d/unit-tests-overview/test-lol.png" alt="Unit Tests"></p>
+<p>Effective unit tests need Clean Code with a Testable design. Your tests need to be Context-aware, that is to say unit tests in project a may not hold the same value of tests in project b.</p>
+<p>Also see <a href="https://github.com/charleyza/Practices/blob/master/UnitTestGuidelines.md" target="_blank" rel="noopener"> this forked readme from Rusty Divine (http://osmyn.com/)</a></p>
+<h3 id="Unit-of-Work"><a href="#Unit-of-Work" class="headerlink" title="Unit of Work"></a>Unit of Work</h3><p>Everything that happens from invoking a public method to it returning the results after it’s finished; it’s the work done along the path you see the debugger take through your code.</p>
+<h3 id="Unit-Test"><a href="#Unit-Test" class="headerlink" title="Unit Test"></a>Unit Test</h3><p>Code that invokes a unit of work within the confines of a project layer while faking external dependencies and validates an assumption about one specific scenario.</p>
+<h3 id="Integration-Test"><a href="#Integration-Test" class="headerlink" title="Integration Test"></a>Integration Test</h3><p>Code that invokes a unit of work that crosses project boundaries, uses actual external dependencies, and/or validates many different aspects about the code under test.</p>
+<h3 id="Stubs"><a href="#Stubs" class="headerlink" title="Stubs"></a>Stubs</h3><p>A substitute for a dependency in the code under test that allows the code to compile and the dependency to return data as specified by the test but importantly cannot itself directly make a test fail.</p>
+<h3 id="Mocks"><a href="#Mocks" class="headerlink" title="Mocks"></a>Mocks</h3><p>A substitute for a dependency in the code under test that knows how many times each of its methods were called an in what order so that it can validate an assumption about how the dependency was used and therefore make a test fail.</p>
+<h3 id="Fakes"><a href="#Fakes" class="headerlink" title="Fakes"></a>Fakes</h3><p>A generic term for a replacement of a real dependency with something the test specifies, which includes both stubs and mocks.</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://ardalis.com/unit-test-naming-convention" target="_blank" rel="noopener">https://ardalis.com/unit-test-naming-convention</a></li>
+<li><a href="http://softwaretestingfundamentals.com/unit-testing/" target="_blank" rel="noopener">http://softwaretestingfundamentals.com/unit-testing/</a></li>
+<li><a href="https://www.pluralsight.com/courses/csharp-unit-testing-enterprise-applications" target="_blank" rel="noopener">https://www.pluralsight.com/courses/csharp-unit-testing-enterprise-applications</a></li>
+<li><a href="https://www.pluralsight.com/courses/basic-unit-testing-csharp-developers" target="_blank" rel="noopener">https://www.pluralsight.com/courses/basic-unit-testing-csharp-developers</a></li>
+<li><a href="https://www.telerik.com/products/mocking/unit-testing.aspx" target="_blank" rel="noopener">https://www.telerik.com/products/mocking/unit-testing.aspx</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/05/unit-tests-overview/" data-id="ck9rzlctw00buq0ntwj5k26il" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-packets-larger-than-max_allowed_packet-are-not-allowed" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/packets-larger-than-max_allowed_packet-are-not-allowed/" class="article-date">
+  <time datetime="2018-05-01T00:08:24.000Z" itemprop="datePublished">2018-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/packets-larger-than-max_allowed_packet-are-not-allowed/">Packets larger than max_allowed_packet are not allowed</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>“A communication packet is a single SQL statement sent to the MySQL server, a single row that is sent to the client, or a binary log event sent from a master replication server to a slave.”</em></p>
+<p>You can view this setting:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &apos;max_allowed_packet&apos;;</span><br><span class="line"></span><br><span class="line">Default before change would show: 4194304</span><br></pre></td></tr></table></figure>
+<p>To change this in windows you must find and update the config file for the service:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;C:\Program Files\MySQL\MySQL Server 5.7\bin\mysqld.exe&quot; --defaults-file=&quot;C:\ProgramData\MySQL\MySQL Server 5.7\my.ini&quot; MySQL57</span><br></pre></td></tr></table></figure>
+<p>Edit the file and change the ‘max_allowed_packet’ value from 4M to something larger like 10M (this is 10 mb)</p>
+<p>If you are running linux you can try this to set it to 16M</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL max_allowed_packet=16777216;</span><br></pre></td></tr></table></figure>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://dev.mysql.com/doc/refman/8.0/en/packet-too-large.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/8.0/en/packet-too-large.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/05/packets-larger-than-max_allowed_packet-are-not-allowed/" data-id="ck9rzlcs9007mq0ntchxqcqq9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/25/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="extend next" rel="next" href="/page/27/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/jquery-examples/">jQuery Examples</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/web-api-controller-example/">Web API Controller Example</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-custom-exception/">C# Custom Exception</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/builder-pattern/">Builder Pattern</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/c-sharp-delegates/">C# Delegates</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET-library/" style="font-size: 11.54px;">.NET library</a> <a href="/tags/AWS/" style="font-size: 15.38px;">AWS</a> <a href="/tags/C/" style="font-size: 18.46px;">C#</a> <a href="/tags/CSV/" style="font-size: 10px;">CSV</a> <a href="/tags/DDD/" style="font-size: 10.77px;">DDD</a> <a href="/tags/ELK-stack/" style="font-size: 10px;">ELK stack</a> <a href="/tags/IDE/" style="font-size: 13.08px;">IDE</a> <a href="/tags/MVC/" style="font-size: 14.62px;">MVC</a> <a href="/tags/SQLite/" style="font-size: 10px;">SQLite</a> <a href="/tags/agile/" style="font-size: 10.77px;">agile</a> <a href="/tags/angular/" style="font-size: 16.92px;">angular</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/client-side-scripting/" style="font-size: 11.54px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.77px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 10.77px;">creational patterns</a> <a href="/tags/css/" style="font-size: 13.08px;">css</a> <a href="/tags/dependency-injection/" style="font-size: 13.85px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.69px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.54px;">docker compose</a> <a href="/tags/food/" style="font-size: 10px;">food</a> <a href="/tags/git/" style="font-size: 12.31px;">git</a> <a href="/tags/hexo/" style="font-size: 10.77px;">hexo</a> <a href="/tags/jquery/" style="font-size: 10.77px;">jquery</a> <a href="/tags/json/" style="font-size: 11.54px;">json</a> <a href="/tags/kibana/" style="font-size: 10.77px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.85px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 10.77px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.54px;">linux</a> <a href="/tags/logging/" style="font-size: 11.54px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 19.23px;">model airplanes</a> <a href="/tags/mysql/" style="font-size: 10.77px;">mysql</a> <a href="/tags/net-core/" style="font-size: 13.08px;">net core</a> <a href="/tags/nuget/" style="font-size: 11.54px;">nuget</a> <a href="/tags/patterns-principles/" style="font-size: 18.46px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.77px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/random/" style="font-size: 10px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 11.54px;">raspberry-pi</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/software-testing/" style="font-size: 16.15px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/static-code-analysis/" style="font-size: 10.77px;">static code analysis</a> <a href="/tags/utilities/" style="font-size: 20px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.77px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.31px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
