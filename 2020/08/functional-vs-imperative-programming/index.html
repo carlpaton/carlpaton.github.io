@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>Functional vs. Imperative Programming | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP!  Summary of use case without fancy words like paradigm, although there is some overlap as some languages support both the below is how I have been programming.    Functional (Declarative) Impera">
+  <meta name="description" content="WIP!  Summary of use case without fancy words like paradigm, although there is some overlap as some languages support both the below is how I have been programming.    Characteristic Imperative (Proc">
 <meta name="keywords" content="patterns principles">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Functional vs. Imperative Programming">
 <meta property="og:url" content="https://carlpaton.github.io/2020/08/functional-vs-imperative-programming/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP!  Summary of use case without fancy words like paradigm, although there is some overlap as some languages support both the below is how I have been programming.    Functional (Declarative) Impera">
+<meta property="og:description" content="WIP!  Summary of use case without fancy words like paradigm, although there is some overlap as some languages support both the below is how I have been programming.    Characteristic Imperative (Proc">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-08-09T22:56:12.326Z">
+<meta property="og:updated_time" content="2020-08-19T05:01:10.852Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Functional vs. Imperative Programming">
-<meta name="twitter:description" content="WIP!  Summary of use case without fancy words like paradigm, although there is some overlap as some languages support both the below is how I have been programming.    Functional (Declarative) Impera">
+<meta name="twitter:description" content="WIP!  Summary of use case without fancy words like paradigm, although there is some overlap as some languages support both the below is how I have been programming.    Characteristic Imperative (Proc">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -124,19 +124,36 @@ ga('send', 'pageview');
 <table>
 <thead>
 <tr>
+<th>Characteristic</th>
+<th>Imperative (Procedural)</th>
 <th>Functional (Declarative)</th>
-<th>Imperative</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>React</td>
+<td>Langauge / Library</td>
 <td>C#</td>
+<td>React</td>
+</tr>
+<tr>
+<td>State</td>
+<td>State changes are    important.</td>
+<td>State changes are non-existent.</td>
+</tr>
+<tr>
+<td>Primary flow control</td>
+<td>Loops, conditionals, and function (method) calls.</td>
+<td>Function calls, including recursion.</td>
+</tr>
+<tr>
+<td>Manipulation unit</td>
+<td>Class instances (objects)</td>
+<td>Functions as first-class objects and data collections.</td>
 </tr>
 </tbody>
 </table>
 <h3 id="Code-Examples"><a href="#Code-Examples" class="headerlink" title="Code Examples"></a>Code Examples</h3><p>Code example by <a href="https://codeburst.io/@ian.mundy" target="_blank" rel="noopener">Ian Mundy</a></p>
-<h4 id="Imperative"><a href="#Imperative" class="headerlink" title="Imperative"></a>Imperative</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const container = document.getElementById(‘container’);</span><br><span class="line">const btn = document.createElement(‘button’);</span><br><span class="line">btn.className = ‘btn red’;</span><br><span class="line">btn.onclick = function(event) &#123;</span><br><span class="line"> if (this.classList.contains(‘red’)) &#123;</span><br><span class="line">   this.classList.remove(‘red’);</span><br><span class="line">   this.classList.add(‘blue’);</span><br><span class="line"> &#125; else &#123;</span><br><span class="line">   this.classList.remove(‘blue’);</span><br><span class="line">   this.classList.add(‘red’);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br><span class="line">container.appendChild(btn);</span><br></pre></td></tr></table></figure>
+<h4 id="Imperative-Procedural"><a href="#Imperative-Procedural" class="headerlink" title="Imperative (Procedural)"></a>Imperative (Procedural)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const container = document.getElementById(‘container’);</span><br><span class="line">const btn = document.createElement(‘button’);</span><br><span class="line">btn.className = ‘btn red’;</span><br><span class="line">btn.onclick = function(event) &#123;</span><br><span class="line"> if (this.classList.contains(‘red’)) &#123;</span><br><span class="line">   this.classList.remove(‘red’);</span><br><span class="line">   this.classList.add(‘blue’);</span><br><span class="line"> &#125; else &#123;</span><br><span class="line">   this.classList.remove(‘blue’);</span><br><span class="line">   this.classList.add(‘red’);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br><span class="line">container.appendChild(btn);</span><br></pre></td></tr></table></figure>
 <h4 id="Functional-Declarative"><a href="#Functional-Declarative" class="headerlink" title="Functional (Declarative)"></a>Functional (Declarative)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Button extends React.Component&#123;</span><br><span class="line">  this.state = &#123; color: &apos;red&apos; &#125;</span><br><span class="line">  handleChange = () =&gt; &#123;</span><br><span class="line">    const color = this.state.color === &apos;red&apos; ? &apos;blue&apos; : &apos;red&apos;;</span><br><span class="line">    this.setState(&#123; color &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (&lt;div&gt;</span><br><span class="line">      &lt;button </span><br><span class="line">         className=`btn $&#123;this.state.color&#125;`</span><br><span class="line">         onClick=&#123;this.handleChange&#125;&gt;</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://codeburst.io/declarative-vs-imperative-programming-a8a7c93d9ad2" target="_blank" rel="noopener">https://codeburst.io/declarative-vs-imperative-programming-a8a7c93d9ad2</a></li>
@@ -146,7 +163,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/08/functional-vs-imperative-programming/" data-id="cke0v0dya005rdkonuab0bs8d" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/08/functional-vs-imperative-programming/" data-id="cke0wrsqw005oosona4kmsnvp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/">patterns principles</a></li></ul>
