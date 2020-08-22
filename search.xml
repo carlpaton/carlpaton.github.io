@@ -92,9 +92,9 @@
       
         <tags>
             
-            <tag> typescript </tag>
-            
             <tag> reactjs </tag>
+            
+            <tag> typescript </tag>
             
         </tags>
       
@@ -341,17 +341,19 @@
     
     
     <entry>
-      <title>Pi4 Hardware</title>
-      <link href="/2020/05/pi4-hardware/"/>
-      <url>/2020/05/pi4-hardware/</url>
+      <title>Pi Switch Control</title>
+      <link href="/2020/05/pi-switch-control/"/>
+      <url>/2020/05/pi-switch-control/</url>
       
-        <content type="html"><![CDATA[<p>I got tired of having to google each time I needed to find or understand Pi Hardware.</p><h3 id="Heatsinks"><a href="#Heatsinks" class="headerlink" title="Heatsinks"></a>Heatsinks</h3><p>These go over the CPU, DDR-4 Memory and USB controller. I couldn’t find a Pi4 set here in NZ so modified this one from <a href="https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html" target="_blank" rel="noopener">geeker.co.nz</a></p><p><img src="/d/p4-hardware/heat-sink.jpg" alt="Heatsinks"></p><ul><li><a href="https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html" target="_blank" rel="noopener">https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html</a></li><li><a href="https://www.youtube.com/watch?v=E-4GaAz7XNM" target="_blank" rel="noopener">https://www.youtube.com/watch?v=E-4GaAz7XNM</a></li></ul><h3 id="Cluster-Stack"><a href="#Cluster-Stack" class="headerlink" title="Cluster Stack"></a>Cluster Stack</h3><ul><li><a href="/2019/10/raspberry-pi-cluster/">Raspberry Pi Cluster</a></li></ul><p><img src="/d/p4-hardware/cluster-stack.jpg" alt="Cluster Stack"></p>]]></content>
+        <content type="html"><![CDATA[<p>Determine if switches are on (high) or off (low)</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"></span><br><span class="line">GPIO.setwarnings(<span class="literal">False</span>) <span class="comment"># Ignore warning for now</span></span><br><span class="line">GPIO.setmode(GPIO.BOARD) <span class="comment"># Use physical pin numbering</span></span><br><span class="line"></span><br><span class="line">GPIO.setup(<span class="number">10</span>, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) <span class="comment"># Set pin 10 to be an input pin and set initial value to be pulled low (off)</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">"Waiting for button push"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>: <span class="comment"># Run forever</span></span><br><span class="line">    <span class="keyword">if</span> GPIO.input(<span class="number">10</span>) == GPIO.HIGH:</span><br><span class="line">        print(<span class="string">"Button was pushed!"</span>)</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://raspberrypihq.com/use-a-push-button-with-raspberry-pi-gpio/" target="_blank" rel="noopener">https://raspberrypihq.com/use-a-push-button-with-raspberry-pi-gpio/</a></li></ul>]]></content>
       
       
       
         <tags>
             
             <tag> raspberry pi </tag>
+            
+            <tag> python </tag>
             
         </tags>
       
@@ -381,11 +383,11 @@
     
     
     <entry>
-      <title>Pi Switch Control</title>
-      <link href="/2020/05/pi-switch-control/"/>
-      <url>/2020/05/pi-switch-control/</url>
+      <title>Pi Servo Control</title>
+      <link href="/2020/05/pi-servo-control/"/>
+      <url>/2020/05/pi-servo-control/</url>
       
-        <content type="html"><![CDATA[<p>Determine if switches are on (high) or off (low)</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"></span><br><span class="line">GPIO.setwarnings(<span class="literal">False</span>) <span class="comment"># Ignore warning for now</span></span><br><span class="line">GPIO.setmode(GPIO.BOARD) <span class="comment"># Use physical pin numbering</span></span><br><span class="line"></span><br><span class="line">GPIO.setup(<span class="number">10</span>, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) <span class="comment"># Set pin 10 to be an input pin and set initial value to be pulled low (off)</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">"Waiting for button push"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>: <span class="comment"># Run forever</span></span><br><span class="line">    <span class="keyword">if</span> GPIO.input(<span class="number">10</span>) == GPIO.HIGH:</span><br><span class="line">        print(<span class="string">"Button was pushed!"</span>)</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://raspberrypihq.com/use-a-push-button-with-raspberry-pi-gpio/" target="_blank" rel="noopener">https://raspberrypihq.com/use-a-push-button-with-raspberry-pi-gpio/</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p>A servo allows precise control of the angular position of its shaft. Standard servos accept 4.6 to 6 volts.</p><table><thead><tr><th>Colour</th><th>Description</th></tr></thead><tbody><tr><td>Yellow/White</td><td>Control signal</td></tr><tr><td>Red</td><td>Positive power lead</td></tr><tr><td>Black/Brown</td><td>Negative power lead</td></tr></tbody></table><h4 id="Control-signal"><a href="#Control-signal" class="headerlink" title="Control signal"></a>Control signal</h4><p>This needs to be a <code>pulse width modulation (PWM)</code> square wave. The square wave needs to be 50 herts (so a pulse of every 0.2 seconds) The angle of the servo is controlled by the length of the positive pulse (duty cycle) The longer the pulse/period of the wave/duty cycle the larger the angle the servo will turn to and try hold itself at.</p><p>These values vary by servo but for the small cheap SG-90’s the degrees can be calculated as:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2% duty cycle = 0 degrees</span><br><span class="line">12% duty cycle = 180 degrees</span><br></pre></td></tr></table></figure><p><img src="/d/pi-servo-control/servo-duty.jpg" alt="Servo Duty"></p><p>Translating this to python code using the RPi.GPIO library</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set GPIO numbering mode</span></span><br><span class="line">GPIO.setmode(GPIO.BOARD)</span><br><span class="line"><span class="comment"># There is another mode called `GPIO.BCM` for BCM pin numbering, not sure what this is?</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set pin 11 as an output, and set servo1 as pin 11 as PWM</span></span><br><span class="line">GPIO.setup(<span class="number">11</span>,GPIO.OUT)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Note 11 is the pi's pin, 50Hz pulse (analog servo), 300 would be for digital</span></span><br><span class="line">servo = GPIO.PWM(<span class="number">11</span>,<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start PWM running, but with value of 0 (pulse off)</span></span><br><span class="line">servo.start(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># duty is a percentage from 0 to 100 which allows for decimals like 3.33</span></span><br><span class="line"><span class="comment"># 2% = 0 degrees</span></span><br><span class="line"><span class="comment"># 7% = 90 degrees</span></span><br><span class="line"><span class="comment"># 12% = 180 degrees</span></span><br><span class="line"><span class="comment"># setting it then back to 0 stops the servo from jittering, just set `time.sleep(0.5)` before so you give the servo time to move to the position</span></span><br><span class="line">duty = <span class="number">2</span></span><br><span class="line">servo.ChangeDutyCycle(duty)</span><br><span class="line">servo.ChangeDutyCycle(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Clean up</span></span><br><span class="line">servo.stop()</span><br><span class="line">GPIO.cleanup()</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/" target="_blank" rel="noopener">https://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/</a></li><li><a href="https://www.servocity.com/how-does-a-servo-work" target="_blank" rel="noopener">https://www.servocity.com/how-does-a-servo-work</a></li><li><a href="http://www.robotplatform.com/knowledge/servo/servo_control_tutorial.html" target="_blank" rel="noopener">http://www.robotplatform.com/knowledge/servo/servo_control_tutorial.html</a></li><li><a href="http://webhome.csc.uvic.ca/~mcheng/samples/qu/SENG466_Home/Phase_1/Entries/2010/2/1_Servo_Motor.html" target="_blank" rel="noopener">http://webhome.csc.uvic.ca/~mcheng/samples/qu/SENG466_Home/Phase_1/Entries/2010/2/1_Servo_Motor.html</a></li><li><a href="https://www.youtube.com/watch?v=xHDT4CwjUQE" target="_blank" rel="noopener">https://www.youtube.com/watch?v=xHDT4CwjUQE</a></li></ul>]]></content>
       
       
       
@@ -402,19 +404,17 @@
     
     
     <entry>
-      <title>Pi Servo Control</title>
-      <link href="/2020/05/pi-servo-control/"/>
-      <url>/2020/05/pi-servo-control/</url>
+      <title>Pi4 Hardware</title>
+      <link href="/2020/05/pi4-hardware/"/>
+      <url>/2020/05/pi4-hardware/</url>
       
-        <content type="html"><![CDATA[<p>A servo allows precise control of the angular position of its shaft. Standard servos accept 4.6 to 6 volts.</p><table><thead><tr><th>Colour</th><th>Description</th></tr></thead><tbody><tr><td>Yellow/White</td><td>Control signal</td></tr><tr><td>Red</td><td>Positive power lead</td></tr><tr><td>Black/Brown</td><td>Negative power lead</td></tr></tbody></table><h4 id="Control-signal"><a href="#Control-signal" class="headerlink" title="Control signal"></a>Control signal</h4><p>This needs to be a <code>pulse width modulation (PWM)</code> square wave. The square wave needs to be 50 herts (so a pulse of every 0.2 seconds) The angle of the servo is controlled by the length of the positive pulse (duty cycle) The longer the pulse/period of the wave/duty cycle the larger the angle the servo will turn to and try hold itself at.</p><p>These values vary by servo but for the small cheap SG-90’s the degrees can be calculated as:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2% duty cycle = 0 degrees</span><br><span class="line">12% duty cycle = 180 degrees</span><br></pre></td></tr></table></figure><p><img src="/d/pi-servo-control/servo-duty.jpg" alt="Servo Duty"></p><p>Translating this to python code using the RPi.GPIO library</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set GPIO numbering mode</span></span><br><span class="line">GPIO.setmode(GPIO.BOARD)</span><br><span class="line"><span class="comment"># There is another mode called `GPIO.BCM` for BCM pin numbering, not sure what this is?</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set pin 11 as an output, and set servo1 as pin 11 as PWM</span></span><br><span class="line">GPIO.setup(<span class="number">11</span>,GPIO.OUT)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Note 11 is the pi's pin, 50Hz pulse (analog servo), 300 would be for digital</span></span><br><span class="line">servo = GPIO.PWM(<span class="number">11</span>,<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start PWM running, but with value of 0 (pulse off)</span></span><br><span class="line">servo.start(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># duty is a percentage from 0 to 100 which allows for decimals like 3.33</span></span><br><span class="line"><span class="comment"># 2% = 0 degrees</span></span><br><span class="line"><span class="comment"># 7% = 90 degrees</span></span><br><span class="line"><span class="comment"># 12% = 180 degrees</span></span><br><span class="line"><span class="comment"># setting it then back to 0 stops the servo from jittering, just set `time.sleep(0.5)` before so you give the servo time to move to the position</span></span><br><span class="line">duty = <span class="number">2</span></span><br><span class="line">servo.ChangeDutyCycle(duty)</span><br><span class="line">servo.ChangeDutyCycle(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Clean up</span></span><br><span class="line">servo.stop()</span><br><span class="line">GPIO.cleanup()</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/" target="_blank" rel="noopener">https://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/</a></li><li><a href="https://www.servocity.com/how-does-a-servo-work" target="_blank" rel="noopener">https://www.servocity.com/how-does-a-servo-work</a></li><li><a href="http://www.robotplatform.com/knowledge/servo/servo_control_tutorial.html" target="_blank" rel="noopener">http://www.robotplatform.com/knowledge/servo/servo_control_tutorial.html</a></li><li><a href="http://webhome.csc.uvic.ca/~mcheng/samples/qu/SENG466_Home/Phase_1/Entries/2010/2/1_Servo_Motor.html" target="_blank" rel="noopener">http://webhome.csc.uvic.ca/~mcheng/samples/qu/SENG466_Home/Phase_1/Entries/2010/2/1_Servo_Motor.html</a></li><li><a href="https://www.youtube.com/watch?v=xHDT4CwjUQE" target="_blank" rel="noopener">https://www.youtube.com/watch?v=xHDT4CwjUQE</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p>I got tired of having to google each time I needed to find or understand Pi Hardware.</p><h3 id="Heatsinks"><a href="#Heatsinks" class="headerlink" title="Heatsinks"></a>Heatsinks</h3><p>These go over the CPU, DDR-4 Memory and USB controller. I couldn’t find a Pi4 set here in NZ so modified this one from <a href="https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html" target="_blank" rel="noopener">geeker.co.nz</a></p><p><img src="/d/p4-hardware/heat-sink.jpg" alt="Heatsinks"></p><ul><li><a href="https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html" target="_blank" rel="noopener">https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html</a></li><li><a href="https://www.youtube.com/watch?v=E-4GaAz7XNM" target="_blank" rel="noopener">https://www.youtube.com/watch?v=E-4GaAz7XNM</a></li></ul><h3 id="Cluster-Stack"><a href="#Cluster-Stack" class="headerlink" title="Cluster Stack"></a>Cluster Stack</h3><ul><li><a href="/2019/10/raspberry-pi-cluster/">Raspberry Pi Cluster</a></li></ul><p><img src="/d/p4-hardware/cluster-stack.jpg" alt="Cluster Stack"></p>]]></content>
       
       
       
         <tags>
             
             <tag> raspberry pi </tag>
-            
-            <tag> python </tag>
             
         </tags>
       
@@ -716,11 +716,11 @@
     
     
     <entry>
-      <title>Chain of Responsibility Pattern</title>
-      <link href="/2020/02/chain-of-responsibility-pattern/"/>
-      <url>/2020/02/chain-of-responsibility-pattern/</url>
+      <title>Command Pattern</title>
+      <link href="/2020/02/command-pattern/"/>
+      <url>/2020/02/command-pattern/</url>
       
-        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The chain of responsibility pattern is used to process varied requests, each of which may be dealt with by a different handler. </p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/ChainOfResponsibility.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/ChainOfResponsibility.aspx</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The command pattern is used to express a request, including the call to be made and all of its required <a href="http://www.blackwasp.co.uk/CSharpMethodParameters.aspx" target="_blank" rel="noopener">parameters</a>, in a command object. The command may then be executed immediately or held for later use.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Command.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Command.aspx</a></li></ul>]]></content>
       
       
       
@@ -737,11 +737,11 @@
     
     
     <entry>
-      <title>Command Pattern</title>
-      <link href="/2020/02/command-pattern/"/>
-      <url>/2020/02/command-pattern/</url>
+      <title>Chain of Responsibility Pattern</title>
+      <link href="/2020/02/chain-of-responsibility-pattern/"/>
+      <url>/2020/02/chain-of-responsibility-pattern/</url>
       
-        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The command pattern is used to express a request, including the call to be made and all of its required <a href="http://www.blackwasp.co.uk/CSharpMethodParameters.aspx" target="_blank" rel="noopener">parameters</a>, in a command object. The command may then be executed immediately or held for later use.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Command.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Command.aspx</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The chain of responsibility pattern is used to process varied requests, each of which may be dealt with by a different handler. </p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/ChainOfResponsibility.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/ChainOfResponsibility.aspx</a></li></ul>]]></content>
       
       
       
@@ -840,27 +840,6 @@
     
     
     <entry>
-      <title>Flyweight Pattern</title>
-      <link href="/2020/02/flyweight-pattern/"/>
-      <url>/2020/02/flyweight-pattern/</url>
-      
-        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The flyweight pattern is used to reduce the memory and resource usage for complex models containing many hundreds, thousands or hundreds of thousands of similar objects.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Flyweight.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Flyweight.aspx</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> patterns principles </tag>
-            
-            <tag> structural patterns </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Factory Pattern</title>
       <link href="/2020/02/factory-pattern/"/>
       <url>/2020/02/factory-pattern/</url>
@@ -874,6 +853,27 @@
             <tag> patterns principles </tag>
             
             <tag> creational patterns </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Flyweight Pattern</title>
+      <link href="/2020/02/flyweight-pattern/"/>
+      <url>/2020/02/flyweight-pattern/</url>
+      
+        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The flyweight pattern is used to reduce the memory and resource usage for complex models containing many hundreds, thousands or hundreds of thousands of similar objects.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Flyweight.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Flyweight.aspx</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> patterns principles </tag>
+            
+            <tag> structural patterns </tag>
             
         </tags>
       
@@ -1123,9 +1123,9 @@
       
         <tags>
             
-            <tag> utilities </tag>
-            
             <tag> patterns principles </tag>
+            
+            <tag> utilities </tag>
             
         </tags>
       
@@ -1596,25 +1596,6 @@
     
     
     <entry>
-      <title>Elastic Container Service Simple Demo</title>
-      <link href="/2019/09/aws-elastic-container-service-simple-demo/"/>
-      <url>/2019/09/aws-elastic-container-service-simple-demo/</url>
-      
-        <content type="html"><![CDATA[<p>This runs on top of Amazon Elastic Compute Cloud (Amazon EC2) and the steps below follow the AWS GUI (graphical user interface). I learnt most of the content below by following <a href="https://www.linkedin.com/in/arthur-ulfeldt-5150aa5/" target="_blank" rel="noopener">Arthur Ulfeldt</a>‘s tutorial <a href="https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html" target="_blank" rel="noopener">Deploying Docker to AWS</a>.</p><p>This demo will simply write the current datetime to a volume using the busybox image, the container is called <code>data-source</code>. Another container running nginx will then display this data, this container is called <code>data-server</code>.</p><p><img src="/d/aws-elastic-container-service-simple-demo/overview.jpg" alt="Simple Demo Infrastructure Overview"></p><p>Calling <code>data-server</code> on its public IP will then display as follows:</p><p><img src="/d/aws-elastic-container-service-simple-demo/simple-demo.jpg" alt="nginx data-server"></p><h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>Create your account at <a href="https://aws.amazon.com/" target="_blank" rel="noopener">https://aws.amazon.com/</a> login and under <code>AWS Management Console</code> type or look for <code>ECS</code>, this will take you to the <code>ECS Dashboard</code> </p><h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><p>Create cluster type of launch type <code>FARGATE</code>, it may be called something like <code>Networking only</code> and mention <code>Powered by AWS Fagate</code> - things in IT change daily :)</p><ul><li>Cluster name: <code>simple-demo2</code></li><li>Check <code>Create VPC</code></li><li>Tag: Description|simple-demo2 (this is the key|value)</li><li>Check <code>Enable container insights</code> for CloudWatch</li><li>From the <a href="/2019/09/aws-command-line-interface/">CLI</a> you can view all clusters:</li></ul><h3 id="Task-Definition"><a href="#Task-Definition" class="headerlink" title="Task Definition"></a>Task Definition</h3><p>Select <code>Task Definitions</code> -&gt; <code>Create new Task Definition</code></p><ul><li>Select the <code>FARGATE</code> template</li><li>Task Definition Name: task-definition-data-server</li><li>Requires Compatibilities: FARGATE</li><li>Task Role: escTaskExecutionRole</li><li>Network Mode: awsvpc</li><li>Task execution role: ecsTaskExecutionRole</li><li>Task memory (GB): 0.5GB</li><li>Task CPU (vCPU): 0.25 vCPU</li></ul><p>Volumes:</p><ul><li>create one called <code>shared-data</code></li></ul><p>CONTAINER 1</p><ul><li>Container name: <code>data-source</code></li><li>Image: busybox</li><li>Memory Limits (MiB): 128</li><li>Entry point:     <code>sh, -c, while true; do echo $(date) &gt; /shared-data/index.html; sleep 5; done</code></li><li>Mount points: select source volume, and set the path <code>/shared-data</code> to match the shell script</li><li>Log configuration: check Auto-configure CloudWatch Logs</li></ul><p>CONTAINER 2</p><ul><li>Container name: <code>data-server</code></li><li>Image: nginx</li><li>Memory Limits (MiB): 128</li><li>Port mappings: 0 -&gt; 80</li><li>Mount points: select source volume, and set the path <code>/usr/share/nginx/html</code></li></ul><h3 id="Run-Task"><a href="#Run-Task" class="headerlink" title="Run Task"></a>Run Task</h3><p>Now manually run the above task definition from <code>Tasks</code> tab, <code>Run new Task</code>.</p><p>Once it starts up select the running task, copy its <code>Public IP</code> into a browsers and you should see the current time update every 5 seconds. Per the image above this <code>IP</code> was <code>3.104.47.134</code></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html" target="_blank" rel="noopener">https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> aws </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Elastic Container Service Stack Overview</title>
       <link href="/2019/09/aws-elastic-container-service-stack-overview/"/>
       <url>/2019/09/aws-elastic-container-service-stack-overview/</url>
@@ -1653,6 +1634,25 @@
     
     
     <entry>
+      <title>Elastic Container Service Simple Demo</title>
+      <link href="/2019/09/aws-elastic-container-service-simple-demo/"/>
+      <url>/2019/09/aws-elastic-container-service-simple-demo/</url>
+      
+        <content type="html"><![CDATA[<p>This runs on top of Amazon Elastic Compute Cloud (Amazon EC2) and the steps below follow the AWS GUI (graphical user interface). I learnt most of the content below by following <a href="https://www.linkedin.com/in/arthur-ulfeldt-5150aa5/" target="_blank" rel="noopener">Arthur Ulfeldt</a>‘s tutorial <a href="https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html" target="_blank" rel="noopener">Deploying Docker to AWS</a>.</p><p>This demo will simply write the current datetime to a volume using the busybox image, the container is called <code>data-source</code>. Another container running nginx will then display this data, this container is called <code>data-server</code>.</p><p><img src="/d/aws-elastic-container-service-simple-demo/overview.jpg" alt="Simple Demo Infrastructure Overview"></p><p>Calling <code>data-server</code> on its public IP will then display as follows:</p><p><img src="/d/aws-elastic-container-service-simple-demo/simple-demo.jpg" alt="nginx data-server"></p><h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>Create your account at <a href="https://aws.amazon.com/" target="_blank" rel="noopener">https://aws.amazon.com/</a> login and under <code>AWS Management Console</code> type or look for <code>ECS</code>, this will take you to the <code>ECS Dashboard</code> </p><h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><p>Create cluster type of launch type <code>FARGATE</code>, it may be called something like <code>Networking only</code> and mention <code>Powered by AWS Fagate</code> - things in IT change daily :)</p><ul><li>Cluster name: <code>simple-demo2</code></li><li>Check <code>Create VPC</code></li><li>Tag: Description|simple-demo2 (this is the key|value)</li><li>Check <code>Enable container insights</code> for CloudWatch</li><li>From the <a href="/2019/09/aws-command-line-interface/">CLI</a> you can view all clusters:</li></ul><h3 id="Task-Definition"><a href="#Task-Definition" class="headerlink" title="Task Definition"></a>Task Definition</h3><p>Select <code>Task Definitions</code> -&gt; <code>Create new Task Definition</code></p><ul><li>Select the <code>FARGATE</code> template</li><li>Task Definition Name: task-definition-data-server</li><li>Requires Compatibilities: FARGATE</li><li>Task Role: escTaskExecutionRole</li><li>Network Mode: awsvpc</li><li>Task execution role: ecsTaskExecutionRole</li><li>Task memory (GB): 0.5GB</li><li>Task CPU (vCPU): 0.25 vCPU</li></ul><p>Volumes:</p><ul><li>create one called <code>shared-data</code></li></ul><p>CONTAINER 1</p><ul><li>Container name: <code>data-source</code></li><li>Image: busybox</li><li>Memory Limits (MiB): 128</li><li>Entry point:     <code>sh, -c, while true; do echo $(date) &gt; /shared-data/index.html; sleep 5; done</code></li><li>Mount points: select source volume, and set the path <code>/shared-data</code> to match the shell script</li><li>Log configuration: check Auto-configure CloudWatch Logs</li></ul><p>CONTAINER 2</p><ul><li>Container name: <code>data-server</code></li><li>Image: nginx</li><li>Memory Limits (MiB): 128</li><li>Port mappings: 0 -&gt; 80</li><li>Mount points: select source volume, and set the path <code>/usr/share/nginx/html</code></li></ul><h3 id="Run-Task"><a href="#Run-Task" class="headerlink" title="Run Task"></a>Run Task</h3><p>Now manually run the above task definition from <code>Tasks</code> tab, <code>Run new Task</code>.</p><p>Once it starts up select the running task, copy its <code>Public IP</code> into a browsers and you should see the current time update every 5 seconds. Per the image above this <code>IP</code> was <code>3.104.47.134</code></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html" target="_blank" rel="noopener">https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> aws </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>XML comments</title>
       <link href="/2019/09/c-sharp-xml-comments/"/>
       <url>/2019/09/c-sharp-xml-comments/</url>
@@ -1664,25 +1664,6 @@
         <tags>
             
             <tag> c# </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>IDE Visual Studio</title>
-      <link href="/2019/09/ide-visual-studio/"/>
-      <url>/2019/09/ide-visual-studio/</url>
-      
-        <content type="html"><![CDATA[<p><a href="/2018/05/ide-editor-and-database-tools/">Also see IDE, Editor and Database Tools</a></p><h3 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CRTL+T                                           Got to all</span><br></pre></td></tr></table></figure><ul><li><a href="https://devblogs.microsoft.com/wp-content/uploads/sites/4/2019/03/vskeyboard.pdf" target="_blank" rel="noopener">https://devblogs.microsoft.com/wp-content/uploads/sites/4/2019/03/vskeyboard.pdf</a></li></ul><h3 id="Built-in-tools"><a href="#Built-in-tools" class="headerlink" title="Built in tools"></a>Built in tools</h3><ul><li><a href="https://blogs.msdn.microsoft.com/devops/2016/07/15/7-ways-to-look-at-the-values-of-variables-while-debugging-in-visual-studio/" target="_blank" rel="noopener">Autos, Locals</a></li><li><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/viewing-the-call-stack-in-visual-studio" target="_blank" rel="noopener">Call Stack</a></li></ul><h3 id="Extensions"><a href="#Extensions" class="headerlink" title="Extensions"></a>Extensions</h3><ul><li><a href="https://marketplace.visualstudio.com/items?itemName=TomasRestrepo.Viasfora" target="_blank" rel="noopener">Viasfora</a></li><li><a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.AddNewFile" target="_blank" rel="noopener">Add New File</a></li><li><a href="https://www.jetbrains.com/resharper/" target="_blank" rel="noopener">resharper</a>, <a href="https://www.jetbrains.com/dotcover/" target="_blank" rel="noopener">dotcover</a>, <a href="https://www.jetbrains.com/decompiler/" target="_blank" rel="noopener">dotpeek</a></li></ul><h3 id="Code-Snippets"><a href="#Code-Snippets" class="headerlink" title="Code Snippets"></a>Code Snippets</h3><ul><li><a href="https://gist.github.com/charleyza/77ae278b904cab2a19423809a69c2c67" target="_blank" rel="noopener">unittest.snippet</a></li></ul><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.visualstudio.com/downloads/" target="_blank" rel="noopener">https://www.visualstudio.com/downloads/</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> ide </tag>
             
         </tags>
       
@@ -1734,6 +1715,25 @@
       <url>/2019/09/ide-webstorm/</url>
       
         <content type="html"><![CDATA[<p><a href="/2018/05/ide-editor-and-database-tools/">Also see IDE, Editor and Database Tools</a></p><h3 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+/                                     Add/remove line or block comment</span><br><span class="line">Ctrl+Shift+f                               Find in Path</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.jetbrains.com/help/webstorm/mastering-keyboard-shortcuts.html" target="_blank" rel="noopener">https://www.jetbrains.com/help/webstorm/mastering-keyboard-shortcuts.html</a></li><li><a href="https://www.jetbrains.com/webstorm/download/#section=windows" target="_blank" rel="noopener">Webstorm</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> ide </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>IDE Visual Studio</title>
+      <link href="/2019/09/ide-visual-studio/"/>
+      <url>/2019/09/ide-visual-studio/</url>
+      
+        <content type="html"><![CDATA[<p><a href="/2018/05/ide-editor-and-database-tools/">Also see IDE, Editor and Database Tools</a></p><h3 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CRTL+T                                           Got to all</span><br></pre></td></tr></table></figure><ul><li><a href="https://devblogs.microsoft.com/wp-content/uploads/sites/4/2019/03/vskeyboard.pdf" target="_blank" rel="noopener">https://devblogs.microsoft.com/wp-content/uploads/sites/4/2019/03/vskeyboard.pdf</a></li></ul><h3 id="Built-in-tools"><a href="#Built-in-tools" class="headerlink" title="Built in tools"></a>Built in tools</h3><ul><li><a href="https://blogs.msdn.microsoft.com/devops/2016/07/15/7-ways-to-look-at-the-values-of-variables-while-debugging-in-visual-studio/" target="_blank" rel="noopener">Autos, Locals</a></li><li><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/viewing-the-call-stack-in-visual-studio" target="_blank" rel="noopener">Call Stack</a></li></ul><h3 id="Extensions"><a href="#Extensions" class="headerlink" title="Extensions"></a>Extensions</h3><ul><li><a href="https://marketplace.visualstudio.com/items?itemName=TomasRestrepo.Viasfora" target="_blank" rel="noopener">Viasfora</a></li><li><a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.AddNewFile" target="_blank" rel="noopener">Add New File</a></li><li><a href="https://www.jetbrains.com/resharper/" target="_blank" rel="noopener">resharper</a>, <a href="https://www.jetbrains.com/dotcover/" target="_blank" rel="noopener">dotcover</a>, <a href="https://www.jetbrains.com/decompiler/" target="_blank" rel="noopener">dotpeek</a></li></ul><h3 id="Code-Snippets"><a href="#Code-Snippets" class="headerlink" title="Code Snippets"></a>Code Snippets</h3><ul><li><a href="https://gist.github.com/charleyza/77ae278b904cab2a19423809a69c2c67" target="_blank" rel="noopener">unittest.snippet</a></li></ul><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.visualstudio.com/downloads/" target="_blank" rel="noopener">https://www.visualstudio.com/downloads/</a></li></ul>]]></content>
       
       
       
@@ -1914,9 +1914,9 @@
       
         <tags>
             
-            <tag> utilities </tag>
-            
             <tag> docker </tag>
+            
+            <tag> utilities </tag>
             
             <tag> kibana </tag>
             
@@ -2471,7 +2471,7 @@
       <link href="/2019/01/css-specificity-and-selectors/"/>
       <url>/2019/01/css-specificity-and-selectors/</url>
       
-        <content type="html"><![CDATA[<h3 id="Specificity"><a href="#Specificity" class="headerlink" title="Specificity"></a>Specificity</h3><p>Specificity uses a four-category system to give a CSS selector a value. The selector with the most specific value wins. Each </p><table><thead><tr><th>Specificity</th><th>High</th><th></th><th></th><th>Low</th></tr></thead><tbody><tr><td>Selector</td><td>Inline</td><td>ID</td><td>Class, pseudo-class, attribute</td><td>element</td></tr><tr><td>Weight</td><td>1,0,0,0</td><td>0,1,0,0</td><td>0,0,1,0</td><td>0,0,0,1</td></tr></tbody></table><p>Examples:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nav#nav &gt; li:hover &#123; colour:red; &#125;</span><br><span class="line">Results in 0,1,1,2</span><br><span class="line"></span><br><span class="line">li:nth-child(2):hover &#123; color:red; &#125;</span><br><span class="line">Results in 0,0,2,1</span><br></pre></td></tr></table></figure><h3 id="Selectors"><a href="#Selectors" class="headerlink" title="Selectors"></a>Selectors</h3><p>These can help you add weight to the <code>Specificity</code> </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">.myDiv &#123;</span><br><span class="line">    padding-top: 50px;</span><br><span class="line">    margin-top: -50px;    </span><br><span class="line">    </span><br><span class="line">    &amp;.myDiv2 &#123;</span><br><span class="line">    padding-top: 150px;</span><br><span class="line">    margin-top: -150px;        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*Resulting CSS and what it would select on</span><br><span class="line"></span><br><span class="line">.myDiv &#123; padding-top: 50px; margin-top: -50px; &#125;               ~ 0,0,1,0</span><br><span class="line">.myDiv.myDiv2 &#123; padding-top: 150px; margin-top: -150px; &#125;      ~ 0,0,2,0</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;myDiv myDiv2&quot;&gt;&lt;/div&gt;</span><br><span class="line">*/</span><br></pre></td></tr></table></figure><h4 id="Universal-and-combinator-selectors"><a href="#Universal-and-combinator-selectors" class="headerlink" title="Universal and combinator selectors"></a>Universal and combinator selectors</h4><p>These have no effect on specificity.</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//universal selector (*) matches elements of any type.</span><br><span class="line"></span><br><span class="line">* &#123; <span class="attribute">box-sizing</span>: border-box; <span class="attribute">font-family</span>: <span class="string">"Open Sans"</span>, sans-serif; &#125;</span><br><span class="line"></span><br><span class="line">//The adjacent sibling combinator (+) separates two selectors and matches the second element only if it immediately follows the first element, and both are children of the same parent element. Example: Paragraphs that come immediately after any image</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">img</span> + <span class="selector-tag">p</span> &#123; <span class="attribute">font-style</span>: bold; &#125;</span><br><span class="line"></span><br><span class="line">//The child combinator (&gt;) is placed between two CSS selectors. It matches only those elements matched by the second selector that are the children of elements matched by the first. Example: List items that are children of the "my-things" list</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span><span class="selector-class">.my-things</span> &gt; <span class="selector-tag">li</span> &#123; <span class="attribute">margin</span>: <span class="number">2em</span>; &#125;</span><br><span class="line"></span><br><span class="line">//The general sibling combinator (~) separates two selectors and matches the second element only if it follows the first element (though not necessarily immediately), and both are children of the same parent element. Example: Paragraphs that are siblings of and subsequent to any image</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">img</span> ~ <span class="selector-tag">p</span> &#123; <span class="attribute">color</span>: red; &#125;</span><br><span class="line"></span><br><span class="line">//The descendant combinator — typically represented by a single space ( ) character. Example: List items that are descendants of the "my-things" list</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span><span class="selector-class">.my-things</span> <span class="selector-tag">li</span> &#123; <span class="attribute">margin</span>: <span class="number">2em</span>; &#125;</span><br></pre></td></tr></table></figure><h4 id="pseudo-class"><a href="#pseudo-class" class="headerlink" title="pseudo-class"></a>pseudo-class</h4><p>Common <code>pseudo-class</code> selectors</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&amp;:first-child &#123;</span><br><span class="line">margin-left: -8px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;:hover &#123;</span><br><span class="line">    text-decoration: underline;</span><br><span class="line">    color: white;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;:last-child &#123;</span><br><span class="line">margin-bottom: 28px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;:visited &#123;</span><br><span class="line">color: white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="Attribute-Selector"><a href="#Attribute-Selector" class="headerlink" title="Attribute Selector"></a>Attribute Selector</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.someClass[someAttribute]</span><br></pre></td></tr></table></figure><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity</a></li><li><a href="https://www.w3schools.com/css/css_specificity.asp" target="_blank" rel="noopener">https://www.w3schools.com/css/css_specificity.asp</a></li><li><a href="https://dev.to/emmawedekind/css-specificity-1kca" target="_blank" rel="noopener">https://dev.to/emmawedekind/css-specificity-1kca</a></li><li><a href="https://specifishity.com/" target="_blank" rel="noopener">https://specifishity.com/</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="Specificity"><a href="#Specificity" class="headerlink" title="Specificity"></a>Specificity</h3><p>Specificity uses a four-category system to give a CSS selector a value. The selector with the most specific value wins. Each </p><table><thead><tr><th>Specificity</th><th>High</th><th></th><th></th><th>Low</th></tr></thead><tbody><tr><td>Selector</td><td>Inline</td><td>ID</td><td>Class, pseudo-class, attribute</td><td>element</td></tr><tr><td>Weight</td><td>1,0,0,0</td><td>0,1,0,0</td><td>0,0,1,0</td><td>0,0,0,1</td></tr></tbody></table><p>Examples:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nav#nav &gt; li:hover &#123; colour:red; &#125;</span><br><span class="line">Results in 0,1,1,2</span><br><span class="line"></span><br><span class="line">li:nth-child(2):hover &#123; color:red; &#125;</span><br><span class="line">Results in 0,0,2,1</span><br></pre></td></tr></table></figure><h3 id="Selectors"><a href="#Selectors" class="headerlink" title="Selectors"></a>Selectors</h3><p>These can help you add weight to the <code>Specificity</code> </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">.myDiv &#123;</span><br><span class="line">    padding-top: 50px;</span><br><span class="line">    margin-top: -50px;    </span><br><span class="line">    </span><br><span class="line">    &amp;.myDiv2 &#123;</span><br><span class="line">    padding-top: 150px;</span><br><span class="line">    margin-top: -150px;        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*Resulting CSS and what it would select on</span><br><span class="line"></span><br><span class="line">.myDiv &#123; padding-top: 50px; margin-top: -50px; &#125;               ~ 0,0,1,0</span><br><span class="line">.myDiv.myDiv2 &#123; padding-top: 150px; margin-top: -150px; &#125;      ~ 0,0,2,0</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;myDiv myDiv2&quot;&gt;&lt;/div&gt;</span><br><span class="line">*/</span><br></pre></td></tr></table></figure><h4 id="Universal-and-combinator-selectors"><a href="#Universal-and-combinator-selectors" class="headerlink" title="Universal and combinator selectors"></a>Universal and combinator selectors</h4><p>These have no effect on specificity.</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// universal selector (*) matches elements of any type.</span><br><span class="line"></span><br><span class="line">* &#123; <span class="attribute">box-sizing</span>: border-box; <span class="attribute">font-family</span>: <span class="string">"Open Sans"</span>, sans-serif; &#125;</span><br><span class="line"></span><br><span class="line">// The adjacent sibling combinator (+) separates two selectors and matches the second element only if it immediately follows the first element, and both are children of the same parent element. Example: Paragraphs that come immediately after any image</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">img</span> + <span class="selector-tag">p</span> &#123; <span class="attribute">font-style</span>: bold; &#125;</span><br><span class="line"></span><br><span class="line">// The child combinator (&gt;) is placed between two CSS selectors. It matches only those elements matched by the second selector that are the children of elements matched by the first. Example: List items that are children of the "my-things" list</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span><span class="selector-class">.my-things</span> &gt; <span class="selector-tag">li</span> &#123; <span class="attribute">margin</span>: <span class="number">2em</span>; &#125;</span><br><span class="line"></span><br><span class="line">// The general sibling combinator (~) separates two selectors and matches the second element only if it follows the first element (though not necessarily immediately), and both are children of the same parent element. Example: Paragraphs that are siblings of and subsequent to any image</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">img</span> ~ <span class="selector-tag">p</span> &#123; <span class="attribute">color</span>: red; &#125;</span><br><span class="line"></span><br><span class="line">// The descendant combinator — typically represented by a single space ( ) character. Example: List items that are descendants of the "my-things" list</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span><span class="selector-class">.my-things</span> <span class="selector-tag">li</span> &#123; <span class="attribute">margin</span>: <span class="number">2em</span>; &#125;</span><br></pre></td></tr></table></figure><h4 id="pseudo-class"><a href="#pseudo-class" class="headerlink" title="pseudo-class"></a>pseudo-class</h4><p>Common <code>pseudo-class</code> selectors</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&amp;:first-child &#123;</span><br><span class="line">    margin-left: -8px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;:hover &#123;</span><br><span class="line">    text-decoration: underline;</span><br><span class="line">    color: white;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;:last-child &#123;</span><br><span class="line">    margin-bottom: 28px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;:visited &#123;</span><br><span class="line">    color: white;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">:nth-child(1) &#123;</span><br><span class="line">    width: 900px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="Attribute-Selector"><a href="#Attribute-Selector" class="headerlink" title="Attribute Selector"></a>Attribute Selector</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.someClass[someAttribute]</span><br></pre></td></tr></table></figure><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity</a></li><li><a href="https://www.w3schools.com/css/css_specificity.asp" target="_blank" rel="noopener">https://www.w3schools.com/css/css_specificity.asp</a></li><li><a href="https://dev.to/emmawedekind/css-specificity-1kca" target="_blank" rel="noopener">https://dev.to/emmawedekind/css-specificity-1kca</a></li><li><a href="https://specifishity.com/" target="_blank" rel="noopener">https://specifishity.com/</a></li></ul>]]></content>
       
       
       
@@ -2562,11 +2562,11 @@
     
     
     <entry>
-      <title>Unit Testing Frameworks</title>
-      <link href="/2018/09/unit-testing-frameworks/"/>
-      <url>/2018/09/unit-testing-frameworks/</url>
+      <title>Test Runners</title>
+      <link href="/2018/09/test-runners/"/>
+      <url>/2018/09/test-runners/</url>
       
-        <content type="html"><![CDATA[<h3 id="NUnit"><a href="#NUnit" class="headerlink" title="NUnit"></a>NUnit</h3><ul><li>See <a href="/2018/12/unit-testing-with-nunit/">Unit testing with NUnit</a></li></ul><h3 id="MSTest"><a href="#MSTest" class="headerlink" title="MSTest"></a>MSTest</h3><ul><li>See <a href="/2018/12/unit-testing-with-mstest/">Unit testing with MSTest</a></li></ul><h3 id="xUnit-net"><a href="#xUnit-net" class="headerlink" title="xUnit.net"></a>xUnit.net</h3><ul><li>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework</li><li>See <a href="https://xunit.github.io/" target="_blank" rel="noopener">https://xunit.github.io</a></li></ul><h3 id="MbUnit"><a href="#MbUnit" class="headerlink" title="MbUnit"></a>MbUnit</h3><ul><li><a href="https://www.nuget.org/packages/mbunit/" target="_blank" rel="noopener">https://www.nuget.org/packages/mbunit/</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="Resharper-–-Unit-Test-Sessions"><a href="#Resharper-–-Unit-Test-Sessions" class="headerlink" title="Resharper – Unit Test Sessions"></a>Resharper – Unit Test Sessions</h3><ul><li><a href="https://www.jetbrains.com/help/resharper/Reference__Windows__Unit_Test_Sessions.html" target="_blank" rel="noopener">Unit Test Sessions window</a></li><li><a href="https://www.jetbrains.com/help/resharper/Using_Unit_Test_Sessions.html" target="_blank" rel="noopener">Using Unit Test Sessions</a></li></ul><h3 id="Dotnet-Watch"><a href="#Dotnet-Watch" class="headerlink" title="Dotnet Watch"></a>Dotnet Watch</h3><p><code>dotnet-watch</code> is a file watcher for <code>dotnet</code> that restarts the specified application when changes in the source code are detected.</p><ul><li>CS to solution directory</li><li>dotnet build<ul><li>dotnet test (run once)</li><li>dotnet watch test (watch for changes)</li></ul></li></ul><p><img src="/d/test-runners/dotnet-watch.png" alt="Dotnet Watch"></p><ul><li><a href="https://www.pluralsight.com/courses/test-driven-development-big-picture" target="_blank" rel="noopener">https://www.pluralsight.com/courses/test-driven-development-big-picture</a></li><li><a href="https://github.com/aspnet/Docs/blob/master/aspnetcore/tutorials/dotnet-watch.md" target="_blank" rel="noopener">https://github.com/aspnet/Docs/blob/master/aspnetcore/tutorials/dotnet-watch.md</a></li><li><a href="https://github.com/aspnet/DotNetTools/blob/master/src/dotnet-watch/README.md" target="_blank" rel="noopener">https://github.com/aspnet/DotNetTools/blob/master/src/dotnet-watch/README.md</a></li></ul><h3 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h3><p>These 3 are listed in <a href="http://www.wrox.com/WileyCDA/WroxTitle/Professional-Test-Driven-Development-with-C-Developing-Real-World-Applications-with-TDD.productCd-047064320X.html" target="_blank" rel="noopener">Professional Test Driven Development with C#: Developing Real World Applications with TDD</a></p><ul><li>TestDriven.NET</li><li>Developer Express Test Runner</li><li>Gallio</li></ul>]]></content>
       
       
       
@@ -2581,11 +2581,11 @@
     
     
     <entry>
-      <title>Test Runners</title>
-      <link href="/2018/09/test-runners/"/>
-      <url>/2018/09/test-runners/</url>
+      <title>Unit Testing Frameworks</title>
+      <link href="/2018/09/unit-testing-frameworks/"/>
+      <url>/2018/09/unit-testing-frameworks/</url>
       
-        <content type="html"><![CDATA[<h3 id="Resharper-–-Unit-Test-Sessions"><a href="#Resharper-–-Unit-Test-Sessions" class="headerlink" title="Resharper – Unit Test Sessions"></a>Resharper – Unit Test Sessions</h3><ul><li><a href="https://www.jetbrains.com/help/resharper/Reference__Windows__Unit_Test_Sessions.html" target="_blank" rel="noopener">Unit Test Sessions window</a></li><li><a href="https://www.jetbrains.com/help/resharper/Using_Unit_Test_Sessions.html" target="_blank" rel="noopener">Using Unit Test Sessions</a></li></ul><h3 id="Dotnet-Watch"><a href="#Dotnet-Watch" class="headerlink" title="Dotnet Watch"></a>Dotnet Watch</h3><p><code>dotnet-watch</code> is a file watcher for <code>dotnet</code> that restarts the specified application when changes in the source code are detected.</p><ul><li>CS to solution directory</li><li>dotnet build<ul><li>dotnet test (run once)</li><li>dotnet watch test (watch for changes)</li></ul></li></ul><p><img src="/d/test-runners/dotnet-watch.png" alt="Dotnet Watch"></p><ul><li><a href="https://www.pluralsight.com/courses/test-driven-development-big-picture" target="_blank" rel="noopener">https://www.pluralsight.com/courses/test-driven-development-big-picture</a></li><li><a href="https://github.com/aspnet/Docs/blob/master/aspnetcore/tutorials/dotnet-watch.md" target="_blank" rel="noopener">https://github.com/aspnet/Docs/blob/master/aspnetcore/tutorials/dotnet-watch.md</a></li><li><a href="https://github.com/aspnet/DotNetTools/blob/master/src/dotnet-watch/README.md" target="_blank" rel="noopener">https://github.com/aspnet/DotNetTools/blob/master/src/dotnet-watch/README.md</a></li></ul><h3 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h3><p>These 3 are listed in <a href="http://www.wrox.com/WileyCDA/WroxTitle/Professional-Test-Driven-Development-with-C-Developing-Real-World-Applications-with-TDD.productCd-047064320X.html" target="_blank" rel="noopener">Professional Test Driven Development with C#: Developing Real World Applications with TDD</a></p><ul><li>TestDriven.NET</li><li>Developer Express Test Runner</li><li>Gallio</li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="NUnit"><a href="#NUnit" class="headerlink" title="NUnit"></a>NUnit</h3><ul><li>See <a href="/2018/12/unit-testing-with-nunit/">Unit testing with NUnit</a></li></ul><h3 id="MSTest"><a href="#MSTest" class="headerlink" title="MSTest"></a>MSTest</h3><ul><li>See <a href="/2018/12/unit-testing-with-mstest/">Unit testing with MSTest</a></li></ul><h3 id="xUnit-net"><a href="#xUnit-net" class="headerlink" title="xUnit.net"></a>xUnit.net</h3><ul><li>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework</li><li>See <a href="https://xunit.github.io/" target="_blank" rel="noopener">https://xunit.github.io</a></li></ul><h3 id="MbUnit"><a href="#MbUnit" class="headerlink" title="MbUnit"></a>MbUnit</h3><ul><li><a href="https://www.nuget.org/packages/mbunit/" target="_blank" rel="noopener">https://www.nuget.org/packages/mbunit/</a></li></ul>]]></content>
       
       
       
@@ -3061,9 +3061,9 @@
       
         <tags>
             
-            <tag> utilities </tag>
-            
             <tag> docker </tag>
+            
+            <tag> utilities </tag>
             
         </tags>
       
@@ -3183,9 +3183,9 @@
       
         <tags>
             
-            <tag> utilities </tag>
-            
             <tag> docker </tag>
+            
+            <tag> utilities </tag>
             
             <tag> docker compose </tag>
             
@@ -3734,11 +3734,11 @@
     
     
     <entry>
-      <title>Stick 120 Size</title>
-      <link href="/2018/04/stick-120/"/>
-      <url>/2018/04/stick-120/</url>
+      <title>Stick 160 Size</title>
+      <link href="/2018/04/stick-160/"/>
+      <url>/2018/04/stick-160/</url>
       
-        <content type="html"><![CDATA[<p>120 Size</p>]]></content>
+        <content type="html"><![CDATA[<h3 id="Plans"><a href="#Plans" class="headerlink" title="Plans"></a>Plans</h3><ul><li><a href="http://www.hangarone.co.nz/big-stik-plan-100-span-30cc-size-by-don-anderson-p-6100.html" target="_blank" rel="noopener">Big Stik Plan 100″ Span 30cc Size by Don Anderson</a></li></ul>]]></content>
       
       
       
@@ -3753,11 +3753,11 @@
     
     
     <entry>
-      <title>Stick 40 Size</title>
-      <link href="/2018/04/stick-40/"/>
-      <url>/2018/04/stick-40/</url>
+      <title>Stick 120 Size</title>
+      <link href="/2018/04/stick-120/"/>
+      <url>/2018/04/stick-120/</url>
       
-        <content type="html"><![CDATA[<h4 id="40-Size-Hangar-9"><a href="#40-Size-Hangar-9" class="headerlink" title="40 Size (Hangar 9)"></a>40 Size (Hangar 9)</h4><p>Fuselage</p><ul><li>F1 to the end of the fuse (excluding rudder) 1100 mm</li><li>F1 is 82 mm high by 80 mm wide, note that the fuse bulges out under the wing to 90×90 mm</li></ul><p>Wing</p><ul><li>1480 mm TE length</li><li>1360 mm LE length</li><li>325 LE Tip to TE tip</li><li>Symmetrical shape ~ <a href="http://airfoiltools.com/airfoil/details?airfoil=raf27-il" target="_blank" rel="noopener">simliar to RAF 27 AIRFOIL (raf27-il)</a></li></ul><p>Tail</p><ul><li>552 mm TE length</li><li>485 mm LE length</li><li>220 LE Tip to TE tip</li></ul><p><img src="/d/stick-sizes/stick 3.jpg" alt="H9 40 Fuse"></p><p><img src="/d/stick-sizes/stick 4.jpg" alt="H9 40 Wing"></p><h4 id="40-Size-Fiber-Glass-Fuselage"><a href="#40-Size-Fiber-Glass-Fuselage" class="headerlink" title="40 Size (Fiber Glass Fuselage)"></a>40 Size (Fiber Glass Fuselage)</h4><p>Fuselage</p><ul><li>F1 to the end of the fuse (excluding rudder) 970 mm</li><li>F1 is 85 mm high by 80 mm wide</li></ul><p><em>Possible Wing Construction:</em></p><ul><li>Spars are made from spruce 3/16 (5mm) by 1/4 (6mm) or 1/4 square</li><li>Sheeting 2mm for LE (leading edge) and TE (trailing edge)</li><li>Ribs 2mm balsa</li><li>Rib caps 5mm x 1.6mm</li><li>LE is 3/8 square</li><li>TE 3/8 x 1/2</li></ul><p><img src="/d/stick-sizes/stick 5.jpg" alt="Images from Arthur Colby"></p><p><img src="/d/stick-sizes/stick 6.jpg" alt="Images from Arthur Colby"></p><p><em>Fuselage Construction:</em></p><ul><li>TBA</li></ul><h3 id="Plans"><a href="#Plans" class="headerlink" title="Plans"></a>Plans</h3><ul><li><a href="https://outerzone.co.uk/plan_details.asp?ID=4245" target="_blank" rel="noopener">40 size : Middle Stick 55in/1400mm span</a></li><li><a href="http://www.hangarone.co.nz/das-ugly-stik-plan-62-span-40-size-by-phil-kraft-p-6095.html" target="_blank" rel="noopener">Das Ugly Stik Plan 62″ Span 40 Size by Phil Kraft</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p>120 Size</p>]]></content>
       
       
       
@@ -3791,25 +3791,6 @@
     
     
     <entry>
-      <title>Stick 60 Size</title>
-      <link href="/2018/04/stick-60/"/>
-      <url>/2018/04/stick-60/</url>
-      
-        <content type="html"><![CDATA[<h4 id="Drastik-60"><a href="#Drastik-60" class="headerlink" title="Drastik 60"></a>Drastik 60</h4><p>I sold my ARF before getting a chance to build it. The over sized wing and fuselage was awesome.</p><p>Wing</p><ul><li>1680 mm TE length</li><li>1530 mm LE length</li><li>400 mm LE Tip to TE tip</li></ul><p>Fuselage</p><ul><li>F1 to the end of the fuse (excluding rudder) 1175 mm</li><li>F1 to end of the rudder 1440 mm</li><li>F1 height 105 mm</li></ul><p><img src="/d/stick-60/stick 7.jpg" alt="Drastik 60"></p><p>These are some snaps of the same model that was for sale on a marketplace, helpful to gauge size.</p><p><img src="/d/stick-60/Drastik 1.jpg" alt="Drastik 60"><br><img src="/d/stick-60/Drastik 2.jpg" alt="Drastik 60"><br><img src="/d/stick-60/Drastik 3.jpg" alt="Drastik 60"></p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> model airplanes </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Mini Ultra Stick</title>
       <link href="/2018/04/stick-mini/"/>
       <url>/2018/04/stick-mini/</url>
@@ -3829,11 +3810,11 @@
     
     
     <entry>
-      <title>Micro Ultra Stick</title>
-      <link href="/2018/04/stick-micro/"/>
-      <url>/2018/04/stick-micro/</url>
+      <title>Stick 40 Size</title>
+      <link href="/2018/04/stick-40/"/>
+      <url>/2018/04/stick-40/</url>
       
-        <content type="html"><![CDATA[<h3 id="800mm-Span"><a href="#800mm-Span" class="headerlink" title="800mm Span"></a>800mm Span</h3><p>335 grams including 1000 Mah 3 Cell Lipo</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3 - 3mm balsa</li><li>F4, F5 - 2mm balsa</li><li>Sheeting (top, bottom, sides) - 2mm balsa</li><li>Wing seat, 3mm balsa vertical grain</li><li>Bracing inside the fuse 3x3mm balsa</li></ul><p><em>Wing</em></p><p>The Airfoil is <a href="/2018/04/airfoils/">Eppler 168 15% width</a></p><ul><li>2mm balsa for skinning and cap strips</li><li>Ribs &amp; sheer webbing 3mm balsa</li><li>5mm trailing edge</li><li>5mm balsa spars</li><li>9.5mm balsa leading edge</li><li>Wing tips 5mm balsa</li></ul><p><em>Tail</em></p><ul><li>5x5mm balsa control surfaces, gussets and triangle bracing (hard would be better)</li></ul><p><strong>Wood Shopping List</strong></p><ul><li>2mm balsa (x4) - <a href="http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html</a></li><li>3mm balsa (x5) - <a href="http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html</a></li><li>5mm balsa (x2) - <a href="http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html</a></li><li>9.5mm balsa (x1) - <a href="http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html</a></li><li>3mm ply (x1) - <a href="http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html</a></li></ul><p><img src="/d/stick-micro/800mm-rib.jpg" alt="800mm Micro Ultra Rib"></p><p><img src="/d/stick-micro/800mm.jpg" alt="800mm Micro Ultra"></p><h3 id="400mm-Span"><a href="#400mm-Span" class="headerlink" title="400mm Span"></a>400mm Span</h3><p>Same plan but printed at 50%</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3, F4 and F5 all 1.5mm balsa</li><li>1mm x 3mm for bracing</li></ul><p><em>Wing</em></p><ul><li>Ribs 1.5mm balsa</li><li>1mm balsa for skinning and cap strips</li></ul><p><em>Tail</em></p><ul><li>3mm x 3mm for control surfaces</li></ul><p><img src="/d/stick-micro/400mm a.jpg" alt="400mm Micro Ultra"></p><p><img src="/d/stick-micro/400mm b.jpg" alt="400mm Micro Ultra"></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://aerofred.com/details.php?image_id=99469" target="_blank" rel="noopener">https://aerofred.com/details.php?image_id=99469</a></li><li><a href="https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC" target="_blank" rel="noopener">https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h4 id="40-Size-Hangar-9"><a href="#40-Size-Hangar-9" class="headerlink" title="40 Size (Hangar 9)"></a>40 Size (Hangar 9)</h4><p>Fuselage</p><ul><li>F1 to the end of the fuse (excluding rudder) 1100 mm</li><li>F1 is 82 mm high by 80 mm wide, note that the fuse bulges out under the wing to 90×90 mm</li></ul><p>Wing</p><ul><li>1480 mm TE length</li><li>1360 mm LE length</li><li>325 LE Tip to TE tip</li><li>Symmetrical shape ~ <a href="http://airfoiltools.com/airfoil/details?airfoil=raf27-il" target="_blank" rel="noopener">simliar to RAF 27 AIRFOIL (raf27-il)</a></li></ul><p>Tail</p><ul><li>552 mm TE length</li><li>485 mm LE length</li><li>220 LE Tip to TE tip</li></ul><p><img src="/d/stick-sizes/stick 3.jpg" alt="H9 40 Fuse"></p><p><img src="/d/stick-sizes/stick 4.jpg" alt="H9 40 Wing"></p><h4 id="40-Size-Fiber-Glass-Fuselage"><a href="#40-Size-Fiber-Glass-Fuselage" class="headerlink" title="40 Size (Fiber Glass Fuselage)"></a>40 Size (Fiber Glass Fuselage)</h4><p>Fuselage</p><ul><li>F1 to the end of the fuse (excluding rudder) 970 mm</li><li>F1 is 85 mm high by 80 mm wide</li></ul><p><em>Possible Wing Construction:</em></p><ul><li>Spars are made from spruce 3/16 (5mm) by 1/4 (6mm) or 1/4 square</li><li>Sheeting 2mm for LE (leading edge) and TE (trailing edge)</li><li>Ribs 2mm balsa</li><li>Rib caps 5mm x 1.6mm</li><li>LE is 3/8 square</li><li>TE 3/8 x 1/2</li></ul><p><img src="/d/stick-sizes/stick 5.jpg" alt="Images from Arthur Colby"></p><p><img src="/d/stick-sizes/stick 6.jpg" alt="Images from Arthur Colby"></p><p><em>Fuselage Construction:</em></p><ul><li>TBA</li></ul><h3 id="Plans"><a href="#Plans" class="headerlink" title="Plans"></a>Plans</h3><ul><li><a href="https://outerzone.co.uk/plan_details.asp?ID=4245" target="_blank" rel="noopener">40 size : Middle Stick 55in/1400mm span</a></li><li><a href="http://www.hangarone.co.nz/das-ugly-stik-plan-62-span-40-size-by-phil-kraft-p-6095.html" target="_blank" rel="noopener">Das Ugly Stik Plan 62″ Span 40 Size by Phil Kraft</a></li></ul>]]></content>
       
       
       
@@ -3848,11 +3829,30 @@
     
     
     <entry>
-      <title>Stick 160 Size</title>
-      <link href="/2018/04/stick-160/"/>
-      <url>/2018/04/stick-160/</url>
+      <title>Stick 60 Size</title>
+      <link href="/2018/04/stick-60/"/>
+      <url>/2018/04/stick-60/</url>
       
-        <content type="html"><![CDATA[<h3 id="Plans"><a href="#Plans" class="headerlink" title="Plans"></a>Plans</h3><ul><li><a href="http://www.hangarone.co.nz/big-stik-plan-100-span-30cc-size-by-don-anderson-p-6100.html" target="_blank" rel="noopener">Big Stik Plan 100″ Span 30cc Size by Don Anderson</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h4 id="Drastik-60"><a href="#Drastik-60" class="headerlink" title="Drastik 60"></a>Drastik 60</h4><p>I sold my ARF before getting a chance to build it. The over sized wing and fuselage was awesome.</p><p>Wing</p><ul><li>1680 mm TE length</li><li>1530 mm LE length</li><li>400 mm LE Tip to TE tip</li></ul><p>Fuselage</p><ul><li>F1 to the end of the fuse (excluding rudder) 1175 mm</li><li>F1 to end of the rudder 1440 mm</li><li>F1 height 105 mm</li></ul><p><img src="/d/stick-60/stick 7.jpg" alt="Drastik 60"></p><p>These are some snaps of the same model that was for sale on a marketplace, helpful to gauge size.</p><p><img src="/d/stick-60/Drastik 1.jpg" alt="Drastik 60"><br><img src="/d/stick-60/Drastik 2.jpg" alt="Drastik 60"><br><img src="/d/stick-60/Drastik 3.jpg" alt="Drastik 60"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> model airplanes </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Micro Ultra Stick</title>
+      <link href="/2018/04/stick-micro/"/>
+      <url>/2018/04/stick-micro/</url>
+      
+        <content type="html"><![CDATA[<h3 id="800mm-Span"><a href="#800mm-Span" class="headerlink" title="800mm Span"></a>800mm Span</h3><p>335 grams including 1000 Mah 3 Cell Lipo</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3 - 3mm balsa</li><li>F4, F5 - 2mm balsa</li><li>Sheeting (top, bottom, sides) - 2mm balsa</li><li>Wing seat, 3mm balsa vertical grain</li><li>Bracing inside the fuse 3x3mm balsa</li></ul><p><em>Wing</em></p><p>The Airfoil is <a href="/2018/04/airfoils/">Eppler 168 15% width</a></p><ul><li>2mm balsa for skinning and cap strips</li><li>Ribs &amp; sheer webbing 3mm balsa</li><li>5mm trailing edge</li><li>5mm balsa spars</li><li>9.5mm balsa leading edge</li><li>Wing tips 5mm balsa</li></ul><p><em>Tail</em></p><ul><li>5x5mm balsa control surfaces, gussets and triangle bracing (hard would be better)</li></ul><p><strong>Wood Shopping List</strong></p><ul><li>2mm balsa (x4) - <a href="http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html</a></li><li>3mm balsa (x5) - <a href="http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html</a></li><li>5mm balsa (x2) - <a href="http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html</a></li><li>9.5mm balsa (x1) - <a href="http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html</a></li><li>3mm ply (x1) - <a href="http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html</a></li></ul><p><img src="/d/stick-micro/800mm-rib.jpg" alt="800mm Micro Ultra Rib"></p><p><img src="/d/stick-micro/800mm.jpg" alt="800mm Micro Ultra"></p><h3 id="400mm-Span"><a href="#400mm-Span" class="headerlink" title="400mm Span"></a>400mm Span</h3><p>Same plan but printed at 50%</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3, F4 and F5 all 1.5mm balsa</li><li>1mm x 3mm for bracing</li></ul><p><em>Wing</em></p><ul><li>Ribs 1.5mm balsa</li><li>1mm balsa for skinning and cap strips</li></ul><p><em>Tail</em></p><ul><li>3mm x 3mm for control surfaces</li></ul><p><img src="/d/stick-micro/400mm a.jpg" alt="400mm Micro Ultra"></p><p><img src="/d/stick-micro/400mm b.jpg" alt="400mm Micro Ultra"></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://aerofred.com/details.php?image_id=99469" target="_blank" rel="noopener">https://aerofred.com/details.php?image_id=99469</a></li><li><a href="https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC" target="_blank" rel="noopener">https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC</a></li></ul>]]></content>
       
       
       
@@ -3951,25 +3951,6 @@
     
     
     <entry>
-      <title>Design By Contract</title>
-      <link href="/2018/04/design-by-contract/"/>
-      <url>/2018/04/design-by-contract/</url>
-      
-        <content type="html"><![CDATA[<p><em>Prescribes that software designers should define formal, precise and verifiable interface specifications for software components, which extend the ordinary definition of abstract data types with preconditions, postconditions and invariants. These specifications are referred to as “contracts”, in accordance with a conceptual metaphor with the conditions and obligations of business contracts.</em></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://en.wikipedia.org/wiki/Design_by_contract" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Design_by_contract</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> patterns principles </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Dependency Inversion Principle (DIP)</title>
       <link href="/2018/04/dependency-inversion-principle-dip/"/>
       <url>/2018/04/dependency-inversion-principle-dip/</url>
@@ -3983,6 +3964,25 @@
             <tag> patterns principles </tag>
             
             <tag> dependency injection </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Design By Contract</title>
+      <link href="/2018/04/design-by-contract/"/>
+      <url>/2018/04/design-by-contract/</url>
+      
+        <content type="html"><![CDATA[<p><em>Prescribes that software designers should define formal, precise and verifiable interface specifications for software components, which extend the ordinary definition of abstract data types with preconditions, postconditions and invariants. These specifications are referred to as “contracts”, in accordance with a conceptual metaphor with the conditions and obligations of business contracts.</em></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://en.wikipedia.org/wiki/Design_by_contract" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Design_by_contract</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> patterns principles </tag>
             
         </tags>
       
