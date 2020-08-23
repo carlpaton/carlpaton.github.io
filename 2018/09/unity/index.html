@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="Unity (MVC Example)“The Unity Container (Unity) is a lightweight, extensible dependency injection container. It facilitates building loosely coupled applications” This was very simple to setup for an">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-08-09T20:50:33.547Z">
+<meta property="og:updated_time" content="2020-08-23T01:40:00.831Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unity">
 <meta name="twitter:description" content="Unity (MVC Example)“The Unity Container (Unity) is a lightweight, extensible dependency injection container. It facilitates building loosely coupled applications” This was very simple to setup for an">
@@ -131,7 +131,11 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">~ /App_Start/UnityConfig.cs</span><br><span class="line">public static void RegisterComponents()</span><br><span class="line">&#123;</span><br><span class="line">    var container = new UnityContainer();</span><br><span class="line"></span><br><span class="line">    // Data repository</span><br><span class="line">    container.AddExtension(new RepositoryModule());</span><br><span class="line">    </span><br><span class="line">    ....</span><br></pre></td></tr></table></figure>
 <p>The module then inherits the <code>Container</code> from the base class <code>UnityContainerExtension</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">using Unity;</span><br><span class="line">using Unity.Extension;</span><br><span class="line"></span><br><span class="line">namespace FooApp.Domain.Plumbing.Unity</span><br><span class="line">&#123;</span><br><span class="line">    public class RepositoryModule : UnityContainerExtension</span><br><span class="line">    &#123;</span><br><span class="line">        protected override void Initialize()</span><br><span class="line">        &#123;</span><br><span class="line">            Container.RegisterType&lt;IFizzRepository, FizzRepository&gt;();</span><br><span class="line">            Container.RegisterType&lt;IBuzzRepository, BuzzRepository&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Sweet! :D</p>
+<h3 id="Abstract-Factory"><a href="#Abstract-Factory" class="headerlink" title="Abstract Factory"></a>Abstract Factory</h3><p> Unity is unable to automatically resolve <code>IEnumerable&lt;T&gt;</code> dependencies which you could use with an <a href="/2020/02/factory-pattern/">Abstract Factory</a>.</p>
+<p> You can however get around this by naming the dependency.</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Container.RegisterType&lt;IPriceRule, EachPriceRule&gt;(&quot;EachPriceRule&quot;);</span><br><span class="line">Container.RegisterType&lt;IPriceRule, WeightPriceRule&gt;(&quot;WeightPriceRule&quot;);</span><br></pre></td></tr></table></figure>
+<p>This is then automagically injected into the consumer.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class FooController : Controller</span><br><span class="line">&#123;</span><br><span class="line">    private readonly IEnumerable&lt;IPriceRule&gt; _priceRules;</span><br><span class="line"></span><br><span class="line">    public FooController(IEnumerable&lt;IPriceRule&gt; priceRules)</span><br><span class="line">    &#123;</span><br><span class="line">        _priceRules = priceRules;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://www.codeproject.com/Articles/988257/Dependency-Injection-using-Unity-container" target="_blank" rel="noopener">https://www.codeproject.com/Articles/988257/Dependency-Injection-using-Unity-container</a></li>
 <li><a href="https://msdn.microsoft.com/en-us/library/dn223671(v=pandp.30).aspx" target="_blank" rel="noopener">https://msdn.microsoft.com/en-us/library/dn223671(v=pandp.30).aspx</a></li>
@@ -143,7 +147,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2018/09/unity/" data-id="cke5hpk9b00fr68onat2hdkr3" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2018/09/unity/" data-id="cke6fcjrj00hh6kon1oo0xahe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dependency-injection/">dependency injection</a></li></ul>
