@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="Add12git add .                              ~ add all changesgit add foo\bar\baz.md                 ~ add just one file  https://git-scm.com/docs/git-add  Branch12git branch">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-08-24T22:38:09.423Z">
+<meta property="og:updated_time" content="2020-08-24T23:21:03.917Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GIT Commands">
 <meta name="twitter:description" content="Add12git add .                              ~ add all changesgit add foo\bar\baz.md                 ~ add just one file  https://git-scm.com/docs/git-add  Branch12git branch">
@@ -174,7 +174,7 @@ ga('send', 'pageview');
 <h3 id="Reset"><a href="#Reset" class="headerlink" title="Reset"></a>Reset</h3><p>You can jump any amount of heads below, example <code>HEAD~2</code> will jump back 2.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD~1 --mixed              ~ Resets the index but not the working tree (i.e., the changed files are preserved but not marked for commit) and reports what has not been updated.</span><br><span class="line">git reset head --hard                 ~ clear the local changes that were reset above (that are now un-commited)</span><br><span class="line">git push origin cool-branch-name -f   ~ forces the changes you did with the above resets to origin</span><br></pre></td></tr></table></figure>
 <p>This was useful when I had run <code>git commit --amend</code> on the wrong head</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --soft HEAD@&#123;1&#125;             ~ Does not touch the index file or the working tree at all (but resets the head to &lt;commit&gt;, just like all modes do). This leaves all your changed files &quot;Changes to be committed&quot;, as git status would put it.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --soft HEAD@&#123;1&#125;             ~ Undo git commit amend</span><br></pre></td></tr></table></figure>
 <ul>
 <li><a href="https://git-scm.com/docs/git-reset" target="_blank" rel="noopener">https://git-scm.com/docs/git-reset</a></li>
 </ul>
@@ -205,7 +205,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2018/04/git-commands/" data-id="cke94ttcy005n58on40dah0km" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2018/04/git-commands/" data-id="cke959jgj005ovwonav86608d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
