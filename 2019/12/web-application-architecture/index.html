@@ -20,18 +20,21 @@ ga('send', 'pageview');
   
   <title>Web Application Architecture | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP  This is simliar to my post on N-Tier Architecture but follows what I feel is a better design and project structure.  “Clean architecture puts the business logic and application model at the cent">
+  <meta name="description" content="Monolithic application “A monolithic application is one that is entirely self-contained, in terms of its behavior. It may interact with other services or data stores in the course of performing its op">
 <meta name="keywords" content="patterns principles,architecture">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Web Application Architecture">
 <meta property="og:url" content="https://carlpaton.github.io/2019/12/web-application-architecture/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP  This is simliar to my post on N-Tier Architecture but follows what I feel is a better design and project structure.  “Clean architecture puts the business logic and application model at the cent">
+<meta property="og:description" content="Monolithic application “A monolithic application is one that is entirely self-contained, in terms of its behavior. It may interact with other services or data stores in the course of performing its op">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-08-25T03:30:01.133Z">
+<meta property="og:image" content="https://carlpaton.github.io/d/web-application-architecture/e-shop-on-web.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/web-application-architecture/ardalis-clean-architecture.jpg">
+<meta property="og:updated_time" content="2020-08-26T08:31:22.073Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web Application Architecture">
-<meta name="twitter:description" content="WIP  This is simliar to my post on N-Tier Architecture but follows what I feel is a better design and project structure.  “Clean architecture puts the business logic and application model at the cent">
+<meta name="twitter:description" content="Monolithic application “A monolithic application is one that is entirely self-contained, in terms of its behavior. It may interact with other services or data stores in the course of performing its op">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/web-application-architecture/e-shop-on-web.jpg">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -117,22 +120,28 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>WIP</p>
+        <h3 id="Monolithic-application"><a href="#Monolithic-application" class="headerlink" title="Monolithic application"></a>Monolithic application</h3><blockquote>
+<p>“A monolithic application is one that is entirely self-contained, in terms of its behavior. It may interact with other services or data stores in the course of performing its operations, but the core of its behavior runs within its own process and the entire application is typically deployed as a single unit. If such an application needs to scale horizontally, typically the entire application is duplicated across multiple servers or virtual machines.”</p>
 </blockquote>
-<p>This is simliar to my post on <a href="/2019/07/n-tier-architecture/">N-Tier Architecture</a> but follows what I feel is a better design and project structure.</p>
-<blockquote>
+<h3 id="Clean-architecture"><a href="#Clean-architecture" class="headerlink" title="Clean architecture"></a>Clean architecture</h3><blockquote>
 <p>“Clean architecture puts the business logic and application model at the center of the application. Instead of having business logic depend on data access or other infrastructure concerns, this dependency is inverted: infrastructure and implementation details depend on the Application Core. This is achieved by defining abstractions, or interfaces, in the Application Core, which are then implemented by types defined in the Infrastructure layer.”</p>
 </blockquote>
+<h4 id="Example-Web-Apps"><a href="#Example-Web-Apps" class="headerlink" title="Example Web Apps"></a>Example Web Apps</h4><p>Application architecture of the microsoft eShopOnWeb example application that follows <code>clean architecture</code></p>
+<p><img src="/d/web-application-architecture/e-shop-on-web.jpg" alt="eShopOnWeb"></p>
+<p>Application architecture of the <code>ardalis/CleanArchitecture</code> example application that follows <code>clean architecture</code> and  <a href="/2020/04/domain-driven-design/">Domain Driven Design</a></p>
+<p><img src="/d/web-application-architecture/ardalis-clean-architecture.jpg" alt="CleanArchitecture"></p>
+<h3 id="N-Layer"><a href="#N-Layer" class="headerlink" title="N-Layer"></a>N-Layer</h3><p>This is simliar to my post on <a href="/2019/07/n-tier-architecture/">N-Tier Architecture</a> but I feel <code>Clean architecture</code> above follows a better design and project structure.</p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures</a></li>
 <li><a href="https://github.com/carlpaton/CleanArchitecture" target="_blank" rel="noopener">https://github.com/carlpaton/CleanArchitecture</a></li>
+<li><a href="https://github.com/carlpaton/eShopOnWeb" target="_blank" rel="noopener">https://github.com/carlpaton/eShopOnWeb</a></li>
+<li><a href="https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor" target="_blank" rel="noopener">https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2019/12/web-application-architecture/" data-id="cke9dvfdy00k16oonf0bdy4cg" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2019/12/web-application-architecture/" data-id="ckeb4di7m00fnz8onuymz3ga2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/architecture/">architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/">patterns principles</a></li></ul>
@@ -143,11 +152,11 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2019/12/sql-stored-proc-with-cursor-loop/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/12/sql-stored-proc-offset-fetch/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Stored Proc With Cursor Loop
+          Stored Proc Offset Fetch
         
       </div>
     </a>
