@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="DefinitionThis design pattern is all about object copying, the use case would be when its easier to copy (clone) an existing object than to fully initialize a new one. Note that the existing object co">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-08-06T05:39:51.969Z">
+<meta property="og:updated_time" content="2020-08-28T01:27:02.085Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Prototype Pattern">
 <meta name="twitter:description" content="DefinitionThis design pattern is all about object copying, the use case would be when its easier to copy (clone) an existing object than to fully initialize a new one. Note that the existing object co">
@@ -138,6 +138,10 @@ ga('send', 'pageview');
 </tr>
 </tbody>
 </table>
+<p><strong>Caveats</strong></p>
+<ul>
+<li>When deep copying an entity, if it has a database auto assigned ID you may want to reset this as should the copied entity change and then be persisted you may update persisted data by mistake.</li>
+</ul>
 <h3 id="ICloneable"><a href="#ICloneable" class="headerlink" title="ICloneable"></a>ICloneable</h3><p><a href="/2020/05/icloneable/">Don’t use ICloneable</a> for the Prototype Pattern as it will create a shallow copy.</p>
 <ul>
 <li><a href="https://github.com/carlpaton/Boilerplate/blob/master/.Net Core Console Application/PatternsAndPrinciples/PrototypePattern/ICloneableDemo.cs" target="_blank" rel="noopener">PatternsAndPrinciples/PrototypePattern/ICloneableDemo.cs</a></li>
@@ -197,7 +201,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/05/prototype-pattern/" data-id="ckeb6qt2h00ayuwoncqbyc980" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/05/prototype-pattern/" data-id="ckedhrmwv00b7jgon17p23iqj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/creational-patterns/">creational patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/">patterns principles</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/serialization/">serialization</a></li></ul>
