@@ -27,6 +27,8 @@ $(document).ready(function () {
             url: "https://carlpaton.github.io/d/netify/sample.json",
             success: function(data) {
                 $(".log").append("success", data);
+
+                console.log("data", data); 
             },
             contentType: "application/json",
             error: function (xhr, error, status) {
