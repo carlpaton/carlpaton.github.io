@@ -12,11 +12,18 @@
 
     <h1>GET SOME!</h1>
     <div>
-        This will do a GET to `https://carlpaton.github.io/d/netify/sample.json`
+        <ul>
+            <li>
+                SHOULD 200 will do a GET to <a href="https://carlpaton.github.io/d/netify/sample.json">netify/sample.json</a>
+            </li>
+            <li>
+                SHOULD 404 will do a GET to <a href="https://carlpaton.github.io/d/netify/404.json">netify/404.json</a>
+            </li>
+        </ul>
     </div>
     <br />
-    <button class="button">GET DATA</button>
-    <button class="button2">GET FAIL</button>
+    <button class="button">SHOULD 200</button>
+    <button class="button2">SHOULD 404</button>
     <h2>LOG</h2>
     <div class="log"></div>
     
@@ -28,6 +35,9 @@ $(document).ready(function () {
             url: "https://carlpaton.github.io/d/netify/sample.json",
             success: function(data) {
                 $(".log").append("success", data);
+                $(".log").append("<br />"); 
+                $(".log").append("xhr:", JSON.stringify(data)); 
+                $(".log").append("<br />");                 
 
                 console.log("data", data); 
             },
@@ -50,7 +60,7 @@ $(document).ready(function () {
     $(".button2").click(function () {
         $.ajax({
             type: "GET",
-            url: "https://carlpaton.github.io/d/netify/gone.json",
+            url: "https://carlpaton.github.io/d/netify/404.json",
             success: function(data) {
             },
             contentType: "application/json",
