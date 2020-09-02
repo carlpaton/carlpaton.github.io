@@ -10,7 +10,14 @@
 </head>
 <body>
 
-    <button class="button">Call `carlpaton.github.io/d/netify/sample.json`</button>
+    <h1>GET SOME!</h1>
+    <div>
+        This will do a GET to `https://carlpaton.github.io/d/netify/sample.json`
+    </div>
+    <br />
+    <button class="button">GET DATA</button>
+    <h2>LOG</h2>
+    <div class="log"></div>
     
 <script>
 $(document).ready(function () {
@@ -19,11 +26,20 @@ $(document).ready(function () {
             type: "GET",
             url: "https://carlpaton.github.io/d/netify/sample.json",
             success: function(data) {
-                console.log(data.d);
+                $(".log").append("success", data);
             },
             contentType: "application/json",
             error: function (xhr, error, status) {
-                console.log(error, status);
+                $(".log").append("error:", error); 
+                $(".log").append("<br />"); 
+                $(".log").append("status:", status); 
+                $(".log").append("<br />");  
+                $(".log").append("xhr:", JSON.stringify(xhr)); 
+                $(".log").append("<br />"); 
+
+                console.log("XXX", xhr);
+                console.log("XXX", error);
+                console.log("XXX", status);
             }
         });
     });
