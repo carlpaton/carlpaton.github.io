@@ -16,6 +16,7 @@
     </div>
     <br />
     <button class="button">GET DATA</button>
+    <button class="button2">GET FAIL</button>
     <h2>LOG</h2>
     <div class="log"></div>
     
@@ -45,6 +46,28 @@ $(document).ready(function () {
             }
         });
     });
+
+    $(".button2").click(function () {
+        $.ajax({
+            type: "GET",
+            url: "https://carlpaton.github.io/d/netify/gone.json",
+            success: function(data) {
+            },
+            contentType: "application/json",
+            error: function (xhr, error, status) {
+                $(".log").append("error:", error); 
+                $(".log").append("<br />"); 
+                $(".log").append("status:", status); 
+                $(".log").append("<br />");  
+                $(".log").append("xhr:", JSON.stringify(xhr)); 
+                $(".log").append("<br />"); 
+
+                console.log("XXX 1", xhr);
+                console.log("XXX 1", error);
+                console.log("XXX 1", status);
+            }
+        });
+    });    
 });
 </script>
 
