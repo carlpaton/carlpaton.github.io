@@ -24,6 +24,7 @@
     <br />
     <button class="button">SHOULD 200</button>
     <button class="button2">SHOULD 404</button>
+    <button class="clear">CLEAR LOG</button>
     <h2>LOG</h2>
     <div class="log"></div>
     
@@ -78,6 +79,10 @@ $(document).ready(function () {
             }
         });
     });    
+
+    $(".clear").click(function () {
+        $(".log").html("");
+    });
 });
 </script>
 
