@@ -20,18 +20,23 @@ ga('send', 'pageview');
   
   <title>Netify | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Debugging proxy that will allow you to intercept and mutate requests from a web page  References https://chrome.google.com/webstore/detail/netify/mdafhjaillpdogjdigdkmnoddeoegblj https://www.json-gen">
+  <meta name="description" content="Debugging proxy that will allow you to intercept and mutate requests from a web page  Local ResponseConsider this simple page - https://carlpaton.github.io/d/netify/ The SHOULD 200 button does a GET">
 <meta name="keywords" content="utilities,browser utilities">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Netify">
 <meta property="og:url" content="https://carlpaton.github.io/2020/09/netify/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Debugging proxy that will allow you to intercept and mutate requests from a web page  References https://chrome.google.com/webstore/detail/netify/mdafhjaillpdogjdigdkmnoddeoegblj https://www.json-gen">
+<meta property="og:description" content="Debugging proxy that will allow you to intercept and mutate requests from a web page  Local ResponseConsider this simple page - https://carlpaton.github.io/d/netify/ The SHOULD 200 button does a GET">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-09-02T23:02:01.931Z">
+<meta property="og:image" content="https://carlpaton.github.io/d/netify/should-200.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/netify/settings.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/netify/intercept-should-200.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/netify/network-tab.jpg">
+<meta property="og:updated_time" content="2020-09-03T00:01:01.476Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netify">
-<meta name="twitter:description" content="Debugging proxy that will allow you to intercept and mutate requests from a web page  References https://chrome.google.com/webstore/detail/netify/mdafhjaillpdogjdigdkmnoddeoegblj https://www.json-gen">
+<meta name="twitter:description" content="Debugging proxy that will allow you to intercept and mutate requests from a web page  Local ResponseConsider this simple page - https://carlpaton.github.io/d/netify/ The SHOULD 200 button does a GET">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/netify/should-200.jpg">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -120,6 +125,29 @@ ga('send', 'pageview');
         <blockquote>
 <p>Debugging proxy that will allow you to intercept and mutate requests from a web page</p>
 </blockquote>
+<h3 id="Local-Response"><a href="#Local-Response" class="headerlink" title="Local Response"></a>Local Response</h3><p>Consider this simple page - <a href="https://carlpaton.github.io/d/netify/">https://carlpaton.github.io/d/netify/</a></p>
+<p>The <code>SHOULD 200</code> button does a <code>GET</code> to <a href="https://carlpaton.github.io/d/netify/sample.json">https://carlpaton.github.io/d/netify/sample.json</a></p>
+<p>The JSON response is then shown in the LOG, sweet.</p>
+<p><img src="/d/netify/should-200.jpg" alt="SHOULD 200"></p>
+<p>Now to intercept that request create a rule that matches</p>
+<ul>
+<li>Request filter: <a href="https://carlpaton.github.io/d/netify/sample.json">https://carlpaton.github.io/d/netify/sample.json</a></li>
+<li>Set to HXR and GET</li>
+</ul>
+<p>Check Local Response and set:</p>
+<ul>
+<li>Status code: 200</li>
+<li>Set headers: for this example they can be left blank as the page doesnt care</li>
+<li>Body</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;foo&quot;: &quot;naa take this&quot; &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/d/netify/settings.jpg" alt="Settings"></p>
+<p>Click <code>Inactivate</code> to change the plugin to be <code>Listening</code>, now click <code>CLEAR LOG</code> and then <code>SHOULD 200</code>. The new intercepted response is now shown.</p>
+<p><img src="/d/netify/intercept-should-200.jpg" alt="SHOULD 200"></p>
+<p>This can be seen in the network tab:</p>
+<p><img src="/d/netify/network-tab.jpg" alt="Network Tab"></p>
+<h4 id="Headers"><a href="#Headers" class="headerlink" title="Headers"></a>Headers</h4><p>Some example headers you may needs to set if your request tells you off.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Content-Type:                                 application/json; charset=utf-8</span><br><span class="line">Access-Control-Allow-Credentials:             true</span><br><span class="line">Access-Control-Allow-Origin:                  http://localhost:1234</span><br></pre></td></tr></table></figure>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://chrome.google.com/webstore/detail/netify/mdafhjaillpdogjdigdkmnoddeoegblj" target="_blank" rel="noopener">https://chrome.google.com/webstore/detail/netify/mdafhjaillpdogjdigdkmnoddeoegblj</a></li>
 <li><a href="https://www.json-generator.com/" target="_blank" rel="noopener">https://www.json-generator.com/</a></li>
@@ -128,7 +156,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/netify/" data-id="ckem0qu2f009sswonc5v4b8oo" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/netify/" data-id="ckem0xl7p009udwon1dwxketj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/browser-utilities/">browser utilities</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/">utilities</a></li></ul>
