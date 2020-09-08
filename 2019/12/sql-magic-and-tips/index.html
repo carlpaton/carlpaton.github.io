@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="SQL Magic and tips that are too small to warrant their own pages (read Carl doesn’t know enough about them) but are still pretty sweet and worth noting how to do! Temporary Tables And VariablesInstant">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-09-08T03:06:52.821Z">
+<meta property="og:updated_time" content="2020-09-08T05:16:43.116Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL Magic And Tips">
 <meta name="twitter:description" content="SQL Magic and tips that are too small to warrant their own pages (read Carl doesn’t know enough about them) but are still pretty sweet and worth noting how to do! Temporary Tables And VariablesInstant">
@@ -142,11 +142,12 @@ ga('send', 'pageview');
 <h3 id="Constraints"><a href="#Constraints" class="headerlink" title="Constraints"></a>Constraints</h3><p>The constraint will be called <code>CON_some_useful_meaningful_name__my_column</code> and is for the column <code>my_column</code>. The <code>CON_</code> prefix can be denoted as anything useful to your organization, always follow the suggestions of your DBA or the existing naming conventions in the database.</p>
 <p>The constraint below means <code>my_column</code> has to be <code>UNIQUE</code>.</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USE</span> myInstance;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> LOCK_TIMEOUT <span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line">IF NOT EXISTS(<span class="keyword">SELECT</span> TOP <span class="number">1</span> <span class="number">1</span> <span class="keyword">FROM</span> sys.key_constraints <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'CON_some_useful_meaningful_name__my_column'</span>)</span><br><span class="line">	<span class="keyword">ALTER</span> <span class="keyword">TABLE</span> [dbo].[my_table] <span class="keyword">ADD</span> <span class="keyword">CONSTRAINT</span> [CON_some_useful_meaningful_name__my_column] <span class="keyword">UNIQUE</span> ([my_column])</span><br><span class="line"><span class="keyword">GO</span></span><br></pre></td></tr></table></figure>
-
+<h3 id="Print-amp-Convert"><a href="#Print-amp-Convert" class="headerlink" title="Print &amp; Convert"></a>Print &amp; Convert</h3><p>When print things out for the user to see your proc doing something you will need to convert types. TIP! Set <code>SET NOCOUNT ON</code> first so you dont get <code>(n row(s) affected)</code> in your messages!</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span> @Counter <span class="built_in">int</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">DECLARE</span> @SomeUuid UNIQUEIDENTIFIER = NEWID ();</span><br><span class="line"></span><br><span class="line"><span class="comment">-- HACK HACK HACK</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- Inform the user</span></span><br><span class="line">PRINT(CONVERT(varchar(1000),@Counter) + ' ' + CONVERT(varchar(36),@SomeUuid))</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2019/12/sql-magic-and-tips/" data-id="cketguw0j00ejx8on6z5yg8u9" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2019/12/sql-magic-and-tips/" data-id="cketi52ab00e1cconuq5h83bg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
