@@ -18,18 +18,20 @@ ga('send', 'pageview');
 
 
   
-  <title>Archives: 2017/11 | Carl Paton | There are no silly questions</title>
+  <title>Transaction With Throw | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="There are no silly questions">
-<meta property="og:type" content="website">
-<meta property="og:title" content="There are no silly questions">
-<meta property="og:url" content="https://carlpaton.github.io/archives/2017/11/index.html">
+  <meta name="description" content="Transaction1234567891011121314151617181920212223242526USE [DocumentPacks];BEGIN TRY     BEGIN TRANSACTION		-- DECLARE		        -- INSERT        -- SOMETHING WENT WRONG WITH THE CODE ABOVE		THROW 51000">
+<meta name="keywords" content="sql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Transaction With Throw">
+<meta property="og:url" content="https://carlpaton.github.io/2019/12/sql-transaction-with-throw/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="There are no silly questions">
+<meta property="og:description" content="Transaction1234567891011121314151617181920212223242526USE [DocumentPacks];BEGIN TRY     BEGIN TRANSACTION		-- DECLARE		        -- INSERT        -- SOMETHING WENT WRONG WITH THE CODE ABOVE		THROW 51000">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-09-08T04:40:11.779Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="There are no silly questions">
-<meta name="twitter:description" content="There are no silly questions">
+<meta name="twitter:title" content="Transaction With Throw">
+<meta name="twitter:description" content="Transaction1234567891011121314151617181920212223242526USE [DocumentPacks];BEGIN TRY     BEGIN TRANSACTION		-- DECLARE		        -- INSERT        -- SOMETHING WENT WRONG WITH THE CODE ABOVE		THROW 51000">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -93,41 +95,67 @@ ga('send', 'pageview');
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/11/windows-event-logs/" class="archive-article-date">
-  <time datetime="2017-11-29T11:00:00.000Z" itemprop="datePublished">Nov 30</time>
+        <section id="main"><article id="post-sql-transaction-with-throw" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/sql-transaction-with-throw/" class="article-date">
+  <time datetime="2019-12-10T11:00:00.000Z" itemprop="datePublished">2019-Dec</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/windows-event-logs/">Windows Event Logs</a>
+    <h1 class="article-title" itemprop="name">
+      Transaction With Throw
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Transaction"><a href="#Transaction" class="headerlink" title="Transaction"></a>Transaction</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USE</span> [DocumentPacks];</span><br><span class="line"></span><br><span class="line"><span class="keyword">BEGIN</span> TRY</span><br><span class="line">     <span class="keyword">BEGIN</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">-- DECLARE</span></span><br><span class="line">		</span><br><span class="line">        <span class="comment">-- INSERT</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">-- SOMETHING WENT WRONG WITH THE CODE ABOVE</span></span><br><span class="line">		THROW <span class="number">51000</span>, <span class="string">'Foo error.'</span>, <span class="number">1</span>; </span><br><span class="line"></span><br><span class="line">     <span class="keyword">COMMIT</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"><span class="keyword">END</span> TRY</span><br><span class="line"><span class="keyword">BEGIN</span> CATCH</span><br><span class="line">     <span class="keyword">DECLARE</span> @ErrorNumber <span class="built_in">INT</span> = ERROR_NUMBER();</span><br><span class="line">     <span class="keyword">DECLARE</span> @ErrorLine <span class="built_in">INT</span> = ERROR_LINE();</span><br><span class="line">     <span class="keyword">DECLARE</span> @ErrorMessage <span class="keyword">NVARCHAR</span>(<span class="number">4000</span>) = ERROR_MESSAGE();</span><br><span class="line">     <span class="keyword">DECLARE</span> @ErrorSeverity <span class="built_in">INT</span> = ERROR_SEVERITY();</span><br><span class="line">     <span class="keyword">DECLARE</span> @ErrorState <span class="built_in">INT</span> = ERROR_STATE();</span><br><span class="line"></span><br><span class="line">     IF @@TRANCOUNT &gt; 0</span><br><span class="line">          <span class="keyword">ROLLBACK</span> <span class="keyword">TRANSACTION</span>;</span><br><span class="line"></span><br><span class="line">     RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);</span><br><span class="line"><span class="keyword">END</span> CATCH</span><br></pre></td></tr></table></figure>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://docs.microsoft.com/en-us/sql/t-sql/language-elements/begin-transaction-transact-sql?view=sql-server-ver15" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/sql/t-sql/language-elements/begin-transaction-transact-sql?view=sql-server-ver15</a></li>
+<li><a href="https://stackoverflow.com/questions/31274274/t-sql-throw-exception-within-a-transaction" target="_blank" rel="noopener">https://stackoverflow.com/questions/31274274/t-sql-throw-exception-within-a-transaction</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/12/sql-transaction-with-throw/" data-id="cketguw0p00ewx8onao05pg7t" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/12/sql-gen-random-data/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Generate Random Data
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/12/sql-batching-data-changes/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Batching Data Changes</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
-
-
 
 </section>
         
