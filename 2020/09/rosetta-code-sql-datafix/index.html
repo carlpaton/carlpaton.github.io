@@ -20,18 +20,20 @@ ga('send', 'pageview');
   
   <title>SQL Datafix | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP!  StoryConsider the following relational database: FooDatabase 12dbo.item_linedbo.tenant In the context of this database a tenant can only be one of App One, App Two or User. Each User has their">
+  <meta name="description" content="This is a Rosetta Code post. StoryConsider the following relational database: FooDatabase  In the context of this database a tenant can only be one of App One, App Two or User. Each User has their own">
 <meta name="keywords" content="rosetta code,sql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL Datafix">
 <meta property="og:url" content="https://carlpaton.github.io/2020/09/rosetta-code-sql-datafix/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP!  StoryConsider the following relational database: FooDatabase 12dbo.item_linedbo.tenant In the context of this database a tenant can only be one of App One, App Two or User. Each User has their">
+<meta property="og:description" content="This is a Rosetta Code post. StoryConsider the following relational database: FooDatabase  In the context of this database a tenant can only be one of App One, App Two or User. Each User has their own">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-09-11T22:28:57.723Z">
+<meta property="og:image" content="https://carlpaton.github.io/d/rosetta-code-sql-datafix/dbo.foodatabase.png">
+<meta property="og:updated_time" content="2020-09-11T22:51:05.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL Datafix">
-<meta name="twitter:description" content="WIP!  StoryConsider the following relational database: FooDatabase 12dbo.item_linedbo.tenant In the context of this database a tenant can only be one of App One, App Two or User. Each User has their">
+<meta name="twitter:description" content="This is a Rosetta Code post. StoryConsider the following relational database: FooDatabase  In the context of this database a tenant can only be one of App One, App Two or User. Each User has their own">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/rosetta-code-sql-datafix/dbo.foodatabase.png">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -117,11 +119,9 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>WIP!</p>
-</blockquote>
+        <p>This is a <a href="/2020/07/rosetta-code/">Rosetta Code</a> post.</p>
 <h3 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h3><p>Consider the following relational database: <code>FooDatabase</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dbo.item_line</span><br><span class="line">dbo.tenant</span><br></pre></td></tr></table></figure>
+<p><img src="/d/rosetta-code-sql-datafix/dbo.foodatabase.png" alt="dbo.FooDatabase"></p>
 <p>In the context of this database a <code>tenant</code> can only be one of <code>App One</code>, <code>App Two</code> or <code>User</code>. Each <code>User</code> has their own unique GUID and the applications have the following GUIDs:</p>
 <table>
 <thead>
@@ -152,14 +152,18 @@ ga('send', 'pageview');
 </ul>
 <p>Using the supplied data the prints and counts should be:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">total dbo.item_line to be updated : 13333</span><br><span class="line">total new dbo.tenant records : 12983</span><br><span class="line">actual updates to dbo.item_line : 13333</span><br></pre></td></tr></table></figure>
-<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>Spin up a MS SQL Instance, youn then connect to it from Microsoft SQL Server Management Studio on <code>localhost,1500</code></p>
+<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>Spin up a MS SQL Instance, you can then connect to it from Microsoft SQL Server Management Studio on <code>localhost,1500</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name=rosetta-df -e &quot;ACCEPT_EULA=Y&quot; -e &quot;SA_PASSWORD=Password123&quot; -p 1500:1433 -d mcr.microsoft.com/mssql/server:2017-latest</span><br></pre></td></tr></table></figure>
 <ul>
 <li><a href="https://github.com/carlpaton/SQLStatements/tree/master/mssql/Rosetta%20Code/SQL%20Data%20Fix" target="_blank" rel="noopener">Run these SQL scripts in the following order</a>:</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">001 CREATE DATABASE.sql</span><br><span class="line">002 CREATE TABLES.sql</span><br><span class="line">003 SEED dbo.tenant.sql</span><br><span class="line">004 SEED dbo.line_item.sql</span><br><span class="line">005 SEED dbo.tenant.sql</span><br></pre></td></tr></table></figure>
 <p>This should get the data into a state that matches the counts above.</p>
-<h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p>baz</p>
+<h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><blockquote>
+<p>WIP!</p>
+</blockquote>
+<h4 id="set-operations"><a href="#set-operations" class="headerlink" title="set operations"></a>set operations</h4><p>A set is an exactly defined collection of objects, this can be accomplished by selecting into a #temptable.</p>
+<h4 id="cursor"><a href="#cursor" class="headerlink" title="cursor"></a>cursor</h4><p>Use a STATIC cursor to iterate over the data.</p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15</a></li>
 <li><a href="https://www.sqlshack.com/understanding-the-interaction-between-set-theory-and-set-operators-in-sql-server/" target="_blank" rel="noopener">https://www.sqlshack.com/understanding-the-interaction-between-set-theory-and-set-operators-in-sql-server/</a></li>
@@ -168,7 +172,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/rosetta-code-sql-datafix/" data-id="ckeytckfu00cgtsonpyb1wokf" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/rosetta-code-sql-datafix/" data-id="ckeyu56ri00cjr0onxah8uu5m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rosetta-code/">rosetta code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
