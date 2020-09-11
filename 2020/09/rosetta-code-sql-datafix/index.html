@@ -18,18 +18,20 @@ ga('send', 'pageview');
 
 
   
-  <title>Tag: json | Carl Paton | There are no silly questions</title>
+  <title>SQL Datafix | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="There are no silly questions">
-<meta property="og:type" content="website">
-<meta property="og:title" content="There are no silly questions">
-<meta property="og:url" content="https://carlpaton.github.io/tags/json/index.html">
+  <meta name="description" content="StoryConsider the following relational database: In the context of this database a tenant can only be one of App One, App Two or User. Each User has their own unique GUID and the applications have the">
+<meta name="keywords" content="rosetta code,sql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL Datafix">
+<meta property="og:url" content="https://carlpaton.github.io/2020/09/rosetta-code-sql-datafix/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="There are no silly questions">
+<meta property="og:description" content="StoryConsider the following relational database: In the context of this database a tenant can only be one of App One, App Two or User. Each User has their own unique GUID and the applications have the">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-09-11T05:46:32.778Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="There are no silly questions">
-<meta name="twitter:description" content="There are no silly questions">
+<meta name="twitter:title" content="SQL Datafix">
+<meta name="twitter:description" content="StoryConsider the following relational database: In the context of this database a tenant can only be one of App One, App Two or User. Each User has their own unique GUID and the applications have the">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -93,98 +95,89 @@ ga('send', 'pageview');
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/01/json-serializers/" class="archive-article-date">
-  <time datetime="2020-01-27T11:00:00.000Z" itemprop="datePublished">Jan 28</time>
+        <section id="main"><article id="post-rosetta-code-sql-datafix" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/rosetta-code-sql-datafix/" class="article-date">
+  <time datetime="2020-09-10T12:00:00.000Z" itemprop="datePublished">2020-Sep</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/json-serializers/">JSON Serializers</a>
+    <h1 class="article-title" itemprop="name">
+      SQL Datafix
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
       
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/08/json-utilities/" class="archive-article-date">
-  <time datetime="2018-08-28T12:00:00.000Z" itemprop="datePublished">Aug 29</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/json-utilities/">JSON Utilities</a>
-    </h1>
-  
+        <h3 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h3><p>Consider the following relational database:</p>
+<p>In the context of this database a <code>tenant</code> can only be one of <code>App One</code>, <code>App Two</code> or <code>User</code>. Each <code>User</code> has their own unique GUID and the applications have the following GUIDs:</p>
+<table>
+<thead>
+<tr>
+<th>Application Name</th>
+<th>GUID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App One</td>
+<td>3ba2e2e8-f093-41d8-8daf-64d5385604ac</td>
+</tr>
+<tr>
+<td>App Two</td>
+<td>efec5b17-47fc-4d79-ae74-6e8b023023d5</td>
+</tr>
+</tbody>
+</table>
+<p>Several records in <code>dbo.item_line</code> have been persisted incorrectly. The column <code>dbo.item_line.tenant_id</code> has been populated with the GUID for <code>App One</code> for the period <code>15 Jan 2019</code> to <code>18 Aug 2019</code> when it should have been populated with the GUID for the <code>User</code> tenant.</p>
+<p>Thankfully <code>dbo.item_line.created_by_user_id</code> is a mandatory field and will contain valid user GUIDs. Note that not all users will exist in <code>dbo.Tenant</code>.</p>
+<p>The cleanup must be idempotent, this means it can be run multiple times without changing the result beyond the initial story/task.</p>
+<h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>Cleanup the data using a SQL script in a safe manner.</p>
+<ul>
+<li>Identify all records in <code>dbo.item_line</code> that need to be updated, print the count.</li>
+<li>Create records in <code>dbo.tenant</code> that dont exist when linking to <code>dbo.item_line.created_by_user_id</code>, print this count too.</li>
+<li>Update <code>dbo.item_line.tenant_id</code> to be the newly created <code>dbo.tenant.id</code> when it did not exist, else update to be <code>dbo.item_line.created_by_user_id</code>. Print the total count of updates. This should match the first count printed.</li>
+</ul>
+<p>Using the supplied data the prints and counts should be:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">total dbo.item_line to be updated : 123</span><br><span class="line">total new dbo.tenant records : 123</span><br><span class="line">actual updates to dbo.item_line : 123</span><br></pre></td></tr></table></figure>
+<h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p>baz</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15</a></li>
+<li><a href="https://www.sqlshack.com/understanding-the-interaction-between-set-theory-and-set-operators-in-sql-server/" target="_blank" rel="noopener">https://www.sqlshack.com/understanding-the-interaction-between-set-theory-and-set-operators-in-sql-server/</a></li>
+</ul>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2020/09/rosetta-code-sql-datafix/" data-id="ckextk2u300cv5wonfl3wb9gx" class="article-share-link">Share</a>
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/jsonnet-dot-net-library/" class="archive-article-date">
-  <time datetime="2017-06-22T12:00:00.000Z" itemprop="datePublished">Jun 23</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/jsonnet-dot-net-library/">Json.NET (.NET library)</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rosetta-code/">rosetta code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/09/mysql-performance/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">MySQL Performance</div>
+    </a>
   
+</nav>
 
+  
+</article>
 
 </section>
         
