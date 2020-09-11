@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>SQL Datafix | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP!  StoryConsider the following relational database: In the context of this database a tenant can only be one of App One, App Two or User. Each User has their own unique GUID and the applications h">
+  <meta name="description" content="WIP!  StoryConsider the following relational database: FooDatabase 12dbo.item_linedbo.tenant In the context of this database a tenant can only be one of App One, App Two or User. Each User has their">
 <meta name="keywords" content="rosetta code,sql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL Datafix">
 <meta property="og:url" content="https://carlpaton.github.io/2020/09/rosetta-code-sql-datafix/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP!  StoryConsider the following relational database: In the context of this database a tenant can only be one of App One, App Two or User. Each User has their own unique GUID and the applications h">
+<meta property="og:description" content="WIP!  StoryConsider the following relational database: FooDatabase 12dbo.item_linedbo.tenant In the context of this database a tenant can only be one of App One, App Two or User. Each User has their">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-09-11T07:09:48.421Z">
+<meta property="og:updated_time" content="2020-09-11T22:28:57.723Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL Datafix">
-<meta name="twitter:description" content="WIP!  StoryConsider the following relational database: In the context of this database a tenant can only be one of App One, App Two or User. Each User has their own unique GUID and the applications h">
+<meta name="twitter:description" content="WIP!  StoryConsider the following relational database: FooDatabase 12dbo.item_linedbo.tenant In the context of this database a tenant can only be one of App One, App Two or User. Each User has their">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -120,7 +120,8 @@ ga('send', 'pageview');
         <blockquote>
 <p>WIP!</p>
 </blockquote>
-<h3 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h3><p>Consider the following relational database:</p>
+<h3 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h3><p>Consider the following relational database: <code>FooDatabase</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dbo.item_line</span><br><span class="line">dbo.tenant</span><br></pre></td></tr></table></figure>
 <p>In the context of this database a <code>tenant</code> can only be one of <code>App One</code>, <code>App Two</code> or <code>User</code>. Each <code>User</code> has their own unique GUID and the applications have the following GUIDs:</p>
 <table>
 <thead>
@@ -140,8 +141,8 @@ ga('send', 'pageview');
 </tr>
 </tbody>
 </table>
-<p>Several records in <code>dbo.item_line</code> have been persisted incorrectly. The column <code>dbo.item_line.tenant_id</code> has been populated with the GUID for <code>App One</code> for the period <code>15 Jan 2019</code> to <code>18 Aug 2019</code> when it should have been populated with the GUID for the <code>User</code> tenant.</p>
-<p>Thankfully <code>dbo.item_line.created_by_user_id</code> is a mandatory field and will contain valid user GUIDs. Note that not all users will exist in <code>dbo.Tenant</code>.</p>
+<p>13 333 records in <code>dbo.item_line</code> have been persisted incorrectly. The column <code>dbo.item_line.tenant_id</code> has been populated with the GUID for <code>App One</code> for the period <code>01 Jan 2018</code> to <code>31 Dec 2018</code> when it should have been populated with the GUID for the <code>User</code> tenant. This date is stored in <code>dbo.item_line.created_date_uct</code>.</p>
+<p>Thankfully <code>dbo.item_line.created_by_user_id</code> is a mandatory field and will contain valid user GUIDs. Note that not all users will exist in <code>dbo.tenant</code>.</p>
 <p>The cleanup must be idempotent, this means it can be run multiple times without changing the result beyond the initial story/task.</p>
 <h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>Cleanup the data using a SQL script in a safe manner.</p>
 <ul>
@@ -150,9 +151,14 @@ ga('send', 'pageview');
 <li>Update <code>dbo.item_line.tenant_id</code> to be the newly created <code>dbo.tenant.id</code> when it did not exist, else update to be <code>dbo.item_line.created_by_user_id</code>. Print the total count of updates. This should match the first count printed.</li>
 </ul>
 <p>Using the supplied data the prints and counts should be:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">total dbo.item_line to be updated : 123</span><br><span class="line">total new dbo.tenant records : 123</span><br><span class="line">actual updates to dbo.item_line : 123</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">total dbo.item_line to be updated : 13333</span><br><span class="line">total new dbo.tenant records : 12983</span><br><span class="line">actual updates to dbo.item_line : 13333</span><br></pre></td></tr></table></figure>
 <h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>Spin up a MS SQL Instance, youn then connect to it from Microsoft SQL Server Management Studio on <code>localhost,1500</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name=rosetta-df -e &quot;ACCEPT_EULA=Y&quot; -e &quot;SA_PASSWORD=Password123&quot; -p 1500:1433 -d mcr.microsoft.com/mssql/server:2017-latest</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://github.com/carlpaton/SQLStatements/tree/master/mssql/Rosetta%20Code/SQL%20Data%20Fix" target="_blank" rel="noopener">Run these SQL scripts in the following order</a>:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">001 CREATE DATABASE.sql</span><br><span class="line">002 CREATE TABLES.sql</span><br><span class="line">003 SEED dbo.tenant.sql</span><br><span class="line">004 SEED dbo.line_item.sql</span><br><span class="line">005 SEED dbo.tenant.sql</span><br></pre></td></tr></table></figure>
+<p>This should get the data into a state that matches the counts above.</p>
 <h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p>baz</p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15</a></li>
@@ -162,7 +168,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/rosetta-code-sql-datafix/" data-id="ckexwhrpt00cj08on9o3qkv3y" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/rosetta-code-sql-datafix/" data-id="ckeytckfu00cgtsonpyb1wokf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rosetta-code/">rosetta code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
