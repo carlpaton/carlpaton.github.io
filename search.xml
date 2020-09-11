@@ -8,7 +8,7 @@
       <link href="/2020/09/rosetta-code-sql-datafix/"/>
       <url>/2020/09/rosetta-code-sql-datafix/</url>
       
-        <content type="html"><![CDATA[<h3 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h3><p>Consider the following relational database:</p><p>In the context of this database a <code>tenant</code> can only be one of <code>App One</code>, <code>App Two</code> or <code>User</code>. Each <code>User</code> has their own unique GUID and the applications have the following GUIDs:</p><table><thead><tr><th>Application Name</th><th>GUID</th></tr></thead><tbody><tr><td>App One</td><td>3ba2e2e8-f093-41d8-8daf-64d5385604ac</td></tr><tr><td>App Two</td><td>efec5b17-47fc-4d79-ae74-6e8b023023d5</td></tr></tbody></table><p>Several records in <code>dbo.item_line</code> have been persisted incorrectly. The column <code>dbo.item_line.tenant_id</code> has been populated with the GUID for <code>App One</code> for the period <code>15 Jan 2019</code> to <code>18 Aug 2019</code> when it should have been populated with the GUID for the <code>User</code> tenant.</p><p>Thankfully <code>dbo.item_line.created_by_user_id</code> is a mandatory field and will contain valid user GUIDs. Note that not all users will exist in <code>dbo.Tenant</code>.</p><p>The cleanup must be idempotent, this means it can be run multiple times without changing the result beyond the initial story/task.</p><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>Cleanup the data using a SQL script in a safe manner.</p><ul><li>Identify all records in <code>dbo.item_line</code> that need to be updated, print the count.</li><li>Create records in <code>dbo.tenant</code> that dont exist when linking to <code>dbo.item_line.created_by_user_id</code>, print this count too.</li><li>Update <code>dbo.item_line.tenant_id</code> to be the newly created <code>dbo.tenant.id</code> when it did not exist, else update to be <code>dbo.item_line.created_by_user_id</code>. Print the total count of updates. This should match the first count printed.</li></ul><p>Using the supplied data the prints and counts should be:</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">total dbo.item_line to be updated : 123</span><br><span class="line">total new dbo.tenant records : 123</span><br><span class="line">actual updates to dbo.item_line : 123</span><br></pre></td></tr></table></figure><h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p>baz</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15</a></li><li><a href="https://www.sqlshack.com/understanding-the-interaction-between-set-theory-and-set-operators-in-sql-server/" target="_blank" rel="noopener">https://www.sqlshack.com/understanding-the-interaction-between-set-theory-and-set-operators-in-sql-server/</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<blockquote><p>WIP!</p></blockquote><h3 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h3><p>Consider the following relational database:</p><p>In the context of this database a <code>tenant</code> can only be one of <code>App One</code>, <code>App Two</code> or <code>User</code>. Each <code>User</code> has their own unique GUID and the applications have the following GUIDs:</p><table><thead><tr><th>Application Name</th><th>GUID</th></tr></thead><tbody><tr><td>App One</td><td>3ba2e2e8-f093-41d8-8daf-64d5385604ac</td></tr><tr><td>App Two</td><td>efec5b17-47fc-4d79-ae74-6e8b023023d5</td></tr></tbody></table><p>Several records in <code>dbo.item_line</code> have been persisted incorrectly. The column <code>dbo.item_line.tenant_id</code> has been populated with the GUID for <code>App One</code> for the period <code>15 Jan 2019</code> to <code>18 Aug 2019</code> when it should have been populated with the GUID for the <code>User</code> tenant.</p><p>Thankfully <code>dbo.item_line.created_by_user_id</code> is a mandatory field and will contain valid user GUIDs. Note that not all users will exist in <code>dbo.Tenant</code>.</p><p>The cleanup must be idempotent, this means it can be run multiple times without changing the result beyond the initial story/task.</p><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>Cleanup the data using a SQL script in a safe manner.</p><ul><li>Identify all records in <code>dbo.item_line</code> that need to be updated, print the count.</li><li>Create records in <code>dbo.tenant</code> that dont exist when linking to <code>dbo.item_line.created_by_user_id</code>, print this count too.</li><li>Update <code>dbo.item_line.tenant_id</code> to be the newly created <code>dbo.tenant.id</code> when it did not exist, else update to be <code>dbo.item_line.created_by_user_id</code>. Print the total count of updates. This should match the first count printed.</li></ul><p>Using the supplied data the prints and counts should be:</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">total dbo.item_line to be updated : 123</span><br><span class="line">total new dbo.tenant records : 123</span><br><span class="line">actual updates to dbo.item_line : 123</span><br></pre></td></tr></table></figure><h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>Spin up a MS SQL Instance</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name=rosetta-df -e &quot;ACCEPT_EULA=Y&quot; -e &quot;SA_PASSWORD=Password123&quot; -p 1500:1433 -d microsoft/mssql-server-linux:2017-CU5</span><br></pre></td></tr></table></figure><h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p>baz</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15</a></li><li><a href="https://www.sqlshack.com/understanding-the-interaction-between-set-theory-and-set-operators-in-sql-server/" target="_blank" rel="noopener">https://www.sqlshack.com/understanding-the-interaction-between-set-theory-and-set-operators-in-sql-server/</a></li></ul>]]></content>
       
       
       
@@ -505,25 +505,6 @@
     
     
     <entry>
-      <title>Pi4 Hardware</title>
-      <link href="/2020/05/pi4-hardware/"/>
-      <url>/2020/05/pi4-hardware/</url>
-      
-        <content type="html"><![CDATA[<p>I got tired of having to google each time I needed to find or understand Pi Hardware.</p><h3 id="Heatsinks"><a href="#Heatsinks" class="headerlink" title="Heatsinks"></a>Heatsinks</h3><p>These go over the CPU, DDR-4 Memory and USB controller. I couldn’t find a Pi4 set here in NZ so modified this one from <a href="https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html" target="_blank" rel="noopener">geeker.co.nz</a></p><p><img src="/d/p4-hardware/heat-sink.jpg" alt="Heatsinks"></p><ul><li><a href="https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html" target="_blank" rel="noopener">https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html</a></li><li><a href="https://www.youtube.com/watch?v=E-4GaAz7XNM" target="_blank" rel="noopener">https://www.youtube.com/watch?v=E-4GaAz7XNM</a></li></ul><h3 id="Cluster-Stack"><a href="#Cluster-Stack" class="headerlink" title="Cluster Stack"></a>Cluster Stack</h3><ul><li><a href="/2019/10/raspberry-pi-cluster/">Raspberry Pi Cluster</a></li></ul><p><img src="/d/p4-hardware/cluster-stack.jpg" alt="Cluster Stack"></p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> raspberry pi </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Pi Switch Control</title>
       <link href="/2020/05/pi-switch-control/"/>
       <url>/2020/05/pi-switch-control/</url>
@@ -558,6 +539,25 @@
             <tag> raspberry pi </tag>
             
             <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Pi4 Hardware</title>
+      <link href="/2020/05/pi4-hardware/"/>
+      <url>/2020/05/pi4-hardware/</url>
+      
+        <content type="html"><![CDATA[<p>I got tired of having to google each time I needed to find or understand Pi Hardware.</p><h3 id="Heatsinks"><a href="#Heatsinks" class="headerlink" title="Heatsinks"></a>Heatsinks</h3><p>These go over the CPU, DDR-4 Memory and USB controller. I couldn’t find a Pi4 set here in NZ so modified this one from <a href="https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html" target="_blank" rel="noopener">geeker.co.nz</a></p><p><img src="/d/p4-hardware/heat-sink.jpg" alt="Heatsinks"></p><ul><li><a href="https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html" target="_blank" rel="noopener">https://www.geeker.co.nz/raspberry-pi/board/raspberry-pi-heat-sink.html</a></li><li><a href="https://www.youtube.com/watch?v=E-4GaAz7XNM" target="_blank" rel="noopener">https://www.youtube.com/watch?v=E-4GaAz7XNM</a></li></ul><h3 id="Cluster-Stack"><a href="#Cluster-Stack" class="headerlink" title="Cluster Stack"></a>Cluster Stack</h3><ul><li><a href="/2019/10/raspberry-pi-cluster/">Raspberry Pi Cluster</a></li></ul><p><img src="/d/p4-hardware/cluster-stack.jpg" alt="Cluster Stack"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> raspberry pi </tag>
             
         </tags>
       
@@ -880,27 +880,6 @@
     
     
     <entry>
-      <title>Command Pattern</title>
-      <link href="/2020/02/command-pattern/"/>
-      <url>/2020/02/command-pattern/</url>
-      
-        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The command pattern is used to express a request, including the call to be made and all of its required <a href="http://www.blackwasp.co.uk/CSharpMethodParameters.aspx" target="_blank" rel="noopener">parameters</a>, in a command object. The command may then be executed immediately or held for later use.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Command.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Command.aspx</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> patterns principles </tag>
-            
-            <tag> behavioural patterns </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Composite Pattern</title>
       <link href="/2020/02/composite-pattern/"/>
       <url>/2020/02/composite-pattern/</url>
@@ -914,6 +893,27 @@
             <tag> patterns principles </tag>
             
             <tag> structural patterns </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Command Pattern</title>
+      <link href="/2020/02/command-pattern/"/>
+      <url>/2020/02/command-pattern/</url>
+      
+        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The command pattern is used to express a request, including the call to be made and all of its required <a href="http://www.blackwasp.co.uk/CSharpMethodParameters.aspx" target="_blank" rel="noopener">parameters</a>, in a command object. The command may then be executed immediately or held for later use.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Command.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Command.aspx</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> patterns principles </tag>
+            
+            <tag> behavioural patterns </tag>
             
         </tags>
       
@@ -962,27 +962,6 @@
     
     
     <entry>
-      <title>Facade Pattern</title>
-      <link href="/2020/02/facade-pattern/"/>
-      <url>/2020/02/facade-pattern/</url>
-      
-        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The facade pattern is used to define a simplified interface to a more complex subsystem.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Facade.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Facade.aspx</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> patterns principles </tag>
-            
-            <tag> structural patterns </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Factory Pattern</title>
       <link href="/2020/02/factory-pattern/"/>
       <url>/2020/02/factory-pattern/</url>
@@ -996,6 +975,27 @@
             <tag> patterns principles </tag>
             
             <tag> creational patterns </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Facade Pattern</title>
+      <link href="/2020/02/facade-pattern/"/>
+      <url>/2020/02/facade-pattern/</url>
+      
+        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The facade pattern is used to define a simplified interface to a more complex subsystem.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Facade.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Facade.aspx</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> patterns principles </tag>
+            
+            <tag> structural patterns </tag>
             
         </tags>
       
@@ -1067,11 +1067,11 @@
     
     
     <entry>
-      <title>Memento Pattern</title>
-      <link href="/2020/02/memento-pattern/"/>
-      <url>/2020/02/memento-pattern/</url>
+      <title>Mediator Pattern</title>
+      <link href="/2020/02/mediator-pattern/"/>
+      <url>/2020/02/mediator-pattern/</url>
       
-        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The memento pattern is used to capture the current state of an object and store it in such a manner that it can be restored at a later time without breaking the rules of encapsulation.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Memento.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Memento.aspx</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The mediator pattern is used to reduce coupling between classes that communicate with each other. Instead of classes communicating directly, and thus requiring knowledge of their implementation, the classes send messages via a mediator object.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Mediator.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Mediator.aspx</a></li></ul>]]></content>
       
       
       
@@ -1088,11 +1088,11 @@
     
     
     <entry>
-      <title>Mediator Pattern</title>
-      <link href="/2020/02/mediator-pattern/"/>
-      <url>/2020/02/mediator-pattern/</url>
+      <title>Memento Pattern</title>
+      <link href="/2020/02/memento-pattern/"/>
+      <url>/2020/02/memento-pattern/</url>
       
-        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The mediator pattern is used to reduce coupling between classes that communicate with each other. Instead of classes communicating directly, and thus requiring knowledge of their implementation, the classes send messages via a mediator object.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Mediator.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Mediator.aspx</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The memento pattern is used to capture the current state of an object and store it in such a manner that it can be restored at a later time without breaking the rules of encapsulation.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Memento.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Memento.aspx</a></li></ul>]]></content>
       
       
       
@@ -1266,9 +1266,9 @@
       
         <tags>
             
-            <tag> utilities </tag>
-            
             <tag> patterns principles </tag>
+            
+            <tag> utilities </tag>
             
         </tags>
       
@@ -1758,25 +1758,6 @@
     
     
     <entry>
-      <title>Elastic Container Registry</title>
-      <link href="/2019/09/aws-elastic-container-registry/"/>
-      <url>/2019/09/aws-elastic-container-registry/</url>
-      
-        <content type="html"><![CDATA[<p>Amazon Elastic Container Registry (ECR) is a fully-managed <a href="https://aws.amazon.com/docker/" target="_blank" rel="noopener">Docker</a> container registry that makes it easy for developers to store, manage, and deploy Docker container images.</p><h3 id="Registry"><a href="#Registry" class="headerlink" title="Registry"></a>Registry</h3><p>Create ECR Repository from the AWS Console, example: <code>lexicon-webmvc</code>  </p><ul><li><a href="https://ap-southeast-2.console.aws.amazon.com/ecr/repositories?region=ap-southeast-2" target="_blank" rel="noopener">https://ap-southeast-2.console.aws.amazon.com/ecr/repositories?region=ap-southeast-2</a></li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">000000000000.dkr.ecr.ap-southeast-2.amazonaws.com/lexicon-webmvc</span><br><span class="line">This is the same as a docker hub image: microsoft/mssql-server-linux:2017-CU13</span><br></pre></td></tr></table></figure><h3 id="Push-image-from-Local"><a href="#Push-image-from-Local" class="headerlink" title="Push image from Local"></a>Push image from Local</h3><p>Use the CLI to generate your login command</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">aws ecr get-login --no-include-email --region ap-southeast-2</span><br><span class="line"></span><br><span class="line">docker login -u AWS -p [MASSIVE ENCRIPTED BLOB] https://000000000000.dkr.ecr.ap-southeast-2.amazonaws.com</span><br><span class="line"></span><br><span class="line">docker tag docker-compose-lexicon_lexicon-webmvc 000000000000.dkr.ecr.ap-southeast-2.amazonaws.com/lexicon-webmvc</span><br><span class="line"></span><br><span class="line">docker push 000000000000.dkr.ecr.ap-southeast-2.amazonaws.com/lexicon-webmvc</span><br></pre></td></tr></table></figure><p>Now the image will be available at the ECR.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://aws.amazon.com/ecr/" target="_blank" rel="noopener">https://aws.amazon.com/ecr/</a></li><li><a href="https://ap-southeast-2.console.aws.amazon.com/ecr/repositories?region=ap-southeast-2" target="_blank" rel="noopener">https://ap-southeast-2.console.aws.amazon.com/ecr/repositories?region=ap-southeast-2</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> aws </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Elastic Container Service - Lexicon from AWS Console</title>
       <link href="/2019/09/aws-elastic-container-service-lexicon-from-aws-console/"/>
       <url>/2019/09/aws-elastic-container-service-lexicon-from-aws-console/</url>
@@ -1796,11 +1777,11 @@
     
     
     <entry>
-      <title>Elastic Container Service - Lexicon from CLI</title>
-      <link href="/2019/09/aws-elastic-container-service-lexicon-from-cli/"/>
-      <url>/2019/09/aws-elastic-container-service-lexicon-from-cli/</url>
+      <title>Elastic Container Registry</title>
+      <link href="/2019/09/aws-elastic-container-registry/"/>
+      <url>/2019/09/aws-elastic-container-registry/</url>
       
-        <content type="html"><![CDATA[<h3 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h3><p><a href="/2019/09/aws-install-and-configure-cli/">Firstly install and configure both the AWSCLI and ECSCLI</a>. </p><p>These are the steps to use the <a href="/2019/09/aws-command-line-interface-overview/">CLI</a> to generate the <a href="/2019/09/aws-elastic-container-service-lexicon/">Lexicon</a> infrastructure with a Fargate Task. All <code>.json</code> configuration files are <a href="https://github.com/carlpaton/AWS" target="_blank" rel="noopener">available on github</a>.</p><h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">--- Create ECS cluster using config and profile setup from `Prerequisites`</span><br><span class="line">ecs-cli up --cluster-config carl_configuration_name --ecs-profile carl_ecs_cli_profile</span><br><span class="line"></span><br><span class="line">--- Get default security group ID for the VPC. Use the VPC ID from the previous output</span><br><span class="line">aws ec2 describe-security-groups --filters Name=vpc-id,Values=vpc-00000000000000000 --region ap-southeast-2</span><br><span class="line"></span><br><span class="line">--- Security group rule to allow inbound access on port 80</span><br><span class="line">aws ec2 authorize-security-group-ingress --group-id sg-0000000000000000 --protocol tcp --port 80 --cidr 0.0.0.0/0 --region ap-southeast-2</span><br></pre></td></tr></table></figure><h3 id="Compose-File"><a href="#Compose-File" class="headerlink" title="Compose File"></a>Compose File</h3><p>Here you will need <code>subnet ID 1</code>, <code>subnet ID 2</code> and <code>security group ID</code> values which would have been displayed when you ran <code>ecs-cli up</code>. If you cleared the console you can use <code>aws ec2 describe-vpcs</code> and look at the <code>Tags</code> to make an educated guess.</p><ul><li><a href="https://github.com/carlpaton/AWS/blob/master/ec2/ecs/compose/docker-compose.yml" target="_blank" rel="noopener">docker-compose.yml</a></li><li><a href="https://github.com/carlpaton/AWS/blob/master/ec2/ecs/compose/ecs-params.yml" target="_blank" rel="noopener">ecs-params.yml</a></li></ul><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-cli-tutorial-fargate.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-cli-tutorial-fargate.html</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p>Amazon Elastic Container Registry (ECR) is a fully-managed <a href="https://aws.amazon.com/docker/" target="_blank" rel="noopener">Docker</a> container registry that makes it easy for developers to store, manage, and deploy Docker container images.</p><h3 id="Registry"><a href="#Registry" class="headerlink" title="Registry"></a>Registry</h3><p>Create ECR Repository from the AWS Console, example: <code>lexicon-webmvc</code>  </p><ul><li><a href="https://ap-southeast-2.console.aws.amazon.com/ecr/repositories?region=ap-southeast-2" target="_blank" rel="noopener">https://ap-southeast-2.console.aws.amazon.com/ecr/repositories?region=ap-southeast-2</a></li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">000000000000.dkr.ecr.ap-southeast-2.amazonaws.com/lexicon-webmvc</span><br><span class="line">This is the same as a docker hub image: microsoft/mssql-server-linux:2017-CU13</span><br></pre></td></tr></table></figure><h3 id="Push-image-from-Local"><a href="#Push-image-from-Local" class="headerlink" title="Push image from Local"></a>Push image from Local</h3><p>Use the CLI to generate your login command</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">aws ecr get-login --no-include-email --region ap-southeast-2</span><br><span class="line"></span><br><span class="line">docker login -u AWS -p [MASSIVE ENCRIPTED BLOB] https://000000000000.dkr.ecr.ap-southeast-2.amazonaws.com</span><br><span class="line"></span><br><span class="line">docker tag docker-compose-lexicon_lexicon-webmvc 000000000000.dkr.ecr.ap-southeast-2.amazonaws.com/lexicon-webmvc</span><br><span class="line"></span><br><span class="line">docker push 000000000000.dkr.ecr.ap-southeast-2.amazonaws.com/lexicon-webmvc</span><br></pre></td></tr></table></figure><p>Now the image will be available at the ECR.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://aws.amazon.com/ecr/" target="_blank" rel="noopener">https://aws.amazon.com/ecr/</a></li><li><a href="https://ap-southeast-2.console.aws.amazon.com/ecr/repositories?region=ap-southeast-2" target="_blank" rel="noopener">https://ap-southeast-2.console.aws.amazon.com/ecr/repositories?region=ap-southeast-2</a></li></ul>]]></content>
       
       
       
@@ -1834,11 +1815,11 @@
     
     
     <entry>
-      <title>Elastic Container Service Stack Overview</title>
-      <link href="/2019/09/aws-elastic-container-service-stack-overview/"/>
-      <url>/2019/09/aws-elastic-container-service-stack-overview/</url>
+      <title>Elastic Container Service - Lexicon from CLI</title>
+      <link href="/2019/09/aws-elastic-container-service-lexicon-from-cli/"/>
+      <url>/2019/09/aws-elastic-container-service-lexicon-from-cli/</url>
       
-        <content type="html"><![CDATA[<h3 id="VPC-Virtual-Private-Cloud"><a href="#VPC-Virtual-Private-Cloud" class="headerlink" title="VPC - Virtual Private Cloud"></a>VPC - Virtual Private Cloud</h3><p>A virtual private cloud (VPC) is a virtual network dedicated to your AWS account. It is logically isolated from other virtual networks in the AWS Cloud. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC. A VPC spans all the Availability Zones in the region.</p><p>When you create a VPC, you must specify a range of IPv4 addresses for the VPC in the form of a Classless Inter-Domain Routing (CIDR) block; for example, <code>10.0.0.0/16</code>. This is the primary CIDR block for your VPC.</p><ul><li><a href="https://tools.ietf.org/html/rfc4632" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc4632</a></li></ul><p><img src="/d/aws-elastic-container-service-stack-overview/elastic-compute-cloud.png" alt="Amazon Elastic Container Service Stack Overview"></p><p> Amazon just wraps all this up under “Web Servers” in their official diagram</p><p><img src="/d/aws-elastic-container-service-stack-overview/nat-gateway-diagram.png" alt="Amazon Web Servers"></p><ul><li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/images/nat-gateway-diagram.png" target="_blank" rel="noopener">https://docs.aws.amazon.com/vpc/latest/userguide/images/nat-gateway-diagram.png</a></li></ul><h3 id="Subnets"><a href="#Subnets" class="headerlink" title="Subnets"></a>Subnets</h3><p>After creating a VPC, you can add one or more subnets in each Availability Zone. When you create a subnet, you specify the CIDR block for the subnet, which is a subset of the VPC CIDR block.</p><ul><li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html</a></li></ul><h3 id="EC2-Elastic-Compute-Cloud"><a href="#EC2-Elastic-Compute-Cloud" class="headerlink" title="EC2 - Elastic Compute Cloud"></a>EC2 - Elastic Compute Cloud</h3><p>Amazon Elastic Compute Cloud (EC2) gives you a platform for your infrastructure to live in. The below is a high level diagram showing the structure and relationships. For access you will need to create an account at <a href="https://aws.amazon.com/" target="_blank" rel="noopener">https://aws.amazon.com/</a></p><ul><li><a href="https://aws.amazon.com/ec2/" target="_blank" rel="noopener">https://aws.amazon.com/ec2/</a></li></ul><h3 id="ECS-Elastic-Container-Service"><a href="#ECS-Elastic-Container-Service" class="headerlink" title="ECS - Elastic Container Service"></a>ECS - Elastic Container Service</h3><p>This is the AWS container orchestration service that supports <a href="https://www.docker.com/" target="_blank" rel="noopener">Docker</a>.</p><ul><li><a href="https://aws.amazon.com/ecs/" target="_blank" rel="noopener">https://aws.amazon.com/ecs/</a></li></ul><h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><ul><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create_cluster.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create_cluster.html</a></li><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-cli-tutorial-fargate.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-cli-tutorial-fargate.html</a></li></ul><h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>Start from task definition and keep it running.</p><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>You can manually run a task from a task definition but its best to use a <code>Service</code> to keep it running. A <code>Task</code> is a running collection of docker containers.</p><ul><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/userguide/task_definitions.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/userguide/task_definitions.html</a></li></ul><h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3><p><a href="https://www.docker.com/" target="_blank" rel="noopener">Docker</a> container spun up from its image.</p>]]></content>
+        <content type="html"><![CDATA[<h3 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h3><p><a href="/2019/09/aws-install-and-configure-cli/">Firstly install and configure both the AWSCLI and ECSCLI</a>. </p><p>These are the steps to use the <a href="/2019/09/aws-command-line-interface-overview/">CLI</a> to generate the <a href="/2019/09/aws-elastic-container-service-lexicon/">Lexicon</a> infrastructure with a Fargate Task. All <code>.json</code> configuration files are <a href="https://github.com/carlpaton/AWS" target="_blank" rel="noopener">available on github</a>.</p><h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">--- Create ECS cluster using config and profile setup from `Prerequisites`</span><br><span class="line">ecs-cli up --cluster-config carl_configuration_name --ecs-profile carl_ecs_cli_profile</span><br><span class="line"></span><br><span class="line">--- Get default security group ID for the VPC. Use the VPC ID from the previous output</span><br><span class="line">aws ec2 describe-security-groups --filters Name=vpc-id,Values=vpc-00000000000000000 --region ap-southeast-2</span><br><span class="line"></span><br><span class="line">--- Security group rule to allow inbound access on port 80</span><br><span class="line">aws ec2 authorize-security-group-ingress --group-id sg-0000000000000000 --protocol tcp --port 80 --cidr 0.0.0.0/0 --region ap-southeast-2</span><br></pre></td></tr></table></figure><h3 id="Compose-File"><a href="#Compose-File" class="headerlink" title="Compose File"></a>Compose File</h3><p>Here you will need <code>subnet ID 1</code>, <code>subnet ID 2</code> and <code>security group ID</code> values which would have been displayed when you ran <code>ecs-cli up</code>. If you cleared the console you can use <code>aws ec2 describe-vpcs</code> and look at the <code>Tags</code> to make an educated guess.</p><ul><li><a href="https://github.com/carlpaton/AWS/blob/master/ec2/ecs/compose/docker-compose.yml" target="_blank" rel="noopener">docker-compose.yml</a></li><li><a href="https://github.com/carlpaton/AWS/blob/master/ec2/ecs/compose/ecs-params.yml" target="_blank" rel="noopener">ecs-params.yml</a></li></ul><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-cli-tutorial-fargate.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-cli-tutorial-fargate.html</a></li></ul>]]></content>
       
       
       
@@ -1858,6 +1839,25 @@
       <url>/2019/09/aws-install-and-configure-cli/</url>
       
         <content type="html"><![CDATA[<h3 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h3><p>To configure the below you will need  the required <code>access key id</code> and  <code>secret access key</code> which you can get from the <a href="https://console.aws.amazon.com/iam/home?region=ap-southeast-2#/home" target="_blank" rel="noopener">AWS AMI Console</a> (Identity and Access Management) you will need to be logged in. Any commands that point to a <code>.json</code> configuration file are <a href="https://github.com/carlpaton/AWS" target="_blank" rel="noopener">available on github</a>.</p><h3 id="AWSCLI"><a href="#AWSCLI" class="headerlink" title="AWSCLI"></a>AWSCLI</h3><ol><li>Download and install using the <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html#install-msi-on-windows" target="_blank" rel="noopener">MSI installer</a> for windows.</li></ol><p>This will live in <code>C:\Program Files\Amazon\AWSCLI</code> and should then work from any terminal.</p><ol start="2"><li>Check version</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws --version</span><br></pre></td></tr></table></figure><ol start="3"><li>Configure with the keys you got from the IAM  in the amazon console.</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt; aws configure</span><br><span class="line">AWS Access Key ID [None]: HOEHOEHOEHOHEOHEOHE</span><br><span class="line">AWS Secret Access Key [None]: HO/hehOehoHEOHEhohEOHeohEOH+EohOEe</span><br><span class="line">Default region name [None]: ap-southeast-2</span><br><span class="line">Default output format [None]:</span><br></pre></td></tr></table></figure><p>This creates these files which you can edit with any text editor.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">~ C:\Users\[USERNAME]\.aws\credentials</span><br><span class="line">[default]</span><br><span class="line">aws_access_key_id = HOEHOEHOEHOHEOHEOHE                    </span><br><span class="line">aws_secret_access_key = HO/hehOehoHEOHEhohEOHeohEOH+EohOEe</span><br><span class="line"></span><br><span class="line">~ C:\Users\[USERNAME]\.aws\config </span><br><span class="line">[default]</span><br><span class="line">region = ap-southeast-2</span><br></pre></td></tr></table></figure><ol start="4"><li>Then you can test it works</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws iam list-roles</span><br></pre></td></tr></table></figure><ol start="5"><li>Create the task execution IAM role</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--- Create the task execution role</span><br><span class="line">C:\dev\aws\ami&gt;</span><br><span class="line">aws iam --region ap-southeast-2 create-role --role-name ecsTaskExecutionRole --assume-role-policy-document file://task-execution-assume-role.json</span><br><span class="line"></span><br><span class="line">--- Attach the task execution role policy</span><br><span class="line">aws iam --region ap-southeast-2 attach-role-policy --role-name ecsTaskExecutionRole --policy-arn arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy</span><br></pre></td></tr></table></figure><h3 id="ECSCLI"><a href="#ECSCLI" class="headerlink" title="ECSCLI"></a>ECSCLI</h3><p>This will live in <code>C:\Program Files\Amazon\ECSCLI</code></p><ol><li>Run windows powersell as administrator</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--- create folder</span><br><span class="line">New-Item C:\Program Files\Amazon\ECSCLI -type directory</span><br><span class="line"></span><br><span class="line">--- install</span><br><span class="line">Invoke-WebRequest -OutFile ‘C:\Program Files\Amazon\ECSCLI\ecs-cli.exe’ https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-windows-amd64-latest.exe</span><br></pre></td></tr></table></figure><ol start="2"><li><p>Edit the environment variables and add <code>C:\Program Files\Amazon\ECSCLI</code> to the <code>PATH</code> variable field</p></li><li><p>Restart powersell  and check version</p></li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ecs-cli --version</span><br></pre></td></tr></table></figure><ol start="4"><li>Configure with the same keys used above</li></ol><p>I used the profile names <code>carl_ecs_cli_profile</code> and <code>carl_configuration_name</code> below when setting up <a href="/2019/09/aws-elastic-container-service-lexicon-from-cli/">ECS for the Lexicon via the AWS CLI</a>.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ecs-cli configure profile --profile-name carl_ecs_cli_profile --access-key HOEHOEHOEHOHEOHEOHE --secret-key HO/hehOehoHEOHEhohEOHeohEOH+EohOEe</span><br><span class="line"></span><br><span class="line">ecs-cli configure --cluster ClusterName1 --default-launch-type FARGATE --region ap-southeast-2 --config-name carl_configuration_name</span><br></pre></td></tr></table></figure><p>Note that <code>--cluster</code> needs to satisfy regular expression pattern: <code>[a-zA-Z][-a-zA-Z0-9]*</code></p><p>This creates these files which you can edit with any text editor.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">~ C:\Users\[USERNAME]\AppData\Local\ecs\config</span><br><span class="line">: carl_configuration_name</span><br><span class="line"></span><br><span class="line">~ C:\Users\[USERNAME]\AppData\Local\ecs\credentials </span><br><span class="line">: carl_ecs_cli_profile</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html#install-msi-on-windows" target="_blank" rel="noopener">https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html#install-msi-on-windows</a></li><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html</a></li><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_Configuration.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_Configuration.html</a></li><li><a href="https://console.aws.amazon.com/iam/" target="_blank" rel="noopener">https://console.aws.amazon.com/iam/</a></li><li><a href="https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/tkv-create-ami-from-instance.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/tkv-create-ami-from-instance.html</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> aws </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Elastic Container Service Stack Overview</title>
+      <link href="/2019/09/aws-elastic-container-service-stack-overview/"/>
+      <url>/2019/09/aws-elastic-container-service-stack-overview/</url>
+      
+        <content type="html"><![CDATA[<h3 id="VPC-Virtual-Private-Cloud"><a href="#VPC-Virtual-Private-Cloud" class="headerlink" title="VPC - Virtual Private Cloud"></a>VPC - Virtual Private Cloud</h3><p>A virtual private cloud (VPC) is a virtual network dedicated to your AWS account. It is logically isolated from other virtual networks in the AWS Cloud. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC. A VPC spans all the Availability Zones in the region.</p><p>When you create a VPC, you must specify a range of IPv4 addresses for the VPC in the form of a Classless Inter-Domain Routing (CIDR) block; for example, <code>10.0.0.0/16</code>. This is the primary CIDR block for your VPC.</p><ul><li><a href="https://tools.ietf.org/html/rfc4632" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc4632</a></li></ul><p><img src="/d/aws-elastic-container-service-stack-overview/elastic-compute-cloud.png" alt="Amazon Elastic Container Service Stack Overview"></p><p> Amazon just wraps all this up under “Web Servers” in their official diagram</p><p><img src="/d/aws-elastic-container-service-stack-overview/nat-gateway-diagram.png" alt="Amazon Web Servers"></p><ul><li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/images/nat-gateway-diagram.png" target="_blank" rel="noopener">https://docs.aws.amazon.com/vpc/latest/userguide/images/nat-gateway-diagram.png</a></li></ul><h3 id="Subnets"><a href="#Subnets" class="headerlink" title="Subnets"></a>Subnets</h3><p>After creating a VPC, you can add one or more subnets in each Availability Zone. When you create a subnet, you specify the CIDR block for the subnet, which is a subset of the VPC CIDR block.</p><ul><li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html</a></li></ul><h3 id="EC2-Elastic-Compute-Cloud"><a href="#EC2-Elastic-Compute-Cloud" class="headerlink" title="EC2 - Elastic Compute Cloud"></a>EC2 - Elastic Compute Cloud</h3><p>Amazon Elastic Compute Cloud (EC2) gives you a platform for your infrastructure to live in. The below is a high level diagram showing the structure and relationships. For access you will need to create an account at <a href="https://aws.amazon.com/" target="_blank" rel="noopener">https://aws.amazon.com/</a></p><ul><li><a href="https://aws.amazon.com/ec2/" target="_blank" rel="noopener">https://aws.amazon.com/ec2/</a></li></ul><h3 id="ECS-Elastic-Container-Service"><a href="#ECS-Elastic-Container-Service" class="headerlink" title="ECS - Elastic Container Service"></a>ECS - Elastic Container Service</h3><p>This is the AWS container orchestration service that supports <a href="https://www.docker.com/" target="_blank" rel="noopener">Docker</a>.</p><ul><li><a href="https://aws.amazon.com/ecs/" target="_blank" rel="noopener">https://aws.amazon.com/ecs/</a></li></ul><h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><ul><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create_cluster.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create_cluster.html</a></li><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-cli-tutorial-fargate.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-cli-tutorial-fargate.html</a></li></ul><h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>Start from task definition and keep it running.</p><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>You can manually run a task from a task definition but its best to use a <code>Service</code> to keep it running. A <code>Task</code> is a running collection of docker containers.</p><ul><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/userguide/task_definitions.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/userguide/task_definitions.html</a></li></ul><h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3><p><a href="https://www.docker.com/" target="_blank" rel="noopener">Docker</a> container spun up from its image.</p>]]></content>
       
       
       
@@ -1910,25 +1910,6 @@
     
     
     <entry>
-      <title>IDE Visual Studio</title>
-      <link href="/2019/09/ide-visual-studio/"/>
-      <url>/2019/09/ide-visual-studio/</url>
-      
-        <content type="html"><![CDATA[<p><a href="/2018/05/ide-editor-and-database-tools/">Also see IDE, Editor and Database Tools</a></p><h3 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CRTL+T                                           Got to all</span><br></pre></td></tr></table></figure><ul><li><a href="https://devblogs.microsoft.com/wp-content/uploads/sites/4/2019/03/vskeyboard.pdf" target="_blank" rel="noopener">https://devblogs.microsoft.com/wp-content/uploads/sites/4/2019/03/vskeyboard.pdf</a></li></ul><h3 id="Built-in-tools"><a href="#Built-in-tools" class="headerlink" title="Built in tools"></a>Built in tools</h3><ul><li><a href="https://blogs.msdn.microsoft.com/devops/2016/07/15/7-ways-to-look-at-the-values-of-variables-while-debugging-in-visual-studio/" target="_blank" rel="noopener">Autos, Locals</a></li><li><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/viewing-the-call-stack-in-visual-studio" target="_blank" rel="noopener">Call Stack</a></li></ul><h3 id="Extensions"><a href="#Extensions" class="headerlink" title="Extensions"></a>Extensions</h3><ul><li><a href="https://marketplace.visualstudio.com/items?itemName=TomasRestrepo.Viasfora" target="_blank" rel="noopener">Viasfora</a></li><li><a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.AddNewFile" target="_blank" rel="noopener">Add New File</a></li><li><a href="https://www.jetbrains.com/resharper/" target="_blank" rel="noopener">resharper</a>, <a href="https://www.jetbrains.com/dotcover/" target="_blank" rel="noopener">dotcover</a>, <a href="https://www.jetbrains.com/decompiler/" target="_blank" rel="noopener">dotpeek</a></li></ul><h3 id="Code-Snippets"><a href="#Code-Snippets" class="headerlink" title="Code Snippets"></a>Code Snippets</h3><ul><li><a href="https://gist.github.com/charleyza/77ae278b904cab2a19423809a69c2c67" target="_blank" rel="noopener">unittest.snippet</a></li></ul><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.visualstudio.com/downloads/" target="_blank" rel="noopener">https://www.visualstudio.com/downloads/</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> ide </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>IDE Visual Studio Code</title>
       <link href="/2019/09/ide-visual-studio-code/"/>
       <url>/2019/09/ide-visual-studio-code/</url>
@@ -1953,6 +1934,25 @@
       <url>/2019/09/ide-webstorm/</url>
       
         <content type="html"><![CDATA[<p><a href="/2018/05/ide-editor-and-database-tools/">Also see IDE, Editor and Database Tools</a></p><h3 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+/                                     Add/remove line or block comment</span><br><span class="line">Ctrl+Shift+f                               Find in Path</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.jetbrains.com/help/webstorm/mastering-keyboard-shortcuts.html" target="_blank" rel="noopener">https://www.jetbrains.com/help/webstorm/mastering-keyboard-shortcuts.html</a></li><li><a href="https://www.jetbrains.com/webstorm/download/#section=windows" target="_blank" rel="noopener">Webstorm</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> ide </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>IDE Visual Studio</title>
+      <link href="/2019/09/ide-visual-studio/"/>
+      <url>/2019/09/ide-visual-studio/</url>
+      
+        <content type="html"><![CDATA[<p><a href="/2018/05/ide-editor-and-database-tools/">Also see IDE, Editor and Database Tools</a></p><h3 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CRTL+T                                           Got to all</span><br></pre></td></tr></table></figure><ul><li><a href="https://devblogs.microsoft.com/wp-content/uploads/sites/4/2019/03/vskeyboard.pdf" target="_blank" rel="noopener">https://devblogs.microsoft.com/wp-content/uploads/sites/4/2019/03/vskeyboard.pdf</a></li></ul><h3 id="Built-in-tools"><a href="#Built-in-tools" class="headerlink" title="Built in tools"></a>Built in tools</h3><ul><li><a href="https://blogs.msdn.microsoft.com/devops/2016/07/15/7-ways-to-look-at-the-values-of-variables-while-debugging-in-visual-studio/" target="_blank" rel="noopener">Autos, Locals</a></li><li><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/viewing-the-call-stack-in-visual-studio" target="_blank" rel="noopener">Call Stack</a></li></ul><h3 id="Extensions"><a href="#Extensions" class="headerlink" title="Extensions"></a>Extensions</h3><ul><li><a href="https://marketplace.visualstudio.com/items?itemName=TomasRestrepo.Viasfora" target="_blank" rel="noopener">Viasfora</a></li><li><a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.AddNewFile" target="_blank" rel="noopener">Add New File</a></li><li><a href="https://www.jetbrains.com/resharper/" target="_blank" rel="noopener">resharper</a>, <a href="https://www.jetbrains.com/dotcover/" target="_blank" rel="noopener">dotcover</a>, <a href="https://www.jetbrains.com/decompiler/" target="_blank" rel="noopener">dotpeek</a></li></ul><h3 id="Code-Snippets"><a href="#Code-Snippets" class="headerlink" title="Code Snippets"></a>Code Snippets</h3><ul><li><a href="https://gist.github.com/charleyza/77ae278b904cab2a19423809a69c2c67" target="_blank" rel="noopener">unittest.snippet</a></li></ul><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.visualstudio.com/downloads/" target="_blank" rel="noopener">https://www.visualstudio.com/downloads/</a></li></ul>]]></content>
       
       
       
@@ -2667,11 +2667,11 @@
     
     
     <entry>
-      <title>BEM - Blocks Elements and Modifiers</title>
-      <link href="/2019/01/css-bem/"/>
-      <url>/2019/01/css-bem/</url>
+      <title>Boxing size</title>
+      <link href="/2019/01/css-boxing-size/"/>
+      <url>/2019/01/css-boxing-size/</url>
       
-        <content type="html"><![CDATA[<p><strong>Block</strong>, encapsulates a standalone entity that is meaningful on its own such as a <code>nav</code> block.</p><p><strong>Element</strong>, parts of a block and have no standalone meaning. Any element is semantically tied to its block such as <code>.list-item-link</code></p><p><strong>Modifier</strong>, flags on blocks or elements used to change appearance, behavior or state such as <code>--hidden</code> or <code>--hover</code></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BLOCK__ELEMENT--MODIFIER</span><br><span class="line">nav__list-item-link--active</span><br></pre></td></tr></table></figure><p><img src="/d/css-bem/css-bem.png" alt="BEM Example"></p><p>Contrived example using common html elements <code>ul</code>, <code>li</code> and <code>a</code> </p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Explore<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span> </span><br><span class="line">   <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Marketplace<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure><p>Classes that can be used</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ul</span>    <span class="selector-tag">-</span>&gt;    <span class="selector-class">.list</span></span><br><span class="line"><span class="selector-tag">li</span>    <span class="selector-tag">-</span>&gt;    <span class="selector-class">.list-item</span></span><br><span class="line"><span class="selector-tag">a</span>     <span class="selector-tag">-</span>&gt;    <span class="selector-class">.list-item-link</span></span><br></pre></td></tr></table></figure><p>So finally this would be</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"gh-nav__list"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"gh-nav__list-item-link"</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Explore<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"gh-nav__list-item-link gh-nav__list-item-link--hover"</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Marketplace<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://getbem.com/introduction/" target="_blank" rel="noopener">http://getbem.com/introduction/</a></li><li><a href="https://codepen.io/charleyza/pen/OJLGvZM" target="_blank" rel="noopener">https://codepen.io/charleyza/pen/OJLGvZM</a></li><li><a href="https://fonts.google.com/?selection.family=Mansalva" target="_blank" rel="noopener">https://fonts.google.com/?selection.family=Mansalva</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p>Boxing Size</p><ul><li><a href="https://codepen.io/charleyza/pen/ErxgKO" target="_blank" rel="noopener">https://codepen.io/charleyza/pen/ErxgKO</a></li></ul>]]></content>
       
       
       
@@ -2686,11 +2686,11 @@
     
     
     <entry>
-      <title>Boxing size</title>
-      <link href="/2019/01/css-boxing-size/"/>
-      <url>/2019/01/css-boxing-size/</url>
+      <title>BEM - Blocks Elements and Modifiers</title>
+      <link href="/2019/01/css-bem/"/>
+      <url>/2019/01/css-bem/</url>
       
-        <content type="html"><![CDATA[<p>Boxing Size</p><ul><li><a href="https://codepen.io/charleyza/pen/ErxgKO" target="_blank" rel="noopener">https://codepen.io/charleyza/pen/ErxgKO</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p><strong>Block</strong>, encapsulates a standalone entity that is meaningful on its own such as a <code>nav</code> block.</p><p><strong>Element</strong>, parts of a block and have no standalone meaning. Any element is semantically tied to its block such as <code>.list-item-link</code></p><p><strong>Modifier</strong>, flags on blocks or elements used to change appearance, behavior or state such as <code>--hidden</code> or <code>--hover</code></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BLOCK__ELEMENT--MODIFIER</span><br><span class="line">nav__list-item-link--active</span><br></pre></td></tr></table></figure><p><img src="/d/css-bem/css-bem.png" alt="BEM Example"></p><p>Contrived example using common html elements <code>ul</code>, <code>li</code> and <code>a</code> </p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Explore<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span> </span><br><span class="line">   <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Marketplace<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure><p>Classes that can be used</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ul</span>    <span class="selector-tag">-</span>&gt;    <span class="selector-class">.list</span></span><br><span class="line"><span class="selector-tag">li</span>    <span class="selector-tag">-</span>&gt;    <span class="selector-class">.list-item</span></span><br><span class="line"><span class="selector-tag">a</span>     <span class="selector-tag">-</span>&gt;    <span class="selector-class">.list-item-link</span></span><br></pre></td></tr></table></figure><p>So finally this would be</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"gh-nav__list"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"gh-nav__list-item-link"</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Explore<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"gh-nav__list-item-link gh-nav__list-item-link--hover"</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Marketplace<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://getbem.com/introduction/" target="_blank" rel="noopener">http://getbem.com/introduction/</a></li><li><a href="https://codepen.io/charleyza/pen/OJLGvZM" target="_blank" rel="noopener">https://codepen.io/charleyza/pen/OJLGvZM</a></li><li><a href="https://fonts.google.com/?selection.family=Mansalva" target="_blank" rel="noopener">https://fonts.google.com/?selection.family=Mansalva</a></li></ul>]]></content>
       
       
       
@@ -3902,11 +3902,11 @@
     
     
     <entry>
-      <title>MVC Data Annotations</title>
-      <link href="/2018/05/mvc-data-annotations/"/>
-      <url>/2018/05/mvc-data-annotations/</url>
+      <title>MVC Html Helpers</title>
+      <link href="/2018/05/mvc-html-helpers/"/>
+      <url>/2018/05/mvc-html-helpers/</url>
       
-        <content type="html"><![CDATA[<h3 id="Date-formatting"><a href="#Date-formatting" class="headerlink" title="Date formatting"></a>Date formatting</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[DisplayFormat(DataFormatString = &quot;&#123;0:dd/MM/yyyy&#125;&quot;, ApplyFormatInEditMode = true)]</span><br></pre></td></tr></table></figure><h3 id="Number-formatting"><a href="#Number-formatting" class="headerlink" title="Number formatting"></a>Number formatting</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[DisplayFormat(DataFormatString = &quot;&#123;0:N&#125;&quot;, ApplyFormatInEditMode = true)]</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<h3 id="DropDownListFor"><a href="#DropDownListFor" class="headerlink" title="DropDownListFor"></a>DropDownListFor</h3><p>View helper sample code</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Html.DropDownListFor(model =&gt; model.OperatorValue, (List&lt;SelectListItem&gt;)ViewData[&quot;OperatorValue_SelectList&quot;], new &#123; @class = &quot;form-control&quot; &#125;)</span><br></pre></td></tr></table></figure><p>Controller sample code, this can be in ‘Lookups.cs’ class</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static List&lt;SelectListItem&gt; OperatorSelectList()</span><br><span class="line">&#123;</span><br><span class="line">   var r = new List&lt;SelectListItem&gt;</span><br><span class="line">   &#123;</span><br><span class="line">      new SelectListItem &#123; Value = &quot;&quot;, Text = &quot;-- Please Select --&quot; &#125;,</span><br><span class="line">      new SelectListItem &#123; Value = &quot;*&quot;, Text = &quot;*&quot; &#125;,</span><br><span class="line">      new SelectListItem &#123; Value = &quot;/&quot;, Text = &quot;/&quot; &#125;,</span><br><span class="line">      new SelectListItem &#123; Value = &quot;+&quot;, Text = &quot;+&quot; &#125;,</span><br><span class="line">      new SelectListItem &#123; Value = &quot;-&quot;, Text = &quot;-&quot; &#125;</span><br><span class="line">   &#125;;</span><br><span class="line">   return r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="DisplayNameFor"><a href="#DisplayNameFor" class="headerlink" title="DisplayNameFor"></a>DisplayNameFor</h3><p>Display from property that is a list of another class</p><p>Example:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class AddViewModel</span><br><span class="line">&#123;</span><br><span class="line">   public double BaseRate &#123; get; set; &#125;</span><br><span class="line">   public DateTime EffectiveFrom &#123; get; set; &#125;</span><br><span class="line">   public List&lt;HistoryViewModel&gt; RatePrimeHistory &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class HistoryViewModel</span><br><span class="line">&#123;</span><br><span class="line">   public double BaseRate &#123; get; set; &#125;</span><br><span class="line">   public DateTime EffectiveFrom &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>To display the history data</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;table class=&quot;table&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;tr&gt;</span><br><span class="line">   &lt;th&gt;</span><br><span class="line">      @&#123;var dummy = Model.RatePrimeHistory.FirstOrDefault(); &#125;</span><br><span class="line">      @Html.DisplayNameFor(model =&gt; dummy.BaseRate)</span><br><span class="line">   &lt;/th&gt;</span><br><span class="line">   &lt;th&gt;</span><br><span class="line">      @Html.DisplayNameFor(model =&gt; dummy.EffectiveFrom)</span><br><span class="line">   &lt;/th&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line"></span><br><span class="line">@foreach (var item in Model.RatePrimeHistory)</span><br><span class="line">&#123;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">   &lt;td&gt;</span><br><span class="line">      @Html.DisplayFor(modelItem =&gt; item.BaseRate)</span><br><span class="line">   &lt;/td&gt;</span><br><span class="line">   &lt;td&gt;</span><br><span class="line">      @Html.DisplayFor(modelItem =&gt; item.EffectiveFrom)</span><br><span class="line">   &lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure><p><a href="https://stackoverflow.com/questions/12941465/calling-ienumerable-overload-of-displaynamefor" target="_blank" rel="noopener">Calling IEnumerable overload of DisplayNameFor</a></p>]]></content>
       
       
       
@@ -3921,11 +3921,11 @@
     
     
     <entry>
-      <title>MVC Html Helpers</title>
-      <link href="/2018/05/mvc-html-helpers/"/>
-      <url>/2018/05/mvc-html-helpers/</url>
+      <title>MVC Data Annotations</title>
+      <link href="/2018/05/mvc-data-annotations/"/>
+      <url>/2018/05/mvc-data-annotations/</url>
       
-        <content type="html"><![CDATA[<h3 id="DropDownListFor"><a href="#DropDownListFor" class="headerlink" title="DropDownListFor"></a>DropDownListFor</h3><p>View helper sample code</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Html.DropDownListFor(model =&gt; model.OperatorValue, (List&lt;SelectListItem&gt;)ViewData[&quot;OperatorValue_SelectList&quot;], new &#123; @class = &quot;form-control&quot; &#125;)</span><br></pre></td></tr></table></figure><p>Controller sample code, this can be in ‘Lookups.cs’ class</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static List&lt;SelectListItem&gt; OperatorSelectList()</span><br><span class="line">&#123;</span><br><span class="line">   var r = new List&lt;SelectListItem&gt;</span><br><span class="line">   &#123;</span><br><span class="line">      new SelectListItem &#123; Value = &quot;&quot;, Text = &quot;-- Please Select --&quot; &#125;,</span><br><span class="line">      new SelectListItem &#123; Value = &quot;*&quot;, Text = &quot;*&quot; &#125;,</span><br><span class="line">      new SelectListItem &#123; Value = &quot;/&quot;, Text = &quot;/&quot; &#125;,</span><br><span class="line">      new SelectListItem &#123; Value = &quot;+&quot;, Text = &quot;+&quot; &#125;,</span><br><span class="line">      new SelectListItem &#123; Value = &quot;-&quot;, Text = &quot;-&quot; &#125;</span><br><span class="line">   &#125;;</span><br><span class="line">   return r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="DisplayNameFor"><a href="#DisplayNameFor" class="headerlink" title="DisplayNameFor"></a>DisplayNameFor</h3><p>Display from property that is a list of another class</p><p>Example:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class AddViewModel</span><br><span class="line">&#123;</span><br><span class="line">   public double BaseRate &#123; get; set; &#125;</span><br><span class="line">   public DateTime EffectiveFrom &#123; get; set; &#125;</span><br><span class="line">   public List&lt;HistoryViewModel&gt; RatePrimeHistory &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class HistoryViewModel</span><br><span class="line">&#123;</span><br><span class="line">   public double BaseRate &#123; get; set; &#125;</span><br><span class="line">   public DateTime EffectiveFrom &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>To display the history data</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;table class=&quot;table&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;tr&gt;</span><br><span class="line">   &lt;th&gt;</span><br><span class="line">      @&#123;var dummy = Model.RatePrimeHistory.FirstOrDefault(); &#125;</span><br><span class="line">      @Html.DisplayNameFor(model =&gt; dummy.BaseRate)</span><br><span class="line">   &lt;/th&gt;</span><br><span class="line">   &lt;th&gt;</span><br><span class="line">      @Html.DisplayNameFor(model =&gt; dummy.EffectiveFrom)</span><br><span class="line">   &lt;/th&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line"></span><br><span class="line">@foreach (var item in Model.RatePrimeHistory)</span><br><span class="line">&#123;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">   &lt;td&gt;</span><br><span class="line">      @Html.DisplayFor(modelItem =&gt; item.BaseRate)</span><br><span class="line">   &lt;/td&gt;</span><br><span class="line">   &lt;td&gt;</span><br><span class="line">      @Html.DisplayFor(modelItem =&gt; item.EffectiveFrom)</span><br><span class="line">   &lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure><p><a href="https://stackoverflow.com/questions/12941465/calling-ienumerable-overload-of-displaynamefor" target="_blank" rel="noopener">Calling IEnumerable overload of DisplayNameFor</a></p>]]></content>
+        <content type="html"><![CDATA[<h3 id="Date-formatting"><a href="#Date-formatting" class="headerlink" title="Date formatting"></a>Date formatting</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[DisplayFormat(DataFormatString = &quot;&#123;0:dd/MM/yyyy&#125;&quot;, ApplyFormatInEditMode = true)]</span><br></pre></td></tr></table></figure><h3 id="Number-formatting"><a href="#Number-formatting" class="headerlink" title="Number formatting"></a>Number formatting</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[DisplayFormat(DataFormatString = &quot;&#123;0:N&#125;&quot;, ApplyFormatInEditMode = true)]</span><br></pre></td></tr></table></figure>]]></content>
       
       
       
@@ -3997,25 +3997,6 @@
     
     
     <entry>
-      <title>Stick 160 Size</title>
-      <link href="/2018/04/stick-160/"/>
-      <url>/2018/04/stick-160/</url>
-      
-        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><h3 id="Plans"><a href="#Plans" class="headerlink" title="Plans"></a>Plans</h3><ul><li><a href="http://www.hangarone.co.nz/big-stik-plan-100-span-30cc-size-by-don-anderson-p-6100.html" target="_blank" rel="noopener">Big Stik Plan 100″ Span 30cc Size by Don Anderson</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> model airplanes </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Stick 25 Size</title>
       <link href="/2018/04/stick-25/"/>
       <url>/2018/04/stick-25/</url>
@@ -4054,11 +4035,11 @@
     
     
     <entry>
-      <title>Micro Ultra Stick</title>
-      <link href="/2018/04/stick-micro/"/>
-      <url>/2018/04/stick-micro/</url>
+      <title>Stick 160 Size</title>
+      <link href="/2018/04/stick-160/"/>
+      <url>/2018/04/stick-160/</url>
       
-        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><h3 id="15in-400mm-Span"><a href="#15in-400mm-Span" class="headerlink" title="15in / 400mm Span"></a>15in / 400mm Span</h3><p>Same plan but printed at 50%</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3, F4 and F5 all 1.5mm balsa</li><li>1mm x 3mm for bracing</li></ul><p><em>Wing</em></p><ul><li>Ribs 1.5mm balsa</li><li>1mm balsa for skinning and cap strips</li></ul><p><em>Tail</em></p><ul><li>3mm x 3mm for control surfaces</li></ul><p><img src="/d/stick-micro/400mm a.jpg" alt="400mm Micro Ultra"></p><p><img src="/d/stick-micro/400mm b.jpg" alt="400mm Micro Ultra"></p><h3 id="31in-800mm-Span"><a href="#31in-800mm-Span" class="headerlink" title="31in / 800mm Span"></a>31in / 800mm Span</h3><p>335 grams including 1000 Mah 3 Cell Lipo</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3 - 3mm balsa</li><li>F4, F5 - 2mm balsa</li><li>Sheeting (top, bottom, sides) - 2mm balsa</li><li>Wing seat, 3mm balsa vertical grain</li><li>Bracing inside the fuse 3x3mm balsa</li></ul><p><em>Wing</em></p><p>The Airfoil is <a href="/2018/04/airfoils/">Eppler 168 15% width</a></p><ul><li>2mm balsa for skinning and cap strips</li><li>Ribs &amp; sheer webbing 3mm balsa</li><li>5mm trailing edge</li><li>5mm balsa spars</li><li>9.5mm balsa leading edge</li><li>Wing tips 5mm balsa</li></ul><p><em>Tail</em></p><ul><li>5x5mm balsa control surfaces, gussets and triangle bracing (hard would be better)</li></ul><p><strong>Wood Shopping List</strong></p><ul><li>2mm balsa (x4) - <a href="http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html</a></li><li>3mm balsa (x5) - <a href="http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html</a></li><li>5mm balsa (x2) - <a href="http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html</a></li><li>9.5mm balsa (x1) - <a href="http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html</a></li><li>3mm ply (x1) - <a href="http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html</a></li></ul><p><img src="/d/stick-micro/800mm-rib.jpg" alt="800mm Micro Ultra Rib"></p><p><img src="/d/stick-micro/800mm.jpg" alt="800mm Micro Ultra"></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://aerofred.com/details.php?image_id=99469" target="_blank" rel="noopener">https://aerofred.com/details.php?image_id=99469</a></li><li><a href="https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC" target="_blank" rel="noopener">https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><h3 id="Plans"><a href="#Plans" class="headerlink" title="Plans"></a>Plans</h3><ul><li><a href="http://www.hangarone.co.nz/big-stik-plan-100-span-30cc-size-by-don-anderson-p-6100.html" target="_blank" rel="noopener">Big Stik Plan 100″ Span 30cc Size by Don Anderson</a></li></ul>]]></content>
       
       
       
@@ -4097,6 +4078,25 @@
       <url>/2018/04/stick-mini/</url>
       
         <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><h3 id="36in-914mm-Span"><a href="#36in-914mm-Span" class="headerlink" title="36in / 914mm Span"></a>36in / 914mm Span</h3><p><em>Engine</em></p><ul><li>.19</li></ul><p><img src="/d/stick-mini/36in-914mm-span.jpg" alt="36in / 914mm Span - outerzone.co.uk"></p><ul><li><a href="https://outerzone.co.uk/plan_details.asp?ID=6144" target="_blank" rel="noopener">https://outerzone.co.uk/plan_details.asp?ID=6144</a></li><li><a href="https://drive.google.com/drive/folders/1eHOD-LG8OXDfRZlQf0kE_bLQRbAcrLLj?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/drive/folders/1eHOD-LG8OXDfRZlQf0kE_bLQRbAcrLLj?usp=sharing</a></li></ul><h3 id="38in-980mm-Span"><a href="#38in-980mm-Span" class="headerlink" title="38in / 980mm Span"></a>38in / 980mm Span</h3><p>E-Flight used to make these, I rebuilt one and over powered it with a park 480 and a 40 amp esc.</p><p><em>Fuselage</em></p><ul><li>Park 450, 2200 3S, 10x7e prop</li><li>Overall Length: 34 in (865mm)</li><li>Flying Weight: 710g</li></ul><p><em>Wing</em></p><ul><li>Span: 38.75 in (985mm)</li><li>Area: 325 sq in (21 sq dm)</li><li>Estimated height TE to LE: (325 / 38.17 = 8.38 in) =&gt; 212mm (includes ailerons)</li><li>Ailerons throw 15mm Up/Down Low Rate, 19mm High Rate</li></ul><p><em>Tail</em></p><ul><li>Elevator throw 18mm Up/Down Low Rate, 23mm High Rate</li><li>Rudder throw 23mm Right/Left Low Rate, 32mm High Rate</li></ul><p><img src="/d/stick-mini/1.jpg" alt="Mini Ultra"><br><img src="/d/stick-mini/2.jpg" alt="Mini Ultra"><br><img src="/d/stick-mini/3.jpg" alt="Mini Ultra"></p><ul><li><a href="https://www.horizonhobby.com/mini-ultra-stick-arf-efl2250" target="_blank" rel="noopener">https://www.horizonhobby.com/mini-ultra-stick-arf-efl2250</a></li><li><a href="https://www.spektrumrc.com/Products/Default.aspx?ProdID=EFL2250" target="_blank" rel="noopener">https://www.spektrumrc.com/Products/Default.aspx?ProdID=EFL2250</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> model airplanes </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Micro Ultra Stick</title>
+      <link href="/2018/04/stick-micro/"/>
+      <url>/2018/04/stick-micro/</url>
+      
+        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><h3 id="15in-400mm-Span"><a href="#15in-400mm-Span" class="headerlink" title="15in / 400mm Span"></a>15in / 400mm Span</h3><p>Same plan but printed at 50%</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3, F4 and F5 all 1.5mm balsa</li><li>1mm x 3mm for bracing</li></ul><p><em>Wing</em></p><ul><li>Ribs 1.5mm balsa</li><li>1mm balsa for skinning and cap strips</li></ul><p><em>Tail</em></p><ul><li>3mm x 3mm for control surfaces</li></ul><p><img src="/d/stick-micro/400mm a.jpg" alt="400mm Micro Ultra"></p><p><img src="/d/stick-micro/400mm b.jpg" alt="400mm Micro Ultra"></p><h3 id="31in-800mm-Span"><a href="#31in-800mm-Span" class="headerlink" title="31in / 800mm Span"></a>31in / 800mm Span</h3><p>335 grams including 1000 Mah 3 Cell Lipo</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3 - 3mm balsa</li><li>F4, F5 - 2mm balsa</li><li>Sheeting (top, bottom, sides) - 2mm balsa</li><li>Wing seat, 3mm balsa vertical grain</li><li>Bracing inside the fuse 3x3mm balsa</li></ul><p><em>Wing</em></p><p>The Airfoil is <a href="/2018/04/airfoils/">Eppler 168 15% width</a></p><ul><li>2mm balsa for skinning and cap strips</li><li>Ribs &amp; sheer webbing 3mm balsa</li><li>5mm trailing edge</li><li>5mm balsa spars</li><li>9.5mm balsa leading edge</li><li>Wing tips 5mm balsa</li></ul><p><em>Tail</em></p><ul><li>5x5mm balsa control surfaces, gussets and triangle bracing (hard would be better)</li></ul><p><strong>Wood Shopping List</strong></p><ul><li>2mm balsa (x4) - <a href="http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html</a></li><li>3mm balsa (x5) - <a href="http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html</a></li><li>5mm balsa (x2) - <a href="http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html</a></li><li>9.5mm balsa (x1) - <a href="http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html</a></li><li>3mm ply (x1) - <a href="http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html</a></li></ul><p><img src="/d/stick-micro/800mm-rib.jpg" alt="800mm Micro Ultra Rib"></p><p><img src="/d/stick-micro/800mm.jpg" alt="800mm Micro Ultra"></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://aerofred.com/details.php?image_id=99469" target="_blank" rel="noopener">https://aerofred.com/details.php?image_id=99469</a></li><li><a href="https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC" target="_blank" rel="noopener">https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC</a></li></ul>]]></content>
       
       
       
@@ -4195,6 +4195,25 @@
     
     
     <entry>
+      <title>Design By Contract</title>
+      <link href="/2018/04/design-by-contract/"/>
+      <url>/2018/04/design-by-contract/</url>
+      
+        <content type="html"><![CDATA[<p><em>Prescribes that software designers should define formal, precise and verifiable interface specifications for software components, which extend the ordinary definition of abstract data types with preconditions, postconditions and invariants. These specifications are referred to as “contracts”, in accordance with a conceptual metaphor with the conditions and obligations of business contracts.</em></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://en.wikipedia.org/wiki/Design_by_contract" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Design_by_contract</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> patterns principles </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Dependency Inversion Principle (DIP)</title>
       <link href="/2018/04/dependency-inversion-principle-dip/"/>
       <url>/2018/04/dependency-inversion-principle-dip/</url>
@@ -4208,25 +4227,6 @@
             <tag> patterns principles </tag>
             
             <tag> dependency injection </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Design By Contract</title>
-      <link href="/2018/04/design-by-contract/"/>
-      <url>/2018/04/design-by-contract/</url>
-      
-        <content type="html"><![CDATA[<p><em>Prescribes that software designers should define formal, precise and verifiable interface specifications for software components, which extend the ordinary definition of abstract data types with preconditions, postconditions and invariants. These specifications are referred to as “contracts”, in accordance with a conceptual metaphor with the conditions and obligations of business contracts.</em></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://en.wikipedia.org/wiki/Design_by_contract" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Design_by_contract</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> patterns principles </tag>
             
         </tags>
       
