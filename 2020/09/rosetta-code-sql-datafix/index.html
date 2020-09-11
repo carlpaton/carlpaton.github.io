@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="WIP!  StoryConsider the following relational database: In the context of this database a tenant can only be one of App One, App Two or User. Each User has their own unique GUID and the applications h">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-09-11T06:25:01.899Z">
+<meta property="og:updated_time" content="2020-09-11T07:09:48.421Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL Datafix">
 <meta name="twitter:description" content="WIP!  StoryConsider the following relational database: In the context of this database a tenant can only be one of App One, App Two or User. Each User has their own unique GUID and the applications h">
@@ -151,8 +151,8 @@ ga('send', 'pageview');
 </ul>
 <p>Using the supplied data the prints and counts should be:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">total dbo.item_line to be updated : 123</span><br><span class="line">total new dbo.tenant records : 123</span><br><span class="line">actual updates to dbo.item_line : 123</span><br></pre></td></tr></table></figure>
-<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>Spin up a MS SQL Instance</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name=rosetta-df -e &quot;ACCEPT_EULA=Y&quot; -e &quot;SA_PASSWORD=Password123&quot; -p 1500:1433 -d microsoft/mssql-server-linux:2017-CU5</span><br></pre></td></tr></table></figure>
+<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>Spin up a MS SQL Instance, youn then connect to it from Microsoft SQL Server Management Studio on <code>localhost,1500</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name=rosetta-df -e &quot;ACCEPT_EULA=Y&quot; -e &quot;SA_PASSWORD=Password123&quot; -p 1500:1433 -d mcr.microsoft.com/mssql/server:2017-latest</span><br></pre></td></tr></table></figure>
 <h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p>baz</p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/sql/t-sql/language-elements/declare-cursor-transact-sql?view=sql-server-ver15</a></li>
@@ -162,7 +162,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/rosetta-code-sql-datafix/" data-id="ckextt66x00chb0on71irgfh5" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/rosetta-code-sql-datafix/" data-id="ckexwhrpt00cj08on9o3qkv3y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rosetta-code/">rosetta code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
