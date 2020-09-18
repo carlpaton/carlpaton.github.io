@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>Retropie | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="InstallPi V4 Support Download and install etcher Download the retropie image Flash your card with etcher   https://retropie.org.uk/docs/First-Installation/  Pre Official Pi V4 SupportRaspbian is the o">
+  <meta name="description" content="InstallPi V4 Support Download and install etcher Download the retropie image Flash your card with etcher  After loading up it will expand the disk and your should be able to configure your controller.">
 <meta name="keywords" content="raspberry pi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Retropie">
 <meta property="og:url" content="https://carlpaton.github.io/2019/10/retropie/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="InstallPi V4 Support Download and install etcher Download the retropie image Flash your card with etcher   https://retropie.org.uk/docs/First-Installation/  Pre Official Pi V4 SupportRaspbian is the o">
+<meta property="og:description" content="InstallPi V4 Support Download and install etcher Download the retropie image Flash your card with etcher  After loading up it will expand the disk and your should be able to configure your controller.">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-09-15T05:04:33.828Z">
+<meta property="og:updated_time" content="2020-09-18T02:04:02.501Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Retropie">
-<meta name="twitter:description" content="InstallPi V4 Support Download and install etcher Download the retropie image Flash your card with etcher   https://retropie.org.uk/docs/First-Installation/  Pre Official Pi V4 SupportRaspbian is the o">
+<meta name="twitter:description" content="InstallPi V4 Support Download and install etcher Download the retropie image Flash your card with etcher  After loading up it will expand the disk and your should be able to configure your controller.">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -122,6 +122,9 @@ ga('send', 'pageview');
 <li><a href="https://retropie.org.uk/download/" target="_blank" rel="noopener">Download the retropie image</a></li>
 <li>Flash your card with etcher</li>
 </ol>
+<p>After loading up it will expand the disk and your should be able to configure your controller.</p>
+<p>Other steps:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">F4 to exit to console</span><br><span class="line"></span><br><span class="line">sudo raspi-config</span><br><span class="line"></span><br><span class="line">4 Localisation Options -&gt; Change Wifi Country</span><br><span class="line"></span><br><span class="line">5 Interfacing Options -&gt; SSH -&gt; Enable</span><br><span class="line"></span><br><span class="line">2 Network Options -&gt; Wifi -&gt; Set SSID/Password</span><br><span class="line"></span><br><span class="line">? Change hostname, I used `node1`</span><br></pre></td></tr></table></figure>
 <ul>
 <li><a href="https://retropie.org.uk/docs/First-Installation/" target="_blank" rel="noopener">https://retropie.org.uk/docs/First-Installation/</a></li>
 </ul>
@@ -131,7 +134,7 @@ ga('send', 'pageview');
 <h3 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware</h3><p>Besides the PI itself you will need either the <code>Nintendo NES classic USB</code> or <code>USB Super Nintendo Game Controllers</code></p>
 <h4 id="XBox-One-Controller"><a href="#XBox-One-Controller" class="headerlink" title="XBox One Controller"></a>XBox One Controller</h4><p>I used <code>select</code> as my hotkey.</p>
 <p>Hotkey combinations are specific to the retroarch/libretro based emulators.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Hotkey Combination	      Action</span><br><span class="line">Hotkey+Start	          Exit</span><br><span class="line">Hotkey+Right Shoulder	  Save</span><br><span class="line">Hotkey+Left Shoulder	  Load</span><br><span class="line">Hotkey+Right	          Input State Slot Increase</span><br><span class="line">Hotkey+Left	              Input State Slot Decrease</span><br><span class="line">Hotkey+X	              RGUI Menu</span><br><span class="line">Hotkey+B	              Reset</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Hotkey Combination        Action</span><br><span class="line">Hotkey+Start              Exit</span><br><span class="line">Hotkey+Right Shoulder	  Save</span><br><span class="line">Hotkey+Left Shoulder	  Load</span><br><span class="line">Hotkey+Right              Input State Slot Increase</span><br><span class="line">Hotkey+Left               Input State Slot Decrease</span><br><span class="line">Hotkey+X                  RGUI Menu</span><br><span class="line">Hotkey+B                  Reset</span><br></pre></td></tr></table></figure>
 <ul>
 <li><a href="https://retropie.org.uk/docs/Controller-Configuration/" target="_blank" rel="noopener">https://retropie.org.uk/docs/Controller-Configuration/</a></li>
 </ul>
@@ -148,7 +151,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2019/10/retropie/" data-id="ckf7a2xut00dlo0onhngwxv33" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2019/10/retropie/" data-id="ckf7mjxjt00c408ono6in3lgn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li></ul>
