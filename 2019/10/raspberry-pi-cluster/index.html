@@ -20,18 +20,20 @@ ga('send', 'pageview');
   
   <title>Raspberry Pi Cluster | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="I was inspired by a Technology blogger Gary Sims to build my own (small) super computer using Raspberry Pi’s and a message passing interface library (mpiexec) MPI library - message passing interface,">
+  <meta name="description" content="I was inspired by a Technology blogger Gary Sims to build my own (small) super computer using Raspberry Pi’s and a message passing interface library. Following his Prime Numbers example the key concep">
 <meta name="keywords" content="raspberry pi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Raspberry Pi Cluster">
 <meta property="og:url" content="https://carlpaton.github.io/2019/10/raspberry-pi-cluster/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="I was inspired by a Technology blogger Gary Sims to build my own (small) super computer using Raspberry Pi’s and a message passing interface library (mpiexec) MPI library - message passing interface,">
+<meta property="og:description" content="I was inspired by a Technology blogger Gary Sims to build my own (small) super computer using Raspberry Pi’s and a message passing interface library. Following his Prime Numbers example the key concep">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-09-18T03:04:02.480Z">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster/raspberry-pi-cluster.jpg">
+<meta property="og:updated_time" content="2020-09-18T21:25:17.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi Cluster">
-<meta name="twitter:description" content="I was inspired by a Technology blogger Gary Sims to build my own (small) super computer using Raspberry Pi’s and a message passing interface library (mpiexec) MPI library - message passing interface,">
+<meta name="twitter:description" content="I was inspired by a Technology blogger Gary Sims to build my own (small) super computer using Raspberry Pi’s and a message passing interface library. Following his Prime Numbers example the key concep">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster/raspberry-pi-cluster.jpg">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -117,42 +119,52 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>I was inspired by a Technology blogger Gary Sims to build my own (small) super computer using Raspberry Pi’s and a message passing interface library (mpiexec)</p>
-<p>MPI library - message passing interface, this is a standard way of sending blocks of data into a cluster from one node to another.</p>
-<p>Scatter - the MPI program will see each core in your cluster as something it can ask to do work. It will scatter the numbers accross the nodes to check if they are prime.</p>
-<p>Gather - the MPI program will then gather the results. This is done on the master node that you started the command from.</p>
-<h3 id="Setup-Hardware-OS"><a href="#Setup-Hardware-OS" class="headerlink" title="Setup Hardware / OS"></a>Setup Hardware / OS</h3><p>I used 2 PI’s and named them <code>node1</code> and <code>node3</code>, you can probably use any raspbian distro but I used</p>
+        <p>I was inspired by a Technology blogger <a href="https://www.youtube.com/channel/UCRjSO-juFtngAeJGJRMdIZw" target="_blank" rel="noopener">Gary Sims</a> to build my own (small) super computer using Raspberry Pi’s and a message passing interface library. Following his <code>Prime Numbers</code> example the key concepts are:</p>
+<p><strong>MPI library</strong> - Message passing interface, this is a standard way of sending blocks of data into a cluster from one node to another. For the examples below I used <a href="https://www.open-mpi.org/doc/v3.0/man1/mpiexec.1.php" target="_blank" rel="noopener">mpiexec</a> which is free and <a href="https://github.com/open-mpi/ompi" target="_blank" rel="noopener">open source</a>.</p>
+<p><strong>Scatter</strong> - the MPI program will see each core in your cluster as something it can ask to do work. It will scatter the numbers accross the nodes to check if they are prime.</p>
+<p><strong>Gather</strong> - the MPI program will then gather the results. This is done on the master node that you started the command from.</p>
+<p><img src="/d/raspberry-pi-cluster/raspberry-pi-cluster.jpg" alt="Raspberry Pi Cluster"></p>
+<p>In this video Gary explains what a <code>Raspberry Pi Supercomputer Cluster</code> is and the key concepts of the message passing interface.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VzcarXuVUvU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h3 id="Setup-Hardware-OS"><a href="#Setup-Hardware-OS" class="headerlink" title="Setup Hardware / OS"></a>Setup Hardware / OS</h3><p>The diagram above shows 4 PI’s but due to cost constraints I only used 2 PI’s and named them <code>node1</code> and <code>node3</code>, you can probably use any raspbian distro but I used</p>
 <ul>
-<li><code>node1</code> - <a href="/2019/10/retropie/">retropie-buster-4.6-rpi4</a></li>
-<li><code>node2</code> - <a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">2020-08-20-raspios-buster-armhf-full</a></li>
+<li><code>node1</code> - <a href="/2019/10/retropie/">Retropie: retropie-buster-4.6-rpi4</a></li>
+<li><code>node2</code> - <a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">Raspios: 2020-08-20-raspios-buster-armhf-full</a></li>
 </ul>
-<p>Applications I used was <code>git</code>, <code>nano</code> and <code>ssh</code> with these additional installs:</p>
+<p>These distros come with most applications already installed, some of the applications I used were <code>git</code>, <code>nano</code> and <code>ssh</code> with these additional installs:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-mpi4py</span><br><span class="line">sudo apt-get install keychain</span><br></pre></td></tr></table></figure>
-<h3 id="Setup-Common-User"><a href="#Setup-Common-User" class="headerlink" title="Setup Common User"></a>Setup Common User</h3><p>node1:</p>
+<h3 id="Setup-Common-User"><a href="#Setup-Common-User" class="headerlink" title="Setup Common User"></a>Setup Common User</h3><p>A common user is needed on each node to allow the nodes to authenticate and execute the MPI commands. I used the username <code>mpiuser</code>. By default the PI’s install with the user <code>PI</code> and password <code>raspberry</code>.</p>
+<p><strong>node1</strong>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo useradd -m -u 2345 mpiuser</span><br></pre></td></tr></table></figure>
 <p><code>-m</code> creates the home directory, <code>-u</code> is the user id, I think you can use any user id as long as they are same on all nodes.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd mpiuser            ~ raspberry for both prompts, secure I know!</span><br></pre></td></tr></table></figure>
-<p>Now login as this user to test it works</p>
+<p>Now login as user <code>mpiuser</code> to test it works</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">su - mpiuser                   ~ switch to the mpiuser user</span><br><span class="line">exit                           ~ exit that user session and go back to the `pi` user</span><br></pre></td></tr></table></figure>
-<p>Repeat the same for <code>node3</code></p>
-<h3 id="Setup-Generate-SSH-Keys"><a href="#Setup-Generate-SSH-Keys" class="headerlink" title="Setup Generate SSH Keys"></a>Setup Generate SSH Keys</h3><p>node1:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">su - mpiuser</span><br><span class="line">ssh-keygen -t rsa              ~ same to the default location `/home/mpiuser/.ssh/`</span><br><span class="line">                               ~ passphrase raspberry</span><br></pre></td></tr></table></figure>
+<p>Repeat the same for <strong>node3</strong>, this can be done over SSH using the PI user. You can connect using <code>ssh pi@node3</code>. When done run <code>exit</code> to fall back to <strong>node1</strong>.</p>
+<h3 id="Setup-Generate-SSH-Keys"><a href="#Setup-Generate-SSH-Keys" class="headerlink" title="Setup Generate SSH Keys"></a>Setup Generate SSH Keys</h3><p>Allow each node to authenticate using SSH (Secure Shell) using public &amp; private keys.</p>
+<p><strong>node1</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">su - mpiuser</span><br><span class="line">ssh-keygen -t rsa              ~ same to the default location `/home/mpiuser/.ssh/`</span><br><span class="line">                               ~ passphrase `raspberry` - secure right? :D</span><br></pre></td></tr></table></figure>
 <p><code>-t rsa</code> is the encription type</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id mpiuser@node3</span><br><span class="line">ssh node3                     ~ should now ask for the passphrase</span><br><span class="line">exit                          ~ go back to node1</span><br></pre></td></tr></table></figure>
-<p>To allow the user to login without a password</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id mpiuser@node3     ~ copys the ssh key to node3 (this would need to be done for nodes2/4)</span><br><span class="line">ssh node3                     ~ should now ask for the passphrase</span><br><span class="line">exit                          ~ go back to node1</span><br></pre></td></tr></table></figure>
+<p>To allow the user to login without a password/passphrase.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano .bashrc</span><br></pre></td></tr></table></figure>
 <p>At the bottom of the file add</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># keychain magic</span><br><span class="line">/usr/bin/keychain $HOME/.ssh/id</span><br><span class="line">source $HOME/.keychain</span><br></pre></td></tr></table></figure>
-<p>After saving the file, run</p>
+<p>After saving the file recompile it by running</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source .bashrc</span><br></pre></td></tr></table></figure>
 <p>Now you should be able to run <code>ssh node3</code> and not be asked for a password. </p>
-<h3 id="Work-Load"><a href="#Work-Load" class="headerlink" title="Work Load"></a>Work Load</h3><p>The PI’s need some problems to solve! Clone <a href="https://github.com/carlpaton/python-hoon" target="_blank" rel="noopener">https://github.com/carlpaton/python-hoon</a> to the same dir on both PI’s</p>
+<h3 id="Hostfile"><a href="#Hostfile" class="headerlink" title="Hostfile"></a>Hostfile</h3><p>When running <code>mpiexec python python_script.py</code> it can be run with the switch <code>-hostfile HOSTFILENAME</code>, so the full command is then <code>mpiexec -hostfile hostfile python python_script.py</code></p>
+<p>The content of the hostfile is either the DNS name or IP address of all the nodes in the cluster.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node1</span><br><span class="line">node3</span><br></pre></td></tr></table></figure>
+<h3 id="Work-Load"><a href="#Work-Load" class="headerlink" title="Work Load"></a>Work Load</h3><p>The PI’s need some problems to solve! Clone <a href="https://github.com/carlpaton/python-hoon" target="_blank" rel="noopener">https://github.com/carlpaton/python-hoon</a> to the same dir on both PI’s. Its important that the directorys are the same as the MASTER node (using MPI) will look in these directorys for the script to run.</p>
 <h4 id="Check-mpi4py"><a href="#Check-mpi4py" class="headerlink" title="Check mpi4py"></a>Check mpi4py</h4><blockquote>
 <p>The script prints hostnames and ranks (process id in MPI) from each MPI process in a sequential manner.</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd python-hoon/mpiexec</span><br><span class="line">time mpiexec python check_mpi4py.py</span><br></pre></td></tr></table></figure>
-<h4 id="Prime-Numbers"><a href="#Prime-Numbers" class="headerlink" title="Prime Numbers"></a>Prime Numbers</h4><p>Use parallel computing to find prime numbers in the range <code>0</code> to <code>10000</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd python-hoon/mpiexec</span><br><span class="line">time mpiexec -hostfile hostfile python primenumbers27.py                ~ no core limit, use all nodes in `hostfile`</span><br><span class="line">time mpiexec -np 4 -hostfile hostfile python primenumbers27.py          ~ limit to 4 cores</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd python-hoon/mpiexec</span><br><span class="line">time mpiexec python check_mpi4py.py</span><br><span class="line">time mpiexec -np 4 -hostfile hostfile python check_mpi4py.py          ~ limit to 4 cores</span><br></pre></td></tr></table></figure>
+<p>This script was copied from <a href="https://chainermn.readthedocs.io/en/v1.0.0b2_a/installation/troubleshooting.html" target="_blank" rel="noopener">chainermn.readthedocs.io</a></p>
+<h4 id="Prime-Numbers"><a href="#Prime-Numbers" class="headerlink" title="Prime Numbers"></a>Prime Numbers</h4><p>Use parallel computing to find prime numbers in the range <code>0</code> to <code>10000</code>. This is a Python 2 script cloned from <a href="https://github.com/garyexplains/examples" target="_blank" rel="noopener">github.com/garyexplains</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd python-hoon/mpiexec</span><br><span class="line">time mpiexec -hostfile hostfile python primenumbers27.py              ~ no core limit, use all nodes in `hostfile`</span><br></pre></td></tr></table></figure>
 <p><strong>What Are Prime Numbers?</strong></p>
 <ul>
 <li>Greater than 1</li>
@@ -168,9 +180,7 @@ ga('send', 'pageview');
 <li><a href="https://www.open-mpi.org/doc/v3.0/man1/mpiexec.1.php" target="_blank" rel="noopener">https://www.open-mpi.org/doc/v3.0/man1/mpiexec.1.php</a></li>
 <li><a href="https://chainermn.readthedocs.io/en/v1.0.0b2_a/installation/troubleshooting.html" target="_blank" rel="noopener">https://chainermn.readthedocs.io/en/v1.0.0b2_a/installation/troubleshooting.html</a></li>
 </ul>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/VzcarXuVUvU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-<h3 id="Docker-Swarm"><a href="#Docker-Swarm" class="headerlink" title="Docker Swarm"></a>Docker Swarm</h3><p>In case I decided to use Docker later…</p>
+<h3 id="Docker-Swarm"><a href="#Docker-Swarm" class="headerlink" title="Docker Swarm"></a>Docker Swarm</h3><p>This cluster can also be run with Docker in swarm mode.</p>
 <ul>
 <li><a href="https://howchoo.com/g/njy4zdm3mwy/how-to-run-a-raspberry-pi-cluster-with-docker-swarm" target="_blank" rel="noopener">https://howchoo.com/g/njy4zdm3mwy/how-to-run-a-raspberry-pi-cluster-with-docker-swarm</a></li>
 <li><a href="https://www.docker.com/blog/happy-pi-day-docker-raspberry-pi/" target="_blank" rel="noopener">https://www.docker.com/blog/happy-pi-day-docker-raspberry-pi/</a></li>
@@ -180,7 +190,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2019/10/raspberry-pi-cluster/" data-id="ckf7mjxjh00bd08onpbdu7b1b" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2019/10/raspberry-pi-cluster/" data-id="ckf8phndu00duh4onauoy0e5a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li></ul>
