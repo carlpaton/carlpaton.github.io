@@ -35,7 +35,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer%20load%20balancing.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer%20swarm%20leave.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer%20after%20adding%20nginx-foo.jpg">
-<meta property="og:updated_time" content="2020-09-25T04:31:21.770Z">
+<meta property="og:updated_time" content="2020-09-25T04:56:45.809Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi Cluster - Docker Swarm">
 <meta name="twitter:description" content="Following on from the post Raspberry Pi Cluster which created a cluster of PI’s and used parallel computing to execute and share the workload of some Python scripts I figured it was time to do the sa">
@@ -127,7 +127,8 @@ ga('send', 'pageview');
       
         <p><img src="/d/raspberry-pi-cluster-swarm/docker swarm lol.jpg" alt="Docker Swarm LOL"></p>
 <p>Following on from the post <a href="/2019/10/raspberry-pi-cluster/">Raspberry Pi Cluster</a> which created a cluster of PI’s and used parallel computing to execute and share the workload of some Python scripts I figured it was time to do the same thing using Docker Swarm.</p>
-<p><a href="https://nigelpoulton.com/blog/f/swarm-vs-kubernetes-2020-update" target="_blank" rel="noopener">Docker Swarm is not dead</a> (I’d take Nigel Poulton’s word on this as gospel). Swarm is simple to setup and has a shallow learning curve. Not all companys needs <a href="/2020/09/raspberry-pi-cluster-kubernetes/">complex container orchestration tools like kubernetes</a> that can automatically replicate to nodes in a cluster under load. With Swarm the replication is done manually with commands like <code>docker service scale</code>.</p>
+<p><a href="https://nigelpoulton.com/blog/f/swarm-vs-kubernetes-2020-update" target="_blank" rel="noopener">Docker Swarm is not dead although its long term future is however unknown</a>. I’d take Nigel Poulton’s word on this as gospel as he is a domain expert. So knowing some Swarm will probably help you at some point, you would be better off focusing more of your attention on kubernetes.</p>
+<p>Swarm is simple to setup and has a shallow learning curve. Not all companys needs <a href="/2020/09/raspberry-pi-cluster-kubernetes/">complex container orchestration tools like kubernetes</a> that can automatically replicate to nodes in a cluster under load. With Swarm the replication is done manually with commands like <code>docker service scale</code>.</p>
 <p>The cluster is made up of 2 or more physical Raspberry Pi 4’s and Docker Swarm has the following common terms:</p>
 <ul>
 <li><strong>Node</strong><br>– This is the machine that runs and instance of the <a href="https://docs.docker.com/engine/" target="_blank" rel="noopener">Docker Engine</a>, this can be a Virtual Machine, PC, Laptop or in my case a Raspberry Pi.</li>
@@ -229,7 +230,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-swarm/" data-id="ckfhr0e7800bqz8onmjbo313e" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-swarm/" data-id="ckfhrwv7l00bql4onlzazzvce" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li></ul>
