@@ -35,7 +35,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer%20load%20balancing.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer%20swarm%20leave.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer%20after%20adding%20nginx-foo.jpg">
-<meta property="og:updated_time" content="2020-09-25T03:57:50.892Z">
+<meta property="og:updated_time" content="2020-09-25T04:12:46.852Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi Cluster - Docker Swarm">
 <meta name="twitter:description" content="Following on from the post Raspberry Pi Cluster which created a cluster of PI’s and used parallel computing to execute and share the workload of some Python scripts I figured it was time to do the sa">
@@ -185,7 +185,7 @@ ga('send', 'pageview');
 <h3 id="Nginx-Services"><a href="#Nginx-Services" class="headerlink" title="Nginx Services"></a>Nginx Services</h3><p>The examples below use the image <a href="https://hub.docker.com/r/carlpaton/nginx-pi-demo" target="_blank" rel="noopener">carlpaton/nginx-pi-demo</a> to display some information about the host node, this is useful as we can then see the <code>Server name</code> and <code>Server address</code> changes. Details about this image and how I created it can be found at <a href="/2020/09/nginx-pi-demo/">nginx-pi-demo</a>.</p>
 <p>When you create a service you can initialze it with <code>--replicas n</code> where n is the amount of running instance you want. The below will create 2 instance of <code>nginx-2</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker service create --replicas 2 --name nginx-2 -p 8081:80 carlpaton/nginx-pi-demo</span><br><span class="line">docker service inspect --pretty nginx-2                                  ~ inspect the service, --pretty formats the output, default is json</span><br></pre></td></tr></table></figure>
-<p><code>nginx-2</code> is then avaible at - <a href="http://node1:8081/" target="_blank" rel="noopener">http://node1:8081/</a>. If you open one instance and a second in incognio you will see for the same DNS <code>node1:8081</code> the <code>Server name</code> and <code>Server address</code> changes, this means the two requests were processed by different nodes &lt;3</p>
+<p><code>nginx-2</code> is then avaible at - <a href="http://node1:8081/" target="_blank" rel="noopener">http://node1:8081/</a>. If you open one instance and a second in incognio you will see for the same DNS <code>node1:8081</code> the <code>Server name</code> and <code>Server address</code> changes, this means the two requests were processed by different containers (not necessarily nodes but if you use this information along with what you see in visualiser you can prove they are on different nodes). </p>
 <p><img src="/d/raspberry-pi-cluster-swarm/nginx-pi-demo.jpg" alt="nginx-pi-demo"></p>
 <p>To manually scale create the server <code>nginx-manual</code> below.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker service create --name nginx-manual -p 8082:80 carlpaton/nginx-pi-demo    ~ create 1 instance   </span><br><span class="line">docker service ps nginx-manual                                                  ~ check where the processes `nginx-manual` are running</span><br></pre></td></tr></table></figure>
@@ -227,7 +227,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-swarm/" data-id="ckfh8u7qt00bz98on1x45cebh" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-swarm/" data-id="ckfhqeote00bnhgon71yqmpto" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li></ul>
@@ -238,19 +238,19 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2020/09/raspberry-pi-cluster-kubernetes/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/09/nginx-pi-demo/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Raspberry Pi Cluster - Kubernetes
+          Nginx Pi Demo
         
       </div>
     </a>
   
   
-    <a href="/2020/09/nginx-pi-demo/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/09/raspberry-pi-cluster-kubernetes/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Nginx Pi Demo</div>
+      <div class="article-nav-title">Raspberry Pi Cluster - Kubernetes</div>
     </a>
   
 </nav>
@@ -278,7 +278,7 @@ ga('send', 'pageview');
       <ul>
         
           <li>
-            <a href="/2020/09/raspberry-pi-cluster-kubernetes/">Raspberry Pi Cluster - Kubernetes</a>
+            <a href="/2020/09/nginx-pi-demo/">Nginx Pi Demo</a>
           </li>
         
           <li>
@@ -286,7 +286,7 @@ ga('send', 'pageview');
           </li>
         
           <li>
-            <a href="/2020/09/nginx-pi-demo/">Nginx Pi Demo</a>
+            <a href="/2020/09/raspberry-pi-cluster-kubernetes/">Raspberry Pi Cluster - Kubernetes</a>
           </li>
         
           <li>
