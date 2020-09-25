@@ -35,7 +35,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer%20load%20balancing.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer%20swarm%20leave.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer%20after%20adding%20nginx-foo.jpg">
-<meta property="og:updated_time" content="2020-09-25T04:12:46.852Z">
+<meta property="og:updated_time" content="2020-09-25T04:24:35.159Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi Cluster - Docker Swarm">
 <meta name="twitter:description" content="Following on from the post Raspberry Pi Cluster which created a cluster of PI’s and used parallel computing to execute and share the workload of some Python scripts I figured it was time to do the sa">
@@ -189,8 +189,10 @@ ga('send', 'pageview');
 <p><img src="/d/raspberry-pi-cluster-swarm/nginx-pi-demo.jpg" alt="nginx-pi-demo"></p>
 <p>To manually scale create the server <code>nginx-manual</code> below.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker service create --name nginx-manual -p 8082:80 carlpaton/nginx-pi-demo    ~ create 1 instance   </span><br><span class="line">docker service ps nginx-manual                                                  ~ check where the processes `nginx-manual` are running</span><br></pre></td></tr></table></figure>
-<p><code>nginx-manual</code> is then avaible at - <a href="http://node1:8082/" target="_blank" rel="noopener">http://node1:8082/</a>. Once its up, scale it out by <code>5</code>. Note that this is going to add 5 more instances, so in the end you will have 1 + 5 = 6.</p>
+<p><code>nginx-manual</code> is then avaible at - <a href="http://node1:8082/" target="_blank" rel="noopener">http://node1:8082/</a>. Once its up, scale it out by <code>5</code>. Note that this <code>5</code> will be the new total service count.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service scale nginx-manual=5</span><br></pre></td></tr></table></figure>
+<p>If you want to scale down just run the same command but with a lower value like 2, the new service count for <code>nginx-manual</code> will then be 2.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service scale nginx-manual=2</span><br></pre></td></tr></table></figure>
 <p>If you now look at the <a href="http://node1:8080/" target="_blank" rel="noopener">visualizer tool</a> you can see Docker Swarm is auto load balancing between the nodes :D</p>
 <p><img src="/d/raspberry-pi-cluster-swarm/visualizer load balancing.jpg" alt="Load Balancing"></p>
 <h3 id="Delete-a-service"><a href="#Delete-a-service" class="headerlink" title="Delete a service"></a>Delete a service</h3><p>To delete a service run <code>rm</code>, the below will create a dummy server <code>nginx-delete</code> and then delete it. <strong>WARNING!</strong> <code>rm</code> will trash the service without confirming. </p>
@@ -227,7 +229,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-swarm/" data-id="ckfhqeote00bnhgon71yqmpto" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-swarm/" data-id="ckfhqrj6h00bshsontwlt0uq4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li></ul>
@@ -238,19 +240,19 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2020/09/nginx-pi-demo/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/09/raspberry-pi-cluster-kubernetes/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Nginx Pi Demo
+          Raspberry Pi Cluster - Kubernetes
         
       </div>
     </a>
   
   
-    <a href="/2020/09/raspberry-pi-cluster-kubernetes/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/09/percentage-for-data-set/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Raspberry Pi Cluster - Kubernetes</div>
+      <div class="article-nav-title">Percentage For Data Set</div>
     </a>
   
 </nav>
@@ -282,11 +284,11 @@ ga('send', 'pageview');
           </li>
         
           <li>
-            <a href="/2020/09/raspberry-pi-cluster-swarm/">Raspberry Pi Cluster - Docker Swarm</a>
+            <a href="/2020/09/raspberry-pi-cluster-kubernetes/">Raspberry Pi Cluster - Kubernetes</a>
           </li>
         
           <li>
-            <a href="/2020/09/raspberry-pi-cluster-kubernetes/">Raspberry Pi Cluster - Kubernetes</a>
+            <a href="/2020/09/raspberry-pi-cluster-swarm/">Raspberry Pi Cluster - Docker Swarm</a>
           </li>
         
           <li>
