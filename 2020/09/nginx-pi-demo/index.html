@@ -29,7 +29,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="This is carlpaton/nginx-pi-demo:latest and is a docker image used with my post on Raspberry Pi Cluster Swarm to simply show which node responded to the request.  All of the below was based on the amaz">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://carlpaton.github.io/d/nginx-pi-demo/nginx-pi-demo.jpg">
-<meta property="og:updated_time" content="2020-09-25T03:30:00.293Z">
+<meta property="og:updated_time" content="2020-09-26T07:43:36.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx Pi Demo">
 <meta name="twitter:description" content="This is carlpaton/nginx-pi-demo:latest and is a docker image used with my post on Raspberry Pi Cluster Swarm to simply show which node responded to the request.  All of the below was based on the amaz">
@@ -121,40 +121,35 @@ ga('send', 'pageview');
       
         <p>This is <a href="https://hub.docker.com/r/carlpaton/nginx-pi-demo" target="_blank" rel="noopener">carlpaton/nginx-pi-demo:latest</a> and is a docker image used with my post on <a href="/2020/09/raspberry-pi-cluster-swarm/">Raspberry Pi Cluster Swarm</a> to simply show which node responded to the request.</p>
 <p><img src="/d/nginx-pi-demo/nginx-pi-demo.jpg" alt="Nginx Pi Demo"></p>
-<p>All of the below was based on the amazing work at <a href="https://docs.nginx.com/nginx/deployment-guides/setting-up-nginx-demo-environment/" target="_blank" rel="noopener">docs.nginx.com</a> and <a href="https://www.docker.com/blog/how-to-use-the-official-nginx-docker-image/" target="_blank" rel="noopener">docker.com</a></p>
-<p>I created this image as follows on one of my Raspberry PI’s.</p>
+<p>All of the below was based on the amazing work at <a href="https://docs.nginx.com/nginx/deployment-guides/setting-up-nginx-demo-environment/" target="_blank" rel="noopener">docs.nginx.com</a> and <a href="https://www.docker.com/blog/how-to-use-the-official-nginx-docker-image/" target="_blank" rel="noopener">docker.com</a>. I created this image as follows on one of my Raspberry PI’s to ensure it works for ARM.</p>
 <ol>
-<li><p>created <a href="https://github.com/carlpaton/nginx-pi-demo/blob/master/default.conf" target="_blank" rel="noopener">default.conf</a></p>
-</li>
-<li><p>created <a href="https://github.com/carlpaton/nginx-pi-demo/blob/master/index.html" target="_blank" rel="noopener">index.html</a></p>
-</li>
-<li><p>created <a href="https://github.com/carlpaton/nginx-pi-demo/blob/master/Dockerfile" target="_blank" rel="noopener">Dockerfile</a></p>
+<li><p>created <a href="https://github.com/carlpaton/nginx-pi-demo/blob/master/default.conf" target="_blank" rel="noopener">default.conf</a>, <a href="https://github.com/carlpaton/nginx-pi-demo/blob/master/index.html" target="_blank" rel="noopener">index.html</a> and <a href="https://github.com/carlpaton/nginx-pi-demo/blob/master/Dockerfile" target="_blank" rel="noopener">Dockerfile</a></p>
 </li>
 <li><p>build the image</p>
 </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t webserver .</span><br></pre></td></tr></table></figure>
-<ol start="5">
+<ol start="3">
 <li>test the image</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm -d -p 100:80 --name web webserver</span><br></pre></td></tr></table></figure>
-<ol start="6">
+<ol start="4">
 <li>login to docker</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login</span><br></pre></td></tr></table></figure>
-<ol start="7">
+<ol start="5">
 <li>tag the image </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag webserver carlpaton/nginx-pi-demo</span><br></pre></td></tr></table></figure>
-<ol start="8">
+<ol start="6">
 <li>ensure the tagged image <code>carlpaton/nginx-pi-demo</code> exists</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
-<ol start="9">
+<ol start="7">
 <li>push the image</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push carlpaton/nginx-pi-demo</span><br></pre></td></tr></table></figure>
-<ol start="10">
+<ol start="8">
 <li>Cleanup</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker kill web</span><br><span class="line">docker rmi webserver</span><br></pre></td></tr></table></figure>
@@ -168,7 +163,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/nginx-pi-demo/" data-id="ckfjd73qr00a5t4onnxly2u32" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/nginx-pi-demo/" data-id="ckfjdbmsj009ywoonaegs3srw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li></ul>
@@ -180,9 +175,9 @@ ga('send', 'pageview');
 <nav id="article-nav">
   
   
-    <a href="/2020/09/raspberry-pi-cluster-swarm/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/09/raspberry-pi-cluster-kubernetes/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Raspberry Pi Cluster - Docker Swarm</div>
+      <div class="article-nav-title">Raspberry Pi Cluster - Kubernetes</div>
     </a>
   
 </nav>
@@ -214,11 +209,11 @@ ga('send', 'pageview');
           </li>
         
           <li>
-            <a href="/2020/09/raspberry-pi-cluster-swarm/">Raspberry Pi Cluster - Docker Swarm</a>
+            <a href="/2020/09/raspberry-pi-cluster-kubernetes/">Raspberry Pi Cluster - Kubernetes</a>
           </li>
         
           <li>
-            <a href="/2020/09/raspberry-pi-cluster-kubernetes/">Raspberry Pi Cluster - Kubernetes</a>
+            <a href="/2020/09/raspberry-pi-cluster-swarm/">Raspberry Pi Cluster - Docker Swarm</a>
           </li>
         
           <li>
