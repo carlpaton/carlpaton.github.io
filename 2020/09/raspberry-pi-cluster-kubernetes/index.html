@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="WIP!  I was inspired by Jeff Geerling’s Turing Pi Cluster videos to try do more with my Pi 4 boards! Sweet so K8’s is Kubernetes right, so whats K3’s? Simple answer - Its lightweight Kubernetes for A">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-09-24T09:25:43.628Z">
+<meta property="og:updated_time" content="2020-09-26T08:06:12.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi Cluster - Kubernetes">
 <meta name="twitter:description" content="WIP!  I was inspired by Jeff Geerling’s Turing Pi Cluster videos to try do more with my Pi 4 boards! Sweet so K8’s is Kubernetes right, so whats K3’s? Simple answer - Its lightweight Kubernetes for A">
@@ -125,6 +125,28 @@ ga('send', 'pageview');
 <blockquote>
 <p>“We wanted an installation of Kubernetes that was half the size in terms of memory footprint. Kubernetes is a 10-letter word stylized as K8s. So something half as big as Kubernetes would be a 5-letter word stylized as K3s. There is no long form of K3s and no official pronunciation. rancher.com”</p>
 </blockquote>
+<h3 id="Kubernetes-ecosystem"><a href="#Kubernetes-ecosystem" class="headerlink" title="Kubernetes ecosystem"></a>Kubernetes ecosystem</h3><p>Kubernetes has the following common terms:</p>
+<ul>
+<li><p><strong>Container</strong> This is a running <code>Docker Image</code> like <a href="https://hub.docker.com/r/carlpaton/nginx-pi-demo" target="_blank" rel="noopener">carlpaton/nginx-pi-demo</a></p>
+</li>
+<li><p><strong>Pods</strong> This is the <code>Kubernetes ecosystem</code> running on a node which is running containers. Note the containers dont necessarily need to be contributing to a common goal to be considered part of the pod.</p>
+</li>
+<li><p><strong>Node</strong> This is the machine that runs and instance of <code>Kubernetes</code>, this can be a Virtual Machine, PC, Laptop or in my case a Raspberry Pi.</p>
+</li>
+<li><p><strong>Cluster</strong> This is several <code>Nodes</code> connected to gether on the same network.</p>
+</li>
+</ul>
+<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>I used the same <a href="/2020/09/raspberry-pi-cluster-swarm/">setup as steps 1 to 6 as for the post Raspberry Pi Cluster</a> - which used the image <a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">2020-08-20-raspios-buster-armhf-lite</a>. Then, this cluster also has two nodes:</p>
+<ul>
+<li><code>node1</code> </li>
+<li><code>node3</code> (worker)</li>
+</ul>
+<p>After that I followed these steps:</p>
+<p><strong>node1</strong></p>
+<ol>
+<li>Pull down and execute the shell convenience script from <a href="https://raw.githubusercontent.com/rancher/k3s/master/install.sh" target="_blank" rel="noopener">k3s.io</a></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sfL https://get.k3s.io | sh -</span><br></pre></td></tr></table></figure>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://k3s.io/" target="_blank" rel="noopener">https://k3s.io/</a></li>
 <li><a href="https://rancher.com/docs/k3s/latest/en/" target="_blank" rel="noopener">https://rancher.com/docs/k3s/latest/en/</a></li>
@@ -133,7 +155,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-kubernetes/" data-id="ckfjdbmtj00brwoonrhfezubv" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-kubernetes/" data-id="ckfjdgmdz00bnhkondnutlcym" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li></ul>
