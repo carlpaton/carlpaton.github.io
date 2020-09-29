@@ -18,20 +18,20 @@ ga('send', 'pageview');
 
 
   
-  <title>Access PostgreSQL database command line terminal in a container | Carl Paton | There are no silly questions</title>
+  <title>Raspberry Pi Cluster Setup OS | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Access PostgreSQL database command line terminal in a container 1sudo docker exec -it [CONTAINER NAME] psql -U postgres Commands: 1234\c [DATABASE NAME] ~ connects to a database\d ~ checks all tables\">
-<meta name="keywords" content="docker,postgresql">
+  <meta name="description" content="Updated: 29/09/2020 I tried to keep the Operating System (OS) setup separate from the Pi Posts else they would be duplicated. DistributionsThere are a few distributions that work on the Pi, the most c">
+<meta name="keywords" content="raspberry pi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Access PostgreSQL database command line terminal in a container">
-<meta property="og:url" content="https://carlpaton.github.io/2018/05/access-postgresql-database-command-line-terminal-in-a-container/index.html">
+<meta property="og:title" content="Raspberry Pi Cluster Setup OS">
+<meta property="og:url" content="https://carlpaton.github.io/2019/10/raspberry-pi-cluster-setup-os/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Access PostgreSQL database command line terminal in a container 1sudo docker exec -it [CONTAINER NAME] psql -U postgres Commands: 1234\c [DATABASE NAME] ~ connects to a database\d ~ checks all tables\">
+<meta property="og:description" content="Updated: 29/09/2020 I tried to keep the Operating System (OS) setup separate from the Pi Posts else they would be duplicated. DistributionsThere are a few distributions that work on the Pi, the most c">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-08-04T22:37:58.509Z">
+<meta property="og:updated_time" content="2020-09-28T20:58:15.615Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Access PostgreSQL database command line terminal in a container">
-<meta name="twitter:description" content="Access PostgreSQL database command line terminal in a container 1sudo docker exec -it [CONTAINER NAME] psql -U postgres Commands: 1234\c [DATABASE NAME] ~ connects to a database\d ~ checks all tables\">
+<meta name="twitter:title" content="Raspberry Pi Cluster Setup OS">
+<meta name="twitter:description" content="Updated: 29/09/2020 I tried to keep the Operating System (OS) setup separate from the Pi Posts else they would be duplicated. DistributionsThere are a few distributions that work on the Pi, the most c">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -95,10 +95,10 @@ ga('send', 'pageview');
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-access-postgresql-database-command-line-terminal-in-a-container" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-raspberry-pi-cluster-setup-os" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/05/access-postgresql-database-command-line-terminal-in-a-container/" class="article-date">
-  <time datetime="2018-05-12T00:08:24.000Z" itemprop="datePublished">2018-May</time>
+    <a href="/2019/10/raspberry-pi-cluster-setup-os/" class="article-date">
+  <time datetime="2019-10-10T11:00:00.000Z" itemprop="datePublished">2019-Oct</time>
 </a>
     
   </div>
@@ -109,7 +109,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      Access PostgreSQL database command line terminal in a container
+      Raspberry Pi Cluster Setup OS
     </h1>
   
 
@@ -117,19 +117,49 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Access PostgreSQL database command line terminal in a container</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker exec -it [CONTAINER NAME] psql -U postgres</span><br></pre></td></tr></table></figure>
-<p>Commands:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">\c [DATABASE NAME] ~ connects to a database</span><br><span class="line">\d ~ checks all tables</span><br><span class="line">\d+ [TABLE NAME] ~ checks </span><br><span class="line">\q ~ quit</span><br></pre></td></tr></table></figure>
-<p>You can also run this as a shell script</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">sudo docker exec -it [CONTAINER NAME] psql -U postgres -c &quot;CREATE DATABASE mydatabase OWNER = postgres TABLESPACE pg_default;&quot;</span><br><span class="line"></span><br><span class="line">sudo docker exec -it [CONTAINER NAME] psql -d gblcore -U postgres -c &quot;CREATE SCHEMA myschema AUTHORIZATION postgres;&quot;</span><br><span class="line"></span><br><span class="line">sudo docker exec -i [CONTAINER NAME] pg_restore -U postgres -d mydatabase &lt; /tmp/production20180529.dump</span><br></pre></td></tr></table></figure>
+        <p>Updated: <em>29/09/2020</em></p>
+<p>I tried to keep the Operating System (OS) setup separate from the <a href="/tags/raspberry-pi/">Pi Posts</a> else they would be duplicated.</p>
+<h3 id="Distributions"><a href="#Distributions" class="headerlink" title="Distributions"></a>Distributions</h3><p>There are a few distributions that work on the Pi, the most common is Raspberry Pi OS (previously called Raspbian). A lot of configuration options still use the terminology <code>raspbian</code>.</p>
+<p>For clusters I mostly use <code>Raspberry Pi OS (32-bit) Lite</code> which is a minimal image based on <code>Debian Buster</code>, its then mannaged though <a href="/tags/ssh/">SSH</a>.</p>
+<p>I have used <code>Raspberry Pi OS (32-bit) with desktop</code> and <code>retropie</code> just to have a hoon.</p>
+<ul>
+<li><a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">2020-08-20-raspios-buster-armhf-lite</a></li>
+<li><a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">Raspios: 2020-08-20-raspios-buster-armhf-full</a></li>
+<li><a href="/2019/10/retropie/">Retropie: retropie-buster-4.6-rpi4</a></li>
+</ul>
+<h3 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware</h3><p>As I only have two <a href="https://www.pbtech.co.nz/product/SEVRBP0206/Raspberry-Pi-4-Model-B-4GB-LPDDR4-FIRST-28nm-Based" target="_blank" rel="noopener">Raspberry Pi 4 Model B’s</a> I set them up as:</p>
+<ul>
+<li><code>node1</code> (master node)</li>
+<li><code>node3</code> (worker node)</li>
+</ul>
+<h3 id="OS-Steps-For-Cluster"><a href="#OS-Steps-For-Cluster" class="headerlink" title="OS Steps (For Cluster)"></a>OS Steps (For Cluster)</h3><ol>
+<li>Download <code>Raspberry Pi OS (32-bit) Lite</code> - <a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">2020-08-20-raspios-buster-armhf-lite</a>.</li>
+<li>Install on SD cards with <a href="https://www.balena.io/etcher/" target="_blank" rel="noopener">Etcher</a> or any flashing utility.</li>
+<li>Pop in the SD Cards and boot the Pi, allow disk expand and wait for the OS to figure out its life.</li>
+<li>Once at the terminal login as user <code>pi</code> and password <code>raspberry</code>. Probably best to update your passwords, meh.</li>
+<li>Run <code>sudo raspi-config</code> </li>
+</ol>
+<ul>
+<li>Config country (4. Localisation Options)</li>
+<li>Rename the Pi’s (2. Network Options)</li>
+<li>Setup Wifi (2. Network Options) </li>
+<li>SSH (5. Interfacing Options). Then finally reboot.</li>
+</ul>
+<ol start="6">
+<li>Install additional software, you dont actually need git unless you plan to pull down <a href="https://github.com/carlpaton/nginx-pi-demo" target="_blank" rel="noopener">nginx-pi-demo</a> and build it yourself.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git nmap</span><br></pre></td></tr></table></figure>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="https://www.raspberrypi.org/" target="_blank" rel="noopener">https://www.raspberrypi.org/</a></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2018/05/access-postgresql-database-command-line-terminal-in-a-container/" data-id="ckfn08bqm0006p0on9yxyqcj2" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2019/10/raspberry-pi-cluster-setup-os/" data-id="ckfn08bxa00dqp0onm1jzoq7e" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/postgresql/">postgresql</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li></ul>
 
     </footer>
   </div>
@@ -137,19 +167,19 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2018/05/metric-to-inch-conversion/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/11/jest/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Metric to Inch Conversion
+          Jest
         
       </div>
     </a>
   
   
-    <a href="/2018/05/db-visualizer/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/10/raspberry-pi-cluster/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Db Visualizer</div>
+      <div class="article-nav-title">Raspberry Pi Cluster</div>
     </a>
   
 </nav>
