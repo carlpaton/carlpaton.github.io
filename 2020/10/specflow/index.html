@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="WIP  Whats Specflow?Its a library that allows for Behavior Driven Development in .NET. (BDD) using Gherkin Syntax (Given-When-Then).  “SpecFlow helps teams bind automation to feature files and share">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-01T02:53:44.996Z">
+<meta property="og:updated_time" content="2020-10-01T09:10:27.610Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Specflow">
 <meta name="twitter:description" content="WIP  Whats Specflow?Its a library that allows for Behavior Driven Development in .NET. (BDD) using Gherkin Syntax (Given-When-Then).  “SpecFlow helps teams bind automation to feature files and share">
@@ -128,25 +128,40 @@ ga('send', 'pageview');
 <p>SpecFlow seems pretty focused on integration testing - <a href="/2018/05/unit-tests-overview/">Code that invokes a unit of work that crosses project boundaries, uses actual external dependencies, and/or validates many different aspects about the code under test</a>.</p>
 <p>As Im using <code>Visual Studio 2019</code> I installed the extension <a href="https://marketplace.visualstudio.com/items?itemName=TechTalkSpecFlowTeam.SpecFlowForVisualStudio" target="_blank" rel="noopener">SpecFlow for Visual Studio 2019</a>.</p>
 <h3 id="Whats-Gherkin"><a href="#Whats-Gherkin" class="headerlink" title="Whats Gherkin?"></a>Whats Gherkin?</h3><p>Its the Syntax (Given-When-Then) which are keywords, the example below is from the template <code>SpecFlow Project</code></p>
+<ul>
+<li><a href="https://github.com/carlpaton/SpecFlowDemo/commit/ab0ed6c8994c006f028d4c30bdaacad763452aba#diff-063b2406327895ad6a12387f95c4ed21" target="_blank" rel="noopener">Features/Calculator.feature (commit ab0ed6c)</a></li>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Feature: Calculator</span><br><span class="line">	In order to avoid silly mistakes</span><br><span class="line">	As a math idiot</span><br><span class="line">	I *want* to be told the **sum** of ***two*** numbers</span><br><span class="line"></span><br><span class="line">Scenario: Add two numbers</span><br><span class="line">	Given the first number is 50</span><br><span class="line">	And the second number is 70</span><br><span class="line">	When the two numbers are added</span><br><span class="line">	Then the result should be 120</span><br></pre></td></tr></table></figure>
 <p>Specflow then knows how to translate the above into steps simliar to the classic <code>tripple A</code> testing pattern. </p>
 <p>All of the below will have <code>using TechTalk.SpecFlow;</code> this resolves the annotations <code>Given When Then</code> above the methods.</p>
-<h4 id="Arrange"><a href="#Arrange" class="headerlink" title="Arrange"></a>Arrange</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// Given the first number is 50</span><br><span class="line"></span><br><span class="line">[Given(&quot;the first number is (.*)&quot;)]</span><br><span class="line">public void GivenTheFirstNumberIs(int number)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    _scenarioContext.Pending();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>If you place your cursor on a line in the <code>.feature</code> and press F12 (Go to definition) the IDE should navigate to the correct place in the step as shown in <code>CalculatorStepDefinitions.cs</code> below.</p>
+<ul>
+<li><a href="https://github.com/carlpaton/SpecFlowDemo/commit/ab0ed6c8994c006f028d4c30bdaacad763452aba#diff-cbdeb46302046153db8b81354704f3e7" target="_blank" rel="noopener">Steps/CalculatorStepDefinitions.cs (commit ab0ed6c)</a></li>
+</ul>
+<h4 id="Arrange"><a href="#Arrange" class="headerlink" title="Arrange"></a>Arrange</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// Given the first number is 50</span><br><span class="line"></span><br><span class="line">[Given(&quot;the first number is (.*)&quot;)]</span><br><span class="line">public void GivenTheFirstNumberIs(int number)</span><br><span class="line">&#123;</span><br><span class="line">    //TODO: implement arrange (precondition) logic</span><br><span class="line"></span><br><span class="line">    _scenarioContext.Pending();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Additional <code>Arrange</code> steps are added with the keyword <code>And</code>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// And the second number is 70</span><br><span class="line"></span><br><span class="line">[Given(&quot;the second number is (.*)&quot;)]</span><br><span class="line">public void GivenTheSecondNumberIs(int number)</span><br><span class="line">&#123;</span><br><span class="line">    //TODO: implement arrange (precondition) logic</span><br><span class="line"></span><br><span class="line">    _scenarioContext.Pending();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="Act"><a href="#Act" class="headerlink" title="Act"></a>Act</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// When the two numbers are added</span><br><span class="line"></span><br><span class="line">[When(&quot;the two numbers are added&quot;)]</span><br><span class="line">public void WhenTheTwoNumbersAreAdded()</span><br><span class="line">&#123;</span><br><span class="line">    //TODO: implement act (action) logic</span><br><span class="line"></span><br><span class="line">    _scenarioContext.Pending();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="Assert"><a href="#Assert" class="headerlink" title="Assert"></a>Assert</h4><p>The assertion can be done with any <a href="/2018/09/unit-testing-frameworks/">testing framework</a> or the <a href="https://specflow.org/plus/" target="_blank" rel="noopener">SpecFlow+ Runner</a>.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// Then the result should be 120</span><br><span class="line"></span><br><span class="line">[Then(&quot;the result should be (.*)&quot;)]</span><br><span class="line">public void ThenTheResultShouldBe(int result)</span><br><span class="line">&#123;</span><br><span class="line">    //TODO: implement assert (verification) logic</span><br><span class="line"></span><br><span class="line">    _scenarioContext.Pending();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Sweet-how-do-I-set-things-up"><a href="#Sweet-how-do-I-set-things-up" class="headerlink" title="Sweet how do I set things up?"></a>Sweet how do I set things up?</h3><p>The flow is simply and there are awesome getting started guides like <a href="https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-An-Example.html" target="_blank" rel="noopener">Getting Started With An Example</a> and <a href="https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-A-New-Project.html" target="_blank" rel="noopener">Getting Started With A New Project</a>.</p>
-<p>A summary of the core steps are</p>
+<p>A summary of the core steps are with a new project are:</p>
 <ul>
 <li>Create new project from template <code>SpecFlow Project</code><ul>
 <li>This creates <a href="https://github.com/carlpaton/SpecFlowDemo/blob/master/Features/Calculator.feature" target="_blank" rel="noopener">/Features/Calculator.feature</a></li>
 <li>It also create <a href="https://github.com/carlpaton/SpecFlowDemo/blob/master/Steps/CalculatorStepDefinitions.cs" target="_blank" rel="noopener">/Steps/CalculatorStepDefinitions.cs</a></li>
 </ul>
 </li>
-<li>foo</li>
+<li>Create the <code>Example</code> Project, this is the code you want to test, following their example its a <code>class library</code>. <strong>EACH LINE</strong> in the <code>Scenario</code> needs to be satisfied with c# code:<ul>
+<li><code>public void GivenTheFirstNumberIs(int number)</code>, this sets (arrange) the state <code>FirstNumber</code> </li>
+<li><code>public void GivenTheSecondNumberIs(int number)</code> this sets (arrange) the state for <code>SecondNumber</code></li>
+<li><code>public void WhenTheTwoNumbersAreAdded()</code> this calls some behaviour (act) : <code>_calculator.Add();</code></li>
+<li><code>public void ThenTheResultShouldBe(int expectedResult)</code> asserts the result</li>
 </ul>
+</li>
+</ul>
+<h3 id="Scenario-Context"><a href="#Scenario-Context" class="headerlink" title="Scenario Context"></a>Scenario Context</h3><p>The boilerplate code injected <code>ScenarioContext _scenarioContext;</code> into the constructor in <a href="https://github.com/carlpaton/SpecFlowDemo/blob/master/IntegrationTests/Steps/CalculatorStepDefinitions.cs" target="_blank" rel="noopener">CalculatorStepDefinitions.cs</a></p>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://specflow.org/" target="_blank" rel="noopener">https://specflow.org/</a></li>
 <li><a href="https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-An-Example.html" target="_blank" rel="noopener">https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-An-Example.html</a></li>
@@ -158,7 +173,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/10/specflow/" data-id="ckfptaoud00edbgonb4dazg74" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/10/specflow/" data-id="ckfq87grd00ee08on5k7i7gpk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
