@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="Whats Specflow?Its a library that allows for Behavior Driven Development in .NET. (BDD) using Gherkin Syntax (Given-When-Then).  “SpecFlow helps teams bind automation to feature files and share the re">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-01T09:48:20.588Z">
+<meta property="og:updated_time" content="2020-10-01T20:52:56.284Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Specflow">
 <meta name="twitter:description" content="Whats Specflow?Its a library that allows for Behavior Driven Development in .NET. (BDD) using Gherkin Syntax (Given-When-Then).  “SpecFlow helps teams bind automation to feature files and share the re">
@@ -157,7 +157,8 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
-<h3 id="Scenario-Context"><a href="#Scenario-Context" class="headerlink" title="Scenario Context"></a>Scenario Context</h3><p>The boilerplate code injected <code>ScenarioContext _scenarioContext;</code> into the constructor in <a href="https://github.com/carlpaton/SpecFlowDemo/blob/master/IntegrationTests/Steps/CalculatorStepDefinitions.cs" target="_blank" rel="noopener">CalculatorStepDefinitions.cs</a> </p>
+<h3 id="Scenario-Context"><a href="#Scenario-Context" class="headerlink" title="Scenario Context"></a>Scenario Context</h3><p><a href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/ScenarioContext.html" target="_blank" rel="noopener">See ScenarioContext</a></p>
+<p>The boilerplate code injected <code>ScenarioContext _scenarioContext;</code> into the constructor in <a href="https://github.com/carlpaton/SpecFlowDemo/blob/master/IntegrationTests/Steps/CalculatorStepDefinitions.cs" target="_blank" rel="noopener">CalculatorStepDefinitions.cs</a> </p>
 <blockquote>
 <p>“ScenarioContext helps you store values in a dictionary between steps. This helps you to organize your step definitions better than using private variables in step definition classes. -docs.specflow.org”</p>
 </blockquote>
@@ -177,6 +178,14 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">private readonly ScenarioContext _scenarioContext;</span><br><span class="line">private readonly Calculator _calculator;</span><br><span class="line"></span><br><span class="line">private int _result;</span><br><span class="line"></span><br><span class="line">public CalculatorStepDefinitions(ScenarioContext scenarioContext)</span><br><span class="line">&#123;</span><br><span class="line">    _scenarioContext = scenarioContext;</span><br><span class="line">    _calculator = new Calculator();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>To automagically injecting an instance based on the default constructor</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private readonly Calculator _calculator;</span><br><span class="line">private int _result;</span><br><span class="line"></span><br><span class="line">public CalculatorStepDefinitions(Calculator calculator)</span><br><span class="line">&#123;</span><br><span class="line">    _calculator = calculator;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Feature-Context"><a href="#Feature-Context" class="headerlink" title="Feature Context"></a>Feature Context</h3><p><a href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/FeatureContext.html" target="_blank" rel="noopener">See FeatureContext</a></p>
+<blockquote>
+<p>“FeatureContext persists for the duration of the execution of an entire feature, whereas ScenarioContext only persists for the duration of a scenario. -docs.specflow.org”</p>
+</blockquote>
+<p>These are useful hooks as you can have annotations like <code>[BeforeFeature]</code> and <code>[AfterFeature]</code>.<br>Note that hooks also exist for <code>Scenario Context</code>: <code>[BeforeScenario]</code> and <code>[AfterScenario]</code>.</p>
+<p>You can use either to rebind/override <code>IKernel</code> with your own mock implementations.</p>
+<p>Example from docs.specflow.or:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[Binding]</span><br><span class="line">public class Hooks</span><br><span class="line">&#123;</span><br><span class="line">    [BeforeFeature]</span><br><span class="line">    public static void BeforeFeature(FeatureContext featureContext)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(&quot;Starting &quot; + featureContext.FeatureInfo.Title);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    [AfterFeature]</span><br><span class="line">    public static void AfterFeature(FeatureContext featureContext)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(&quot;Finished &quot; + featureContext.FeatureInfo.Title);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://github.com/carlpaton/SpecFlowDemo" target="_blank" rel="noopener">https://github.com/carlpaton/SpecFlowDemo</a></li>
 <li><a href="https://specflow.org/" target="_blank" rel="noopener">https://specflow.org/</a></li>
@@ -189,7 +198,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/10/specflow/" data-id="ckfqmzhds00e8d8onnlvkxwaq" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/10/specflow/" data-id="ckfr8f2z000fzcoonbtest7lp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li></ul>
