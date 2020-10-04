@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>Passwordless SSH Access | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="While setting up my Raspberry Pi Cluster I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below. The Keychain steps below allow for">
+  <meta name="description" content="While setting up my Raspberry Pi Cluster I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below. Check if the SSH key exists1ls -l ~">
 <meta name="keywords" content="linux,raspberry pi,ssh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Passwordless SSH Access">
 <meta property="og:url" content="https://carlpaton.github.io/2019/10/passwordless-ssh-access/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="While setting up my Raspberry Pi Cluster I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below. The Keychain steps below allow for">
+<meta property="og:description" content="While setting up my Raspberry Pi Cluster I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below. Check if the SSH key exists1ls -l ~">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-04T09:47:44.808Z">
+<meta property="og:updated_time" content="2020-10-04T20:55:43.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Passwordless SSH Access">
-<meta name="twitter:description" content="While setting up my Raspberry Pi Cluster I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below. The Keychain steps below allow for">
+<meta name="twitter:description" content="While setting up my Raspberry Pi Cluster I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below. Check if the SSH key exists1ls -l ~">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -118,8 +118,9 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p>While setting up my <a href="/2019/10/raspberry-pi-cluster/">Raspberry Pi Cluster</a> I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below.</p>
-<p>The <code>Keychain</code> steps below allow for passwordless SSH access from <code>node1</code> to <code>node3</code>.</p>
-<h3 id="Keychain"><a href="#Keychain" class="headerlink" title="Keychain"></a>Keychain</h3><p><a href="https://linux.die.net/man/1/keychain" target="_blank" rel="noopener">Keychain</a> is a manager for ssh-agent.</p>
+<h3 id="Check-if-the-SSH-key-exists"><a href="#Check-if-the-SSH-key-exists" class="headerlink" title="Check if the SSH key exists"></a>Check if the SSH key exists</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<h3 id="Keychain"><a href="#Keychain" class="headerlink" title="Keychain"></a>Keychain</h3><p>The <code>Keychain</code> steps below allow for passwordless SSH access from <code>node1</code> to <code>node3</code>.</p>
+<p><a href="https://linux.die.net/man/1/keychain" target="_blank" rel="noopener">Keychain</a> is a manager for ssh-agent.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install keychain</span><br></pre></td></tr></table></figure>
 <h4 id="Setup-Common-User"><a href="#Setup-Common-User" class="headerlink" title="Setup Common User"></a>Setup Common User</h4><p>The steps below are based on the work by <a href="https://www.udemy.com/course/build-your-own-super-computer-with-raspberry-pi" target="_blank" rel="noopener">Ben Heidorn - udemy.com</a></p>
 <p>A common user is needed on each node to allow the nodes to authenticate and execute the MPI commands. I used the username <code>mpiuser</code>. By default the PI’s install with the user <code>PI</code> and password <code>raspberry</code>.</p>
@@ -155,7 +156,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2019/10/passwordless-ssh-access/" data-id="ckfuyg0l300avbsontmrfhhd6" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2019/10/passwordless-ssh-access/" data-id="ckfvl71b700ajioongdwtto54" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
