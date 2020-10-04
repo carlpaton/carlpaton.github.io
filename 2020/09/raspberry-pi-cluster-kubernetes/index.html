@@ -29,7 +29,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="WIP  Sweet so K8’s is Kubernetes right, so whats K3’s? Simple answer - Its lightweight Kubernetes for ARM processors which run on Raspberry Pi’s &amp;lt;3 I was inspired by Jeff Geerling’s Turing Pi Clus">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-kubernetes/overview%20of%20kubernetes%20k3s.jpg">
-<meta property="og:updated_time" content="2020-10-04T06:58:50.815Z">
+<meta property="og:updated_time" content="2020-10-04T10:19:35.547Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi Cluster - Kubernetes">
 <meta name="twitter:description" content="WIP  Sweet so K8’s is Kubernetes right, so whats K3’s? Simple answer - Its lightweight Kubernetes for ARM processors which run on Raspberry Pi’s &amp;lt;3 I was inspired by Jeff Geerling’s Turing Pi Clus">
@@ -147,22 +147,29 @@ ga('send', 'pageview');
 <li><code>node3</code> (worker node) ~ runs the <code>k3s agent</code></li>
 </ul>
 <h3 id="Setup-Passwordless-SSH-Access"><a href="#Setup-Passwordless-SSH-Access" class="headerlink" title="Setup Passwordless SSH Access"></a>Setup Passwordless SSH Access</h3><p>See the <code>No passphrase</code> section on this <a href="/2019/10/passwordless-ssh-access/">passwordless SSH access</a> post.</p>
-<h3 id="Setup-K3s"><a href="#Setup-K3s" class="headerlink" title="Setup K3s"></a>Setup K3s</h3><p>After this I followed Jeff’s advice and used <a href="https://www.youtube.com/watch?v=goclfp6a2IQ" target="_blank" rel="noopener">ansible</a> to manage all of the Raspberry Pi’s with this <a href="https://github.com/rancher/k3s-ansible" target="_blank" rel="noopener">ansible playbook from Rancher Labs</a>.</p>
+<h3 id="Setup-K3s"><a href="#Setup-K3s" class="headerlink" title="Setup K3s"></a>Setup K3s</h3><p>This can either be done manually (on each node) or with a Playbook.</p>
+<h4 id="Setup-K3s-Manual"><a href="#Setup-K3s-Manual" class="headerlink" title="Setup K3s (Manual)"></a>Setup K3s (Manual)</h4><p>Using a utility script from Rancher labs run the followng <code>curl</code> command:</p>
 <p><strong>node1</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git ansible</span><br></pre></td></tr></table></figure>
-<p>Clone the playbook from Rancher labs and copy the <code>inventory/sample</code> folder to the name of your cluster. I called mine <code>carl-cluster</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/rancher/k3s-ansible</span><br><span class="line"></span><br><span class="line">cd k3s-ansible</span><br><span class="line">cp -R inventory/sample inventory/carl-cluster</span><br></pre></td></tr></table></figure>
-<p>Set the hosts, these are your Raspberry Pi’s. You can use the IP or DNS.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd inventory/carl-cluster</span><br><span class="line">nano hosts.ini</span><br></pre></td></tr></table></figure>
-<p>I used the following config</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[master]</span><br><span class="line">node1</span><br><span class="line"></span><br><span class="line">[node]</span><br><span class="line">node3</span><br><span class="line"></span><br><span class="line">[k3s_cluster:children]</span><br><span class="line">master</span><br><span class="line">node</span><br></pre></td></tr></table></figure>
-<p>Set the <code>pi</code> user in <code>group_vars</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd group_vars</span><br><span class="line">nano all.yml</span><br><span class="line"></span><br><span class="line">ansible_user: debian    ~ default value</span><br><span class="line">ansible_user: pi        ~ updated value</span><br></pre></td></tr></table></figure>
-<p>Then run this command to install your cluster!</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ../../../</span><br><span class="line">ansible-playbook site.yml -i inventory/carl-cluster/hosts.ini</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><a href="/2017/06/work-in-progress/">WIP</a></p>
-</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644         ~ install     </span><br><span class="line">sudo systemctl status k3s                                                  ~ confirm server is running</span><br><span class="line">kubectl get node -o wide                                                   ~ check nodes</span><br></pre></td></tr></table></figure>
+<p>You will then see <code>[INFO]  systemd: Starting k3s</code>. To get the join key:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cat /var/lib/rancher/k3s/server/node-token</span><br><span class="line"></span><br><span class="line">K103806426a7447c475f68e140f5d5d3fbad4061bc561ccf34cd8000163f2561ca3::server:31fe5dc0e1e2be58e88d411dc34dbb4e</span><br></pre></td></tr></table></figure>
+<p><strong>node3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export K3S_URL=&quot;https://192.168.1.79:6443&quot;</span><br><span class="line">export K3S_TOKEN=&quot;K103806426a7447c475f68e140f5d5d3fbad4061bc561ccf34cd8000163f2561ca3::server:31fe5dc0e1e2be58e88d411dc34dbb4e&quot;</span><br><span class="line">curl -sfL https://get.k3s.io | sh -</span><br></pre></td></tr></table></figure>
+<p>You will then see <code>[INFO]  systemd: Starting k3s-agent</code></p>
+<p><strong>node1</strong></p>
+<p>WIP - debugging <code>Error from server (ServiceUnavailable): the server is currently unable to handle the request</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes</span><br><span class="line">kubectl version</span><br><span class="line">kubectl cluster-info</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line">#### Setup K3s (Playbook)</span><br><span class="line"></span><br><span class="line">After this I followed Jeff&apos;s advice and used [ansible](https://www.youtube.com/watch?v=goclfp6a2IQ) to manage all of the Raspberry Pi&apos;s with this [ansible playbook from Rancher Labs](https://github.com/rancher/k3s-ansible).</span><br><span class="line"></span><br><span class="line">**node1**</span><br></pre></td></tr></table></figure>
+<p>sudo apt-get install git ansible<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Clone the playbook from Rancher labs and copy the `inventory/sample` folder to the name of your cluster. I called mine `carl-cluster`</span><br></pre></td></tr></table></figure></p>
+<p>git clone <a href="https://github.com/rancher/k3s-ansible" target="_blank" rel="noopener">https://github.com/rancher/k3s-ansible</a></p>
+<p>cd k3s-ansible<br>cp -R inventory/sample inventory/carl-cluster<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Set the hosts, these are your Raspberry Pi&apos;s. You can use the IP or DNS.</span><br></pre></td></tr></table></figure></p>
+<p>cd inventory/carl-cluster<br>nano hosts.ini<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">I used the following config</span><br></pre></td></tr></table></figure></p>
+<p>[master]<br>node1</p>
+<p>[node]<br>node3</p>
+<p>[k3s_cluster:children]<br>master<br>node<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Set the `pi` user in `group_vars`</span><br></pre></td></tr></table></figure></p>
+<p>cd group_vars<br>nano all.yml</p>
+<p>ansible_user: debian    ~ default value<br>ansible_user: pi        ~ updated value<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Then run this command to install your cluster!</span><br></pre></td></tr></table></figure></p>
+<p>cd ../../../<br>ansible-playbook site.yml -i inventory/carl-cluster/hosts.ini<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">This was as far as I got with the playbook, running on `node1` complained about not being able to see `node1`</span><br></pre></td></tr></table></figure></p>
+<p>WIP - ACTUAL ERROR HERE<br><code>`</code></p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://k3s.io/" target="_blank" rel="noopener">https://k3s.io/</a></li>
 <li><a href="https://rancher.com/docs/k3s/latest/en/" target="_blank" rel="noopener">https://rancher.com/docs/k3s/latest/en/</a></li>
@@ -172,7 +179,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-kubernetes/" data-id="ckfurfkbp00br0goncxgi99id" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-kubernetes/" data-id="ckfuyg0lg00bpbsond69bflac" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ansible/">ansible</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
