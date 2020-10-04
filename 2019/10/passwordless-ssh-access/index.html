@@ -18,20 +18,20 @@ ga('send', 'pageview');
 
 
   
-  <title>Unit testing with xUnit.net | Carl Paton | There are no silly questions</title>
+  <title>Passwordless SSH Access | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Install xunit from Nuget as version 2.4.1. U_I_E signatures are Unit of work, inital condition and expecte">
-<meta name="keywords" content="software testing">
+  <meta name="description" content="While setting up my Raspberry Pi Cluster I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below. The Keychain steps below allow for">
+<meta name="keywords" content="linux,raspberry pi,ssh">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Unit testing with xUnit.net">
-<meta property="og:url" content="https://carlpaton.github.io/2019/06/unit-testing-with-xunit/index.html">
+<meta property="og:title" content="Passwordless SSH Access">
+<meta property="og:url" content="https://carlpaton.github.io/2019/10/passwordless-ssh-access/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Install xunit from Nuget as version 2.4.1. U_I_E signatures are Unit of work, inital condition and expecte">
+<meta property="og:description" content="While setting up my Raspberry Pi Cluster I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below. The Keychain steps below allow for">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-09-17T20:39:56.126Z">
+<meta property="og:updated_time" content="2020-10-04T06:13:28.514Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Unit testing with xUnit.net">
-<meta name="twitter:description" content="xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Install xunit from Nuget as version 2.4.1. U_I_E signatures are Unit of work, inital condition and expecte">
+<meta name="twitter:title" content="Passwordless SSH Access">
+<meta name="twitter:description" content="While setting up my Raspberry Pi Cluster I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below. The Keychain steps below allow for">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -95,10 +95,10 @@ ga('send', 'pageview');
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-unit-testing-with-xunit" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-passwordless-ssh-access" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/06/unit-testing-with-xunit/" class="article-date">
-  <time datetime="2019-05-31T12:00:00.000Z" itemprop="datePublished">2019-Jun</time>
+    <a href="/2019/10/passwordless-ssh-access/" class="article-date">
+  <time datetime="2019-10-10T11:00:00.000Z" itemprop="datePublished">2019-Oct</time>
 </a>
     
   </div>
@@ -109,7 +109,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      Unit testing with xUnit.net
+      Passwordless SSH Access
     </h1>
   
 
@@ -117,29 +117,39 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Install <code>xunit</code> from Nuget as version <code>2.4.1</code>.</p>
-<p>U_I_E signatures are <code>Unit of work</code>, <code>inital condition</code> and <code>expected result</code>.</p>
-<h3 id="Fact"><a href="#Fact" class="headerlink" title="Fact"></a>Fact</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Fact]</span><br><span class="line">public void U_I_E()</span><br><span class="line">&#123;</span><br><span class="line">    // Arrange</span><br><span class="line"></span><br><span class="line">    // Act</span><br><span class="line">    var someBool = ...</span><br><span class="line"></span><br><span class="line">    // Assert</span><br><span class="line">    Assert.Equal(shouldPass, someBool&gt;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Other asserts</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Assert.Contains(collection, x =&gt; x.SweetProp == &quot;Foo&quot;);</span><br><span class="line">Assert.DoesNotContain(collection, x =&gt; x.SweetProp == &quot;Bar&quot;);</span><br><span class="line">Assert.NotNull(fooObj);</span><br><span class="line">Assert.True(condition);</span><br></pre></td></tr></table></figure>
-<h3 id="Theory-Inline-Data"><a href="#Theory-Inline-Data" class="headerlink" title="Theory - Inline Data"></a>Theory - Inline Data</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Theory]</span><br><span class="line">[InlineData(&quot;foo@bar.com&quot;, true)]</span><br><span class="line">[InlineData(&quot;baz@bat.com&quot;, false)]</span><br><span class="line">public void U_I_E(string someEmail, bool someBool)</span><br><span class="line">&#123;</span><br><span class="line">    // Arrange</span><br><span class="line"></span><br><span class="line">    // Act</span><br><span class="line">    var someBool = ...</span><br><span class="line"></span><br><span class="line">    // Assert</span><br><span class="line">    Assert.Equal(shouldPass, someBool&gt;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Theory-Member-Data"><a href="#Theory-Member-Data" class="headerlink" title="Theory - Member Data"></a>Theory - Member Data</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public static IEnumerable&lt;object[]&gt; FooTestData()</span><br><span class="line">&#123;</span><br><span class="line">    // someString, someStrings                     </span><br><span class="line">    yield return new object[] &#123; &quot;foo&quot;, new[] &#123; &quot;aaa&quot;, &quot;bbb&quot; &#125; &#125;;</span><br><span class="line">    yield return new object[] &#123; &quot;bar&quot;, new[] &#123; &quot;ccc&quot;, &quot;ddd&quot; &#125; &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[Theory]</span><br><span class="line">[MemberData(nameof(FooTestData))]</span><br><span class="line">public void U_I_E(string someString, IEnumerable&lt;string&gt; someStrings)</span><br><span class="line">&#123;</span><br><span class="line">    // Arrange</span><br><span class="line"></span><br><span class="line">    // Act</span><br><span class="line"></span><br><span class="line">    // Assert</span><br><span class="line">    Assert.Equal(...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Shared-Context-between-Tests"><a href="#Shared-Context-between-Tests" class="headerlink" title="Shared Context between Tests"></a>Shared Context between Tests</h3><p>xUnit doesnt have explicit <code>[SetUp]</code> and <code>[TearDown]</code> annotations like <a href="/2018/12/unit-testing-with-nunit/">NUnit</a>, instead they say you must use a Constructor and Dispose.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class StackTests : IDisposable</span><br><span class="line">&#123;</span><br><span class="line">    Stack&lt;int&gt; stack;</span><br><span class="line"></span><br><span class="line">    public StackTests()</span><br><span class="line">    &#123;</span><br><span class="line">        stack = new Stack&lt;int&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Dispose()</span><br><span class="line">    &#123;</span><br><span class="line">        stack.Dispose();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><a href="https://xunit.net/docs/shared-context" target="_blank" rel="noopener">https://xunit.net/docs/shared-context</a></li>
-</ul>
-<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
-<li><a href="https://xunit.github.io/docs/getting-started/netfx/visual-studio" target="_blank" rel="noopener">https://xunit.github.io/docs/getting-started/netfx/visual-studio</a></li>
-</ul>
+        <p>While setting up my <a href="/2019/10/raspberry-pi-cluster/">Raspberry Pi Cluster</a> I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below.</p>
+<p>The <code>Keychain</code> steps below allow for passwordless SSH access from <code>node1</code> to <code>node3</code>.</p>
+<h3 id="Keychain"><a href="#Keychain" class="headerlink" title="Keychain"></a>Keychain</h3><p><a href="https://linux.die.net/man/1/keychain" target="_blank" rel="noopener">Keychain</a> is a manager for ssh-agent.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install keychain</span><br></pre></td></tr></table></figure>
+<h4 id="Setup-Common-User"><a href="#Setup-Common-User" class="headerlink" title="Setup Common User"></a>Setup Common User</h4><p>The steps below are based on the work by <a href="https://www.udemy.com/course/build-your-own-super-computer-with-raspberry-pi" target="_blank" rel="noopener">Ben Heidorn - udemy.com</a></p>
+<p>A common user is needed on each node to allow the nodes to authenticate and execute the MPI commands. I used the username <code>mpiuser</code>. By default the PI’s install with the user <code>PI</code> and password <code>raspberry</code>.</p>
+<p><strong>node1</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo useradd -m -u 2345 mpiuser</span><br></pre></td></tr></table></figure>
+<p><code>-m</code> creates the home directory, <code>-u</code> is the user id, I think you can use any user id as long as they are same on all nodes.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd mpiuser            ~ raspberry for both prompts, secure I know!</span><br></pre></td></tr></table></figure>
+<p>Now login as user <code>mpiuser</code> to test it works</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">su - mpiuser                   ~ switch to the mpiuser user</span><br><span class="line">exit                           ~ exit that user session and go back to the `pi` user</span><br></pre></td></tr></table></figure>
+<p>Repeat the same for <strong>node3</strong>, this can be done over SSH using the PI user. You can connect using <code>ssh pi@node3</code>. When done run <code>exit</code> to fall back to <strong>node1</strong>.</p>
+<h4 id="Setup-Generate-SSH-Keys"><a href="#Setup-Generate-SSH-Keys" class="headerlink" title="Setup Generate SSH Keys"></a>Setup Generate SSH Keys</h4><p>Allow each node to authenticate using SSH (Secure Shell) using public &amp; private keys.</p>
+<p><strong>node1</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">su - mpiuser</span><br><span class="line">ssh-keygen -t rsa              ~ same to the default location `/home/mpiuser/.ssh/id_rsa`</span><br><span class="line">                               ~ passphrase `raspberry` - secure right? :D</span><br></pre></td></tr></table></figure>
+<p><code>-t rsa</code> is the encription type</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id mpiuser@node3     ~ copys the ssh key to node3 (this would need to be done for nodes2/4)</span><br><span class="line">ssh node3                     ~ should now ask for the passphrase</span><br><span class="line">exit                          ~ go back to node1</span><br></pre></td></tr></table></figure>
+<p>To allow the user to login without a password/passphrase. This is done on the Node1 (master)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano .bashrc</span><br></pre></td></tr></table></figure>
+<p>At the bottom of the file add</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># keychain magic</span><br><span class="line">/usr/bin/keychain $HOME/.ssh/id_rsa</span><br><span class="line">source $HOME/.keychain/$HOSTNAME-sh</span><br></pre></td></tr></table></figure>
+<p>After saving the file recompile it by running</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source .bashrc</span><br></pre></td></tr></table></figure>
+<p>Now you should be able to run <code>ssh node3</code> and not be asked for a password. </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2019/06/unit-testing-with-xunit/" data-id="ckfrz5pi200gqd0one5vlfyhq" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2019/10/passwordless-ssh-access/" data-id="ckfupsvzs0000p8on3nbxcoim" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
 
     </footer>
   </div>
@@ -147,19 +157,19 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2019/07/kibana/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/10/retropie/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Kibana
+          Retropie
         
       </div>
     </a>
   
   
-    <a href="/2019/05/backends-for-frontends/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/09/imac-2019/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Backends for Frontends</div>
+      <div class="article-nav-title">Imac 2019</div>
     </a>
   
 </nav>
