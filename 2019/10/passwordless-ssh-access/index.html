@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="While setting up my Raspberry Pi Cluster I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below. The Keychain steps below allow for">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-04T06:13:28.514Z">
+<meta property="og:updated_time" content="2020-10-04T06:51:19.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Passwordless SSH Access">
 <meta name="twitter:description" content="While setting up my Raspberry Pi Cluster I needed passwordless SSH access between the master and worker nodes. There are a few ways to do this which I detail below. The Keychain steps below allow for">
@@ -142,11 +142,20 @@ ga('send', 'pageview');
 <p>After saving the file recompile it by running</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source .bashrc</span><br></pre></td></tr></table></figure>
 <p>Now you should be able to run <code>ssh node3</code> and not be asked for a password. </p>
+<h3 id="No-passphrase"><a href="#No-passphrase" class="headerlink" title="No passphrase"></a>No passphrase</h3><p><strong>node1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub pi@node3</span><br><span class="line">ssh pi@node3</span><br></pre></td></tr></table></figure>
+<p><strong>node3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub pi@node1</span><br><span class="line">ssh pi@node1</span><br></pre></td></tr></table></figure>
+<p>This will copy the keys to</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><ul>
+<li><a href="https://collabnix.com/how-to-create-password-less-ssh-for-linux/" target="_blank" rel="noopener">https://collabnix.com/how-to-create-password-less-ssh-for-linux/</a></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2019/10/passwordless-ssh-access/" data-id="ckfupsvzs0000p8on3nbxcoim" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2019/10/passwordless-ssh-access/" data-id="ckfurfkba00as0gonkd8c4kb2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
@@ -157,19 +166,19 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2019/10/retropie/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/11/jest/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Retropie
+          Jest
         
       </div>
     </a>
   
   
-    <a href="/2019/09/imac-2019/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/10/raspberry-pi-cluster-setup-os/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Imac 2019</div>
+      <div class="article-nav-title">Raspberry Pi Cluster Setup OS</div>
     </a>
   
 </nav>

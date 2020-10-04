@@ -21,7 +21,7 @@ ga('send', 'pageview');
   <title>Raspberry Pi Cluster | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="I was inspired by a Technology blogger Gary Sims to build my own (small) super computer using Raspberry Pi’s and a message passing interface library. Following his Prime Numbers example the key concep">
-<meta name="keywords" content="raspberry pi,python,ssh">
+<meta name="keywords" content="raspberry pi,ssh,python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Raspberry Pi Cluster">
 <meta property="og:url" content="https://carlpaton.github.io/2019/10/raspberry-pi-cluster/index.html">
@@ -32,7 +32,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster/primenumbers27%20-%208%20cores.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster/primenumbers27%20-%204%20cores.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster/primenumbers27%20-%201%20core.jpg">
-<meta property="og:updated_time" content="2020-10-04T06:16:02.143Z">
+<meta property="og:updated_time" content="2020-10-04T06:32:25.678Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi Cluster">
 <meta name="twitter:description" content="I was inspired by a Technology blogger Gary Sims to build my own (small) super computer using Raspberry Pi’s and a message passing interface library. Following his Prime Numbers example the key concep">
@@ -137,7 +137,7 @@ ga('send', 'pageview');
 </ul>
 <p>The distro come with most applications already installed, some of the applications I used were <code>git</code>, <code>nano</code> and <code>ssh</code>. Additional installs:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git python-mpi4py keychain ansible</span><br></pre></td></tr></table></figure>
-<h3 id="Setup-Passwordless-SSH-Access"><a href="#Setup-Passwordless-SSH-Access" class="headerlink" title="Setup Passwordless SSH Access"></a>Setup Passwordless SSH Access</h3><p>See the <code>Keychain</code> section on this <a href>passwordless SSH access</a> post.</p>
+<h3 id="Setup-Passwordless-SSH-Access"><a href="#Setup-Passwordless-SSH-Access" class="headerlink" title="Setup Passwordless SSH Access"></a>Setup Passwordless SSH Access</h3><p>See the <code>Keychain</code> section on this <a href="/2019/10/passwordless-ssh-access/">passwordless SSH access</a> post.</p>
 <h3 id="Hostfile"><a href="#Hostfile" class="headerlink" title="Hostfile"></a>Hostfile</h3><p>When running <code>mpiexec python python_script.py</code> it can be run with the switch <code>-hostfile HOSTFILENAME</code>, so the full command is then <code>mpiexec -hostfile hostfile python python_script.py</code></p>
 <p>The content of the hostfile is either the DNS name or IP address of all the nodes in the cluster.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node1</span><br><span class="line">node3</span><br></pre></td></tr></table></figure>
@@ -178,7 +178,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2019/10/raspberry-pi-cluster/" data-id="ckfrz5pfl00bsd0onlrtcp4my" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2019/10/raspberry-pi-cluster/" data-id="ckfurfkbt00c30gonvy4zk7vr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
