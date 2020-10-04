@@ -29,7 +29,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="WIP  Sweet so K8’s is Kubernetes right, so whats K3’s? Simple answer - Its lightweight Kubernetes for ARM processors which run on Raspberry Pi’s &amp;lt;3 I was inspired by Jeff Geerling’s Turing Pi Clus">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-kubernetes/overview%20of%20kubernetes%20k3s.jpg">
-<meta property="og:updated_time" content="2020-10-04T20:52:32.614Z">
+<meta property="og:updated_time" content="2020-10-04T21:14:53.967Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi Cluster - Kubernetes">
 <meta name="twitter:description" content="WIP  Sweet so K8’s is Kubernetes right, so whats K3’s? Simple answer - Its lightweight Kubernetes for ARM processors which run on Raspberry Pi’s &amp;lt;3 I was inspired by Jeff Geerling’s Turing Pi Clus">
@@ -179,6 +179,12 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ../../../</span><br><span class="line">ansible-playbook site.yml -i inventory/carl-cluster/hosts.ini</span><br></pre></td></tr></table></figure>
 <p>This was as far as I got with the playbook, running on <code>node1</code> complained about not being able to see <code>node1</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WIP - ACTUAL ERROR HERE</span><br></pre></td></tr></table></figure>
+<h3 id="Check-whats-running"><a href="#Check-whats-running" class="headerlink" title="Check whats running"></a>Check whats running</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods --all-namespaces</span><br></pre></td></tr></table></figure>
+<h3 id="Kubernetes-Dashboard"><a href="#Kubernetes-Dashboard" class="headerlink" title="Kubernetes Dashboard"></a>Kubernetes Dashboard</h3><p>This didnt work!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">---- Deploying</span><br><span class="line">export GITHUB_URL=https://github.com/kubernetes/dashboard/releases</span><br><span class="line">export VERSION_KUBE_DASHBOARD=$(curl -w &apos;%&#123;url_effective&#125;&apos; -I -L -s -S $&#123;GITHUB_URL&#125;/latest -o /dev/null | sed -e &apos;s|.*/||&apos;)</span><br><span class="line">sudo k3s kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/$&#123;VERSION_KUBE_DASHBOARD&#125;/aio/deploy/recommended.yaml</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://rancher.com/docs/k3s/latest/en/installation/kube-dashboard/" target="_blank" rel="noopener">https://rancher.com/docs/k3s/latest/en/installation/kube-dashboard/</a></li>
+</ul>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://k3s.io/" target="_blank" rel="noopener">https://k3s.io/</a></li>
 <li><a href="https://rancher.com/docs/k3s/latest/en/" target="_blank" rel="noopener">https://rancher.com/docs/k3s/latest/en/</a></li>
@@ -188,7 +194,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-kubernetes/" data-id="ckfvl71bw00bnioonygd6xvx4" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-kubernetes/" data-id="ckfvm0dzu00but4on3vj7nth3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ansible/">ansible</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
