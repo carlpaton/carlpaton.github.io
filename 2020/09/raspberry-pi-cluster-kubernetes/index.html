@@ -29,7 +29,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="WIP  Sweet so K8’s is Kubernetes right, so whats K3’s? Simple answer - Its lightweight Kubernetes for ARM processors which run on Raspberry Pi’s &amp;lt;3 I was inspired by Jeff Geerling’s Turing Pi Clus">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-kubernetes/overview%20of%20kubernetes%20k3s.jpg">
-<meta property="og:updated_time" content="2020-10-06T07:13:06.831Z">
+<meta property="og:updated_time" content="2020-10-07T03:40:33.532Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi Cluster - Kubernetes">
 <meta name="twitter:description" content="WIP  Sweet so K8’s is Kubernetes right, so whats K3’s? Simple answer - Its lightweight Kubernetes for ARM processors which run on Raspberry Pi’s &amp;lt;3 I was inspired by Jeff Geerling’s Turing Pi Clus">
@@ -184,11 +184,33 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ../../../</span><br><span class="line">ansible-playbook site.yml -i inventory/carl-cluster/hosts.ini</span><br></pre></td></tr></table></figure>
 <p>This was as far as I got with the playbook, running on <code>node1</code> complained about not being able to see <code>node1</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WIP - ACTUAL ERROR HERE</span><br></pre></td></tr></table></figure>
-<h3 id="Check-whats-running"><a href="#Check-whats-running" class="headerlink" title="Check whats running"></a>Check whats running</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods --all-namespaces</span><br></pre></td></tr></table></figure>
-<h3 id="Kubernetes-Dashboard"><a href="#Kubernetes-Dashboard" class="headerlink" title="Kubernetes Dashboard"></a>Kubernetes Dashboard</h3><p>WIP!</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">---- Deploying</span><br><span class="line">export GITHUB_URL=https://github.com/kubernetes/dashboard/releases</span><br><span class="line">export VERSION_KUBE_DASHBOARD=$(curl -w &apos;%&#123;url_effective&#125;&apos; -I -L -s -S $&#123;GITHUB_URL&#125;/latest -o /dev/null | sed -e &apos;s|.*/||&apos;)</span><br><span class="line">sudo k3s kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/$&#123;VERSION_KUBE_DASHBOARD&#125;/aio/deploy/recommended.yaml</span><br></pre></td></tr></table></figure>
+<h3 id="Check-whats-running"><a href="#Check-whats-running" class="headerlink" title="Check whats running"></a>Check whats running</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods --all-namespaces</span><br><span class="line">kubectl get pods -n monitoring</span><br></pre></td></tr></table></figure>
+<h3 id="Cluster-Monitoring"><a href="#Cluster-Monitoring" class="headerlink" title="Cluster Monitoring"></a>Cluster Monitoring</h3><p>This <code>Cluster Monitoring</code> tool was built by Carlos Eduardo and he made it work for ARM based clusters.</p>
+<p><strong>Required software install</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update                                ~ update apt cache</span><br><span class="line">apt-get install -y build-essential golang     ~ make utility and go language</span><br></pre></td></tr></table></figure>
+<p><strong>Switch to root and clone</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo su                                                       ~ switch to root user</span><br><span class="line">cd ~                                                          ~ go to home dir</span><br><span class="line">pwd                                                           ~ confirm dir we are in</span><br><span class="line">git clone https://github.com/carlosedp/cluster-monitoring     ~ clone</span><br></pre></td></tr></table></figure>
+<p><strong>Setup</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd cluster-monitoring</span><br><span class="line">nano vars.jsonnet</span><br></pre></td></tr></table></figure></p>
+<p>Then update the following for K3S</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    name: &apos;armExporter&apos;,                         ~ this will give you CPU temp</span><br><span class="line">    enabled: true,</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    name: &apos;traefikExporter&apos;,</span><br><span class="line">    enabled: true,</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">k3s: &#123;</span><br><span class="line">    enabled: true,</span><br><span class="line">    master_ip: [&apos;192.168.1.79&apos;],                  ~ this was my master node</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">suffixDomain: &apos;192.168.1.185.nip.io&apos;,             ~ this was my worker node</span><br></pre></td></tr></table></figure>
+<p>Finally build the mainfest for your cluster</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">make vendor</span><br><span class="line">make                                              ~ generate YML manifests</span><br><span class="line">kubectl apply -f manifests/setup/</span><br><span class="line">kubectl apply -f manifests/</span><br></pre></td></tr></table></figure>
+<p>Now Kuberbettes will take all these things created though these manifests and start scheduling them on nodes. Some STATUS will be <code>ContainerCreating</code> as its pulling down docker images ect.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -n monitoring</span><br><span class="line">kubectl get ingress -n monitoring          ~ will give the host name</span><br></pre></td></tr></table></figure>
 <ul>
-<li><a href="https://rancher.com/docs/k3s/latest/en/installation/kube-dashboard/" target="_blank" rel="noopener">https://rancher.com/docs/k3s/latest/en/installation/kube-dashboard/</a></li>
+<li><a href="http://grafana.192.168.1.185.nip.io/" target="_blank" rel="noopener">http://grafana.192.168.1.185.nip.io/</a>              ~ admin admin</li>
+<li><a href="http://prometheus.192.168.1.185.nip.io/" target="_blank" rel="noopener">http://prometheus.192.168.1.185.nip.io/</a></li>
+<li><a href="http://alertmanager.192.168.1.185.nip.io/" target="_blank" rel="noopener">http://alertmanager.192.168.1.185.nip.io/</a></li>
+</ul>
+<p><strong>Get logs in pods, containers</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubectl get namespaces</span><br><span class="line">kubectl get pods -n monitoring</span><br><span class="line">kubectl logs -f -n monitoring prometheus-k8s-0</span><br><span class="line">kubectl logs -f -n monitoring prometheus-k8s-0 -c prometheus-config-reloader    ~ -c for container</span><br><span class="line">CTRL C</span><br></pre></td></tr></table></figure>
+<p><strong>unistall</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete -f manifests/setup</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://github.com/carlosedp/cluster-monitoring#quickstart-for-k3s" target="_blank" rel="noopener">https://github.com/carlosedp/cluster-monitoring#quickstart-for-k3s</a></li>
 </ul>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://k3s.io/" target="_blank" rel="noopener">https://k3s.io/</a></li>
@@ -199,7 +221,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-kubernetes/" data-id="ckfxmje5q00byo0onqa94o1xd" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-kubernetes/" data-id="ckfylci6k00bldsonck1xvrsp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ansible/">ansible</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
