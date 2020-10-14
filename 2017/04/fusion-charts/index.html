@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>Fusion Charts | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="3.12.1TypeSet as ChartModel.type 123column3d,pie3d,bar3d ChartModel12345678910111213141516171819202122232425262728293031323334353637383940414243public class ChartModel&amp;#123;   public ChartModel()   &amp;#">
+  <meta name="description" content="3.12.1TypeSet as ChartModel.type, there are some examples here. 123column3d,pie3d,bar3d ChartModel12345678910111213141516171819202122232425262728293031323334353637383940414243public class ChartModel&amp;#">
 <meta name="keywords" content="utilities,reporting">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Fusion Charts">
 <meta property="og:url" content="https://carlpaton.github.io/2017/04/fusion-charts/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="3.12.1TypeSet as ChartModel.type 123column3d,pie3d,bar3d ChartModel12345678910111213141516171819202122232425262728293031323334353637383940414243public class ChartModel&amp;#123;   public ChartModel()   &amp;#">
+<meta property="og:description" content="3.12.1TypeSet as ChartModel.type, there are some examples here. 123column3d,pie3d,bar3d ChartModel12345678910111213141516171819202122232425262728293031323334353637383940414243public class ChartModel&amp;#">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-05T08:29:34.989Z">
+<meta property="og:updated_time" content="2020-10-14T20:49:43.374Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Fusion Charts">
-<meta name="twitter:description" content="3.12.1TypeSet as ChartModel.type 123column3d,pie3d,bar3d ChartModel12345678910111213141516171819202122232425262728293031323334353637383940414243public class ChartModel&amp;#123;   public ChartModel()   &amp;#">
+<meta name="twitter:description" content="3.12.1TypeSet as ChartModel.type, there are some examples here. 123column3d,pie3d,bar3d ChartModel12345678910111213141516171819202122232425262728293031323334353637383940414243public class ChartModel&amp;#">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -117,7 +117,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="3-12-1"><a href="#3-12-1" class="headerlink" title="3.12.1"></a>3.12.1</h3><h4 id="Type"><a href="#Type" class="headerlink" title="Type"></a>Type</h4><p>Set as <code>ChartModel.type</code></p>
+        <h3 id="3-12-1"><a href="#3-12-1" class="headerlink" title="3.12.1"></a>3.12.1</h3><h4 id="Type"><a href="#Type" class="headerlink" title="Type"></a>Type</h4><p>Set as <code>ChartModel.type</code>, there are some <a href="/d/fusion-charts/3.12.1/">examples here</a>.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">column3d,</span><br><span class="line">pie3d,</span><br><span class="line">bar3d</span><br></pre></td></tr></table></figure>
 <h4 id="ChartModel"><a href="#ChartModel" class="headerlink" title="ChartModel"></a>ChartModel</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">public class ChartModel</span><br><span class="line">&#123;</span><br><span class="line">   public ChartModel()</span><br><span class="line">   &#123;</span><br><span class="line">      dataSource = new dataSource();</span><br><span class="line">      dataSource.chart = new chart();</span><br><span class="line">      dataSource.data = new List&lt;data&gt;();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public string type &#123; get; set; &#125;</span><br><span class="line">   public string renderAt &#123; get; set; &#125;</span><br><span class="line">   public string width &#123; get; set; &#125;</span><br><span class="line">   public string height &#123; get; set; &#125;</span><br><span class="line">   public string dataFormat &#123; get; set; &#125;</span><br><span class="line">   public dataSource dataSource &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class dataSource</span><br><span class="line">&#123;</span><br><span class="line">   public chart chart &#123; get; set; &#125;</span><br><span class="line">   public List&lt;data&gt; data &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class chart</span><br><span class="line">&#123;</span><br><span class="line">   public string caption &#123; get; set; &#125;</span><br><span class="line">   public string subCaption &#123; get; set; &#125;</span><br><span class="line">   public string xAxisName &#123; get; set; &#125;</span><br><span class="line">   public string yAxisName &#123; get; set; &#125;</span><br><span class="line">   public string theme &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">   /// &lt;summary&gt;</span><br><span class="line">   /// If set to 3 displays the value as x.xxx in the tool tip</span><br><span class="line">   /// &lt;/summary&gt;</span><br><span class="line">   public string decimals &#123; get; set; &#125;</span><br><span class="line">   public string showValues &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class data</span><br><span class="line">&#123;</span><br><span class="line">   public string label &#123; get; set; &#125;</span><br><span class="line">   public string value &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -127,7 +127,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2017/04/fusion-charts/" data-id="ckfylci2y005qdsond4wcl24u" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2017/04/fusion-charts/" data-id="ckg9668ok0077igonhtzi1gh4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reporting/">reporting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/">utilities</a></li></ul>
