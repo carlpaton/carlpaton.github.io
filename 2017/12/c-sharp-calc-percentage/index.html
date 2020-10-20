@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>C# Calculate Percentage | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Simple percentage calculation as an injectable service.  Yeah I got tired of Google’ling which number number you divide by each time I needed to do this in code :) Interface123456789101112131415161718">
+  <meta name="description" content="Simple percentage calculation as an injectable service.  Yeah I got tired of Google’ling which number number you divide by each time I needed to do this in code :) Simply put this is: (100 * scoreAchi">
 <meta name="keywords" content="c#,life-hacks">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C# Calculate Percentage">
 <meta property="og:url" content="https://carlpaton.github.io/2017/12/c-sharp-calc-percentage/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Simple percentage calculation as an injectable service.  Yeah I got tired of Google’ling which number number you divide by each time I needed to do this in code :) Interface123456789101112131415161718">
+<meta property="og:description" content="Simple percentage calculation as an injectable service.  Yeah I got tired of Google’ling which number number you divide by each time I needed to do this in code :) Simply put this is: (100 * scoreAchi">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-08-22T06:54:46.841Z">
+<meta property="og:updated_time" content="2020-10-20T03:37:31.544Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C# Calculate Percentage">
-<meta name="twitter:description" content="Simple percentage calculation as an injectable service.  Yeah I got tired of Google’ling which number number you divide by each time I needed to do this in code :) Interface123456789101112131415161718">
+<meta name="twitter:description" content="Simple percentage calculation as an injectable service.  Yeah I got tired of Google’ling which number number you divide by each time I needed to do this in code :) Simply put this is: (100 * scoreAchi">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -119,6 +119,7 @@ ga('send', 'pageview');
       
         <p>Simple percentage calculation as an <a href="/2018/04/dependency-inversion-principle-dip/">injectable</a> service. </p>
 <p>Yeah I got tired of <a href="https://www.urbandictionary.com/define.php?term=google%27ling" target="_blank" rel="noopener">Google’ling</a> which number number you divide by each time I needed to do this in code :)</p>
+<p>Simply put this is: <code>(100 * scoreAchieved) / outOf</code> which is generally <code>(100 * small number) / big number</code>.</p>
 <h3 id="Interface"><a href="#Interface" class="headerlink" title="Interface"></a>Interface</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">namespace Foo.Common.Maths.Interfaces</span><br><span class="line">&#123;</span><br><span class="line">    public interface IPercentageCalculator</span><br><span class="line">    &#123;</span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// Calculate the score achieved as a percentage out of the given value `outOf`</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        /// &lt;param name=&quot;scoreAchieved&quot;&gt;Example: 73&lt;/param&gt;</span><br><span class="line">        /// &lt;param name=&quot;outOf&quot;&gt;Example: 100&lt;/param&gt;</span><br><span class="line">        /// &lt;returns&gt;73.00 as the default decimal spacing is .00 (2 digits)&lt;/returns&gt;</span><br><span class="line">        double GetPercentage(int scoreAchieved, int outOf);</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// Calculate the score achieved as a percentage out of the given value `outOf`</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        /// &lt;param name=&quot;scoreAchieved&quot;&gt;Example: 73&lt;/param&gt;</span><br><span class="line">        /// &lt;param name=&quot;outOf&quot;&gt;Example: 100&lt;/param&gt;</span><br><span class="line">        /// &lt;param name=&quot;digits&quot;&gt;Example: 3&lt;/param&gt;</span><br><span class="line">        /// &lt;returns&gt;73.000&lt;/returns&gt;</span><br><span class="line">        double GetPercentage(int scoreAchieved, int outOf, int digits);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line"></span><br><span class="line">namespace Foo.Common.Maths</span><br><span class="line">&#123;</span><br><span class="line">    ///&lt;inheritdoc/&gt;</span><br><span class="line">    public class PercentageCalculator : IPercentageCalculator</span><br><span class="line">    &#123;</span><br><span class="line">        private const int DIGITS = 2;</span><br><span class="line"></span><br><span class="line">        public double GetPercentage(int scoreAchieved, int outOf)</span><br><span class="line">        &#123;</span><br><span class="line">            if (scoreAchieved == 0 || outOf == 0)</span><br><span class="line">                return 0;</span><br><span class="line"></span><br><span class="line">            return GetPercentage(scoreAchieved, outOf, DIGITS);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public double GetPercentage(int scoreAchieved, int outOf, int digits)</span><br><span class="line">        &#123;</span><br><span class="line">            if (scoreAchieved == 0 || outOf == 0)</span><br><span class="line">                return 0;</span><br><span class="line"></span><br><span class="line">            return Math.Round((double)(100 * scoreAchieved) / outOf, digits);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
@@ -128,7 +129,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2017/12/c-sharp-calc-percentage/" data-id="ckgahd45o001tcsontj46hg7c" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2017/12/c-sharp-calc-percentage/" data-id="ckghf3cxa001twkon4xsz7un3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/life-hacks/">life-hacks</a></li></ul>
@@ -139,19 +140,19 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2017/12/binary-serializer/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/01/reading-excel-with-epplus-dot-net-library/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Binary Serializer
+          Reading Excel with EPPlus (.NET library)
         
       </div>
     </a>
   
   
-    <a href="/2017/12/serialization/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/12/binary-serializer/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Serialization</div>
+      <div class="article-nav-title">Binary Serializer</div>
     </a>
   
 </nav>
