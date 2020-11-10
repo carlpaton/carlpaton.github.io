@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="Add1234git add .                              ~ add all changesgit add foo\bar\baz.md                 ~ add just one filegit reset                              ~ un-stage any files added  https://git-">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-14T06:36:06.169Z">
+<meta property="og:updated_time" content="2020-11-10T07:21:42.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GIT Commands">
 <meta name="twitter:description" content="Add1234git add .                              ~ add all changesgit add foo\bar\baz.md                 ~ add just one filegit reset                              ~ un-stage any files added  https://git-">
@@ -175,6 +175,12 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://git-scm.com/docs/git-rebase" target="_blank" rel="noopener">https://git-scm.com/docs/git-rebase</a></li>
 </ul>
+<h4 id="Update-commit-history"><a href="#Update-commit-history" class="headerlink" title="Update commit history"></a>Update commit history</h4><p>Change the commit message of older commits.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~2</span><br></pre></td></tr></table></figure>
+<p>Displays the last 2 commit message in your configured editor, change <code>pick</code> for the line you wish to update to be <code>reword</code>, save and close.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pick 0e0e0e0 last commit</span><br><span class="line">pick 0e0e0e1 first commit</span><br></pre></td></tr></table></figure>
+<p>That commit message will then open with the option for you to change it from <code>first commit</code> to <code>sweet first commit</code>. You then need to force the changes to the remote repository.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --force</span><br></pre></td></tr></table></figure>
 <h3 id="Reset"><a href="#Reset" class="headerlink" title="Reset"></a>Reset</h3><p>You can jump any amount of heads below, example <code>HEAD~2</code> will jump back 2.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD~1 --mixed              ~ Resets the index but not the working tree (i.e., the changed files are preserved but not marked for commit) and reports what has not been updated.</span><br><span class="line">git reset head --hard                 ~ clear the local changes that were reset above (that are now un-commited)</span><br><span class="line">git push origin cool-branch-name -f   ~ forces the changes you did with the above resets to origin</span><br></pre></td></tr></table></figure>
 <p>This was useful when I had run <code>git commit --amend</code> on the wrong head</p>
@@ -209,7 +215,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2018/04/git-commands/" data-id="ckh2gn01r0068bconym4xtv1j" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2018/04/git-commands/" data-id="ckh5xu6an0063kwon470c7hw5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
