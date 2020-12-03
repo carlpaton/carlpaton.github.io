@@ -18,22 +18,20 @@ ga('send', 'pageview');
 
 
   
-  <title>Pi Resources | Carl Paton | There are no silly questions</title>
+  <title>OAuth2 Client Credentials Flow | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="File ManagerRe-install file manager when it crashes on start. 1sudo apt-get install --reinstall pcmanfm GPIOGPIO (general-purpose input/output) values can be seen by running pinout, if you hold the pi">
-<meta name="keywords" content="raspberry pi">
+  <meta name="description" content="Grant Type - Client Credentials is used when the application needs an access token to act on behalf of themselves (so not a user)  Do a POST request to https://authorisation-service.local/token includ">
+<meta name="keywords" content="c#,wip,authentication">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pi Resources">
-<meta property="og:url" content="https://carlpaton.github.io/2019/12/pi-resources/index.html">
+<meta property="og:title" content="OAuth2 Client Credentials Flow">
+<meta property="og:url" content="https://carlpaton.github.io/2020/12/oauth2-client-credentials-flow/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="File ManagerRe-install file manager when it crashes on start. 1sudo apt-get install --reinstall pcmanfm GPIOGPIO (general-purpose input/output) values can be seen by running pinout, if you hold the pi">
+<meta property="og:description" content="Grant Type - Client Credentials is used when the application needs an access token to act on behalf of themselves (so not a user)  Do a POST request to https://authorisation-service.local/token includ">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://carlpaton.github.io/d/pi-resources/pinout.jpg">
-<meta property="og:updated_time" content="2020-08-06T05:40:53.287Z">
+<meta property="og:updated_time" content="2020-12-03T22:40:58.400Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pi Resources">
-<meta name="twitter:description" content="File ManagerRe-install file manager when it crashes on start. 1sudo apt-get install --reinstall pcmanfm GPIOGPIO (general-purpose input/output) values can be seen by running pinout, if you hold the pi">
-<meta name="twitter:image" content="https://carlpaton.github.io/d/pi-resources/pinout.jpg">
+<meta name="twitter:title" content="OAuth2 Client Credentials Flow">
+<meta name="twitter:description" content="Grant Type - Client Credentials is used when the application needs an access token to act on behalf of themselves (so not a user)  Do a POST request to https://authorisation-service.local/token includ">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -97,10 +95,10 @@ ga('send', 'pageview');
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-pi-resources" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-oauth2-client-credentials-flow" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/12/pi-resources/" class="article-date">
-  <time datetime="2019-12-04T11:00:00.000Z" itemprop="datePublished">2019-Dec</time>
+    <a href="/2020/12/oauth2-client-credentials-flow/" class="article-date">
+  <time datetime="2020-12-03T11:00:00.000Z" itemprop="datePublished">2020-Dec</time>
 </a>
     
   </div>
@@ -111,7 +109,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      Pi Resources
+      OAuth2 Client Credentials Flow
     </h1>
   
 
@@ -119,30 +117,30 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="File-Manager"><a href="#File-Manager" class="headerlink" title="File Manager"></a>File Manager</h3><p>Re-install file manager when it crashes on start.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install --reinstall pcmanfm</span><br></pre></td></tr></table></figure>
-<h3 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h3><p><em>GPIO</em> (general-purpose input/output) values can be seen by running <code>pinout</code>, if you hold the pi vertically with the usb ports facing down the <code>5V</code> pins are on the top left.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import RPi.GPIO as GPIO</span><br><span class="line"></span><br><span class="line"># for GPIO numbering, choose BCM  </span><br><span class="line">GPIO.setmode(GPIO.BCM)</span><br><span class="line"></span><br><span class="line"># or, for pin numbering, choose BOARD  </span><br><span class="line">GPIO.setmode(GPIO.BOARD)  </span><br><span class="line"></span><br><span class="line"># but you can&apos;t have both, so only use one</span><br></pre></td></tr></table></figure>
-<p><img src="/d/pi-resources/pinout.jpg" alt="GPIO"></p>
-<ul>
-<li><a href="https://www.raspberrypi.org/documentation/usage/gpio/python/README.md" target="_blank" rel="noopener">https://www.raspberrypi.org/documentation/usage/gpio/python/README.md</a></li>
-<li><a href="https://www.raspberrypi.org/documentation/usage/gpio/" target="_blank" rel="noopener">https://www.raspberrypi.org/documentation/usage/gpio/</a></li>
-<li><a href="https://raspi.tv/2013/rpi-gpio-basics-4-setting-up-rpi-gpio-numbering-systems-and-inputs" target="_blank" rel="noopener">https://raspi.tv/2013/rpi-gpio-basics-4-setting-up-rpi-gpio-numbering-systems-and-inputs</a></li>
-</ul>
-<h3 id="Net-Core"><a href="#Net-Core" class="headerlink" title=".Net Core"></a>.Net Core</h3><ul>
-<li><a href="https://www.hanselman.com/blog/BuildingRunningAndTestingNETCoreAndASPNETCore21InDockerOnARaspberryPiARM32.aspx" target="_blank" rel="noopener">https://www.hanselman.com/blog/BuildingRunningAndTestingNETCoreAndASPNETCore21InDockerOnARaspberryPiARM32.aspx</a></li>
-</ul>
+        <p>Grant Type - <code>Client Credentials</code> is used when the application needs an access token to act on behalf of themselves (so not a user)</p>
+<ol>
+<li>Do a POST request to <code>https://authorisation-service.local/token</code> including your <code>client_id</code> and <code>client_secret</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST https://authorisation-service.local/token</span><br><span class="line"></span><br><span class="line">grant_type=client_credentials</span><br><span class="line">&amp;client_id=dd938314e8e1</span><br><span class="line">&amp;client_secret=20166c44bc7e</span><br><span class="line">&amp;scope=foo</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>The response could look like</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"token_type"</span>: <span class="string">"Bearer"</span>,</span><br><span class="line">  <span class="attr">"expires_in"</span>: <span class="number">86400</span>,</span><br><span class="line">  <span class="attr">"access_token"</span>: <span class="string">"eaabf941fbd1"</span>,</span><br><span class="line">  <span class="attr">"scope"</span>: <span class="string">"foo"</span>,</span><br><span class="line">  <span class="attr">"refresh_token"</span>: <span class="string">"2501d78c0345"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Resource requests then need to include the <code>token_type</code> and <code>access_token</code> in the authorisation header. Note the American spelling with a <code>z</code>. </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;Authorization&apos;:&apos;Bearer eaabf941fbd1&apos;</span><br></pre></td></tr></table></figure>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
-<li><a href="https://www.makeuseof.com/tag/different-uses-raspberry-pi/" target="_blank" rel="noopener">https://www.makeuseof.com/tag/different-uses-raspberry-pi/</a></li>
+<li><a href="https://aaronparecki.com/oauth-2-simplified/#others" target="_blank" rel="noopener">https://aaronparecki.com/oauth-2-simplified/#others</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2019/12/pi-resources/" data-id="cki9f5cds00bktkonxrn9d2bg" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/12/oauth2-client-credentials-flow/" data-id="cki9f5cde00artkon1w7lcfhq" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/">raspberry pi</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/authentication/">authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
 
     </footer>
   </div>
@@ -150,19 +148,10 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2019/12/sql-batching-data-changes/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Batching Data Changes
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/12/sql-magic-and-tips/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/12/oauth2-authorization-code-flow/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">SQL Magic And Tips</div>
+      <div class="article-nav-title">OAuth2 Authorization Code Flow</div>
     </a>
   
 </nav>
