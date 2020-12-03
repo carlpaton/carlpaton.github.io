@@ -37,9 +37,9 @@
       
         <tags>
             
-            <tag> web api </tag>
-            
             <tag> wip </tag>
+            
+            <tag> web api </tag>
             
         </tags>
       
@@ -59,6 +59,8 @@
         <tags>
             
             <tag> anti pattern </tag>
+            
+            <tag> wip </tag>
             
         </tags>
       
@@ -95,6 +97,8 @@
       
       
         <tags>
+            
+            <tag> wip </tag>
             
             <tag> aws </tag>
             
@@ -331,9 +335,9 @@
             
             <tag> patterns principles </tag>
             
-            <tag> architecture </tag>
-            
             <tag> wip </tag>
+            
+            <tag> architecture </tag>
             
         </tags>
       
@@ -373,9 +377,9 @@
             
             <tag> patterns principles </tag>
             
-            <tag> architecture </tag>
-            
             <tag> wip </tag>
+            
+            <tag> architecture </tag>
             
         </tags>
       
@@ -497,9 +501,9 @@
             
             <tag> patterns principles </tag>
             
-            <tag> architecture </tag>
-            
             <tag> wip </tag>
+            
+            <tag> architecture </tag>
             
         </tags>
       
@@ -746,53 +750,32 @@
     
     
     <entry>
-      <title>Pi Servo Control</title>
-      <link href="/2020/05/pi-servo-control/"/>
-      <url>/2020/05/pi-servo-control/</url>
-      
-        <content type="html"><![CDATA[<p>A servo allows precise control of the angular position of its shaft. Standard servos accept 4.6 to 6 volts.</p><table><thead><tr><th>Colour</th><th>Description</th></tr></thead><tbody><tr><td>Yellow/White</td><td>Control signal</td></tr><tr><td>Red</td><td>Positive power lead</td></tr><tr><td>Black/Brown</td><td>Negative power lead</td></tr></tbody></table><h4 id="Control-signal"><a href="#Control-signal" class="headerlink" title="Control signal"></a>Control signal</h4><p>This needs to be a <code>pulse width modulation (PWM)</code> square wave. The square wave needs to be 50 herts (so a pulse of every 0.2 seconds) The angle of the servo is controlled by the length of the positive pulse (duty cycle) The longer the pulse/period of the wave/duty cycle the larger the angle the servo will turn to and try hold itself at.</p><p>These values vary by servo but for the small cheap SG-90’s the degrees can be calculated as:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2% duty cycle = 0 degrees</span><br><span class="line">12% duty cycle = 180 degrees</span><br></pre></td></tr></table></figure><p><img src="/d/pi-servo-control/servo-duty.jpg" alt="Servo Duty"></p><p>Translating this to python code using the RPi.GPIO library</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set GPIO numbering mode</span></span><br><span class="line">GPIO.setmode(GPIO.BOARD)</span><br><span class="line"><span class="comment"># There is another mode called `GPIO.BCM` for BCM pin numbering, not sure what this is?</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set pin 11 as an output, and set servo1 as pin 11 as PWM</span></span><br><span class="line">GPIO.setup(<span class="number">11</span>,GPIO.OUT)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Note 11 is the pi's pin, 50Hz pulse (analog servo), 300 would be for digital</span></span><br><span class="line">servo = GPIO.PWM(<span class="number">11</span>,<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start PWM running, but with value of 0 (pulse off)</span></span><br><span class="line">servo.start(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># duty is a percentage from 0 to 100 which allows for decimals like 3.33</span></span><br><span class="line"><span class="comment"># 2% = 0 degrees</span></span><br><span class="line"><span class="comment"># 7% = 90 degrees</span></span><br><span class="line"><span class="comment"># 12% = 180 degrees</span></span><br><span class="line"><span class="comment"># setting it then back to 0 stops the servo from jittering, just set `time.sleep(0.5)` before so you give the servo time to move to the position</span></span><br><span class="line">duty = <span class="number">2</span></span><br><span class="line">servo.ChangeDutyCycle(duty)</span><br><span class="line">servo.ChangeDutyCycle(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Clean up</span></span><br><span class="line">servo.stop()</span><br><span class="line">GPIO.cleanup()</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/" target="_blank" rel="noopener">https://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/</a></li><li><a href="https://www.servocity.com/how-does-a-servo-work" target="_blank" rel="noopener">https://www.servocity.com/how-does-a-servo-work</a></li><li><a href="http://www.robotplatform.com/knowledge/servo/servo_control_tutorial.html" target="_blank" rel="noopener">http://www.robotplatform.com/knowledge/servo/servo_control_tutorial.html</a></li><li><a href="http://webhome.csc.uvic.ca/~mcheng/samples/qu/SENG466_Home/Phase_1/Entries/2010/2/1_Servo_Motor.html" target="_blank" rel="noopener">http://webhome.csc.uvic.ca/~mcheng/samples/qu/SENG466_Home/Phase_1/Entries/2010/2/1_Servo_Motor.html</a></li><li><a href="https://www.youtube.com/watch?v=xHDT4CwjUQE" target="_blank" rel="noopener">https://www.youtube.com/watch?v=xHDT4CwjUQE</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> raspberry pi </tag>
-            
-            <tag> python </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Pi Useless Box</title>
-      <link href="/2020/05/pi-useless-box/"/>
-      <url>/2020/05/pi-useless-box/</url>
-      
-        <content type="html"><![CDATA[<p>Python code for the below is on <a href="https://github.com/carlpaton/python-hoon/tree/master/useless-box" target="_blank" rel="noopener">github</a> with details on the <a href="/2020/05/pi-servo-control/">servo</a> and <a href="/2020/05/pi-switch-control/">switch</a> control here.</p><h3 id="Pin-Out"><a href="#Pin-Out" class="headerlink" title="Pin Out"></a>Pin Out</h3><p><img src="/d/pi-useless-box/useless-box-pinout.jpg" alt="Pinout"></p><h3 id="What-is-a-useless-box"><a href="#What-is-a-useless-box" class="headerlink" title="What is a useless box?"></a>What is a useless box?</h3><iframe width="560" height="315" src="https://www.youtube.com/embed/aqAUmgE3WyM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><p>Then there are the advanced ones!</p><ul><li><a href="https://www.youtube.com/watch?v=Nqk_nWAjBus" target="_blank" rel="noopener">https://www.youtube.com/watch?v=Nqk_nWAjBus</a></li></ul><h3 id="Inside-the-Useless-Machine"><a href="#Inside-the-Useless-Machine" class="headerlink" title="Inside the Useless Machine"></a>Inside the Useless Machine</h3><iframe width="560" height="315" src="https://www.youtube.com/embed/PRn1Uzp54uw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> raspberry pi </tag>
-            
-            <tag> python </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Pi Switch Control</title>
       <link href="/2020/05/pi-switch-control/"/>
       <url>/2020/05/pi-switch-control/</url>
       
         <content type="html"><![CDATA[<p>Determine if switches are on (high) or off (low)</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"></span><br><span class="line">GPIO.setwarnings(<span class="literal">False</span>) <span class="comment"># Ignore warning for now</span></span><br><span class="line">GPIO.setmode(GPIO.BOARD) <span class="comment"># Use physical pin numbering</span></span><br><span class="line"></span><br><span class="line">GPIO.setup(<span class="number">10</span>, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) <span class="comment"># Set pin 10 to be an input pin and set initial value to be pulled low (off)</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">"Waiting for button push"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>: <span class="comment"># Run forever</span></span><br><span class="line">    <span class="keyword">if</span> GPIO.input(<span class="number">10</span>) == GPIO.HIGH:</span><br><span class="line">        print(<span class="string">"Button was pushed!"</span>)</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://raspberrypihq.com/use-a-push-button-with-raspberry-pi-gpio/" target="_blank" rel="noopener">https://raspberrypihq.com/use-a-push-button-with-raspberry-pi-gpio/</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> raspberry pi </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Pi Servo Control</title>
+      <link href="/2020/05/pi-servo-control/"/>
+      <url>/2020/05/pi-servo-control/</url>
+      
+        <content type="html"><![CDATA[<p>A servo allows precise control of the angular position of its shaft. Standard servos accept 4.6 to 6 volts.</p><table><thead><tr><th>Colour</th><th>Description</th></tr></thead><tbody><tr><td>Yellow/White</td><td>Control signal</td></tr><tr><td>Red</td><td>Positive power lead</td></tr><tr><td>Black/Brown</td><td>Negative power lead</td></tr></tbody></table><h4 id="Control-signal"><a href="#Control-signal" class="headerlink" title="Control signal"></a>Control signal</h4><p>This needs to be a <code>pulse width modulation (PWM)</code> square wave. The square wave needs to be 50 herts (so a pulse of every 0.2 seconds) The angle of the servo is controlled by the length of the positive pulse (duty cycle) The longer the pulse/period of the wave/duty cycle the larger the angle the servo will turn to and try hold itself at.</p><p>These values vary by servo but for the small cheap SG-90’s the degrees can be calculated as:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2% duty cycle = 0 degrees</span><br><span class="line">12% duty cycle = 180 degrees</span><br></pre></td></tr></table></figure><p><img src="/d/pi-servo-control/servo-duty.jpg" alt="Servo Duty"></p><p>Translating this to python code using the RPi.GPIO library</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set GPIO numbering mode</span></span><br><span class="line">GPIO.setmode(GPIO.BOARD)</span><br><span class="line"><span class="comment"># There is another mode called `GPIO.BCM` for BCM pin numbering, not sure what this is?</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set pin 11 as an output, and set servo1 as pin 11 as PWM</span></span><br><span class="line">GPIO.setup(<span class="number">11</span>,GPIO.OUT)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Note 11 is the pi's pin, 50Hz pulse (analog servo), 300 would be for digital</span></span><br><span class="line">servo = GPIO.PWM(<span class="number">11</span>,<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start PWM running, but with value of 0 (pulse off)</span></span><br><span class="line">servo.start(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># duty is a percentage from 0 to 100 which allows for decimals like 3.33</span></span><br><span class="line"><span class="comment"># 2% = 0 degrees</span></span><br><span class="line"><span class="comment"># 7% = 90 degrees</span></span><br><span class="line"><span class="comment"># 12% = 180 degrees</span></span><br><span class="line"><span class="comment"># setting it then back to 0 stops the servo from jittering, just set `time.sleep(0.5)` before so you give the servo time to move to the position</span></span><br><span class="line">duty = <span class="number">2</span></span><br><span class="line">servo.ChangeDutyCycle(duty)</span><br><span class="line">servo.ChangeDutyCycle(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Clean up</span></span><br><span class="line">servo.stop()</span><br><span class="line">GPIO.cleanup()</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/" target="_blank" rel="noopener">https://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/</a></li><li><a href="https://www.servocity.com/how-does-a-servo-work" target="_blank" rel="noopener">https://www.servocity.com/how-does-a-servo-work</a></li><li><a href="http://www.robotplatform.com/knowledge/servo/servo_control_tutorial.html" target="_blank" rel="noopener">http://www.robotplatform.com/knowledge/servo/servo_control_tutorial.html</a></li><li><a href="http://webhome.csc.uvic.ca/~mcheng/samples/qu/SENG466_Home/Phase_1/Entries/2010/2/1_Servo_Motor.html" target="_blank" rel="noopener">http://webhome.csc.uvic.ca/~mcheng/samples/qu/SENG466_Home/Phase_1/Entries/2010/2/1_Servo_Motor.html</a></li><li><a href="https://www.youtube.com/watch?v=xHDT4CwjUQE" target="_blank" rel="noopener">https://www.youtube.com/watch?v=xHDT4CwjUQE</a></li></ul>]]></content>
       
       
       
@@ -820,6 +803,27 @@
         <tags>
             
             <tag> raspberry pi </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Pi Useless Box</title>
+      <link href="/2020/05/pi-useless-box/"/>
+      <url>/2020/05/pi-useless-box/</url>
+      
+        <content type="html"><![CDATA[<p>Python code for the below is on <a href="https://github.com/carlpaton/python-hoon/tree/master/useless-box" target="_blank" rel="noopener">github</a> with details on the <a href="/2020/05/pi-servo-control/">servo</a> and <a href="/2020/05/pi-switch-control/">switch</a> control here.</p><h3 id="Pin-Out"><a href="#Pin-Out" class="headerlink" title="Pin Out"></a>Pin Out</h3><p><img src="/d/pi-useless-box/useless-box-pinout.jpg" alt="Pinout"></p><h3 id="What-is-a-useless-box"><a href="#What-is-a-useless-box" class="headerlink" title="What is a useless box?"></a>What is a useless box?</h3><iframe width="560" height="315" src="https://www.youtube.com/embed/aqAUmgE3WyM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><p>Then there are the advanced ones!</p><ul><li><a href="https://www.youtube.com/watch?v=Nqk_nWAjBus" target="_blank" rel="noopener">https://www.youtube.com/watch?v=Nqk_nWAjBus</a></li></ul><h3 id="Inside-the-Useless-Machine"><a href="#Inside-the-Useless-Machine" class="headerlink" title="Inside the Useless Machine"></a>Inside the Useless Machine</h3><iframe width="560" height="315" src="https://www.youtube.com/embed/PRn1Uzp54uw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> raspberry pi </tag>
+            
+            <tag> python </tag>
             
         </tags>
       
@@ -1142,27 +1146,6 @@
     
     
     <entry>
-      <title>Command Pattern</title>
-      <link href="/2020/02/command-pattern/"/>
-      <url>/2020/02/command-pattern/</url>
-      
-        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The command pattern is used to express a request, including the call to be made and all of its required <a href="http://www.blackwasp.co.uk/CSharpMethodParameters.aspx" target="_blank" rel="noopener">parameters</a>, in a command object. The command may then be executed immediately or held for later use.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://exceptionnotfound.net/command-pattern-in-csharp/" target="_blank" rel="noopener">https://exceptionnotfound.net/command-pattern-in-csharp/</a></li><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Command.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Command.aspx</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> patterns principles </tag>
-            
-            <tag> behavioural patterns </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Composite Pattern</title>
       <link href="/2020/02/composite-pattern/"/>
       <url>/2020/02/composite-pattern/</url>
@@ -1176,6 +1159,27 @@
             <tag> patterns principles </tag>
             
             <tag> structural patterns </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Command Pattern</title>
+      <link href="/2020/02/command-pattern/"/>
+      <url>/2020/02/command-pattern/</url>
+      
+        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The command pattern is used to express a request, including the call to be made and all of its required <a href="http://www.blackwasp.co.uk/CSharpMethodParameters.aspx" target="_blank" rel="noopener">parameters</a>, in a command object. The command may then be executed immediately or held for later use.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://exceptionnotfound.net/command-pattern-in-csharp/" target="_blank" rel="noopener">https://exceptionnotfound.net/command-pattern-in-csharp/</a></li><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Command.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Command.aspx</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> patterns principles </tag>
+            
+            <tag> behavioural patterns </tag>
             
         </tags>
       
@@ -1287,11 +1291,11 @@
     
     
     <entry>
-      <title>Iterator Pattern</title>
-      <link href="/2020/02/iterator-pattern/"/>
-      <url>/2020/02/iterator-pattern/</url>
+      <title>Interpreter Pattern</title>
+      <link href="/2020/02/interpreter-pattern/"/>
+      <url>/2020/02/interpreter-pattern/</url>
       
-        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The iterator pattern is used to provide a standard interface for traversing a collection of items in an aggregate object without the need to understand its underlying structure.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Iterator.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Iterator.aspx</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The interpreter pattern is used to define the grammar for instructions that form part of a language or notation, whilst allowing the grammar to be easily extended.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Interpreter.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Interpreter.aspx</a></li></ul>]]></content>
       
       
       
@@ -1308,11 +1312,11 @@
     
     
     <entry>
-      <title>Interpreter Pattern</title>
-      <link href="/2020/02/interpreter-pattern/"/>
-      <url>/2020/02/interpreter-pattern/</url>
+      <title>Iterator Pattern</title>
+      <link href="/2020/02/iterator-pattern/"/>
+      <url>/2020/02/iterator-pattern/</url>
       
-        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The interpreter pattern is used to define the grammar for instructions that form part of a language or notation, whilst allowing the grammar to be easily extended.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Interpreter.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Interpreter.aspx</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The iterator pattern is used to provide a standard interface for traversing a collection of items in an aggregate object without the need to understand its underlying structure.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="http://www.blackwasp.co.uk/gofpatterns.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li><li><a href="http://www.blackwasp.co.uk/Iterator.aspx" target="_blank" rel="noopener">http://www.blackwasp.co.uk/Iterator.aspx</a></li></ul>]]></content>
       
       
       
@@ -1910,25 +1914,6 @@
     
     
     <entry>
-      <title>Raspberry Pi Cluster Setup OS</title>
-      <link href="/2019/10/raspberry-pi-cluster-setup-os/"/>
-      <url>/2019/10/raspberry-pi-cluster-setup-os/</url>
-      
-        <content type="html"><![CDATA[<p>Updated: <em>29/09/2020</em></p><p>I tried to keep the Operating System (OS) setup separate from the <a href="/tags/raspberry-pi/">Pi Posts</a> else they would be duplicated.</p><h3 id="Distributions"><a href="#Distributions" class="headerlink" title="Distributions"></a>Distributions</h3><p>There are a few distributions that work on the Pi, the most common is Raspberry Pi OS (previously called Raspbian). A lot of configuration options still use the terminology <code>raspbian</code>.</p><p>For clusters I mostly use <code>Raspberry Pi OS (32-bit) Lite</code> which is a minimal image based on <code>Debian Buster</code>, its then mannaged though <a href="/tags/ssh/">SSH</a>.</p><p>I have used <code>Raspberry Pi OS (32-bit) with desktop</code> and <code>retropie</code> just to have a hoon.</p><ul><li><a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">2020-08-20-raspios-buster-armhf-lite</a></li><li><a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">Raspios: 2020-08-20-raspios-buster-armhf-full</a></li><li><a href="/2019/10/retropie/">Retropie: retropie-buster-4.6-rpi4</a></li></ul><h3 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware</h3><p>As I only have two <a href="https://www.pbtech.co.nz/product/SEVRBP0206/Raspberry-Pi-4-Model-B-4GB-LPDDR4-FIRST-28nm-Based" target="_blank" rel="noopener">Raspberry Pi 4 Model B’s</a> I set them up as:</p><ul><li><code>node1</code> (master node)</li><li><code>node3</code> (worker node)</li></ul><h3 id="OS-Steps-For-Cluster"><a href="#OS-Steps-For-Cluster" class="headerlink" title="OS Steps (For Cluster)"></a>OS Steps (For Cluster)</h3><ol><li>Download <code>Raspberry Pi OS (32-bit) Lite</code> - <a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">2020-08-20-raspios-buster-armhf-lite</a>.</li><li>Install on SD cards with <a href="https://www.balena.io/etcher/" target="_blank" rel="noopener">Etcher</a> or any flashing utility.</li><li>Pop in the SD Cards and boot the Pi, allow disk expand and wait for the OS to figure out its life.</li><li>Once at the terminal login as user <code>pi</code> and password <code>raspberry</code>. Probably best to update your passwords, meh.</li><li>Run <code>sudo raspi-config</code> </li></ol><ul><li>Config country (4. Localisation Options)</li><li>Rename the Pi’s (2. Network Options)</li><li>Setup Wifi (2. Network Options) </li><li>SSH (5. Interfacing Options). Then finally reboot.</li></ul><ol start="6"><li>Install additional software, you dont actually need git unless you plan to pull down <a href="https://github.com/carlpaton/nginx-pi-demo" target="_blank" rel="noopener">nginx-pi-demo</a> and build it yourself.</li></ol><p>The other software is just common things I install and use in other posts.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git nmap python-mpi4py keychain ansible</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.raspberrypi.org/" target="_blank" rel="noopener">https://www.raspberrypi.org/</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> raspberry pi </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Raspberry Pi Cluster</title>
       <link href="/2019/10/raspberry-pi-cluster/"/>
       <url>/2019/10/raspberry-pi-cluster/</url>
@@ -1941,9 +1926,28 @@
             
             <tag> raspberry pi </tag>
             
+            <tag> python </tag>
+            
             <tag> ssh </tag>
             
-            <tag> python </tag>
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Raspberry Pi Cluster Setup OS</title>
+      <link href="/2019/10/raspberry-pi-cluster-setup-os/"/>
+      <url>/2019/10/raspberry-pi-cluster-setup-os/</url>
+      
+        <content type="html"><![CDATA[<p>Updated: <em>29/09/2020</em></p><p>I tried to keep the Operating System (OS) setup separate from the <a href="/tags/raspberry-pi/">Pi Posts</a> else they would be duplicated.</p><h3 id="Distributions"><a href="#Distributions" class="headerlink" title="Distributions"></a>Distributions</h3><p>There are a few distributions that work on the Pi, the most common is Raspberry Pi OS (previously called Raspbian). A lot of configuration options still use the terminology <code>raspbian</code>.</p><p>For clusters I mostly use <code>Raspberry Pi OS (32-bit) Lite</code> which is a minimal image based on <code>Debian Buster</code>, its then mannaged though <a href="/tags/ssh/">SSH</a>.</p><p>I have used <code>Raspberry Pi OS (32-bit) with desktop</code> and <code>retropie</code> just to have a hoon.</p><ul><li><a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">2020-08-20-raspios-buster-armhf-lite</a></li><li><a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">Raspios: 2020-08-20-raspios-buster-armhf-full</a></li><li><a href="/2019/10/retropie/">Retropie: retropie-buster-4.6-rpi4</a></li></ul><h3 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware</h3><p>As I only have two <a href="https://www.pbtech.co.nz/product/SEVRBP0206/Raspberry-Pi-4-Model-B-4GB-LPDDR4-FIRST-28nm-Based" target="_blank" rel="noopener">Raspberry Pi 4 Model B’s</a> I set them up as:</p><ul><li><code>node1</code> (master node)</li><li><code>node3</code> (worker node)</li></ul><h3 id="OS-Steps-For-Cluster"><a href="#OS-Steps-For-Cluster" class="headerlink" title="OS Steps (For Cluster)"></a>OS Steps (For Cluster)</h3><ol><li>Download <code>Raspberry Pi OS (32-bit) Lite</code> - <a href="https://www.raspberrypi.org/downloads/raspberry-pi-os/" target="_blank" rel="noopener">2020-08-20-raspios-buster-armhf-lite</a>.</li><li>Install on SD cards with <a href="https://www.balena.io/etcher/" target="_blank" rel="noopener">Etcher</a> or any flashing utility.</li><li>Pop in the SD Cards and boot the Pi, allow disk expand and wait for the OS to figure out its life.</li><li>Once at the terminal login as user <code>pi</code> and password <code>raspberry</code>. Probably best to update your passwords, meh.</li><li>Run <code>sudo raspi-config</code> </li></ol><ul><li>Config country (4. Localisation Options)</li><li>Rename the Pi’s (2. Network Options)</li><li>Setup Wifi (2. Network Options) </li><li>SSH (5. Interfacing Options). Then finally reboot.</li></ul><ol start="6"><li>Install additional software, you dont actually need git unless you plan to pull down <a href="https://github.com/carlpaton/nginx-pi-demo" target="_blank" rel="noopener">nginx-pi-demo</a> and build it yourself.</li></ol><p>The other software is just common things I install and use in other posts.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git nmap python-mpi4py keychain ansible</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.raspberrypi.org/" target="_blank" rel="noopener">https://www.raspberrypi.org/</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> raspberry pi </tag>
             
         </tags>
       
@@ -2104,25 +2108,6 @@
     
     
     <entry>
-      <title>Elastic Container Service Simple Demo</title>
-      <link href="/2019/09/aws-elastic-container-service-simple-demo/"/>
-      <url>/2019/09/aws-elastic-container-service-simple-demo/</url>
-      
-        <content type="html"><![CDATA[<p>This runs on top of Amazon Elastic Compute Cloud (Amazon EC2) and the steps below follow the AWS GUI (graphical user interface). I learnt most of the content below by following <a href="https://www.linkedin.com/in/arthur-ulfeldt-5150aa5/" target="_blank" rel="noopener">Arthur Ulfeldt</a>‘s tutorial <a href="https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html" target="_blank" rel="noopener">Deploying Docker to AWS</a>.</p><p>This demo will simply write the current datetime to a volume using the busybox image, the container is called <code>data-source</code>. Another container running nginx will then display this data, this container is called <code>data-server</code>.</p><p><img src="/d/aws-elastic-container-service-simple-demo/overview.jpg" alt="Simple Demo Infrastructure Overview"></p><p>Calling <code>data-server</code> on its public IP will then display as follows:</p><p><img src="/d/aws-elastic-container-service-simple-demo/simple-demo.jpg" alt="nginx data-server"></p><h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>Create your account at <a href="https://aws.amazon.com/" target="_blank" rel="noopener">https://aws.amazon.com/</a> login and under <code>AWS Management Console</code> type or look for <code>ECS</code>, this will take you to the <code>ECS Dashboard</code> </p><h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><p>Create cluster type of launch type <code>FARGATE</code>, it may be called something like <code>Networking only</code> and mention <code>Powered by AWS Fagate</code> - things in IT change daily :)</p><ul><li>Cluster name: <code>simple-demo2</code></li><li>Check <code>Create VPC</code></li><li>Tag: Description|simple-demo2 (this is the key|value)</li><li>Check <code>Enable container insights</code> for CloudWatch</li><li>From the <a href="/2019/09/aws-command-line-interface/">CLI</a> you can view all clusters:</li></ul><h3 id="Task-Definition"><a href="#Task-Definition" class="headerlink" title="Task Definition"></a>Task Definition</h3><p>Select <code>Task Definitions</code> -&gt; <code>Create new Task Definition</code></p><ul><li>Select the <code>FARGATE</code> template</li><li>Task Definition Name: task-definition-data-server</li><li>Requires Compatibilities: FARGATE</li><li>Task Role: escTaskExecutionRole</li><li>Network Mode: awsvpc</li><li>Task execution role: ecsTaskExecutionRole</li><li>Task memory (GB): 0.5GB</li><li>Task CPU (vCPU): 0.25 vCPU</li></ul><p>Volumes:</p><ul><li>create one called <code>shared-data</code></li></ul><p>CONTAINER 1</p><ul><li>Container name: <code>data-source</code></li><li>Image: busybox</li><li>Memory Limits (MiB): 128</li><li>Entry point:     <code>sh, -c, while true; do echo $(date) &gt; /shared-data/index.html; sleep 5; done</code></li><li>Mount points: select source volume, and set the path <code>/shared-data</code> to match the shell script</li><li>Log configuration: check Auto-configure CloudWatch Logs</li></ul><p>CONTAINER 2</p><ul><li>Container name: <code>data-server</code></li><li>Image: nginx</li><li>Memory Limits (MiB): 128</li><li>Port mappings: 0 -&gt; 80</li><li>Mount points: select source volume, and set the path <code>/usr/share/nginx/html</code></li></ul><h3 id="Run-Task"><a href="#Run-Task" class="headerlink" title="Run Task"></a>Run Task</h3><p>Now manually run the above task definition from <code>Tasks</code> tab, <code>Run new Task</code>.</p><p>Once it starts up select the running task, copy its <code>Public IP</code> into a browsers and you should see the current time update every 5 seconds. Per the image above this <code>IP</code> was <code>3.104.47.134</code></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html" target="_blank" rel="noopener">https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> aws </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Elastic Container Service - Lexicon from CLI</title>
       <link href="/2019/09/aws-elastic-container-service-lexicon-from-cli/"/>
       <url>/2019/09/aws-elastic-container-service-lexicon-from-cli/</url>
@@ -2142,11 +2127,11 @@
     
     
     <entry>
-      <title>AWS Install &amp; Configure CLI</title>
-      <link href="/2019/09/aws-install-and-configure-cli/"/>
-      <url>/2019/09/aws-install-and-configure-cli/</url>
+      <title>Elastic Container Service Simple Demo</title>
+      <link href="/2019/09/aws-elastic-container-service-simple-demo/"/>
+      <url>/2019/09/aws-elastic-container-service-simple-demo/</url>
       
-        <content type="html"><![CDATA[<h3 id="IAM-Overview"><a href="#IAM-Overview" class="headerlink" title="IAM Overview"></a>IAM Overview</h3><p>It is not reccomended to use the <code>rootuser</code> for any workloads/CLI/SDK access, rather setup a <code>IAM users</code> and grant access either by policy (single rule) or role. Think of a role as a hat that the user can wear to then have access to resources.</p><blockquote><p>“An IAM role is an IAM identity that you can create in your account that has specific permissions. An IAM role is similar to an IAM user, in that it is an AWS identity with permission policies that determine what the identity can and cannot do in AWS.”</p></blockquote><blockquote><p>“A role is intended to be assumable by anyone or thing who needs it.”</p></blockquote><blockquote><p>“An IAM role is similar to a user in that it is an AWS identity with permissions policies that determine what the identity can and cannot do in AWS. A role is intended to be assumable by anyone or thing who needs it. A role does not have standard long-term credentials (password or access keys) associated with it. Instead, if a user assumes a role, temporary security credentials are created dynamically and provided to the user.”</p></blockquote><p><img src="/d/aws-install-and-configure-cli/iam-overview.jpg" alt="IAM Overview"></p><h3 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h3><p>To configure the below you will need  the required <code>access key id</code> and  <code>secret access key</code> which you can get from the <a href="https://console.aws.amazon.com/iam/home?region=ap-southeast-2#/home" target="_blank" rel="noopener">AWS AMI Console</a> (Identity and Access Management) you will need to be logged in. Any commands that point to a <code>.json</code> configuration file are <a href="https://github.com/carlpaton/AWS" target="_blank" rel="noopener">available on github</a>.</p><h3 id="AWSCLI"><a href="#AWSCLI" class="headerlink" title="AWSCLI"></a>AWSCLI</h3><ol><li>Download and install using the <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html#install-msi-on-windows" target="_blank" rel="noopener">MSI installer</a> for windows.</li></ol><p>This will live in <code>C:\Program Files\Amazon\AWSCLI</code> and should then work from any terminal.</p><ol start="2"><li>Check version</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws --version</span><br></pre></td></tr></table></figure><ol start="3"><li>Configure with the keys you got from the IAM  in the amazon console.</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt; aws configure</span><br><span class="line">AWS Access Key ID [None]: HOEHOEHOEHOHEOHEOHE</span><br><span class="line">AWS Secret Access Key [None]: HO/hehOehoHEOHEhohEOHeohEOH+EohOEe</span><br><span class="line">Default region name [None]: ap-southeast-2</span><br><span class="line">Default output format [None]:</span><br></pre></td></tr></table></figure><p>This creates these text files in the following location:</p><ul><li><code>%USERPROFILE%\.aws\credentials</code> (windows)</li><li><code>~/.aws/credentials</code> (linux)</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~ C:\Users\[USERNAME]\.aws\credentials</span><br><span class="line">[default]</span><br><span class="line">aws_access_key_id = HOEHOEHOEHOHEOHEOHE                    </span><br><span class="line">aws_secret_access_key = HO/hehOehoHEOHEhohEOHeohEOH+EohOEe</span><br></pre></td></tr></table></figure><ul><li><code>%USERPROFILE%\.aws\config</code> (windows)</li><li><code>~/.aws/config</code> (linux)</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ C:\Users\[USERNAME]\.aws\config </span><br><span class="line">[default]</span><br><span class="line">region = ap-southeast-2</span><br></pre></td></tr></table></figure><ol start="4"><li>Then you can test it works</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws iam list-roles</span><br></pre></td></tr></table></figure><ol start="5"><li>Create the task execution IAM role</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--- Create the task execution role</span><br><span class="line">C:\dev\aws\ami&gt;</span><br><span class="line">aws iam --region ap-southeast-2 create-role --role-name ecsTaskExecutionRole --assume-role-policy-document file://task-execution-assume-role.json</span><br><span class="line"></span><br><span class="line">--- Attach the task execution role policy</span><br><span class="line">aws iam --region ap-southeast-2 attach-role-policy --role-name ecsTaskExecutionRole --policy-arn arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy</span><br></pre></td></tr></table></figure><h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><ul><li><a href="https://docs.aws.amazon.com/sdk-for-net/latest/developer-guide/creds-file.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/sdk-for-net/latest/developer-guide/creds-file.html</a></li><li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#create-iam-users" target="_blank" rel="noopener">https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#create-iam-users</a></li><li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html</a></li><li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html</a></li><li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html</a></li></ul><h3 id="ECSCLI-Elastic-Container-Service"><a href="#ECSCLI-Elastic-Container-Service" class="headerlink" title="ECSCLI (Elastic Container Service)"></a>ECSCLI (Elastic Container Service)</h3><p>This will live in <code>C:\Program Files\Amazon\ECSCLI</code></p><ol><li>Run windows powersell as administrator</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--- create folder</span><br><span class="line">New-Item C:\Program Files\Amazon\ECSCLI -type directory</span><br><span class="line"></span><br><span class="line">--- install</span><br><span class="line">Invoke-WebRequest -OutFile ‘C:\Program Files\Amazon\ECSCLI\ecs-cli.exe’ https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-windows-amd64-latest.exe</span><br></pre></td></tr></table></figure><ol start="2"><li><p>Edit the environment variables and add <code>C:\Program Files\Amazon\ECSCLI</code> to the <code>PATH</code> variable field</p></li><li><p>Restart powersell  and check version</p></li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ecs-cli --version</span><br></pre></td></tr></table></figure><ol start="4"><li>Configure with the same keys used above</li></ol><p>I used the profile names <code>carl_ecs_cli_profile</code> and <code>carl_configuration_name</code> below when setting up <a href="/2019/09/aws-elastic-container-service-lexicon-from-cli/">ECS for the Lexicon via the AWS CLI</a>.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ecs-cli configure profile --profile-name carl_ecs_cli_profile --access-key HOEHOEHOEHOHEOHEOHE --secret-key HO/hehOehoHEOHEhohEOHeohEOH+EohOEe</span><br><span class="line"></span><br><span class="line">ecs-cli configure --cluster ClusterName1 --default-launch-type FARGATE --region ap-southeast-2 --config-name carl_configuration_name</span><br></pre></td></tr></table></figure><p>Note that <code>--cluster</code> needs to satisfy regular expression pattern: <code>[a-zA-Z][-a-zA-Z0-9]*</code></p><p>This creates these files which you can edit with any text editor.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">~ C:\Users\[USERNAME]\AppData\Local\ecs\config</span><br><span class="line">: carl_configuration_name</span><br><span class="line"></span><br><span class="line">~ C:\Users\[USERNAME]\AppData\Local\ecs\credentials </span><br><span class="line">: carl_ecs_cli_profile</span><br></pre></td></tr></table></figure><h3 id="References-1"><a href="#References-1" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html#install-msi-on-windows" target="_blank" rel="noopener">https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html#install-msi-on-windows</a></li><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html</a></li><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_Configuration.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_Configuration.html</a></li><li><a href="https://console.aws.amazon.com/iam/" target="_blank" rel="noopener">https://console.aws.amazon.com/iam/</a></li><li><a href="https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/tkv-create-ami-from-instance.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/tkv-create-ami-from-instance.html</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p>This runs on top of Amazon Elastic Compute Cloud (Amazon EC2) and the steps below follow the AWS GUI (graphical user interface). I learnt most of the content below by following <a href="https://www.linkedin.com/in/arthur-ulfeldt-5150aa5/" target="_blank" rel="noopener">Arthur Ulfeldt</a>‘s tutorial <a href="https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html" target="_blank" rel="noopener">Deploying Docker to AWS</a>.</p><p>This demo will simply write the current datetime to a volume using the busybox image, the container is called <code>data-source</code>. Another container running nginx will then display this data, this container is called <code>data-server</code>.</p><p><img src="/d/aws-elastic-container-service-simple-demo/overview.jpg" alt="Simple Demo Infrastructure Overview"></p><p>Calling <code>data-server</code> on its public IP will then display as follows:</p><p><img src="/d/aws-elastic-container-service-simple-demo/simple-demo.jpg" alt="nginx data-server"></p><h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>Create your account at <a href="https://aws.amazon.com/" target="_blank" rel="noopener">https://aws.amazon.com/</a> login and under <code>AWS Management Console</code> type or look for <code>ECS</code>, this will take you to the <code>ECS Dashboard</code> </p><h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><p>Create cluster type of launch type <code>FARGATE</code>, it may be called something like <code>Networking only</code> and mention <code>Powered by AWS Fagate</code> - things in IT change daily :)</p><ul><li>Cluster name: <code>simple-demo2</code></li><li>Check <code>Create VPC</code></li><li>Tag: Description|simple-demo2 (this is the key|value)</li><li>Check <code>Enable container insights</code> for CloudWatch</li><li>From the <a href="/2019/09/aws-command-line-interface/">CLI</a> you can view all clusters:</li></ul><h3 id="Task-Definition"><a href="#Task-Definition" class="headerlink" title="Task Definition"></a>Task Definition</h3><p>Select <code>Task Definitions</code> -&gt; <code>Create new Task Definition</code></p><ul><li>Select the <code>FARGATE</code> template</li><li>Task Definition Name: task-definition-data-server</li><li>Requires Compatibilities: FARGATE</li><li>Task Role: escTaskExecutionRole</li><li>Network Mode: awsvpc</li><li>Task execution role: ecsTaskExecutionRole</li><li>Task memory (GB): 0.5GB</li><li>Task CPU (vCPU): 0.25 vCPU</li></ul><p>Volumes:</p><ul><li>create one called <code>shared-data</code></li></ul><p>CONTAINER 1</p><ul><li>Container name: <code>data-source</code></li><li>Image: busybox</li><li>Memory Limits (MiB): 128</li><li>Entry point:     <code>sh, -c, while true; do echo $(date) &gt; /shared-data/index.html; sleep 5; done</code></li><li>Mount points: select source volume, and set the path <code>/shared-data</code> to match the shell script</li><li>Log configuration: check Auto-configure CloudWatch Logs</li></ul><p>CONTAINER 2</p><ul><li>Container name: <code>data-server</code></li><li>Image: nginx</li><li>Memory Limits (MiB): 128</li><li>Port mappings: 0 -&gt; 80</li><li>Mount points: select source volume, and set the path <code>/usr/share/nginx/html</code></li></ul><h3 id="Run-Task"><a href="#Run-Task" class="headerlink" title="Run Task"></a>Run Task</h3><p>Now manually run the above task definition from <code>Tasks</code> tab, <code>Run new Task</code>.</p><p>Once it starts up select the running task, copy its <code>Public IP</code> into a browsers and you should see the current time update every 5 seconds. Per the image above this <code>IP</code> was <code>3.104.47.134</code></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html" target="_blank" rel="noopener">https://www.lynda.com/Docker-tutorials/Welcome/606069/643348-4.html</a></li></ul>]]></content>
       
       
       
@@ -2180,6 +2165,25 @@
     
     
     <entry>
+      <title>AWS Install &amp; Configure CLI</title>
+      <link href="/2019/09/aws-install-and-configure-cli/"/>
+      <url>/2019/09/aws-install-and-configure-cli/</url>
+      
+        <content type="html"><![CDATA[<h3 id="IAM-Overview"><a href="#IAM-Overview" class="headerlink" title="IAM Overview"></a>IAM Overview</h3><p>It is not reccomended to use the <code>rootuser</code> for any workloads/CLI/SDK access, rather setup a <code>IAM users</code> and grant access either by policy (single rule) or role. Think of a role as a hat that the user can wear to then have access to resources.</p><blockquote><p>“An IAM role is an IAM identity that you can create in your account that has specific permissions. An IAM role is similar to an IAM user, in that it is an AWS identity with permission policies that determine what the identity can and cannot do in AWS.”</p></blockquote><blockquote><p>“A role is intended to be assumable by anyone or thing who needs it.”</p></blockquote><blockquote><p>“An IAM role is similar to a user in that it is an AWS identity with permissions policies that determine what the identity can and cannot do in AWS. A role is intended to be assumable by anyone or thing who needs it. A role does not have standard long-term credentials (password or access keys) associated with it. Instead, if a user assumes a role, temporary security credentials are created dynamically and provided to the user.”</p></blockquote><p><img src="/d/aws-install-and-configure-cli/iam-overview.jpg" alt="IAM Overview"></p><h3 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h3><p>To configure the below you will need  the required <code>access key id</code> and  <code>secret access key</code> which you can get from the <a href="https://console.aws.amazon.com/iam/home?region=ap-southeast-2#/home" target="_blank" rel="noopener">AWS AMI Console</a> (Identity and Access Management) you will need to be logged in. Any commands that point to a <code>.json</code> configuration file are <a href="https://github.com/carlpaton/AWS" target="_blank" rel="noopener">available on github</a>.</p><h3 id="AWSCLI"><a href="#AWSCLI" class="headerlink" title="AWSCLI"></a>AWSCLI</h3><ol><li>Download and install using the <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html#install-msi-on-windows" target="_blank" rel="noopener">MSI installer</a> for windows.</li></ol><p>This will live in <code>C:\Program Files\Amazon\AWSCLI</code> and should then work from any terminal.</p><ol start="2"><li>Check version</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws --version</span><br></pre></td></tr></table></figure><ol start="3"><li>Configure with the keys you got from the IAM  in the amazon console.</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt; aws configure</span><br><span class="line">AWS Access Key ID [None]: HOEHOEHOEHOHEOHEOHE</span><br><span class="line">AWS Secret Access Key [None]: HO/hehOehoHEOHEhohEOHeohEOH+EohOEe</span><br><span class="line">Default region name [None]: ap-southeast-2</span><br><span class="line">Default output format [None]:</span><br></pre></td></tr></table></figure><p>This creates these text files in the following location:</p><ul><li><code>%USERPROFILE%\.aws\credentials</code> (windows)</li><li><code>~/.aws/credentials</code> (linux)</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~ C:\Users\[USERNAME]\.aws\credentials</span><br><span class="line">[default]</span><br><span class="line">aws_access_key_id = HOEHOEHOEHOHEOHEOHE                    </span><br><span class="line">aws_secret_access_key = HO/hehOehoHEOHEhohEOHeohEOH+EohOEe</span><br></pre></td></tr></table></figure><ul><li><code>%USERPROFILE%\.aws\config</code> (windows)</li><li><code>~/.aws/config</code> (linux)</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ C:\Users\[USERNAME]\.aws\config </span><br><span class="line">[default]</span><br><span class="line">region = ap-southeast-2</span><br></pre></td></tr></table></figure><ol start="4"><li>Then you can test it works</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws iam list-roles</span><br></pre></td></tr></table></figure><ol start="5"><li>Create the task execution IAM role</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--- Create the task execution role</span><br><span class="line">C:\dev\aws\ami&gt;</span><br><span class="line">aws iam --region ap-southeast-2 create-role --role-name ecsTaskExecutionRole --assume-role-policy-document file://task-execution-assume-role.json</span><br><span class="line"></span><br><span class="line">--- Attach the task execution role policy</span><br><span class="line">aws iam --region ap-southeast-2 attach-role-policy --role-name ecsTaskExecutionRole --policy-arn arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy</span><br></pre></td></tr></table></figure><h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><ul><li><a href="https://docs.aws.amazon.com/sdk-for-net/latest/developer-guide/creds-file.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/sdk-for-net/latest/developer-guide/creds-file.html</a></li><li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#create-iam-users" target="_blank" rel="noopener">https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#create-iam-users</a></li><li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html</a></li><li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html</a></li><li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html</a></li></ul><h3 id="ECSCLI-Elastic-Container-Service"><a href="#ECSCLI-Elastic-Container-Service" class="headerlink" title="ECSCLI (Elastic Container Service)"></a>ECSCLI (Elastic Container Service)</h3><p>This will live in <code>C:\Program Files\Amazon\ECSCLI</code></p><ol><li>Run windows powersell as administrator</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--- create folder</span><br><span class="line">New-Item C:\Program Files\Amazon\ECSCLI -type directory</span><br><span class="line"></span><br><span class="line">--- install</span><br><span class="line">Invoke-WebRequest -OutFile ‘C:\Program Files\Amazon\ECSCLI\ecs-cli.exe’ https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-windows-amd64-latest.exe</span><br></pre></td></tr></table></figure><ol start="2"><li><p>Edit the environment variables and add <code>C:\Program Files\Amazon\ECSCLI</code> to the <code>PATH</code> variable field</p></li><li><p>Restart powersell  and check version</p></li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ecs-cli --version</span><br></pre></td></tr></table></figure><ol start="4"><li>Configure with the same keys used above</li></ol><p>I used the profile names <code>carl_ecs_cli_profile</code> and <code>carl_configuration_name</code> below when setting up <a href="/2019/09/aws-elastic-container-service-lexicon-from-cli/">ECS for the Lexicon via the AWS CLI</a>.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ecs-cli configure profile --profile-name carl_ecs_cli_profile --access-key HOEHOEHOEHOHEOHEOHE --secret-key HO/hehOehoHEOHEhohEOHeohEOH+EohOEe</span><br><span class="line"></span><br><span class="line">ecs-cli configure --cluster ClusterName1 --default-launch-type FARGATE --region ap-southeast-2 --config-name carl_configuration_name</span><br></pre></td></tr></table></figure><p>Note that <code>--cluster</code> needs to satisfy regular expression pattern: <code>[a-zA-Z][-a-zA-Z0-9]*</code></p><p>This creates these files which you can edit with any text editor.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">~ C:\Users\[USERNAME]\AppData\Local\ecs\config</span><br><span class="line">: carl_configuration_name</span><br><span class="line"></span><br><span class="line">~ C:\Users\[USERNAME]\AppData\Local\ecs\credentials </span><br><span class="line">: carl_ecs_cli_profile</span><br></pre></td></tr></table></figure><h3 id="References-1"><a href="#References-1" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html#install-msi-on-windows" target="_blank" rel="noopener">https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html#install-msi-on-windows</a></li><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html</a></li><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_Configuration.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_Configuration.html</a></li><li><a href="https://console.aws.amazon.com/iam/" target="_blank" rel="noopener">https://console.aws.amazon.com/iam/</a></li><li><a href="https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/tkv-create-ami-from-instance.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/tkv-create-ami-from-instance.html</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> aws </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>XML comments</title>
       <link href="/2019/09/c-sharp-xml-comments/"/>
       <url>/2019/09/c-sharp-xml-comments/</url>
@@ -2191,44 +2195,6 @@
         <tags>
             
             <tag> c# </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>IDE Visual Studio Code</title>
-      <link href="/2019/09/ide-visual-studio-code/"/>
-      <url>/2019/09/ide-visual-studio-code/</url>
-      
-        <content type="html"><![CDATA[<p><a href="/2018/05/ide-editor-and-database-tools/">Also see IDE, Editor and Database Tools</a></p><h3 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+P                                              Quick Open, Go to File…</span><br></pre></td></tr></table></figure><ul><li><a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf" target="_blank" rel="noopener">https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf</a></li></ul><h3 id="Settings"><a href="#Settings" class="headerlink" title="Settings"></a>Settings</h3><p>File -&gt; Preferences -&gt; Settings -&gt; Under user settings click the ellipses … in the top right -&gt; Select ‘Open settings.json’</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Show white space                    “editor.renderWhitespace”: “all”</span><br><span class="line">Auto save                           “files.autoSave”: “afterDelay”</span><br><span class="line">Explorer                            “explorer.autoReveal”: true</span><br></pre></td></tr></table></figure><h3 id="Extensions"><a href="#Extensions" class="headerlink" title="Extensions"></a>Extensions</h3><ul><li><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin" target="_blank" rel="noopener">TSLint</a> ~ Adds tslint to VS Code using the TypeScript TSLint language service plugin.</li><li><a href="https://marketplace.visualstudio.com/items?itemName=Orta.vscode-jest" target="_blank" rel="noopener">Jest</a> ~ Test player &amp; debugger </li><li><a href="https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare" target="_blank" rel="noopener">VS Live Share</a></li><li><a href="https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare-audio" target="_blank" rel="noopener">VS Live Share Audio</a></li><li><a href="https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2" target="_blank" rel="noopener">Bracket Pair Colorizer 2</a></li></ul><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://code.visualstudio.com/download" target="_blank" rel="noopener">https://code.visualstudio.com/download</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> ide </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>IDE WebStorm</title>
-      <link href="/2019/09/ide-webstorm/"/>
-      <url>/2019/09/ide-webstorm/</url>
-      
-        <content type="html"><![CDATA[<p><a href="/2018/05/ide-editor-and-database-tools/">Also see IDE, Editor and Database Tools</a></p><h3 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+/                                     Add/remove line or block comment</span><br><span class="line">Ctrl+Shift+f                               Find in Path</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.jetbrains.com/help/webstorm/mastering-keyboard-shortcuts.html" target="_blank" rel="noopener">https://www.jetbrains.com/help/webstorm/mastering-keyboard-shortcuts.html</a></li><li><a href="https://www.jetbrains.com/webstorm/download/#section=windows" target="_blank" rel="noopener">Webstorm</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> ide </tag>
             
         </tags>
       
@@ -2256,11 +2222,49 @@
     
     
     <entry>
+      <title>IDE Visual Studio Code</title>
+      <link href="/2019/09/ide-visual-studio-code/"/>
+      <url>/2019/09/ide-visual-studio-code/</url>
+      
+        <content type="html"><![CDATA[<p><a href="/2018/05/ide-editor-and-database-tools/">Also see IDE, Editor and Database Tools</a></p><h3 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+P                                              Quick Open, Go to File…</span><br></pre></td></tr></table></figure><ul><li><a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf" target="_blank" rel="noopener">https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf</a></li></ul><h3 id="Settings"><a href="#Settings" class="headerlink" title="Settings"></a>Settings</h3><p>File -&gt; Preferences -&gt; Settings -&gt; Under user settings click the ellipses … in the top right -&gt; Select ‘Open settings.json’</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Show white space                    “editor.renderWhitespace”: “all”</span><br><span class="line">Auto save                           “files.autoSave”: “afterDelay”</span><br><span class="line">Explorer                            “explorer.autoReveal”: true</span><br></pre></td></tr></table></figure><h3 id="Extensions"><a href="#Extensions" class="headerlink" title="Extensions"></a>Extensions</h3><ul><li><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin" target="_blank" rel="noopener">TSLint</a> ~ Adds tslint to VS Code using the TypeScript TSLint language service plugin.</li><li><a href="https://marketplace.visualstudio.com/items?itemName=Orta.vscode-jest" target="_blank" rel="noopener">Jest</a> ~ Test player &amp; debugger </li><li><a href="https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare" target="_blank" rel="noopener">VS Live Share</a></li><li><a href="https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare-audio" target="_blank" rel="noopener">VS Live Share Audio</a></li><li><a href="https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2" target="_blank" rel="noopener">Bracket Pair Colorizer 2</a></li></ul><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://code.visualstudio.com/download" target="_blank" rel="noopener">https://code.visualstudio.com/download</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> ide </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>IDE Visual Studio</title>
       <link href="/2019/09/ide-visual-studio/"/>
       <url>/2019/09/ide-visual-studio/</url>
       
         <content type="html"><![CDATA[<p><a href="/2018/05/ide-editor-and-database-tools/">Also see IDE, Editor and Database Tools</a></p><h3 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CRTL+T                                           Got to all</span><br></pre></td></tr></table></figure><ul><li><a href="https://devblogs.microsoft.com/wp-content/uploads/sites/4/2019/03/vskeyboard.pdf" target="_blank" rel="noopener">https://devblogs.microsoft.com/wp-content/uploads/sites/4/2019/03/vskeyboard.pdf</a></li></ul><h3 id="Built-in-tools"><a href="#Built-in-tools" class="headerlink" title="Built in tools"></a>Built in tools</h3><ul><li><a href="https://blogs.msdn.microsoft.com/devops/2016/07/15/7-ways-to-look-at-the-values-of-variables-while-debugging-in-visual-studio/" target="_blank" rel="noopener">Autos, Locals</a></li><li><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/viewing-the-call-stack-in-visual-studio" target="_blank" rel="noopener">Call Stack</a></li></ul><h3 id="Extensions"><a href="#Extensions" class="headerlink" title="Extensions"></a>Extensions</h3><ul><li><a href="https://marketplace.visualstudio.com/items?itemName=TomasRestrepo.Viasfora" target="_blank" rel="noopener">Viasfora</a></li><li><a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.AddNewFile" target="_blank" rel="noopener">Add New File</a></li><li><a href="https://www.jetbrains.com/resharper/" target="_blank" rel="noopener">resharper</a>, <a href="https://www.jetbrains.com/dotcover/" target="_blank" rel="noopener">dotcover</a>, <a href="https://www.jetbrains.com/decompiler/" target="_blank" rel="noopener">dotpeek</a></li></ul><h3 id="Code-Snippets"><a href="#Code-Snippets" class="headerlink" title="Code Snippets"></a>Code Snippets</h3><ul><li><a href="https://gist.github.com/charleyza/77ae278b904cab2a19423809a69c2c67" target="_blank" rel="noopener">unittest.snippet</a></li></ul><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.visualstudio.com/downloads/" target="_blank" rel="noopener">https://www.visualstudio.com/downloads/</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> ide </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>IDE WebStorm</title>
+      <link href="/2019/09/ide-webstorm/"/>
+      <url>/2019/09/ide-webstorm/</url>
+      
+        <content type="html"><![CDATA[<p><a href="/2018/05/ide-editor-and-database-tools/">Also see IDE, Editor and Database Tools</a></p><h3 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+/                                     Add/remove line or block comment</span><br><span class="line">Ctrl+Shift+f                               Find in Path</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://www.jetbrains.com/help/webstorm/mastering-keyboard-shortcuts.html" target="_blank" rel="noopener">https://www.jetbrains.com/help/webstorm/mastering-keyboard-shortcuts.html</a></li><li><a href="https://www.jetbrains.com/webstorm/download/#section=windows" target="_blank" rel="noopener">Webstorm</a></li></ul>]]></content>
       
       
       
@@ -4328,11 +4332,11 @@
     
     
     <entry>
-      <title>Stick 160 Size</title>
-      <link href="/2018/04/stick-160/"/>
-      <url>/2018/04/stick-160/</url>
+      <title>Stick 25 Size</title>
+      <link href="/2018/04/stick-25/"/>
+      <url>/2018/04/stick-25/</url>
       
-        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><h3 id="Plans"><a href="#Plans" class="headerlink" title="Plans"></a>Plans</h3><ul><li><a href="http://www.hangarone.co.nz/big-stik-plan-100-span-30cc-size-by-don-anderson-p-6100.html" target="_blank" rel="noopener">Big Stik Plan 100″ Span 30cc Size by Don Anderson</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><p>The HK link says its 1060mm but the wing I got is 1200 without the tips so I’ll go with the slightly longer size. These are some guestimates on wood to be used.</p><p><em>Fuselage</em></p><ul><li>Ply re-enforcement where the landing gear attaches. </li><li>F1 -&gt; 5 or 6mm ply</li><li>F2,3 -&gt; 3mm ply</li><li>F4,5,6 -&gt; 5mm balsa</li><li>Triangle stock -&gt; Probably cut from 3mm balsa scraps</li><li>Gussets -&gt; 2 or 3mm square</li><li>Sides -&gt; 2mm balsa forward grain</li><li>Top/Bottom -&gt; 2mm balsa sideways grain</li><li>Wing seats 2mm balsa vertical grain (Thanks for the tip bro Clive!)</li></ul><p><em>Wing</em></p><ul><li>Main spar &amp; LE -&gt; 8mm square hard balsa</li><li>Forward spar/stringers -&gt; 4mm balsa</li><li>Sheer web -&gt; 2mm balsa</li><li>Ribs &amp; caps, 2mm balsa</li><li>Wing tips, 5 or 6mm balsa</li><li>Sheeting -&gt; 2mm balsa</li><li>TE -&gt; 6mm square (I think)</li><li>Triangle stock -&gt; Probably cut from 3mm balsa scraps</li></ul><p><em>Tail</em></p><ul><li>4mm balsa, I’ll build it up with 2mm to try save weight.</li></ul><p><img src="/d/stick-25/formers.jpg" alt="Formers"></p><p><img src="/d/stick-25/rib template.jpg" alt="Rib Template"></p><p><img src="/d/stick-25/stick 25 fuse.jpg" alt="Fuselage"></p><p><img src="/d/stick-25/wing tips.jpg" alt="Wing Tips"></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://hobbyking.com/en_us/big-stick-laser-cut-balsa-kit-1060mm-kit.html?___store=en_us" target="_blank" rel="noopener">https://hobbyking.com/en_us/big-stick-l … tore=en_us</a></li></ul>]]></content>
       
       
       
@@ -4366,30 +4370,11 @@
     
     
     <entry>
-      <title>Stick 25 Size</title>
-      <link href="/2018/04/stick-25/"/>
-      <url>/2018/04/stick-25/</url>
+      <title>Mini Ultra Stick</title>
+      <link href="/2018/04/stick-mini/"/>
+      <url>/2018/04/stick-mini/</url>
       
-        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><p>The HK link says its 1060mm but the wing I got is 1200 without the tips so I’ll go with the slightly longer size. These are some guestimates on wood to be used.</p><p><em>Fuselage</em></p><ul><li>Ply re-enforcement where the landing gear attaches. </li><li>F1 -&gt; 5 or 6mm ply</li><li>F2,3 -&gt; 3mm ply</li><li>F4,5,6 -&gt; 5mm balsa</li><li>Triangle stock -&gt; Probably cut from 3mm balsa scraps</li><li>Gussets -&gt; 2 or 3mm square</li><li>Sides -&gt; 2mm balsa forward grain</li><li>Top/Bottom -&gt; 2mm balsa sideways grain</li><li>Wing seats 2mm balsa vertical grain (Thanks for the tip bro Clive!)</li></ul><p><em>Wing</em></p><ul><li>Main spar &amp; LE -&gt; 8mm square hard balsa</li><li>Forward spar/stringers -&gt; 4mm balsa</li><li>Sheer web -&gt; 2mm balsa</li><li>Ribs &amp; caps, 2mm balsa</li><li>Wing tips, 5 or 6mm balsa</li><li>Sheeting -&gt; 2mm balsa</li><li>TE -&gt; 6mm square (I think)</li><li>Triangle stock -&gt; Probably cut from 3mm balsa scraps</li></ul><p><em>Tail</em></p><ul><li>4mm balsa, I’ll build it up with 2mm to try save weight.</li></ul><p><img src="/d/stick-25/formers.jpg" alt="Formers"></p><p><img src="/d/stick-25/rib template.jpg" alt="Rib Template"></p><p><img src="/d/stick-25/stick 25 fuse.jpg" alt="Fuselage"></p><p><img src="/d/stick-25/wing tips.jpg" alt="Wing Tips"></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://hobbyking.com/en_us/big-stick-laser-cut-balsa-kit-1060mm-kit.html?___store=en_us" target="_blank" rel="noopener">https://hobbyking.com/en_us/big-stick-l … tore=en_us</a></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> model airplanes </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Micro Ultra Stick</title>
-      <link href="/2018/04/stick-micro/"/>
-      <url>/2018/04/stick-micro/</url>
-      
-        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><h3 id="15in-400mm-Span"><a href="#15in-400mm-Span" class="headerlink" title="15in / 400mm Span"></a>15in / 400mm Span</h3><p>Same plan but printed at 50%</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3, F4 and F5 all 1.5mm balsa</li><li>1mm x 3mm for bracing</li></ul><p><em>Wing</em></p><ul><li>Ribs 1.5mm balsa</li><li>1mm balsa for skinning and cap strips</li></ul><p><em>Tail</em></p><ul><li>3mm x 3mm for control surfaces</li></ul><p><img src="/d/stick-micro/400mm a.jpg" alt="400mm Micro Ultra"></p><p><img src="/d/stick-micro/400mm b.jpg" alt="400mm Micro Ultra"></p><h3 id="31in-800mm-Span"><a href="#31in-800mm-Span" class="headerlink" title="31in / 800mm Span"></a>31in / 800mm Span</h3><p>335 grams including 1000 Mah 3 Cell Lipo</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3 - 3mm balsa</li><li>F4, F5 - 2mm balsa</li><li>Sheeting (top, bottom, sides) - 2mm balsa</li><li>Wing seat, 3mm balsa vertical grain</li><li>Bracing inside the fuse 3x3mm balsa</li></ul><p><em>Wing</em></p><p>The Airfoil is <a href="/2018/04/airfoils/">Eppler 168 15% width</a></p><ul><li>2mm balsa for skinning and cap strips</li><li>Ribs &amp; sheer webbing 3mm balsa</li><li>5mm trailing edge</li><li>5mm balsa spars</li><li>9.5mm balsa leading edge</li><li>Wing tips 5mm balsa</li></ul><p><em>Tail</em></p><ul><li>5x5mm balsa control surfaces, gussets and triangle bracing (hard would be better)</li></ul><p><strong>Wood Shopping List</strong></p><ul><li>2mm balsa (x4) - <a href="http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html</a></li><li>3mm balsa (x5) - <a href="http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html</a></li><li>5mm balsa (x2) - <a href="http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html</a></li><li>9.5mm balsa (x1) - <a href="http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html</a></li><li>3mm ply (x1) - <a href="http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html</a></li></ul><p><img src="/d/stick-micro/800mm-rib.jpg" alt="800mm Micro Ultra Rib"></p><p><img src="/d/stick-micro/800mm.jpg" alt="800mm Micro Ultra"></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://aerofred.com/details.php?image_id=99469" target="_blank" rel="noopener">https://aerofred.com/details.php?image_id=99469</a></li><li><a href="https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC" target="_blank" rel="noopener">https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><h3 id="36in-914mm-Span"><a href="#36in-914mm-Span" class="headerlink" title="36in / 914mm Span"></a>36in / 914mm Span</h3><p><em>Engine</em></p><ul><li>.19</li></ul><p><img src="/d/stick-mini/36in-914mm-span.jpg" alt="36in / 914mm Span - outerzone.co.uk"></p><ul><li><a href="https://outerzone.co.uk/plan_details.asp?ID=6144" target="_blank" rel="noopener">https://outerzone.co.uk/plan_details.asp?ID=6144</a></li><li><a href="https://drive.google.com/drive/folders/1eHOD-LG8OXDfRZlQf0kE_bLQRbAcrLLj?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/drive/folders/1eHOD-LG8OXDfRZlQf0kE_bLQRbAcrLLj?usp=sharing</a></li></ul><h3 id="38in-980mm-Span"><a href="#38in-980mm-Span" class="headerlink" title="38in / 980mm Span"></a>38in / 980mm Span</h3><p>E-Flight used to make these, I rebuilt one and over powered it with a park 480 and a 40 amp esc.</p><p><em>Fuselage</em></p><ul><li>Park 450, 2200 3S, 10x7e prop</li><li>Overall Length: 34 in (865mm)</li><li>Flying Weight: 710g</li></ul><p><em>Wing</em></p><ul><li>Span: 38.75 in (985mm)</li><li>Area: 325 sq in (21 sq dm)</li><li>Estimated height TE to LE: (325 / 38.17 = 8.38 in) =&gt; 212mm (includes ailerons)</li><li>Ailerons throw 15mm Up/Down Low Rate, 19mm High Rate</li></ul><p><em>Tail</em></p><ul><li>Elevator throw 18mm Up/Down Low Rate, 23mm High Rate</li><li>Rudder throw 23mm Right/Left Low Rate, 32mm High Rate</li></ul><p><img src="/d/stick-mini/1.jpg" alt="Mini Ultra"><br><img src="/d/stick-mini/2.jpg" alt="Mini Ultra"><br><img src="/d/stick-mini/3.jpg" alt="Mini Ultra"></p><ul><li><a href="https://www.horizonhobby.com/mini-ultra-stick-arf-efl2250" target="_blank" rel="noopener">https://www.horizonhobby.com/mini-ultra-stick-arf-efl2250</a></li><li><a href="https://www.spektrumrc.com/Products/Default.aspx?ProdID=EFL2250" target="_blank" rel="noopener">https://www.spektrumrc.com/Products/Default.aspx?ProdID=EFL2250</a></li></ul>]]></content>
       
       
       
@@ -4423,11 +4408,30 @@
     
     
     <entry>
-      <title>Mini Ultra Stick</title>
-      <link href="/2018/04/stick-mini/"/>
-      <url>/2018/04/stick-mini/</url>
+      <title>Stick 160 Size</title>
+      <link href="/2018/04/stick-160/"/>
+      <url>/2018/04/stick-160/</url>
       
-        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><h3 id="36in-914mm-Span"><a href="#36in-914mm-Span" class="headerlink" title="36in / 914mm Span"></a>36in / 914mm Span</h3><p><em>Engine</em></p><ul><li>.19</li></ul><p><img src="/d/stick-mini/36in-914mm-span.jpg" alt="36in / 914mm Span - outerzone.co.uk"></p><ul><li><a href="https://outerzone.co.uk/plan_details.asp?ID=6144" target="_blank" rel="noopener">https://outerzone.co.uk/plan_details.asp?ID=6144</a></li><li><a href="https://drive.google.com/drive/folders/1eHOD-LG8OXDfRZlQf0kE_bLQRbAcrLLj?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/drive/folders/1eHOD-LG8OXDfRZlQf0kE_bLQRbAcrLLj?usp=sharing</a></li></ul><h3 id="38in-980mm-Span"><a href="#38in-980mm-Span" class="headerlink" title="38in / 980mm Span"></a>38in / 980mm Span</h3><p>E-Flight used to make these, I rebuilt one and over powered it with a park 480 and a 40 amp esc.</p><p><em>Fuselage</em></p><ul><li>Park 450, 2200 3S, 10x7e prop</li><li>Overall Length: 34 in (865mm)</li><li>Flying Weight: 710g</li></ul><p><em>Wing</em></p><ul><li>Span: 38.75 in (985mm)</li><li>Area: 325 sq in (21 sq dm)</li><li>Estimated height TE to LE: (325 / 38.17 = 8.38 in) =&gt; 212mm (includes ailerons)</li><li>Ailerons throw 15mm Up/Down Low Rate, 19mm High Rate</li></ul><p><em>Tail</em></p><ul><li>Elevator throw 18mm Up/Down Low Rate, 23mm High Rate</li><li>Rudder throw 23mm Right/Left Low Rate, 32mm High Rate</li></ul><p><img src="/d/stick-mini/1.jpg" alt="Mini Ultra"><br><img src="/d/stick-mini/2.jpg" alt="Mini Ultra"><br><img src="/d/stick-mini/3.jpg" alt="Mini Ultra"></p><ul><li><a href="https://www.horizonhobby.com/mini-ultra-stick-arf-efl2250" target="_blank" rel="noopener">https://www.horizonhobby.com/mini-ultra-stick-arf-efl2250</a></li><li><a href="https://www.spektrumrc.com/Products/Default.aspx?ProdID=EFL2250" target="_blank" rel="noopener">https://www.spektrumrc.com/Products/Default.aspx?ProdID=EFL2250</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><h3 id="Plans"><a href="#Plans" class="headerlink" title="Plans"></a>Plans</h3><ul><li><a href="http://www.hangarone.co.nz/big-stik-plan-100-span-30cc-size-by-don-anderson-p-6100.html" target="_blank" rel="noopener">Big Stik Plan 100″ Span 30cc Size by Don Anderson</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> model airplanes </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Micro Ultra Stick</title>
+      <link href="/2018/04/stick-micro/"/>
+      <url>/2018/04/stick-micro/</url>
+      
+        <content type="html"><![CDATA[<p><a href="/2018/04/stick-sizes/">All stick sizes</a></p><h3 id="15in-400mm-Span"><a href="#15in-400mm-Span" class="headerlink" title="15in / 400mm Span"></a>15in / 400mm Span</h3><p>Same plan but printed at 50%</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3, F4 and F5 all 1.5mm balsa</li><li>1mm x 3mm for bracing</li></ul><p><em>Wing</em></p><ul><li>Ribs 1.5mm balsa</li><li>1mm balsa for skinning and cap strips</li></ul><p><em>Tail</em></p><ul><li>3mm x 3mm for control surfaces</li></ul><p><img src="/d/stick-micro/400mm a.jpg" alt="400mm Micro Ultra"></p><p><img src="/d/stick-micro/400mm b.jpg" alt="400mm Micro Ultra"></p><h3 id="31in-800mm-Span"><a href="#31in-800mm-Span" class="headerlink" title="31in / 800mm Span"></a>31in / 800mm Span</h3><p>335 grams including 1000 Mah 3 Cell Lipo</p><p><em>Fuselage</em></p><ul><li>F1 - 3mm ply</li><li>F2, F3 - 3mm balsa</li><li>F4, F5 - 2mm balsa</li><li>Sheeting (top, bottom, sides) - 2mm balsa</li><li>Wing seat, 3mm balsa vertical grain</li><li>Bracing inside the fuse 3x3mm balsa</li></ul><p><em>Wing</em></p><p>The Airfoil is <a href="/2018/04/airfoils/">Eppler 168 15% width</a></p><ul><li>2mm balsa for skinning and cap strips</li><li>Ribs &amp; sheer webbing 3mm balsa</li><li>5mm trailing edge</li><li>5mm balsa spars</li><li>9.5mm balsa leading edge</li><li>Wing tips 5mm balsa</li></ul><p><em>Tail</em></p><ul><li>5x5mm balsa control surfaces, gussets and triangle bracing (hard would be better)</li></ul><p><strong>Wood Shopping List</strong></p><ul><li>2mm balsa (x4) - <a href="http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-20mm-100mm-915mm-p-1742.html</a></li><li>3mm balsa (x5) - <a href="http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-30mm-100mm-915mm-18-p-1746.html</a></li><li>5mm balsa (x2) - <a href="http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-50mm-100mm-915mm-316-p-1750.html</a></li><li>9.5mm balsa (x1) - <a href="http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/balsa-sheet-95mm-100mm-915mm-38-p-1755.html</a></li><li>3mm ply (x1) - <a href="http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html" target="_blank" rel="noopener">http://www.hangarone.co.nz/birch-plywood-30mm-300mm-300mm-18-p-4309.html</a></li></ul><p><img src="/d/stick-micro/800mm-rib.jpg" alt="800mm Micro Ultra Rib"></p><p><img src="/d/stick-micro/800mm.jpg" alt="800mm Micro Ultra"></p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://aerofred.com/details.php?image_id=99469" target="_blank" rel="noopener">https://aerofred.com/details.php?image_id=99469</a></li><li><a href="https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC" target="_blank" rel="noopener">https://drive.google.com/open?id=1UbFKG9-SI9BApiWPF_RSDiL536Q5YlRC</a></li></ul>]]></content>
       
       
       
