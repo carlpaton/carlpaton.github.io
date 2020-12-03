@@ -20,20 +20,18 @@ ga('send', 'pageview');
   
   <title>OAuth2 | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Workflow/Grant Type - Authorization Code  The flows below assume you have registered the client (your application) and created a user. Typically registration involves a developer account at the servic">
+  <meta name="description" content="Grant Types Authorization Code Authorization Code with Proof Key for Code Exchange (PKCE) - “pixy”  Implicit  Password Credentials Client Credentials  References https://www.oauth.com/oauth2-servers/b">
 <meta name="keywords" content="c#,wip,authentication">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OAuth2">
 <meta property="og:url" content="https://carlpaton.github.io/2020/12/oauth2/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Workflow/Grant Type - Authorization Code  The flows below assume you have registered the client (your application) and created a user. Typically registration involves a developer account at the servic">
+<meta property="og:description" content="Grant Types Authorization Code Authorization Code with Proof Key for Code Exchange (PKCE) - “pixy”  Implicit  Password Credentials Client Credentials  References https://www.oauth.com/oauth2-servers/b">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://carlpaton.github.io/d/oauth2/workflow.png">
-<meta property="og:updated_time" content="2020-12-03T10:17:32.224Z">
+<meta property="og:updated_time" content="2020-12-03T22:23:02.619Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OAuth2">
-<meta name="twitter:description" content="Workflow/Grant Type - Authorization Code  The flows below assume you have registered the client (your application) and created a user. Typically registration involves a developer account at the servic">
-<meta name="twitter:image" content="https://carlpaton.github.io/d/oauth2/workflow.png">
+<meta name="twitter:description" content="Grant Types Authorization Code Authorization Code with Proof Key for Code Exchange (PKCE) - “pixy”  Implicit  Password Credentials Client Credentials  References https://www.oauth.com/oauth2-servers/b">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -119,61 +117,26 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Workflow/Grant Type - Authorization Code</p>
-<p><img src="/d/oauth2/workflow.png" alt="Workflow - Authorization Code"></p>
-<p>The flows below assume you have registered the client (your application) and created a user. Typically registration involves a developer account at the service, answering questions about your application, uploading a logo etc.</p>
-<p>The user is the single sign on (SSO) account. This could be Google, Facebook, Active Directory ect. </p>
-<p>All the tokens and secrets below are overly simplified. </p>
-<h3 id="Authorization-Code"><a href="#Authorization-Code" class="headerlink" title="Authorization Code"></a>Authorization Code</h3><ol>
-<li><p>The user opens your application at <code>https://your-application.local</code> and is not authenticated. </p>
-</li>
-<li><p>Your application builds an authorization URL and redirect to the authorization service at <code>https://authorisation-service.local</code></p>
-</li>
-</ol>
-<ul>
-<li><code>client_id</code> is your application id that is registered with the authorization service</li>
-<li><code>redirect_uri</code> is the landing page on your application where the now authenticated user will be redirected to along with the <code>authorization-code</code></li>
-<li><code>scope</code> is used for the resource access</li>
-<li><code>state</code> is a random string</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">https://authorisation-service.local/authorise?response_type=code</span><br><span class="line">&amp;client_id=dd938314e8e1</span><br><span class="line">&amp;redirect_uri=https://your-application.local/authorization-code.html</span><br><span class="line">&amp;scope=foo</span><br><span class="line">&amp;state=18b1abb9830d</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li><p>The user then provides the authorization service their <strong>USERNAME</strong> and <strong>PASSWORD</strong>, it then validates the users credentials. The username/password are never given back to your application. The user is then redirected back to your application based on <code>redirect_uri</code> with query parameters <code>state</code> and <code>code</code></p>
-</li>
-<li><p>Verify the state parameter is what you passed above, so <code>18b1abb9830d=18b1abb9830d</code> to protect against <a href="https://owasp.org/www-community/attacks/csrf" target="_blank" rel="noopener">Cross Site Request Forgery (CSRF)</a> attacks.</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?state=18b1abb9830d&amp;code=ca9c004f825b</span><br></pre></td></tr></table></figure>
-<ol start="5">
-<li>The authorization code is then programatically sent back to <code>https://authorisation-service.local/token</code> with a POST request.</li>
-</ol>
-<ul>
-<li><code>client_secret</code> would have been provided when the client was registered.</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST https://authorisation-service.local/token</span><br><span class="line"></span><br><span class="line">grant_type=authorization_code</span><br><span class="line">&amp;client_id=dd938314e8e1</span><br><span class="line">&amp;client_secret=20166c44bc7e</span><br><span class="line">&amp;redirect_uri=https://your-application.local/authorization-code.html</span><br><span class="line">&amp;code=ca9c004f825b</span><br></pre></td></tr></table></figure>
-<p>The response could look like</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"token_type"</span>: <span class="string">"Bearer"</span>,</span><br><span class="line">  <span class="attr">"expires_in"</span>: <span class="number">86400</span>,</span><br><span class="line">  <span class="attr">"access_token"</span>: <span class="string">"eaabf941fbd1"</span>,</span><br><span class="line">  <span class="attr">"scope"</span>: <span class="string">"foo"</span>,</span><br><span class="line">  <span class="attr">"refresh_token"</span>: <span class="string">"2501d78c0345"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="6">
-<li>Resource requests then need to include the <code>token_type</code> and <code>access_token</code> in the authorisation header. Note the American spelling with a <code>z</code>. </li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;Authorization&apos;:&apos;Bearer eaabf941fbd1&apos;</span><br></pre></td></tr></table></figure>
-<h3 id="Other-Grant-Types"><a href="#Other-Grant-Types" class="headerlink" title="Other Grant Types"></a>Other Grant Types</h3><ul>
-<li>Proof Key for Code Exchange (PKCE) - “pixy” </li>
+        <h3 id="Grant-Types"><a href="#Grant-Types" class="headerlink" title="Grant Types"></a>Grant Types</h3><ul>
+<li><a href="/2020/12/oauth2-authorization-code-flow/">Authorization Code</a></li>
+<li>Authorization Code with <code>Proof Key for Code Exchange</code> (PKCE) - “pixy” </li>
 <li>Implicit </li>
-<li>Device Code</li>
-<li>OpenID Connect</li>
+<li>Password Credentials</li>
+<li>Client Credentials</li>
 </ul>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://www.oauth.com/oauth2-servers/background/" target="_blank" rel="noopener">https://www.oauth.com/oauth2-servers/background/</a></li>
 <li><a href="https://aaronparecki.com/oauth-2-simplified/" target="_blank" rel="noopener">https://aaronparecki.com/oauth-2-simplified/</a></li>
 <li><a href="https://example-app.com/pkce" target="_blank" rel="noopener">https://example-app.com/pkce</a></li>
 <li><a href="https://www.youtube.com/watch?v=CPbvxxslDTU" target="_blank" rel="noopener">https://www.youtube.com/watch?v=CPbvxxslDTU</a></li>
+<li><a href="https://auth0.com/docs/authorization/which-oauth-2-0-flow-should-i-use" target="_blank" rel="noopener">https://auth0.com/docs/authorization/which-oauth-2-0-flow-should-i-use</a></li>
+<li><a href="https://www.oauth.com/playground/index.html" target="_blank" rel="noopener">https://www.oauth.com/playground/index.html</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/12/oauth2/" data-id="cki8iswdf00ax98onapgwsxov" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/12/oauth2/" data-id="cki9df47j00c7gconfkqojqzi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/authentication/">authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
@@ -185,9 +148,9 @@ ga('send', 'pageview');
 <nav id="article-nav">
   
   
-    <a href="/2020/11/what-makes-a-great-api/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/12/oauth2-authorization-code-flow/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">What makes a great API</div>
+      <div class="article-nav-title">OAuth2 Authorization Code Flow</div>
     </a>
   
 </nav>
@@ -219,6 +182,10 @@ ga('send', 'pageview');
           </li>
         
           <li>
+            <a href="/2020/12/oauth2-authorization-code-flow/">OAuth2 Authorization Code Flow</a>
+          </li>
+        
+          <li>
             <a href="/2020/11/what-makes-a-great-api/">What makes a great API</a>
           </li>
         
@@ -230,10 +197,6 @@ ga('send', 'pageview');
             <a href="/2020/11/serilog/">Serilog</a>
           </li>
         
-          <li>
-            <a href="/2020/11/aws-s3/">Amazon S3</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -243,7 +206,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.67px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.33px;">architecture</a> <a href="/tags/authentication/" style="font-size: 11.11px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15.56px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 18.89px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 10.56px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.78px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 17.22px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 16.11px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.33px;">structural patterns</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.44px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.78px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 16.11px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.67px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.33px;">architecture</a> <a href="/tags/authentication/" style="font-size: 11.67px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15.56px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 18.89px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 10.56px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.78px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 17.22px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 16.11px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.33px;">structural patterns</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.44px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 12.78px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 16.67px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
     </div>
   </div>
 
