@@ -18,20 +18,20 @@ ga('send', 'pageview');
 
 
   
-  <title>Design By Contract | Carl Paton | There are no silly questions</title>
+  <title>What makes a great API | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Prescribes that software designers should define formal, precise and verifiable interface specifications for software components, which extend the ordinary definition of abstract data types with preco">
-<meta name="keywords" content="patterns principles">
+  <meta name="description" content="WIP  I recently did some work on a new ASP.NET Web API project using .Net Core. While  doing research and development I could see some themes and patterns on What makes a great API and decided to col">
+<meta name="keywords" content="web api">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Design By Contract">
-<meta property="og:url" content="https://carlpaton.github.io/2018/04/design-by-contract/index.html">
+<meta property="og:title" content="What makes a great API">
+<meta property="og:url" content="https://carlpaton.github.io/2020/11/what-makes-a-great-api/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Prescribes that software designers should define formal, precise and verifiable interface specifications for software components, which extend the ordinary definition of abstract data types with preco">
+<meta property="og:description" content="WIP  I recently did some work on a new ASP.NET Web API project using .Net Core. While  doing research and development I could see some themes and patterns on What makes a great API and decided to col">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-08-04T22:37:58.535Z">
+<meta property="og:updated_time" content="2020-12-02T02:23:50.568Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Design By Contract">
-<meta name="twitter:description" content="Prescribes that software designers should define formal, precise and verifiable interface specifications for software components, which extend the ordinary definition of abstract data types with preco">
+<meta name="twitter:title" content="What makes a great API">
+<meta name="twitter:description" content="WIP  I recently did some work on a new ASP.NET Web API project using .Net Core. While  doing research and development I could see some themes and patterns on What makes a great API and decided to col">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -95,10 +95,10 @@ ga('send', 'pageview');
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-design-by-contract" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-what-makes-a-great-api" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/04/design-by-contract/" class="article-date">
-  <time datetime="2018-04-18T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+    <a href="/2020/11/what-makes-a-great-api/" class="article-date">
+  <time datetime="2020-11-29T11:00:00.000Z" itemprop="datePublished">2020-Nov</time>
 </a>
     
   </div>
@@ -109,7 +109,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      Design By Contract
+      What makes a great API
     </h1>
   
 
@@ -117,18 +117,58 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><em>Prescribes that software designers should define formal, precise and verifiable interface specifications for software components, which extend the ordinary definition of abstract data types with preconditions, postconditions and invariants. These specifications are referred to as “contracts”, in accordance with a conceptual metaphor with the conditions and obligations of business contracts.</em></p>
-<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
-<li><a href="https://en.wikipedia.org/wiki/Design_by_contract" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Design_by_contract</a></li>
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
+<p>I recently did some work on a new <a href="https://dotnet.microsoft.com/apps/aspnet/apis" target="_blank" rel="noopener">ASP.NET Web API</a> project using <a href="https://dotnet.microsoft.com/download/dotnet-core" target="_blank" rel="noopener">.Net Core</a>. While  doing research and development I could see some themes and patterns on <code>What makes a great API</code> and decided to collate this information.</p>
+<p>This was for a RESTful (Representational State Transfer) Web based API (hypertext-driven) with JSON resonse, this was not the API of a new class interface. I dont believe being RESTful makes your API great, SOAP (Simple Object Access Protocol) could work just as well however REST is certainly more popular today. Have a look at <a href="https://www.upwork.com/resources/soap-vs-rest-a-look-at-two-different-api-styles" target="_blank" rel="noopener">SOAP vs. REST: A Look at Two Different API Styles</a>.</p>
+<h2 id="Pillars"><a href="#Pillars" class="headerlink" title="Pillars"></a>Pillars</h2><p>Clear pillars are needed for a great API, this is certainly not an exhaustive list but these stood out for me.</p>
+<h3 id="Security"><a href="#Security" class="headerlink" title="Security"></a>Security</h3><p><strong>Dont bolt security on at the end</strong>, secure your API from the start.</p>
+<ul>
+<li>Use <a href="https://tools.ietf.org/html/rfc6749" target="_blank" rel="noopener">OAuth 2.0</a> for authorization</li>
+<li>Never put <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.stacktrace" target="_blank" rel="noopener">stack traces</a> in responses, this can disclose sensitive information</li>
+<li>Errors must be represented in <a href="https://tools.ietf.org/html/rfc7807" target="_blank" rel="noopener">Problem JSON (RFC 7807)</a> format, providing error <code>type</code> (URI), and optionally <code>title</code>, <code>status</code>, <code>detail</code> along with others.</li>
+</ul>
+<h3 id="Supported-amp-Well-Architected"><a href="#Supported-amp-Well-Architected" class="headerlink" title="Supported &amp; Well Architected"></a>Supported &amp; Well Architected</h3><ul>
+<li>Use a command line tool such as XOP to generate the skeleton of an OpenAPI specification</li>
+<li>Document the API first as a proposal and then implement the empty controllers and Generate the OpenAPI specification via Swashbuckle. Use the generated specification to test that the implementation respects the contract.</li>
+<li>Write <a href="https://www.altexsoft.com/blog/api-documentation/" target="_blank" rel="noopener">API documentation</a> and build API client SDKs (Software development kit) </li>
+<li>Utilize patterns, standards, templates, and frameworks to realize the features of an API which are not domain specific.</li>
+</ul>
+<h3 id="Consistent"><a href="#Consistent" class="headerlink" title="Consistent"></a>Consistent</h3><ul>
+<li>Be stateless</li>
+<li>have a common look and feel</li>
+<li>The number of items returned by a collection must be limited and paginated (Sorting &amp; Paging)</li>
+<li>Fielding defined appropriate use within HTTP of the canonical verbs <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>, <code>HEAD</code>, and <code>OPTIONS</code>. So don’t change state with GET :)</li>
+<li>Search by criteria</li>
+<li>HTTP header Fields should be in Hyphenated-Pascal-Case format</li>
+<li>Date and Time values must be represented as <code>YYYY-MM-DDThh:mm:ss[.sss]Z</code> format strings</li>
+<li>Dont use null for any represented types</li>
+<li>Resource endpoints must use plural resource forms, example <code>/foos</code></li>
+<li>Resources and sub-resources must be hierarchically identified, example <code>/{resources}/[resource-id]/{sub-resources}/[sub-resource-id]</code></li>
+</ul>
+<h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><ul>
+<li>Allow to scale horizontally by using Docker containers and orchestration software like <a href="https://aws.amazon.com/kubernetes" target="_blank" rel="noopener">Kubernetes</a></li>
+<li>Rate limit client requests using HTTP Status Code <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429" target="_blank" rel="noopener">429 Too Many Requests</a></li>
+</ul>
+<h3 id="Ability-to-change"><a href="#Ability-to-change" class="headerlink" title="Ability to change"></a>Ability to change</h3><ul>
+<li>avoid breaking changes, dont remove fields/methods/add additional validations</li>
+</ul>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
+<li><a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api</a></li>
+<li><a href="http://spec.openapis.org/oas/v3.0.3" target="_blank" rel="noopener">http://spec.openapis.org/oas/v3.0.3</a></li>
+<li><a href="https://tools.ietf.org/html/rfc3339" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc3339</a></li>
+<li><a href="https://tools.ietf.org/html/rfc7807" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc7807</a></li>
+<li><a href="https://www.elastic.io/6-characteristics-of-great-api/" target="_blank" rel="noopener">https://www.elastic.io/6-characteristics-of-great-api/</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2018/04/design-by-contract/" data-id="cki83ef1u005jkconjvyos8nk" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/11/what-makes-a-great-api/" data-id="cki83ef8d00hpkconpo7a6aam" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/">patterns principles</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web-api/">web api</a></li></ul>
 
     </footer>
   </div>
@@ -136,19 +176,10 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2018/04/dependency-inversion-principle-dip/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Dependency Inversion Principle (DIP)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/04/interface-segregation-principle-isp/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/11/serilog/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Interface Segregation Principle (ISP)</div>
+      <div class="article-nav-title">Serilog</div>
     </a>
   
 </nav>
