@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>Amazon S3 | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP  S3 “Amazon Simple Storage Service (Amazon S3) is storage for the internet. You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web.”  S3 Glacier “Low">
+  <meta name="description" content="WIP  S3 vs S3 Glacier “S3: Amazon Simple Storage Service (Amazon S3) is storage for the internet. You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web.">
 <meta name="keywords" content="wip,aws">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Amazon S3">
 <meta property="og:url" content="https://carlpaton.github.io/2020/11/aws-s3/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP  S3 “Amazon Simple Storage Service (Amazon S3) is storage for the internet. You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web.”  S3 Glacier “Low">
+<meta property="og:description" content="WIP  S3 vs S3 Glacier “S3: Amazon Simple Storage Service (Amazon S3) is storage for the internet. You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web.">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-12-03T04:36:33.111Z">
+<meta property="og:updated_time" content="2020-12-20T19:41:01.553Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Amazon S3">
-<meta name="twitter:description" content="WIP  S3 “Amazon Simple Storage Service (Amazon S3) is storage for the internet. You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web.”  S3 Glacier “Low">
+<meta name="twitter:description" content="WIP  S3 vs S3 Glacier “S3: Amazon Simple Storage Service (Amazon S3) is storage for the internet. You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web.">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -120,21 +120,73 @@ ga('send', 'pageview');
         <blockquote>
 <p><a href="/2017/06/work-in-progress/">WIP</a></p>
 </blockquote>
-<h3 id="S3"><a href="#S3" class="headerlink" title="S3"></a>S3</h3><blockquote>
-<p>“Amazon Simple Storage Service (Amazon S3) is storage for the internet. You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web.”</p>
+<h3 id="S3-vs-S3-Glacier"><a href="#S3-vs-S3-Glacier" class="headerlink" title="S3 vs S3 Glacier"></a>S3 vs S3 Glacier</h3><blockquote>
+<p>“S3: Amazon Simple Storage Service (Amazon S3) is storage for the internet. You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web.”</p>
 </blockquote>
-<h3 id="S3-Glacier"><a href="#S3-Glacier" class="headerlink" title="S3 Glacier"></a>S3 Glacier</h3><blockquote>
-<p>“Low-cost storage service that provides highly secure, durable, and flexible storage for data archiving and online backup.”</p>
+<blockquote>
+<p>“S3 Glacier: Low-cost storage service that provides highly secure, durable, and flexible storage for data archiving and online backup.”</p>
 </blockquote>
+<h3 id="Code-Examples"><a href="#Code-Examples" class="headerlink" title="Code Examples"></a>Code Examples</h3><p>The following are the interface definitions for a <a href="https://carlpaton.github.io/2020/02/facade-pattern/">facade</a> I built using the <a href="https://aws.amazon.com/sdk-for-net/" target="_blank" rel="noopener">AWS SDK for .NET</a>. For me it made sense to create two responsibilities <a href="https://github.com/carlpaton/AwsAdministrator/blob/master/src/AwsAdmin.Application/S3/Interface/IBucketService.cs" target="_blank" rel="noopener">IBucketService</a> to manage the bucket itself and <a href="https://github.com/carlpaton/AwsAdministrator/blob/master/src/AwsAdmin.Application/S3/Interface/IBucketObjectService.cs" target="_blank" rel="noopener">IBucketObjectService</a> to manage the content in the bucket.</p>
+<h2 id="Bucket-Service"><a href="#Bucket-Service" class="headerlink" title="Bucket Service"></a>Bucket Service</h2><p><strong>Interface</strong>: <code>IBucketService</code></p>
+<h3 id="PutBucketAsync"><a href="#PutBucketAsync" class="headerlink" title="PutBucketAsync"></a>PutBucketAsync</h3><p>Creates the given bucket, note that buckets are globally unique in name.<br>Will throw if the bucket already exists:</p>
+<ul>
+<li><code>Amazon.S3.AmazonS3Exception : Your previous request to create the named bucket succeeded and you already own it.</code></li>
+<li><p><code>Amazon.S3.AmazonS3Exception : The requested bucket name is not available. The bucket namespace is shared by all users of the system. Please select a different name and try again.</code></p>
+</li>
+<li><p><code>bucketName</code> - Globally unique bucket name</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;PutBucketResponse&gt; PutBucketAsync(string bucketName);</span><br></pre></td></tr></table></figure>
+<h3 id="ListBucketsAsync"><a href="#ListBucketsAsync" class="headerlink" title="ListBucketsAsync"></a>ListBucketsAsync</h3><p>Gets a list of buckets for the authenticated user</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;ListBucketsResponse&gt; ListBucketsAsync();</span><br></pre></td></tr></table></figure>
+<p>CLI</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws s3 ls</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://docs.aws.amazon.com/cli/latest/reference/s3/ls.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cli/latest/reference/s3/ls.html</a></li>
+</ul>
+<h3 id="DeleteBucketAsync"><a href="#DeleteBucketAsync" class="headerlink" title="DeleteBucketAsync"></a>DeleteBucketAsync</h3><p>Deletes the given bucket, will throw if its not empty.</p>
+<ul>
+<li><code>Amazon.S3.AmazonS3Exception : The bucket you tried to delete is not empty</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;DeleteBucketResponse&gt; DeleteBucketAsync(string bucketName);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/DeletingOneObjectUsingNetSDK.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonS3/latest/dev/DeletingOneObjectUsingNetSDK.html</a></li>
+</ul>
+<h2 id="Bucket-Object-Service"><a href="#Bucket-Object-Service" class="headerlink" title="Bucket Object Service"></a>Bucket Object Service</h2><p><strong>Interface</strong>: <code>IBucketObjectService</code></p>
+<h3 id="GetPreSignedURL"><a href="#GetPreSignedURL" class="headerlink" title="GetPreSignedURL"></a>GetPreSignedURL</h3><p>Create a signed URL allowing access to a resource that would usually require authentication.</p>
+<ul>
+<li><code>expireInHours</code> hours in the future in which the URL will expire</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string GetPreSignedURL(string bucketName, string key, double expireInHours);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/S3/MS3GetPreSignedURLGetPreSignedUrlRequest.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/S3/MS3GetPreSignedURLGetPreSignedUrlRequest.html</a></li>
+</ul>
+<h3 id="PutTextObjectAsync"><a href="#PutTextObjectAsync" class="headerlink" title="PutTextObjectAsync"></a>PutTextObjectAsync</h3><p>Put the plaintext object in the S3 bucket. The content type will be set to ‘text/plain’.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;PutObjectResponse&gt; PutTextObjectAsync(string bucketName, string key, string contentBody);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/object-tagging.html" target="_blank" rel="noopener">Object Tagging</a></li>
+<li><a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html#object-metadata" target="_blank" rel="noopener">Object Metadata</a></li>
+</ul>
+<h3 id="GetObjectAsync"><a href="#GetObjectAsync" class="headerlink" title="GetObjectAsync"></a>GetObjectAsync</h3><p>Get the value of the object on the bucket by reading <code>response.ResponseStream</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;GetObjectResponse&gt; GetObjectAsync(string bucketName, string key);</span><br></pre></td></tr></table></figure>
+<h3 id="GetObjectMetadataAsync"><a href="#GetObjectMetadataAsync" class="headerlink" title="GetObjectMetadataAsync"></a>GetObjectMetadataAsync</h3><p>Retrieves metadata from an object without returning the object itself.</p>
+<p>I think this is used as HTTP header data.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;GetObjectMetadataResponse&gt; GetObjectMetadataAsync(string bucketName, string key);</span><br></pre></td></tr></table></figure>
+<h3 id="DeleteObjectAsync"><a href="#DeleteObjectAsync" class="headerlink" title="DeleteObjectAsync"></a>DeleteObjectAsync</h3><p>Deletes the given object (key).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;DeleteObjectResponse&gt; DeleteObjectAsync(string bucketName, string key);</span><br></pre></td></tr></table></figure>
+<h3 id="GetObjectTaggingAsync"><a href="#GetObjectTaggingAsync" class="headerlink" title="GetObjectTaggingAsync"></a>GetObjectTaggingAsync</h3><p>Gets the tags as <code>response.Tagging</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;GetObjectTaggingResponse&gt; GetObjectTaggingAsync(string bucketName, string key);</span><br></pre></td></tr></table></figure>
+<h3 id="ListObjectsAsync"><a href="#ListObjectsAsync" class="headerlink" title="ListObjectsAsync"></a>ListObjectsAsync</h3><p>Gets data about the objects as <code>response.S3Objects</code> where <code>.Key</code> is the filename<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;ListObjectsResponse&gt; ListObjectsAsync(string bucketName);</span><br></pre></td></tr></table></figure></p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://aws.amazon.com/s3/" target="_blank" rel="noopener">https://aws.amazon.com/s3/</a></li>
 <li><a href="https://docs.aws.amazon.com/s3/index.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/s3/index.html</a></li>
+<li><a href="https://github.com/carlpaton/AwsAdministrator/tree/master/src/AwsAdmin.Application/S3" target="_blank" rel="noopener">https://github.com/carlpaton/AwsAdministrator/tree/master/src/AwsAdmin.Application/S3</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/11/aws-s3/" data-id="ckixgz7su001a1gong9dynr01" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/11/aws-s3/" data-id="ckixjd339001c8sonqkr6qrwd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
