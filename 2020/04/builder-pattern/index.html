@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>Builder Pattern | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Use Case: Unit test object creation.  DefinitionWhen piecewise object construction is complicated, provide and API for doing it in a brief and clearly expressed manner.  A piecewise function is a fun">
+  <meta name="description" content="Use Case: Unit test object creation, any time object construction is complicated.  DefinitionWhen piecewise object construction is complicated, provide and API for doing it in a brief and clearly exp">
 <meta name="keywords" content="patterns principles,creational patterns">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Builder Pattern">
 <meta property="og:url" content="https://carlpaton.github.io/2020/04/builder-pattern/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Use Case: Unit test object creation.  DefinitionWhen piecewise object construction is complicated, provide and API for doing it in a brief and clearly expressed manner.  A piecewise function is a fun">
+<meta property="og:description" content="Use Case: Unit test object creation, any time object construction is complicated.  DefinitionWhen piecewise object construction is complicated, provide and API for doing it in a brief and clearly exp">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-12-08T07:41:48.935Z">
+<meta property="og:updated_time" content="2020-12-20T18:31:07.220Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Builder Pattern">
-<meta name="twitter:description" content="Use Case: Unit test object creation.  DefinitionWhen piecewise object construction is complicated, provide and API for doing it in a brief and clearly expressed manner.  A piecewise function is a fun">
+<meta name="twitter:description" content="Use Case: Unit test object creation, any time object construction is complicated.  DefinitionWhen piecewise object construction is complicated, provide and API for doing it in a brief and clearly exp">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -118,22 +118,30 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>Use Case: Unit test object creation.</p>
+<p>Use Case: Unit test object creation, any time object construction is complicated.</p>
 </blockquote>
 <h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>When piecewise object construction is complicated, provide and API for doing it in a brief and clearly expressed manner. </p>
 <p><em>A piecewise function is a function built from pieces of different functions over different intervals. </em></p>
-<h3 id="Example-Builder"><a href="#Example-Builder" class="headerlink" title="Example Builder"></a>Example Builder</h3><p><code>FooBuilder</code> is used to construct the entity <code>Foo</code>, its state can be set if needs be with the methods <code>WithId()</code> and <code>WithContactPerson()</code>, this fluent API can be chained. Finally the <code>Create()</code> method returns an instance of <code>Foo</code> with the internal state set.</p>
+<h3 id="Example-FooBuilder"><a href="#Example-FooBuilder" class="headerlink" title="Example FooBuilder"></a>Example FooBuilder</h3><p><code>FooBuilder</code> is used to construct the entity <code>Foo</code>, its state can be set if needs be with the methods <code>WithId()</code> and <code>WithContactPerson()</code>, this fluent API can be chained. Finally the <code>Create()</code> method returns an instance of <code>Foo</code> with the internal state set.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">namespace FooApp.Core.Builders</span><br><span class="line">&#123;</span><br><span class="line">    public class FooBuilder</span><br><span class="line">    &#123;</span><br><span class="line">        private Guid _id;</span><br><span class="line">        private string _contactPerson;</span><br><span class="line"></span><br><span class="line">        public FooBuilder() </span><br><span class="line">        &#123;</span><br><span class="line">            _id = Guid.NewGuid();</span><br><span class="line">            _contactPerson = &quot;&quot;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public FooBuilder WithId(Guid id)</span><br><span class="line">        &#123;</span><br><span class="line">            _id = id;</span><br><span class="line">            return this;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public FooBuilder WithContactPerson(string contactPerson)</span><br><span class="line">        &#123;</span><br><span class="line">            _contactPerson = contactPerson;</span><br><span class="line">            return this;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Foo Create()</span><br><span class="line">        &#123;</span><br><span class="line">            return new Foo()</span><br><span class="line">            &#123;</span><br><span class="line">                Id = _id,</span><br><span class="line">                ContactPerson = _contactPerson</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Example-Use-Case"><a href="#Example-Use-Case" class="headerlink" title="Example Use Case"></a>Example Use Case</h3><p>In a test this could be used as follows with the assumption <code>fooRepository</code> -&gt; <code>SelectList</code> returns a collection of type <code>Foo</code>.</p>
+<h4 id="Example-Use-Case-Of-FooBuilder"><a href="#Example-Use-Case-Of-FooBuilder" class="headerlink" title="Example Use Case Of FooBuilder"></a>Example Use Case Of FooBuilder</h4><p>In a test this could be used as follows with the assumption <code>fooRepository</code> -&gt; <code>SelectList</code> returns a collection of type <code>Foo</code>.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var foo = new FooBuilder();</span><br><span class="line"></span><br><span class="line">fooRepositoryMock.Setup(x =&gt; x.SelectList())</span><br><span class="line">    .Returns(new List&lt;Foo&gt;() &#123;</span><br><span class="line">        foo.WithContactPerson(&quot;Bizz Bat&quot;).Create(),</span><br><span class="line">        foo.WithId(&quot;26ac6c17-0172-4d86-802c-d5b839f6215f&quot;).WithContactPerson(&quot;Hoe Bar&quot;).Create()</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Example-HTML-Builder"><a href="#Example-HTML-Builder" class="headerlink" title="Example HTML Builder"></a>Example HTML Builder</h3><p>Code example below from <a href="https://www.udemy.com/user/dmitrinesteruk/" target="_blank" rel="noopener">Dmitri Nesteruk</a></p>
+<h4 id="Life-without-Builder"><a href="#Life-without-Builder" class="headerlink" title="Life without Builder"></a>Life without Builder</h4><p>Manually create some HTML, this will work but its not great.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var sb = new StringBuilder();</span><br><span class="line">var words = new[] &#123;&quot;hello&quot;, &quot;world&quot;&#125;;</span><br><span class="line"></span><br><span class="line">sb.Append(&quot;&lt;ul&gt;&quot;);</span><br><span class="line">foreach (var word in words)</span><br><span class="line">&#123;</span><br><span class="line">	sb.AppendFormat(&quot;&lt;li&gt;&#123;0&#125;&lt;/li&gt;&quot;, word);</span><br><span class="line">&#125;</span><br><span class="line">sb.Append(&quot;&lt;/ul&gt;&quot;);</span><br><span class="line">WriteLine(sb);</span><br></pre></td></tr></table></figure>
+<h4 id="Life-With-A-Builder"><a href="#Life-With-A-Builder" class="headerlink" title="Life With A Builder"></a>Life With A Builder</h4><p>Here the constructor for  <a href="https://github.com/carlpaton/Boilerplate/blob/master/.Net%20Core%20Console%20Application/PatternsAndPrinciples/BuilderPattern/HtmlBuilder.cs" target="_blank" rel="noopener">HtmlBuilder</a> takes a <code>rootName</code> and the <code>AddChild</code> method takes <code>childName</code> and <code>childText</code> parameters. This is then <a href="/2018/03/pillars-of-object-oriented-programming-oop/">encapsulating</a> the creation and use of <a href="https://github.com/carlpaton/Boilerplate/blob/master/.Net%20Core%20Console%20Application/PatternsAndPrinciples/BuilderPattern/HtmlElement.cs" target="_blank" rel="noopener">HtmlElement</a>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// ordinary non-fluent builder</span><br><span class="line">var builder = new HtmlBuilder(&quot;ul&quot;);</span><br><span class="line">builder.AddChild(&quot;li&quot;, &quot;hello&quot;);</span><br><span class="line">builder.AddChild(&quot;li&quot;, &quot;world&quot;);</span><br><span class="line">WriteLine(builder.ToString());</span><br></pre></td></tr></table></figure>
+<p>The method <code>AddChildFluent</code> returns a <a href="https://github.com/carlpaton/Boilerplate/blob/master/.Net%20Core%20Console%20Application/PatternsAndPrinciples/BuilderPattern/HtmlBuilder.cs" target="_blank" rel="noopener">HtmlBuilder</a> to allow you to chain methods together. This works by returning a reference to the original object. This is called a <strong>fluent</strong> interface.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var builder = new HtmlBuilder(&quot;ul&quot;);</span><br><span class="line">builder</span><br><span class="line">    .AddChildFluent(&quot;li&quot;, &quot;hello&quot;)</span><br><span class="line">    .AddChildFluent(&quot;li&quot;, &quot;world&quot;);</span><br><span class="line">WriteLine(builder);</span><br></pre></td></tr></table></figure>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://www.udemy.com/course/design-patterns-csharp-dotnet/" target="_blank" rel="noopener">https://www.udemy.com/course/design-patterns-csharp-dotnet/</a></li>
+<li><a href="https://github.com/carlpaton/Boilerplate/tree/master/.Net%20Core%20Console%20Application/PatternsAndPrinciples/BuilderPattern" target="_blank" rel="noopener">PatternsAndPrinciples/BuilderPattern</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/04/builder-pattern/" data-id="ckixgdx2200201konxsp3exky" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/04/builder-pattern/" data-id="ckixgz7t6001w1gonx6td7szv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/creational-patterns/">creational patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/">patterns principles</a></li></ul>
@@ -192,11 +200,11 @@ ga('send', 'pageview');
           </li>
         
           <li>
-            <a href="/2020/12/oauth2/">OAuth2</a>
+            <a href="/2020/12/oauth2-authorization-code-flow/">OAuth2 Authorization Code Flow</a>
           </li>
         
           <li>
-            <a href="/2020/12/oauth2-authorization-code-flow/">OAuth2 Authorization Code Flow</a>
+            <a href="/2020/12/oauth2/">OAuth2</a>
           </li>
         
           <li>
