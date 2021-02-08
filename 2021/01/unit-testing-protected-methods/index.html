@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>Unit testing protected methods | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Problem StatementWe have a class FooRequirementHandler which inherits from and implements AuthorizationHandler&amp;lt;FooRequirement&amp;gt; - see Custom Authorization Policy We now have a protected access mo">
+  <meta name="description" content="Problem StatementWe have a class FooRequirementHandler which inherits from and implements AuthorizationHandler&amp;lt;FooRequirement&amp;gt; - For details on what these handlers actually do see Custom Authori">
 <meta name="keywords" content="software testing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unit testing protected methods">
 <meta property="og:url" content="https://carlpaton.github.io/2021/01/unit-testing-protected-methods/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Problem StatementWe have a class FooRequirementHandler which inherits from and implements AuthorizationHandler&amp;lt;FooRequirement&amp;gt; - see Custom Authorization Policy We now have a protected access mo">
+<meta property="og:description" content="Problem StatementWe have a class FooRequirementHandler which inherits from and implements AuthorizationHandler&amp;lt;FooRequirement&amp;gt; - For details on what these handlers actually do see Custom Authori">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-02-05T10:08:24.394Z">
+<meta property="og:updated_time" content="2021-02-08T19:27:48.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unit testing protected methods">
-<meta name="twitter:description" content="Problem StatementWe have a class FooRequirementHandler which inherits from and implements AuthorizationHandler&amp;lt;FooRequirement&amp;gt; - see Custom Authorization Policy We now have a protected access mo">
+<meta name="twitter:description" content="Problem StatementWe have a class FooRequirementHandler which inherits from and implements AuthorizationHandler&amp;lt;FooRequirement&amp;gt; - For details on what these handlers actually do see Custom Authori">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -117,24 +117,24 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Problem-Statement"><a href="#Problem-Statement" class="headerlink" title="Problem Statement"></a>Problem Statement</h3><p>We have a class <code>FooRequirementHandler</code> which inherits from and implements <code>AuthorizationHandler&lt;FooRequirement&gt;</code> - see <a href="/2021/02/filters-in-asp-net-core/">Custom Authorization Policy</a></p>
-<p>We now have a <code>protected</code> access modifier to contend with. If we create an instance of <code>FooRequirementHandler</code> and try call <code>HandleRequirementAsync</code> the pre-compiler will protest with it being inaccessible due to its protection level.</p>
+        <h3 id="Problem-Statement"><a href="#Problem-Statement" class="headerlink" title="Problem Statement"></a>Problem Statement</h3><p>We have a class <code>FooRequirementHandler</code> which inherits from and implements <code>AuthorizationHandler&lt;FooRequirement&gt;</code> - For details on what these handlers actually do see <a href="/2021/02/filters-in-asp-net-core/">Custom Authorization Policy</a> in this filters post.</p>
+<p>We now have a <code>protected</code> access modifier to contend with. If we create an instance of <code>FooRequirementHandler</code> and try call <code>HandleRequirementAsync</code> the pre-compiler will protest with it being inaccessible due to its protection level. This is to be expected.</p>
 <ul>
 <li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/protected" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/protected</a></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PracticeUserRequirement requirement)</span><br><span class="line">&#123;</span><br><span class="line">   // Handler things</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, FooRequirement requirement)</span><br><span class="line">&#123;</span><br><span class="line">   // Handler things</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Work-Around"><a href="#Work-Around" class="headerlink" title="Work Around"></a>Work Around</h3><p>In the test create a class that inherits from <code>FooRequirementHandler</code> to expose the behavior.</p>
 <blockquote>
 <p>A protected member is accessible within its class and by derived class instances.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// Additional setup required to expose `protected` behaviour</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">public class ExposedFooRequirementHandler : FooRequirementHandler</span><br><span class="line">&#123;</span><br><span class="line">   public ExposedFooRequirementHandler(ISomeInterface someInterface)</span><br><span class="line">      : base(someInterface)</span><br><span class="line">   &#123;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public async Task ExposedHandleRequirementAsync(AuthorizationHandlerContext context, FooRequirement requirement)</span><br><span class="line">   &#123;</span><br><span class="line">      await base.HandleRequirementAsync(context, requirement);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>In the unit test you can then use <code>ExposedFooRequirementHandler</code> as the class under test.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var classUnderTest = new ExposedPracticeUserRequirementHandler(someInterfaceMock.Object);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var classUnderTest = new ExposedFooRequirementHandler(someInterfaceMock.Object);</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2021/01/unit-testing-protected-methods/" data-id="ckks4r6y000hypoon3uivjlay" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2021/01/unit-testing-protected-methods/" data-id="ckkx55ijf00lw2oon6nyzujrc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li></ul>

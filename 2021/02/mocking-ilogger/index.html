@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>Mocking ILogger | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Create the mocked logger that is injected into SomeServiceClient 1var loggerMock = new Mock&amp;lt;ILogger&amp;lt;SomeServiceClient&amp;gt;&amp;gt;(); After injecting loggerMock.Object and calling the unit of work yo">
+  <meta name="description" content="Mocking extension methods is not possible as they are static.  Use the static modifier to declare a static member, which belongs to the type itself rather than to a specific object.   https://docs.mic">
 <meta name="keywords" content="wip,software testing,mocking">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mocking ILogger">
 <meta property="og:url" content="https://carlpaton.github.io/2021/02/mocking-ilogger/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Create the mocked logger that is injected into SomeServiceClient 1var loggerMock = new Mock&amp;lt;ILogger&amp;lt;SomeServiceClient&amp;gt;&amp;gt;(); After injecting loggerMock.Object and calling the unit of work yo">
+<meta property="og:description" content="Mocking extension methods is not possible as they are static.  Use the static modifier to declare a static member, which belongs to the type itself rather than to a specific object.   https://docs.mic">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-02-05T10:09:21.229Z">
+<meta property="og:updated_time" content="2021-02-08T22:21:42.013Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mocking ILogger">
-<meta name="twitter:description" content="Create the mocked logger that is injected into SomeServiceClient 1var loggerMock = new Mock&amp;lt;ILogger&amp;lt;SomeServiceClient&amp;gt;&amp;gt;(); After injecting loggerMock.Object and calling the unit of work yo">
+<meta name="twitter:description" content="Mocking extension methods is not possible as they are static.  Use the static modifier to declare a static member, which belongs to the type itself rather than to a specific object.   https://docs.mic">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -117,10 +117,24 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Create the mocked logger that is injected into <code>SomeServiceClient</code></p>
+        <p>Mocking extension methods is not possible as they are <code>static</code>.</p>
+<blockquote>
+<p>Use the static modifier to declare a static member, which belongs to the type itself rather than to a specific object.</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/static" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/static</a>.</li>
+</ul>
+<h3 id="Work-around"><a href="#Work-around" class="headerlink" title="Work around"></a>Work around</h3><p>Create the mocked logger that is injected into <code>SomeServiceClient</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var loggerMock = new Mock&lt;ILogger&lt;SomeServiceClient&gt;&gt;();</span><br></pre></td></tr></table></figure>
 <p>After injecting <code>loggerMock.Object</code> and calling the unit of work you can verify what the extension method is calling under the hood.</p>
-<pre><code class="c#">loggerMock.Verify(
+<p>Key things to look at here are:</p>
+<ul>
+<li><code>LogLevel</code> below is <code>LogLevel.Error</code> which will be for <code>_logger.LogError</code> from <code>Microsoft.Extensions.Logging</code></li>
+<li><code>logEntryToBeWritten</code> is the text to be logged without the exeption.</li>
+</ul>
+<pre><code class="c#">var logEntryToBeWritten = &quot;The what what borked&quot;;
+
+loggerMock.Verify(
     x =&gt; x.Log(
         It.Is&lt;LogLevel&gt;(l =&gt; l == LogLevel.Error),
         It.IsAny&lt;EventId&gt;(),
@@ -135,7 +149,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2021/02/mocking-ilogger/" data-id="ckks4r6t4009fpoonm1xwx1kh" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2021/02/mocking-ilogger/" data-id="ckkx55ibb00952oonagwa45x7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocking/">mocking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
