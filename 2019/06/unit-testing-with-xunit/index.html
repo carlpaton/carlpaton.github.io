@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Install xunit from Nuget as version 2.4.1. U_I_E signatures are Unit of work, inital condition and expecte">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-09-17T20:39:56.126Z">
+<meta property="og:updated_time" content="2021-02-22T06:55:56.241Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unit testing with xUnit.net">
 <meta name="twitter:description" content="xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Install xunit from Nuget as version 2.4.1. U_I_E signatures are Unit of work, inital condition and expecte">
@@ -129,6 +129,8 @@ ga('send', 'pageview');
 <ul>
 <li><a href="https://xunit.net/docs/shared-context" target="_blank" rel="noopener">https://xunit.net/docs/shared-context</a></li>
 </ul>
+<h3 id="Exceptions"><a href="#Exceptions" class="headerlink" title="Exceptions"></a>Exceptions</h3><p>Verifies that the exact exception is thrown (and not a derived exception type). Returns the exception that was thrown, when successful.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Act</span><br><span class="line">var exception = Assert.ThrowsAsync&lt;HttpRequestException&gt;(async () =&gt; await classUnderTest.SomeMethodThatThrowsAsync());</span><br><span class="line"></span><br><span class="line">// Assert</span><br><span class="line">Assert.Equal(expectedExceptionMessage, exception.Result.Message);</span><br></pre></td></tr></table></figure>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://xunit.github.io/docs/getting-started/netfx/visual-studio" target="_blank" rel="noopener">https://xunit.github.io/docs/getting-started/netfx/visual-studio</a></li>
 </ul>
@@ -136,7 +138,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2019/06/unit-testing-with-xunit/" data-id="cklbkqu8v00h7e8on6kb4op3i" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2019/06/unit-testing-with-xunit/" data-id="cklbo566y00i474on3kpb302n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li></ul>
