@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Entity Framework Core | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="WIP  Many years back I looked at Entity Framework, this was still when I wanted to learn about the Microsoft .Net framework which was before .Net Core came along. At the time most of my day was consu">
+<meta name="keywords" content="wip,software testing,orm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Entity Framework Core">
+<meta property="og:url" content="https://carlpaton.github.io/2021/02/entity-framework-core/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="WIP  Many years back I looked at Entity Framework, this was still when I wanted to learn about the Microsoft .Net framework which was before .Net Core came along. At the time most of my day was consu">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2021-02-24T23:13:48.746Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Entity Framework Core">
+<meta name="twitter:description" content="WIP  Many years back I looked at Entity Framework, this was still when I wanted to learn about the Microsoft .Net framework which was before .Net Core came along. At the time most of my day was consu">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions">Carl Paton</a>
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/">About</a>
+        
+        <a class="main-nav-link" href="/tags/aws/">AWS</a>
+        
+        <a class="main-nav-link" href="/tags/c/">C#</a>
+        
+        <a class="main-nav-link" href="/tags/docker/">Docker</a>
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/">Design Patterns</a>
+        
+        <a class="main-nav-link" href="/tags/learning-resources/">Learning</a>
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/">Patterns Principles</a>
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-entity-framework-core" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/02/entity-framework-core/" class="article-date">
+  <time datetime="2021-02-22T11:00:00.000Z" itemprop="datePublished">2021-Feb</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Entity Framework Core
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
+<p>Many years back I looked at <a href="https://docs.microsoft.com/en-us/ef/" target="_blank" rel="noopener">Entity Framework</a>, this was still when I wanted to learn about the <a href="https://dotnet.microsoft.com/download/dotnet-framework" target="_blank" rel="noopener">Microsoft .Net framework</a> which was before <a href="https://dotnet.microsoft.com/download" target="_blank" rel="noopener">.Net Core</a> came along. At the time most of my day was consumed by <a href="https://www.guru99.com/introduction-to-vbscript.html" target="_blank" rel="noopener">VB Script</a> and <a href="https://www.microsoft.com/en-us/sql-server" target="_blank" rel="noopener">Microsoft SQL</a>. Typically connecting to the database in VB Script meant hand rolling the connection and working with a data reader and record set. It was, to say the least painful!</p>
+<p>Example of my pain:</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> dbCon = CreateObject(<span class="string">"ADODB.Connection"</span>)	</span><br><span class="line">dbCon.Open <span class="string">"Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;MultipleActiveResultSets=true;"</span></span><br><span class="line"></span><br><span class="line">    sql = <span class="string">"SELECT id, desc FROM foo WHERE bar = 'bat' ORDER BY id DESC"</span></span><br><span class="line">    <span class="keyword">set</span> rs = dbCon.execute(sql)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> rs.eof <span class="keyword">then</span></span><br><span class="line">            <span class="keyword">do</span> <span class="keyword">until</span> rs.eof</span><br><span class="line"></span><br><span class="line">                response.Write rs(<span class="string">"id"</span>) &amp; <span class="string">" "</span> &amp; rs(<span class="string">"desc"</span>) &amp; <span class="string">"&lt;br /&gt;"</span></span><br><span class="line">            </span><br><span class="line">            rs.movenext</span><br><span class="line">            <span class="keyword">loop</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">if</span></span><br><span class="line"></span><br><span class="line">    rs.Close</span><br><span class="line">    <span class="keyword">set</span> rs = <span class="literal">nothing</span></span><br><span class="line"></span><br><span class="line">dbCon.Close</span><br><span class="line"><span class="keyword">set</span> dbCon = <span class="literal">nothing</span></span><br></pre></td></tr></table></figure>
+<p>So when I finally started looking at <a href="https://docs.microsoft.com/en-us/dotnet/csharp/" target="_blank" rel="noopener">C#</a> and .Net I found something called a <a href="/2017/10/sqllite-with-repository-pattern/">Repository Pattern</a>. This was awesome as it promoted dependency inversion and I could create my own repository and it made sense. Entity Framework felt like it abstracted away so much of the <code>magic</code> that I didnt actually know what it was doing, this worried me as what would I do when it breaks? I also <a href="/2020/09/mysql-performance/">profiled</a> the SQL Database when trying out Entity Framework boilerplate code and I was amazed to see how many SQL Queries were running! I figured yeah na this is too complex for my brain.</p>
+<p>For this reason I happily plodded along with my new friend the Repository Pattern. However last year I changed jobs and my new team wanted to use Entity Framework Core. I was pretty excited about this as .Net Core is amazing and it was a chance to learn by doing!</p>
+<h3 id="EF-Core"><a href="#EF-Core" class="headerlink" title="EF Core"></a>EF Core</h3><p>Baby steps!</p>
+<h3 id="Refrences"><a href="#Refrences" class="headerlink" title="Refrences"></a>Refrences</h3><ul>
+<li><a href="https://docs.microsoft.com/en-us/ef/core/" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/ef/core/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2021/02/entity-framework-core/" data-id="cklk1tb1200007oonj9c59m1w" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/orm/">orm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/02/mocking-ilogger/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mocking ILogger</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search..." class="form-control">
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/filters-in-asp-net-core/">Filters in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/mocking-httpclient-sendasync/">Mocking HttpClient SendAsync</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/unit-testing-protected-methods/">Unit testing protected methods</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.25px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.63px;">agile</a> <a href="/tags/angular/" style="font-size: 16.25px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 14.38px;">architecture</a> <a href="/tags/authentication/" style="font-size: 13.13px;">authentication</a> <a href="/tags/aws/" style="font-size: 15px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15.63px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.63px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.38px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.25px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.63px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.88px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.5px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 10.63px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.13px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.5px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.25px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.25px;">food</a> <a href="/tags/git/" style="font-size: 11.88px;">git</a> <a href="/tags/hexo/" style="font-size: 10.63px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.5px;">ide</a> <a href="/tags/javascript/" style="font-size: 10.63px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.63px;">jquery</a> <a href="/tags/json/" style="font-size: 11.25px;">json</a> <a href="/tags/kibana/" style="font-size: 10.63px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.63px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 14.38px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.5px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.5px;">linux</a> <a href="/tags/logging/" style="font-size: 11.88px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.88px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.75px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.75px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.5px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.63px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.25px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.63px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.25px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/random/" style="font-size: 11.25px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.88px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.25px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.63px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.88px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 13.13px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.5px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.63px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.25px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.63px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.75px;">structural patterns</a> <a href="/tags/typescript/" style="font-size: 10.63px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.38px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.63px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.75px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 18.13px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  <script src="/js/search.js"></script>
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
