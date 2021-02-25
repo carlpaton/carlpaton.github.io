@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>Testing Strategies | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP   “A test strategy is an outline that describes the testing approach of the software development cycle.”  I was recently afforded the opertunity for a deep dive into software testing strategies -">
+  <meta name="description" content="WIP   “A test strategy is an outline that describes the testing approach of the software development cycle.”   https://en.wikipedia.org/wiki/Test_strategy  I was recently afforded the opertunity for">
 <meta name="keywords" content="wip,software testing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Testing Strategies">
 <meta property="og:url" content="https://carlpaton.github.io/2021/01/testing-strategies/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP   “A test strategy is an outline that describes the testing approach of the software development cycle.”  I was recently afforded the opertunity for a deep dive into software testing strategies -">
+<meta property="og:description" content="WIP   “A test strategy is an outline that describes the testing approach of the software development cycle.”   https://en.wikipedia.org/wiki/Test_strategy  I was recently afforded the opertunity for">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-02-24T22:30:14.641Z">
+<meta property="og:updated_time" content="2021-02-25T00:01:33.723Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Testing Strategies">
-<meta name="twitter:description" content="WIP   “A test strategy is an outline that describes the testing approach of the software development cycle.”  I was recently afforded the opertunity for a deep dive into software testing strategies -">
+<meta name="twitter:description" content="WIP   “A test strategy is an outline that describes the testing approach of the software development cycle.”   https://en.wikipedia.org/wiki/Test_strategy  I was recently afforded the opertunity for">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -123,15 +123,68 @@ ga('send', 'pageview');
 <blockquote>
 <p>“A test strategy is an outline that describes the testing approach of the software development cycle.”</p>
 </blockquote>
-<p>I was recently afforded the opertunity for a deep dive into software testing strategies - it was a amazing! I’ve realized that different teams have a different understanding and naming of tests. As long as the team agree and document the stratagy all will be well in the world. Its also no always best practice to do every kind of test possible, as a team you need to agree on your working/social contracts and then add this to your DoD (Definition of done).</p>
-<h3 id="Unit-Test"><a href="#Unit-Test" class="headerlink" title="Unit Test"></a>Unit Test</h3><h3 id="Component-Test"><a href="#Component-Test" class="headerlink" title="Component Test"></a>Component Test</h3><h3 id="E2E-Test"><a href="#E2E-Test" class="headerlink" title="E2E Test"></a>E2E Test</h3><h3 id="Integration-Test"><a href="#Integration-Test" class="headerlink" title="Integration Test"></a>Integration Test</h3><h3 id="Acceptance-Test"><a href="#Acceptance-Test" class="headerlink" title="Acceptance Test"></a>Acceptance Test</h3><h3 id="Load-Test"><a href="#Load-Test" class="headerlink" title="Load Test"></a>Load Test</h3><h3 id="Penetration-Test"><a href="#Penetration-Test" class="headerlink" title="Penetration Test"></a>Penetration Test</h3><h3 id="Accessibility-Test"><a href="#Accessibility-Test" class="headerlink" title="Accessibility Test"></a>Accessibility Test</h3><h3 id="Refrences"><a href="#Refrences" class="headerlink" title="Refrences"></a>Refrences</h3><ul>
+<ul>
 <li><a href="https://en.wikipedia.org/wiki/Test_strategy" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Test_strategy</a></li>
+</ul>
+<p>I was recently afforded the opertunity for a deep dive into software testing strategies - it was a amazing! I’ve realized that different teams have a different understanding and naming of tests. As long as the team agree and document the stratagy all will be well in the world. Its also not always best practice to do every kind of test possible, as a team you need to agree on your working/social contracts and then add this to your DoD (Definition of done).</p>
+<h3 id="Unit-Test"><a href="#Unit-Test" class="headerlink" title="Unit Test"></a>Unit Test</h3><p>These define the smallest unit of work we can have, normally a well written method in a class that takes advantage of <a href="/2018/04/dependency-inversion-principle-dip/">dependency inversion</a>.</p>
+<p>Key points</p>
+<ul>
+<li>This will have a very narrow scope &amp; test logic would be given <code>x</code> the behaviour is <code>y</code>, this doesnt guarantee feature works</li>
+<li><a href="/2018/09/mocking-frameworks/">Mock</a> out all dependencies</li>
+<li>Pick a <a href="/2018/09/unit-testing-frameworks/">Unit Testing Framework</a></li>
+<li>Decide on a pattern and stick to it, <a href="https://gist.github.com/carlpaton/77ae278b904cab2a19423809a69c2c67" target="_blank" rel="noopener">AAA</a> is the only one I really know</li>
+</ul>
+<h3 id="Component-Test"><a href="#Component-Test" class="headerlink" title="Component Test"></a>Component Test</h3><p>This will test a deployable boundary (example: the BFF) and generally dependencies outside the boundary are mocked.</p>
+<p>Key points</p>
+<ul>
+<li>Makes sense to run this on PR builds</li>
+<li>Wiremocks are useful here</li>
+</ul>
+<h3 id="Integration-Test"><a href="#Integration-Test" class="headerlink" title="Integration Test"></a>Integration Test</h3><p>This will cross boundaries and the real implementation of resources are used, this is normally done in a UAT environment.</p>
+<p>Key points</p>
+<ul>
+<li>Ensures that the external services mocked out in <code>Component Tests</code> is right</li>
+<li>Wiremocks are useful here</li>
+</ul>
+<h3 id="End-to-end-testing-E2E-Test"><a href="#End-to-end-testing-E2E-Test" class="headerlink" title="End to end testing (E2E Test)"></a>End to end testing (E2E Test)</h3><p>These are slow, expensive and generally pretty flakey! A great testing tool for this is <a href="https://www.cypress.io/" target="_blank" rel="noopener">cypress</a></p>
+<p>Key points</p>
+<ul>
+<li>Only do these tests for thr most common flows</li>
+<li>Normally tests the happy path</li>
+<li>Driven by the UI (User Interface) and can test down the stack to the database</li>
+<li>Should cover what you would manually test after deployment</li>
+</ul>
+<h3 id="Acceptance-Test"><a href="#Acceptance-Test" class="headerlink" title="Acceptance Test"></a>Acceptance Test</h3><p>These are manual tests done by a user, should be the engineer and QA doing these to ensure they fifull the stories acceptance criteria and mandatory requirements.</p>
+<p>Key points</p>
+<ul>
+<li>Tests the UI from a user perspective and is is focused on user behaviour</li>
+</ul>
+<h3 id="Load-Test"><a href="#Load-Test" class="headerlink" title="Load Test"></a>Load Test</h3><ul>
+<li><a href="https://ardalis.com/load-testing-and-the-requests-per-second-curve/" target="_blank" rel="noopener">https://ardalis.com/load-testing-and-the-requests-per-second-curve/</a></li>
+</ul>
+<h3 id="Penetration-Test"><a href="#Penetration-Test" class="headerlink" title="Penetration Test"></a>Penetration Test</h3><blockquote>
+<p>“A penetration test, colloquially known as a pen test, pentest or ethical hacking, is an authorized simulated cyberattack on a computer system, performed to evaluate the security of the system;”</p>
+</blockquote>
+<p>This is things like DDOS (Distributed Denial of Service) or known variabilities on the host or code base.</p>
+<ul>
+<li><a href="https://cipher.com/blog/the-types-of-pentests-you-must-know-about/" target="_blank" rel="noopener">https://cipher.com/blog/the-types-of-pentests-you-must-know-about/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Penetration_test" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Penetration_test</a></li>
+</ul>
+<h3 id="Accessibility-Test"><a href="#Accessibility-Test" class="headerlink" title="Accessibility Test"></a>Accessibility Test</h3><p>I briefly touched on this at a previouse employer, we used <a href="https://carlpaton.github.io/2019/02/accessibility-utilities/">NVDA screen reader</a> to look for accessibility tags and help make our HTML more semantic. Things like ALT tags in images, linking text in A HREF anchors that made sense, tabindex for keyboard control ect.</p>
+<blockquote>
+<p>“Semantic HTML is the use of HTML markup to reinforce the semantics, or meaning, of the information in webpages and web applications rather than merely to define its presentation or look.”</p>
+</blockquote>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML</a></li>
+<li><a href="https://www.w3schools.com/html/html_accessibility.asp" target="_blank" rel="noopener">https://www.w3schools.com/html/html_accessibility.asp</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Semantic_HTML" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Semantic_HTML</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2021/01/testing-strategies/" data-id="cklk1tb2t00097oonnbacyz5h" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2021/01/testing-strategies/" data-id="cklk3qc2300hi4gon6y7o16qe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
