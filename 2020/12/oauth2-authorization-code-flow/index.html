@@ -29,7 +29,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="Grant Type - Authorization Code Flow, steps 1-&amp;gt;7 are explained below.  The flows below assume you have registered the client (your application) and created a user. Typically registration involves a">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://carlpaton.github.io/d/oauth2-authorization-code-flow/workflow.png">
-<meta property="og:updated_time" content="2020-12-03T22:11:38.999Z">
+<meta property="og:updated_time" content="2021-03-04T04:10:41.360Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OAuth2 Authorization Code Flow">
 <meta name="twitter:description" content="Grant Type - Authorization Code Flow, steps 1-&amp;gt;7 are explained below.  The flows below assume you have registered the client (your application) and created a user. Typically registration involves a">
@@ -148,8 +148,13 @@ ga('send', 'pageview');
 <li>The authorization code is then programatically sent back to <code>https://authorisation-service.local/token</code> with a POST request <strong>to exchange it for an access token</strong>. This POST includes your <code>client_secret</code></li>
 </ol>
 <ul>
+<li>Its considered best practice to to include the <code>Proof Key for Code Exchange</code> (PKCE) - “pixy” flow here</li>
+<li>You just need to provide a <code>client_secret</code> authorization code. </li>
 <li><code>client_secret</code> would have been provided when the client was registered.</li>
 </ul>
+<blockquote>
+<p>“The key difference between the PKCE flow and the standard Authorization Code flow is users aren’t required to provide a client_secret. PKCE reduces security risks for native apps, as embedded secrets aren’t required in source code, which limits exposure to reverse engineering.” - developers.onelogin.com</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST https://authorisation-service.local/token</span><br><span class="line"></span><br><span class="line">grant_type=authorization_code</span><br><span class="line">&amp;client_id=dd938314e8e1</span><br><span class="line">&amp;client_secret=20166c44bc7e</span><br><span class="line">&amp;redirect_uri=https://your-application.local/authorization-code.html</span><br><span class="line">&amp;code=ca9c004f825b</span><br></pre></td></tr></table></figure>
 <ol start="6">
 <li>The response could look like</li>
@@ -163,12 +168,13 @@ ga('send', 'pageview');
 <li><a href="https://aaronparecki.com/oauth-2-simplified/#web-server-apps" target="_blank" rel="noopener">https://aaronparecki.com/oauth-2-simplified/#web-server-apps</a></li>
 <li><a href="https://oauth.net/2/grant-types/authorization-code/" target="_blank" rel="noopener">https://oauth.net/2/grant-types/authorization-code/</a></li>
 <li><a href="https://developer.okta.com/blog/2018/04/10/oauth-authorization-code-grant-type" target="_blank" rel="noopener">https://developer.okta.com/blog/2018/04/10/oauth-authorization-code-grant-type</a></li>
+<li><a href="https://developers.onelogin.com/openid-connect/guides/auth-flow-pkce" target="_blank" rel="noopener">https://developers.onelogin.com/openid-connect/guides/auth-flow-pkce</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/12/oauth2-authorization-code-flow/" data-id="cklucb57700c19gon0at1mbuy" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/12/oauth2-authorization-code-flow/" data-id="cklucey8d00b25son22bepklc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/authentication/">authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
