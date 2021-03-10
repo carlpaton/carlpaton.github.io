@@ -20,18 +20,18 @@ ga('send', 'pageview');
   
   <title>Command and Query Responsibility Segregation (CQRS) | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP   “The Command and Query Responsibility Segregation (CQRS) pattern separates read and update operations for a data store. Implementing CQRS in your application can maximize its performance, scala">
+  <meta name="description" content="WIP   Use Case: When applications change frequently, you can updated the Queries &amp;amp; Commands without affecting each other. When the Application is read heavy, you can then split the database into">
 <meta name="keywords" content="patterns principles,wip,architecture">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Command and Query Responsibility Segregation (CQRS)">
 <meta property="og:url" content="https://carlpaton.github.io/2020/08/cqrs/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP   “The Command and Query Responsibility Segregation (CQRS) pattern separates read and update operations for a data store. Implementing CQRS in your application can maximize its performance, scala">
+<meta property="og:description" content="WIP   Use Case: When applications change frequently, you can updated the Queries &amp;amp; Commands without affecting each other. When the Application is read heavy, you can then split the database into">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-03-06T11:02:47.864Z">
+<meta property="og:updated_time" content="2021-03-10T10:11:21.502Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Command and Query Responsibility Segregation (CQRS)">
-<meta name="twitter:description" content="WIP   “The Command and Query Responsibility Segregation (CQRS) pattern separates read and update operations for a data store. Implementing CQRS in your application can maximize its performance, scala">
+<meta name="twitter:description" content="WIP   Use Case: When applications change frequently, you can updated the Queries &amp;amp; Commands without affecting each other. When the Application is read heavy, you can then split the database into">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -121,11 +121,65 @@ ga('send', 'pageview');
 <p><a href="/2017/06/work-in-progress/">WIP</a></p>
 </blockquote>
 <blockquote>
+<p>Use Case: When applications change frequently, you can updated the Queries &amp; Commands without affecting each other. When the Application is read heavy, you can then split the database into a Read (performance tuned for read) and Write (Fully normalized)</p>
+</blockquote>
+<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><blockquote>
 <p>“The Command and Query Responsibility Segregation (CQRS) pattern separates read and update operations for a data store. Implementing CQRS in your application can maximize its performance, scalability, and security. The flexibility created by migrating to CQRS allows a system to better evolve over time and prevents update commands from causing merge conflicts at the domain level.”</p>
 </blockquote>
-<h3 id="CQRS-using-C-and-MediatR"><a href="#CQRS-using-C-and-MediatR" class="headerlink" title="CQRS using C# and MediatR"></a>CQRS using C# and MediatR</h3><p>Jonathan Williams: CQRS using C# and MediatR</p>
+<p>CQRS has 3 building blocks</p>
+<table>
+<thead>
+<tr>
+<th>Building block</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Command / Query</td>
+<td>All the data we need to execute the Query or Command. This is represented as an object instance.</td>
+</tr>
+<tr>
+<td>Handler</td>
+<td>Business logic to execute the Command or Query. This returns a response.</td>
+</tr>
+<tr>
+<td>Response</td>
+<td>Return data that we want to return encapsulated as an object.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Net-5-C-9-amp-MediatR"><a href="#Net-5-C-9-amp-MediatR" class="headerlink" title=".Net 5 C# 9 &amp; MediatR"></a>.Net 5 C# 9 &amp; MediatR</h3><p>All of the examples below are from <a href="https://github.com/carlpaton/CQRSInDotnetCore" target="_blank" rel="noopener">Jonathan Williams: CQRS using C# and MediatR</a></p>
+<p>Dependancy libraries</p>
+<ul>
+<li><a href="https://www.nuget.org/packages/MediatR/" target="_blank" rel="noopener">MediatR 9.0.0</a></li>
+<li><a href="https://www.nuget.org/packages/MediatR.Extensions.Microsoft.DependencyInjection/" target="_blank" rel="noopener">MediatR.Extensions.Microsoft.DependencyInjection 9.0.0</a></li>
+</ul>
+<p>Jonathan keeps the code together in a static class for findability and describes this as a container for the building blocks. Type of <code>record</code> is recommended for <code>Query</code>, <code>Command</code> and <code>Responses</code> as they are immutable, these are DTO’s (data transfer objects) so we dont want them to change.</p>
+<h4 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h4><p>All the code below has been simplified for brevity, the full <a href="https://github.com/carlpaton/CQRSInDotnetCore" target="_blank" rel="noopener">source is on github</a>. The <code>Repository</code> is just a data repository that returns a <code>List&lt;Todo&gt; Todos</code> where type <code>Todo</code> is a domain entity with properties <code>Id</code>, <code>Name</code> and <code>Complete</code>.</p>
+<ol>
+<li>In a <code>Command</code> folder create the static class <code>AddTodo</code></li>
+<li>Add the record <code>Command</code>, class <code>Handler</code> and record <code>Response</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">namespace CQRSTest.Commands</span><br><span class="line">&#123;</span><br><span class="line">    public static class AddTodo</span><br><span class="line">    &#123;</span><br><span class="line">        // Command</span><br><span class="line">        public record Command(string Name) : IRequest&lt;int&gt;;</span><br><span class="line"></span><br><span class="line">        // Handler</span><br><span class="line">        public class Handler : IRequestHandler&lt;Command, int&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            private readonly Repository repository;</span><br><span class="line"></span><br><span class="line">            public Handler(Repository repository)</span><br><span class="line">            &#123;</span><br><span class="line">                this.repository = repository;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public async Task&lt;Response&gt; Handle(Command request, CancellationToken cancellationToken)</span><br><span class="line">            &#123;</span><br><span class="line">                var hardCodedId = 42; // we dont have a real database for this demo</span><br><span class="line">                var todo = new Todo &#123; Id = hardCodedId, Name = request.Name &#125;;</span><br><span class="line">                repository.Todos.Add(todo);</span><br><span class="line"></span><br><span class="line">                return hardCodedId;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Response (the code above just returned an int, I included this for completeness as the handler could return a complex type)</span><br><span class="line">        public record Response(int Id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>In a <code>Queries</code> folder create the static class <code>GetTodoById</code>.</li>
+<li>Add the record <code>Query</code>, <code>Handler</code> and record <code>Response</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">namespace CQRSTest.Queries</span><br><span class="line">&#123;</span><br><span class="line">    public static class GetTodoById</span><br><span class="line">    &#123;</span><br><span class="line">        // Query</span><br><span class="line">        public record Query(int Id) : IRequest&lt;Response&gt;;</span><br><span class="line"></span><br><span class="line">        // Handler</span><br><span class="line">        public class Handler : IRequestHandler&lt;Query, Response&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            private readonly Repository repository;</span><br><span class="line"></span><br><span class="line">            public Handler(Repository repository)</span><br><span class="line">            &#123;</span><br><span class="line">                this.repository = repository;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public async Task&lt;Response&gt; Handle(Query request, CancellationToken cancellationToken)</span><br><span class="line">            &#123;</span><br><span class="line">                var todo = repository.Todos.FirstOrDefault(x =&gt; x.Id == request.Id);</span><br><span class="line">                return todo == null ? null : new Response &#123; Id = todo.Id, Name = todo.Name, Completed = todo.Completed &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Response</span><br><span class="line">        public record Response (int Id, string Name, bool Completed);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>In the controller use constructor injection to inject <code>IMediator mediator</code>, then use <code>mediator.Send(requestObject)</code> to infer the relative <code>Command</code> or <code>Query</code>.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">namespace CQRSTest.Controllers</span><br><span class="line">&#123;</span><br><span class="line">    [ApiController]</span><br><span class="line">    public class TodoController : ControllerBase</span><br><span class="line">    &#123;</span><br><span class="line">        private readonly IMediator mediator;</span><br><span class="line"></span><br><span class="line">        public TodoController(IMediator mediator)</span><br><span class="line">        &#123;</span><br><span class="line">            this.mediator = mediator;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        [HttpGet(&quot;/&#123;id&#125;&quot;)]</span><br><span class="line">        public async Task&lt;IActionResult&gt; GetTodoById(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            var query = new GetTodoById.Query(id);</span><br><span class="line">            var response = await mediator.Send(query);</span><br><span class="line">            return response == null ? NotFound() : Ok(response);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        [HttpPost(&quot;&quot;)]</span><br><span class="line">        public async Task&lt;IActionResult&gt; AddTodo(AddTodo.Command command) =&gt; Ok(await mediator.Send(command));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>In the application startup pipeline add Mediator to the dependancy injection container using the extension method <code>AddMediatR</code>. Passing the assembly <code>Startup</code> tells mediator to use refection to include our classes above in the dependancy injection container (as they are in the same assembly as Startup). It will be looking for the <code>IRequestHandler</code> interface.</li>
+</ol>
+<p>The order is important, any <code>Repository</code> being used needs to be added to the container first as this will be resolved/injected into the handlers constructor.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">services.AddSingleton&lt;Repository&gt;();</span><br><span class="line">services.AddMediatR(typeof(Startup).Assembly);</span><br></pre></td></tr></table></figure>
+<p>Jonathan did a sweet video covering the code above.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/mdzEKGlH0_Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+<h3 id="Net-3-1"><a href="#Net-3-1" class="headerlink" title=".Net 3.1"></a>.Net 3.1</h3><p>TODO</p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a href="https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs</a></li>
 <li><a href="https://microservices.io/patterns/data/cqrs.html" target="_blank" rel="noopener">https://microservices.io/patterns/data/cqrs.html</a></li>
@@ -135,7 +189,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2020/08/cqrs/" data-id="cklxmbx9d003ul0onk3qf2gse" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2020/08/cqrs/" data-id="ckm3a90de003lnkon8z7f7903" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/architecture/">architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/">patterns principles</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/">wip</a></li></ul>
