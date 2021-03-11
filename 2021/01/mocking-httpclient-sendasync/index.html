@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="In the past the only way I’ve known how to deal with mocking Http/Web clients is to wrap the methods using a custom interface. This is a lot of overhead and I feel teaches us its ok to write code that">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-02-08T19:53:30.672Z">
+<meta property="og:updated_time" content="2021-03-11T08:18:25.014Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mocking HttpClient SendAsync">
 <meta name="twitter:description" content="In the past the only way I’ve known how to deal with mocking Http/Web clients is to wrap the methods using a custom interface. This is a lot of overhead and I feel teaches us its ok to write code that">
@@ -136,6 +136,8 @@ ga('send', 'pageview');
 <p>3.1. The work around is to look at the <code>HttpClient</code> constructor overloads, one takes an instance of <code>HttpMessageHandler</code> which has an abstract <code>SendAsync</code> method that is used by HttpClient under the hood. Credit to <a href="https://dev.to/gautemeekolsen/how-to-test-httpclient-with-moq-in-c-2ldp" target="_blank" rel="noopener">Gaute Meek Olsen’s</a> post explaining this far better than I could.</p>
 <p>Create the <code>httpMessageHandlerMock</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var httpMessageHandlerMock = new Mock&lt;HttpMessageHandler&gt;();</span><br><span class="line">var response = new HttpResponseMessage &#123; StatusCode = HttpStatusCode.OK &#125;;</span><br></pre></td></tr></table></figure>
+<p>You can also add to the response body if needs be, the below is manual json - best to do it with a <a href="/2020/01/json-serializers/">serialized object</a> of what ever your end point returns.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var response = new HttpResponseMessage &#123; </span><br><span class="line">  StatusCode = HttpStatusCode.OK </span><br><span class="line">  Content = new StringContent(@&quot;[&#123; &quot;&quot;id&quot;&quot;: 1, &quot;&quot;desc&quot;&quot;: &quot;&quot;foo&quot;&quot;&#125;]&quot;)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>Then define a <code>.Setup</code> to return the response above. As <code>SendAsync</code> is protected we need to use <code>.Protected()</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">httpMessageHandlerMock</span><br><span class="line">  .Protected()</span><br><span class="line">  .Setup&lt;Task&lt;HttpResponseMessage&gt;&gt;(</span><br><span class="line">    &quot;SendAsync&quot;,</span><br><span class="line">    ItExpr.IsAny&lt;HttpRequestMessage&gt;(),</span><br><span class="line">    ItExpr.IsAny&lt;CancellationToken&gt;())</span><br><span class="line">  .ReturnsAsync(response);</span><br></pre></td></tr></table></figure>
 <p>Create the client for dependancy injection</p>
@@ -150,7 +152,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2021/01/mocking-httpclient-sendasync/" data-id="ckm3bevax0097jsonpiokvd0m" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2021/01/mocking-httpclient-sendasync/" data-id="ckm4lnm7q00b6n8onmfkhbn8w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocking/">mocking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/">software testing</a></li></ul>
