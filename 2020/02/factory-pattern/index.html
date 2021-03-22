@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Factory Pattern | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Motivation &amp; DefinitionA factory component’s responsibility is solely for the wholesale creation of objects so non-piecewise like a builder pattern. Motivational usage of a factory could include:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Factory Pattern">
+<meta property="og:url" content="https://carlpaton.github.io/2020/02/factory-pattern/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Motivation &amp; DefinitionA factory component’s responsibility is solely for the wholesale creation of objects so non-piecewise like a builder pattern. Motivational usage of a factory could include:">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-02-02T11:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-04T22:37:58.544Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="patterns principles">
+<meta property="article:tag" content="creational patterns">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-factory-pattern" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/factory-pattern/" class="article-date">
+  <time datetime="2020-02-02T11:00:00.000Z" itemprop="datePublished">2020-Feb</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Factory Pattern
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Motivation-amp-Definition"><a href="#Motivation-amp-Definition" class="headerlink" title="Motivation &amp; Definition"></a>Motivation &amp; Definition</h3><p>A factory component’s responsibility is solely for the <strong>wholesale creation of objects</strong> so <a href="/2020/04/builder-pattern/">non-piecewise like a builder pattern</a>. Motivational usage of a factory could include:</p>
+<ul>
+<li>Object creation logic sometimes becomes too convoluted</li>
+<li>Constructor is not descriptive, its name will match the name of the containing type and additional information about how the object is constructed would need to be communicated in the summary documentation above the method. You cannot overload with same sets of arguments with different names. Optional parameters are confusing and not a great idea for a constructor.</li>
+<li>Entire object creation (so <a href="/2020/04/builder-pattern/">non-piecewise like a builder pattern</a>) is outsourced to separate function (<strong>factory method</strong>), may exist in a separate class (<strong>factory</strong>), hierarchy of factories (<strong>abstract factory</strong>)</li>
+</ul>
+<p>Point Example from <a target="_blank" rel="noopener" href="https://www.udemy.com/user/dmitrinesteruk/">Dmitri Nesteruk</a> of a constructor that can be simplified by use of a factory.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Point</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="built_in">double</span> _x, _y;</span><br><span class="line"></span><br><span class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">	<span class="comment"><span class="doctag">///</span> Initializes a point from EITHER cartesian or polar</span></span><br><span class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;a&quot;&gt;</span>x if cartesian, rho if polar<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;b&quot;&gt;</span>y if cartesian, theta if polar<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;cs&quot;&gt;</span>Coordinate system enum.<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Point</span>(<span class="params"><span class="built_in">double</span> a, <span class="built_in">double</span> b, CoordinateSystem cs = CoordinateSystem.Cartesian</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		<span class="keyword">switch</span> (cs)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span> CoordinateSystem.Polar:</span><br><span class="line">				_x = a * Math.Cos(b);</span><br><span class="line">				_y = a * Math.Sin(b);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="literal">default</span>:</span><br><span class="line">				_x = a;</span><br><span class="line">				_y = b;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Factory-Method"><a href="#Factory-Method" class="headerlink" title="Factory Method"></a>Factory Method</h3><blockquote>
+<p>The factory method is used to replace class constructors, abstracting the process of object generation so that the type of the object instantiated can be determined at run-time.</p>
+</blockquote>
+<p>Refactoring the example above to use factory methods:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Point</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="built_in">double</span> _x, _y;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// this is a factory method</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Point <span class="title">NewCartesianPoint</span>(<span class="params"><span class="built_in">double</span> x, <span class="built_in">double</span> y</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Point(x, y);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// this is a factory method</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Point <span class="title">NewPolarPoint</span>(<span class="params"><span class="built_in">double</span> rho, <span class="built_in">double</span> theta</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Point(</span><br><span class="line">			rho * Math.Cos(theta), </span><br><span class="line">			rho * Math.Sim(theta));</span><br><span class="line">	&#125;	</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Point</span>(<span class="params"><span class="built_in">double</span> x, <span class="built_in">double</span> y</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		_x = x;</span><br><span class="line">		_y = y;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Factory"><a href="#Factory" class="headerlink" title="Factory"></a>Factory</h3><blockquote>
+<p>A factory is a separate component that knows how to initialize types in a particular way.</p>
+</blockquote>
+<p>It can be argued that the <strong>factory methods</strong> above violates <a href="/2018/05/single-responsibility-principle-srp/">SRP (Single Responsibility Principle)</a> as creation of the object and what it actually does are different concerns. You can move the factory methods into their own class. </p>
+<p>A <strong>caveat</strong> however would then be that the constructor now needs to be public and the consumer can access it. If your assembly was being downloaded as a package (Example: <a target="_blank" rel="noopener" href="https://www.nuget.org/packages">Nuget</a>) you can mark the constructor as <strong>internal</strong> which will fix this problem however this is not always the case.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> PointFactory</span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Point <span class="title">NewCartesianPoint</span>(<span class="params"><span class="built_in">double</span> x, <span class="built_in">double</span> y</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Point(x, y);</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">	<span class="function"><span class="keyword">public</span> Point <span class="title">NewPolarPoint</span>(<span class="params"><span class="built_in">double</span> rho, <span class="built_in">double</span> theta</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Point(</span><br><span class="line">			rho * Math.Cos(theta), </span><br><span class="line">			rho * Math.Sim(theta));</span><br><span class="line">	&#125;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Point</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="built_in">double</span> _x, _y;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Point</span>(<span class="params"><span class="built_in">double</span> x, <span class="built_in">double</span> y</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		_x = x;</span><br><span class="line">		_y = y;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Building on the above you can solve the public constructor issue by using an <strong>inner factory</strong> which would simply put the factory back inside Point as an inner class. They don’t have to be static but its the simplest.</p>
+<p>This is how some of the .net framework is written, example:  <code>Task.Factory.StartNew ...</code></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Point</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="built_in">double</span> _x, _y;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Factory</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Point <span class="title">NewCartesianPoint</span>(<span class="params"><span class="built_in">double</span> x, <span class="built_in">double</span> y</span>)</span></span><br><span class="line"><span class="function"></span>		&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> Point(x, y);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Point <span class="title">NewPolarPoint</span>(<span class="params"><span class="built_in">double</span> rho, <span class="built_in">double</span> theta</span>)</span></span><br><span class="line"><span class="function"></span>		&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> Point(</span><br><span class="line">				rho * Math.Cos(theta), </span><br><span class="line">				rho * Math.Sim(theta));</span><br><span class="line">		&#125;    </span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Point</span>(<span class="params"><span class="built_in">double</span> x, <span class="built_in">double</span> y</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		_x = x;</span><br><span class="line">		_y = y;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// then call as </span></span><br><span class="line"><span class="keyword">var</span> point = Point.Factory.NewCartesianPoint(<span class="number">0</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Abstract-Factory"><a href="#Abstract-Factory" class="headerlink" title="Abstract Factory"></a>Abstract Factory</h3><blockquote>
+<p>The abstract factory pattern is used to provide a client with a set of related or dependent objects. The “family” of objects created by the factory are determined at run-time. These objects can be interfaces or abstract classes.</p>
+</blockquote>
+<p>This is relatively <strong>rarely used</strong> outside of a large complicated code bases however smaller contrived examples can be explained using a simple <a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/tree/master/Class%20Library/PatternsAndPrinciples">shopping cart</a> which follows <a href="/2018/04/open-closed-principle-ocp/">OCP (Open Close Principle)</a>. </p>
+<h4 id="Cart-Example"><a href="#Cart-Example" class="headerlink" title="Cart Example"></a>Cart Example</h4><p>This is a <a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/tree/master/Class%20Library/PatternsAndPrinciples/ShoppingCart">cart example</a> based on code done by <a target="_blank" rel="noopener" href="https://ardalis.com/?s=solid">Steve Smith aka Ardalis</a></p>
+<p>Create the interface for the rules <a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/Class%20Library/PatternsAndPrinciples/ShoppingCart/Interfaces/IPriceRule.cs">ShoppingCart/Interfaces/IPriceRule.cs</a></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IPriceRule</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="built_in">bool</span> <span class="title">IsMatch</span>(<span class="params">OrderItemModel item</span>)</span>;</span><br><span class="line">	<span class="function"><span class="built_in">decimal</span> <span class="title">CalculatePrice</span>(<span class="params">OrderItemModel item</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Create the interface for the calculator <a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/Class%20Library/PatternsAndPrinciples/ShoppingCart/Interfaces/IPricingCalculator.cs">ShoppingCart/Interfaces/IPricingCalculator.cs</a></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IPricingCalculator</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="built_in">decimal</span> <span class="title">CalculatePrice</span>(<span class="params">OrderItemModel item</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Implement some rules <a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/Class%20Library/PatternsAndPrinciples/ShoppingCart/Business/PriceRules/EachPriceRule.cs">ShoppingCart/Business/PriceRules/EachPriceRule.cs</a></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">EachPriceRule</span> : <span class="title">IPriceRule</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">IsMatch</span>(<span class="params">OrderItemModel item</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">    	<span class="keyword">return</span> item.Sku.StartsWith(<span class="string">&quot;EACH&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">decimal</span> <span class="title">CalculatePrice</span>(<span class="params">OrderItemModel item</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">		<span class="keyword">return</span> item.Quantity * <span class="number">5</span>m;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Implement the calculator <a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/Class%20Library/PatternsAndPrinciples/ShoppingCart/Business/PricingCalculator.cs">PricingCalculator.cs</a>, the <code>IEnumerable&lt;IPriceRule&gt;</code> would be injected using <a href="/tags/dependency-injection/">dependency injection</a>. </p>
+<ul>
+<li><strong>NOTE:</strong> If the calculator returned <code>IPriceRule</code> instead of the <code>decimal</code> it would be a true factory, calling <code>.First</code> is still retrieving an <code>IPriceRule</code> so the pattern is still the same. If you look at the <code>Hot Drink Machine</code> example below it does return the rules interface. </li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PricingCalculator</span> : <span class="title">IPricingCalculator</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">readonly</span> IEnumerable&lt;IPriceRule&gt; _pricingRules;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">PricingCalculator</span>(<span class="params">IEnumerable&lt;IPriceRule&gt; pricingRules</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		_pricingRules = pricingRules;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">decimal</span> <span class="title">CalculatePrice</span>(<span class="params">OrderItemModel item</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">		<span class="keyword">return</span> _pricingRules</span><br><span class="line">			.First(r =&gt; r.IsMatch(item))</span><br><span class="line">			.CalculatePrice(item);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Then to consume inject <a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/Class%20Library/PatternsAndPrinciples/ShoppingCart/Services/CartService.cs">IPricingCalculator</a> as <code>_pricingCalculator</code>, its <code>CalculatePrice</code> method will find the correct rule from the list based on item and then fluently call the rules <code>CalculatePrice</code> method.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_pricingCalculator.CalculatePrice(item);</span><br></pre></td></tr></table></figure>
+
+<h4 id="Hot-Drink-Machine-Example"><a href="#Hot-Drink-Machine-Example" class="headerlink" title="Hot Drink Machine Example"></a>Hot Drink Machine Example</h4><p>A <code>HotDrinkMachine</code> example from <a target="_blank" rel="noopener" href="https://www.udemy.com/user/dmitrinesteruk/">Dmitri Nesteruk</a> explains that an abstract factory doesn’t necessarily need to return a family of objects but can return different objects with their own separate factories. This can be expanded to return families of objects per the text book definition.</p>
+<p>The code creation would be done as follows:</p>
+<ol>
+<li>Create the interface <code>IHotDrink</code></li>
+<li>Create the implementations, here <code>internal</code> insinuates we wont be giving out these classes but rather the <code>IHotDrink</code></li>
+<li>Create factory interface <code>IHotDrinkFactory</code></li>
+<li>Create the factory, the assumption here is the process for making Tea and Coffee is vastly different and therefor warrants their own factory. So we will create two factory objects. Again, here <code>internal</code> insinuates we wont be giving out these classes but rather the <code>IHotDrinkFactory</code>. </li>
+<li>Create the <code>HotDrinkMachine</code> class, there are two ways he loaded them up <ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/.Net%20Core%20Console%20Application/PatternsAndPrinciples/FactoryPattern/AbstractFactoryDemo.cs">Dictionary from enumeration AvailableDrink that maps to available factories</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/.Net%20Core%20Console%20Application/PatternsAndPrinciples/FactoryPattern/AbstractFactoryDemo2.cs">HotDrinkMachine using reflection, typically you would use DI to inject these</a></li>
+</ol>
+</li>
+<li>Finally this can be called as</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> machine = <span class="keyword">new</span> HotDrinkMachine();</span><br><span class="line">IHotDrink drink = machine.MakeDrink(); <span class="comment">// 1st example had params here</span></span><br><span class="line">drink.Consume();</span><br></pre></td></tr></table></figure>
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://dzone.com/articles/factory-method-vs-abstract">https://dzone.com/articles/factory-method-vs-abstract</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/abstract-factory-pattern/">https://www.geeksforgeeks.org/abstract-factory-pattern/</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.blackwasp.co.uk/gofpatterns.aspx">http://www.blackwasp.co.uk/gofpatterns.aspx</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.dotnettricks.com/learn/designpatterns/factory-method-design-pattern-dotnet">https://www.dotnettricks.com/learn/designpatterns/factory-method-design-pattern-dotnet</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.c-sharpcorner.com/article/factory-method-design-pattern-in-c-sharp/">https://www.c-sharpcorner.com/article/factory-method-design-pattern-in-c-sharp/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2020/02/factory-pattern/" data-id="ckml3zlww005vpoona0nk13vf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/creational-patterns/" rel="tag">creational patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/" rel="tag">patterns principles</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/02/facade-pattern/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Facade Pattern
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/02/flyweight-pattern/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Flyweight Pattern</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

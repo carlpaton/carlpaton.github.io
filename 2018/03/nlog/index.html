@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>NLog | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Creates and manages instances of Logger objects. Install from nuget: NLog 4.7.0 Configuration Create NLog.config with default template data  12345678910111213141516171819202122232425262728293031323334">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLog">
+<meta property="og:url" content="https://carlpaton.github.io/2018/03/nlog/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Creates and manages instances of Logger objects. Install from nuget: NLog 4.7.0 Configuration Create NLog.config with default template data  12345678910111213141516171819202122232425262728293031323334">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/nlog/always-copy.jpg">
+<meta property="article:published_time" content="2018-03-28T11:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-04T22:37:58.571Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="logging">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/nlog/always-copy.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-nlog" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/nlog/" class="article-date">
+  <time datetime="2018-03-28T11:00:00.000Z" itemprop="datePublished">2018-Mar</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NLog
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Creates and manages instances of <a target="_blank" rel="noopener" href="https://nlog-project.org/documentation/v4.3.0/html/T_NLog_Logger.htm">Logger</a> objects.</p>
+<p>Install from nuget: <code>NLog 4.7.0</code></p>
+<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><ol>
+<li>Create <code>NLog.config</code> with default template data</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">nlog</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.nlog-project.org/schemas/NLog.xsd&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.nlog-project.org/schemas/NLog.xsd NLog.xsd&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">autoReload</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">throwExceptions</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">internalLogLevel</span>=<span class="string">&quot;Off&quot;</span> <span class="attr">internalLogFile</span>=<span class="string">&quot;c:\temp\nlog-internal.log&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- optional, add some variables</span></span><br><span class="line"><span class="comment">  https://github.com/nlog/NLog/wiki/Configuration-file#variables</span></span><br><span class="line"><span class="comment">  --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>=<span class="string">&quot;myvar&quot;</span> <span class="attr">value</span>=<span class="string">&quot;myvalue&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">  See https://github.com/nlog/nlog/wiki/Configuration-file</span></span><br><span class="line"><span class="comment">  for information on customizing logging rules and outputs.</span></span><br><span class="line"><span class="comment">   --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">targets</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    add your targets here</span></span><br><span class="line"><span class="comment">    See https://github.com/nlog/NLog/wiki/Targets for possible targets.</span></span><br><span class="line"><span class="comment">    See https://github.com/nlog/NLog/wiki/Layout-Renderers for the possible layout renderers.</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    Write events to a file with the date in the filename.</span></span><br><span class="line"><span class="comment">    &lt;target xsi:type=&quot;File&quot; name=&quot;f&quot; fileName=&quot;$&#123;basedir&#125;/logs/$&#123;shortdate&#125;.log&quot;</span></span><br><span class="line"><span class="comment">            layout=&quot;$&#123;longdate&#125; $&#123;uppercase:$&#123;level&#125;&#125; $&#123;message&#125;&quot; /&gt;</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">targets</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">rules</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- add your logging rules here --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    Write all events with minimal level of Debug (So Debug, Info, Warn, Error and Fatal, but not Trace)  to &quot;f&quot;</span></span><br><span class="line"><span class="comment">    &lt;logger name=&quot;*&quot; minlevel=&quot;Debug&quot; writeTo=&quot;f&quot; /&gt;</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">rules</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">nlog</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This came from: </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/NLog/NLog/dev/src/NuGet/NLog.Config/content/NLog.config">https://raw.githubusercontent.com/NLog/NLog/dev/src/NuGet/NLog.Config/content/NLog.config</a></li>
+</ul>
+<ol start="2">
+<li>Set the file to always copy</li>
+</ol>
+<p><img src="/d/nlog/always-copy.jpg" alt="Always Copy"></p>
+<ol start="3">
+<li>Configure the file</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">targets</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">target</span> <span class="attr">name</span>=<span class="string">&quot;logfile&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">xsi:type</span>=<span class="string">&quot;File&quot;</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">archiveNumbering</span>=<span class="string">&quot;Date&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">archiveEvery</span>=<span class="string">&quot;Day&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">maxArchiveFiles</span>=<span class="string">&quot;50&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">bufferSize</span>=<span class="string">&quot;102400&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">fileName</span>=<span class="string">&quot;appname.log&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">targets</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">rules</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">&quot;*&quot;</span> <span class="attr">writeTo</span>=<span class="string">&quot;logfile&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">rules</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Example-use"><a href="#Example-use" class="headerlink" title="Example use"></a>Example use</h3><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> logger = NLog.LogManager.GetCurrentClassLogger();</span><br><span class="line"></span><br><span class="line">logger.Debug(<span class="string">&quot;Some debug&quot;</span>);</span><br><span class="line">logger.Debug(<span class="string">&quot;Some other debug&quot;</span>); </span><br><span class="line">logger.Info(<span class="string">&quot;Some info.&quot;</span>);</span><br><span class="line"></span><br><span class="line">~ <span class="keyword">this</span> will then create `appname.log` <span class="keyword">in</span> your executing bin directory.</span><br></pre></td></tr></table></figure>
+
+<h3 id="Configure-for-Dependency-Injection"><a href="#Configure-for-Dependency-Injection" class="headerlink" title="Configure for Dependency Injection"></a>Configure for Dependency Injection</h3><p>Install from nuget: <code>NLog.Web.AspNetCore 4.9.2</code></p>
+<ol>
+<li>Update <code>Program.cs</code></li>
+</ol>
+<p>BEFORE</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Hosting;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Configuration;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Logging;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">GameUI</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            CreateWebHostBuilder(args).Build().Run();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IWebHostBuilder <span class="title">CreateWebHostBuilder</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span> =&gt;</span><br><span class="line">            WebHost.CreateDefaultBuilder(args)</span><br><span class="line">                .UseStartup&lt;Startup&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>AFTER</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Hosting;</span><br><span class="line"><span class="keyword">using</span> NLog.Web;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Logging;</span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">GameUI</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="comment">// NLog: setup the logger first to catch all errors</span></span><br><span class="line">            <span class="keyword">var</span> logger = NLog.Web.NLogBuilder.ConfigureNLog(<span class="string">&quot;nlog.config&quot;</span>).GetCurrentClassLogger();</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                logger.Debug(<span class="string">&quot;init main&quot;</span>);</span><br><span class="line">                CreateWebHostBuilder(args).Build().Run();</span><br><span class="line">            &#125;</span><br><span class="line">            catch (Exception ex)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//NLog: catch setup errors</span></span><br><span class="line">                logger.Error(ex, <span class="string">&quot;Stopped program because of exception&quot;</span>);</span><br><span class="line">                <span class="keyword">throw</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">finally</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)</span></span><br><span class="line">                NLog.LogManager.Shutdown();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IWebHostBuilder <span class="title">CreateWebHostBuilder</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">return</span> WebHost.CreateDefaultBuilder(args)</span><br><span class="line">            .UseStartup&lt;Startup&gt;()</span><br><span class="line">            .ConfigureLogging(logging =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                logging.ClearProviders();</span><br><span class="line">                logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);</span><br><span class="line">            &#125;)</span><br><span class="line">            .UseNLog();  <span class="comment">// NLog: setup NLog for Dependency injection</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Configure appsettings.json</li>
+</ol>
+<p>If you are debugging locally make the changes in <code>appsettings.Development.json</code></p>
+<blockquote>
+<p>The Logging configuration specified in <code>appsettings.json</code> overrides any call to <code>SetMinimumLevel</code>. So either remove <code>&quot;Default&quot;:</code> or adjust it correctly to your needs.     - github.com/NLog</p>
+</blockquote>
+<p>BEFORE</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Logging&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;LogLevel&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;Default&quot;</span>: <span class="string">&quot;Warning&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>AFTER</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Logging&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;LogLevel&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;Default&quot;</span>: <span class="string">&quot;Trace&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;Microsoft&quot;</span>: <span class="string">&quot;Information&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;           </span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Inject into your constructor</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Logging;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ComputerMoveHard</span> : <span class="title">IComputerMove</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> ILogger&lt;ComputerMoveHard&gt; _logger;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ComputerMoveHard</span>(<span class="params">ILogger&lt;ComputerMoveHard&gt; logger</span>) </span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        _logger = logger;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">SetPosition</span>(<span class="params">...</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        _logger.LogTrace(<span class="string">&quot;This is LogTrace&quot;</span>);</span><br><span class="line">        _logger.LogDebug(<span class="string">&quot;This is LogDebug&quot;</span>);</span><br><span class="line">        _logger.LogInformation(<span class="string">&quot;This is LogInformation&quot;</span>);</span><br><span class="line">        _logger.LogWarning(<span class="string">&quot;This is LogWarning&quot;</span>);</span><br><span class="line">        _logger.LogError(<span class="string">&quot;This is LogError&quot;</span>);</span><br><span class="line">        _logger.LogCritical(<span class="string">&quot;This is LogCritical&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/NLog/NLog/wiki/Getting-started-with-ASP.NET-Core-2">https://github.com/NLog/NLog/wiki/Getting-started-with-ASP.NET-Core-2</a></li>
+</ul>
+<h3 id="Log-Levels"><a href="#Log-Levels" class="headerlink" title="Log Levels"></a>Log Levels</h3><p>These levels work from minimum (Trace) to maximum (Critical), so if you set your level to <code>Information</code> you will not get logs for <code>Trace</code> and <code>Debug</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Trace - Very detailed log messages, potentially of a high frequency and volume</span><br><span class="line">Debug - Less detailed and&#x2F;or less frequent debugging messages</span><br><span class="line">Information - Informational messages</span><br><span class="line">Warning - Warnings which don&#39;t appear to the user of the application</span><br><span class="line">Error - Error messages</span><br><span class="line">Critical - Fatal error messages. After a fatal error, the application usually terminates.</span><br><span class="line">None - No logging</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.codeproject.com/Articles/10631/Introduction-to-NLog">https://www.codeproject.com/Articles/10631/Introduction-to-NLog</a></li>
+</ul>
+<h3 id="Logging-To-Different-Files"><a href="#Logging-To-Different-Files" class="headerlink" title="Logging To Different Files"></a>Logging To Different Files</h3><p>You can specify logging to files by class and wildcard, super useful for debugging code flows. For the below I needed only logs for <code>moverules</code> from the name space <code>GameEngine.Services.ComputerMove.MoveRules.*</code></p>
+<p>So for the below I would include <code>_logger.LogTrace(&quot;This is LogTrace&quot;);</code> in the code for the <strong>MoveRules</strong> classes and this data will go into <code>moverules.log</code> </p>
+<p>Note that appsettings needs to then be set to <code>Trace</code>.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">targets</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">target</span> <span class="attr">name</span>=<span class="string">&quot;moverules&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">xsi:type</span>=<span class="string">&quot;File&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">archiveNumbering</span>=<span class="string">&quot;Date&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">archiveEvery</span>=<span class="string">&quot;Day&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">maxArchiveFiles</span>=<span class="string">&quot;50&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">bufferSize</span>=<span class="string">&quot;102400&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">fileName</span>=<span class="string">&quot;moverules.log&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">target</span> <span class="attr">name</span>=<span class="string">&quot;tictactoe&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">xsi:type</span>=<span class="string">&quot;File&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">archiveNumbering</span>=<span class="string">&quot;Date&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">archiveEvery</span>=<span class="string">&quot;Day&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">maxArchiveFiles</span>=<span class="string">&quot;50&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">bufferSize</span>=<span class="string">&quot;102400&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">fileName</span>=<span class="string">&quot;tictactoe.log&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">targets</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">rules</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">&quot;GameEngine.Services.ComputerMove.MoveRules.*&quot;</span> <span class="attr">level</span>=<span class="string">&quot;Trace&quot;</span> <span class="attr">writeTo</span>=<span class="string">&quot;moverules&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">&quot;*&quot;</span> <span class="attr">minlevel</span>=<span class="string">&quot;Debug&quot;</span> <span class="attr">writeTo</span>=<span class="string">&quot;tictactoe&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">rules</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/nlog/nlog/wiki/NLog-Install">https://github.com/nlog/nlog/wiki/NLog-Install</a></li>
+<li><a target="_blank" rel="noopener" href="https://nlog-project.org/documentation/v4.3.0/html/T_NLog_LogManager.htm">https://nlog-project.org/documentation/v4.3.0/html/T_NLog_LogManager.htm</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/03/nlog/" data-id="ckml3zlyi00b3poondz3gcppt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/logging/" rel="tag">logging</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/postgresql-on-a-linux-vm/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          PostgreSQL on a Linux VM
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/simple-text-logging-for-a-c-console-application/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Simple text logging for a C# console application</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

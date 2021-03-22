@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Docker FizzBuzz Image | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="![Docker Fizzbuzz](&#x2F;d&#x2F;docker-fizzbuzz-image&#x2F;fizzbuzz 1.png) What is FizzBuzz?A popular interview question is the “FizzBuzz test”, its based on a children’s game where you count from 1 to 100 and for m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker FizzBuzz Image">
+<meta property="og:url" content="https://carlpaton.github.io/2018/06/docker-fizzbuzz-image/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="![Docker Fizzbuzz](&#x2F;d&#x2F;docker-fizzbuzz-image&#x2F;fizzbuzz 1.png) What is FizzBuzz?A popular interview question is the “FizzBuzz test”, its based on a children’s game where you count from 1 to 100 and for m">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-06-30T00:08:24.000Z">
+<meta property="article:modified_time" content="2020-08-04T22:37:58.538Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-docker-fizzbuzz-image" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/docker-fizzbuzz-image/" class="article-date">
+  <time datetime="2018-06-30T00:08:24.000Z" itemprop="datePublished">2018-Jun</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker FizzBuzz Image
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>![Docker Fizzbuzz](/d/docker-fizzbuzz-image/fizzbuzz 1.png)</p>
+<h3 id="What-is-FizzBuzz"><a href="#What-is-FizzBuzz" class="headerlink" title="What is FizzBuzz?"></a>What is FizzBuzz?</h3><p>A popular interview question is the “FizzBuzz test”, its based on a children’s game where you count from 1 to 100 and for multiples of 3 say “Fizz”, multiples of 5 say “Buzz”, if both say “FizzBuzz” else say the number, example 8.</p>
+<p>Translated into to the code domain the question you could ask is:</p>
+<p>“Write a program that prints the numbers from 1 to 100. But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. For numbers which are multiples of both three and five print “FizzBuzz”.”</p>
+<h3 id="Whats-this-got-to-do-with-Docker"><a href="#Whats-this-got-to-do-with-Docker" class="headerlink" title="Whats this got to do with Docker?"></a>Whats this got to do with Docker?</h3><p>Well the hello world app from Docker is great but this is a little more fun and I like to put things into containers. FizzBuzz seems like a good candidate and is simpler to understand than the <a href="/2018/07/docker-image-vodacommessagingxml2sms/">Docker Image for SMS</a>.</p>
+<p>The ‘hello world’ example from Docker also starts its life from an image they call ‘SCRATCH’ – this is great but not really useful in real world applications (Well ones I am capable of building anyway)<br>My ‘FizzBuzz’ image starts its life from ‘microsoft/aspnetcore:2.0’ so its far larger but comes with the .net goodness I know and love.</p>
+<p>FizzBuzz is also a great way to demonstrate how easy Docker is to use and the powerful features it has! I hope it inspires developers looking to try their hand at Docker and gives a starting point.</p>
+<p>Perhaps instead of asking a candidate to do the sudo code for you, ask them how they will code and create a docker image :)</p>
+<h3 id="The-Code"><a href="#The-Code" class="headerlink" title="The Code"></a>The Code</h3><p>I used a C# Console Application targeting .Net Core 2 so the resulting container is platform agnostic.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/carlpaton/FizzBuzz">You can download all the source code here</a>.</p>
+<p>Variables are used for the lowerBound, upperBound, fizzAt, buzzAt and outPut values as things need to be maintainable. This demonstrates that things can change, just look at our recent VAT increase!</p>
+<p>These are read from injected environmental variables but do have hard coded defaults set, this is fine for this example however for production applications anything hard coded is frowned upon.</p>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var lowerBound &#x3D; Environment.GetEnvironmentVariable(&quot;lowerBound&quot;) &#x3D;&#x3D; null ? 1 : Convert.ToInt32(Environment.GetEnvironmentVariable(&quot;lowerBound&quot;));</span><br></pre></td></tr></table></figure>
+
+<h3 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h3><p>Docker builds images from Dockerfiles, I used <a target="_blank" rel="noopener" href="http://cloud.docker.com/">cloud.docker.com</a> to create a repository which builds the resulting image to <a target="_blank" rel="noopener" href="http://hub.docker.com/">hub.docker.com</a>. This can then be pulled from <a target="_blank" rel="noopener" href="https://store.docker.com/community/images/carlpaton/fizzbuzz">store.docker.com</a> with the following commmand:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull carlpaton&#x2F;fizzbuzz</span><br></pre></td></tr></table></figure>
+
+<p>The docker file runs the following steps:</p>
+<ol>
+<li>Creates a builder image from microsoft/dotnet:2.0-sdk</li>
+<li>Copys the solution file</li>
+<li>Copys the project file and restores dependencys (same like your IDE does from Nuget)</li>
+<li>Copys your class files</li>
+<li>Builds &amp; Publishes your code (same like your IDE’s compiler does)</li>
+<li>Finally from microsoft/aspnetcore:2.0 builds the image and copys in the compiled code from the ‘builder’ image</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/carlpaton/FizzBuzz/blob/master/Dockerfile">You can view the contents of the Dockerfile I used here</a>.</p>
+<h3 id="Environmental-Variables"><a href="#Environmental-Variables" class="headerlink" title="Environmental Variables"></a>Environmental Variables</h3><p>The variables based on how you want the resulting container to behave need to be injected when you spin up, these need to be in a file thats relative to your current director.</p>
+<p>Example: env_file_name.env</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lowerBound&#x3D;1</span><br><span class="line">upperBound&#x3D;100</span><br><span class="line">fizzAt&#x3D;3</span><br><span class="line">buzzAt&#x3D;4</span><br></pre></td></tr></table></figure>
+
+<p>You then inject with <em>–env-file=env_file_name.env</em></p>
+<h3 id="Shell-script"><a href="#Shell-script" class="headerlink" title="Shell script"></a>Shell script</h3><p>To pull the container and spin up the image you will need to simply run the following shell script.<br>Note that you can pass the environmental variables in the command, or even better you can <a href="/2018/07/docker-compose/">use Docker Compose</a>.</p>
+<p>Example shell script:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">docker pull carlpaton&#x2F;fizzbuzz:v1.0.0</span><br><span class="line">sudo docker container kill fizzbuzz</span><br><span class="line">sudo docker rm fizzbuzz</span><br><span class="line"></span><br><span class="line">sudo docker run --env-file&#x3D;env_file_name.env --name fizzbuzz carlpaton&#x2F;fizzbuzz:v1.0.0</span><br><span class="line"></span><br><span class="line">sudo docker start fizzbuzz</span><br><span class="line">sudo docker ps --all</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/carlpaton/FizzBuzz/blob/master/fizzbuzz.sh">You can download this shell script here</a>.</p>
+<h3 id="Open-Source"><a href="#Open-Source" class="headerlink" title="Open Source"></a>Open Source</h3><p>I believe in sharing things, all the code for the above is free <a target="_blank" rel="noopener" href="https://opensource.org/licenses/MIT">MIT</a>.</p>
+<h3 id="References-amp-Perquisites"><a href="#References-amp-Perquisites" class="headerlink" title="References &amp; Perquisites"></a>References &amp; Perquisites</h3><p>Before running the above you will need to <a href="/2018/04/setup-docker-on-linux/">setup Docker</a>.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.codinghorror.com/why-cant-programmers-program/">https://blog.codinghorror.com/why-cant-programmers-program/</a></li>
+<li><a target="_blank" rel="noopener" href="http://wiki.c2.com/?FizzBuzzTest">http://wiki.c2.com/?FizzBuzzTest</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=QPZ0pIK_wsc">https://www.youtube.com/watch?v=QPZ0pIK_wsc</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/06/docker-fizzbuzz-image/" data-id="ckml3zlwn004zpoonce2z0up3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/swagger-swashbuckle-aspnetcore/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Swagger – Swashbuckle AspNetCore
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/docker-utilities/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Docker Utilities</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>PostgreSQL on a Linux VM | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="You will need to install Ubuntu on your virtual host, I used VMware Workstation Player and ubuntu-17.10.1-server-amd64.iso I called my instance ‘Ubuntu PSQL’ and used carl&#x2F;carl username and password f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL on a Linux VM">
+<meta property="og:url" content="https://carlpaton.github.io/2018/04/postgresql-on-a-linux-vm/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="You will need to install Ubuntu on your virtual host, I used VMware Workstation Player and ubuntu-17.10.1-server-amd64.iso I called my instance ‘Ubuntu PSQL’ and used carl&#x2F;carl username and password f">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-03-31T12:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-04T22:37:58.576Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="postgresql">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-postgresql-on-a-linux-vm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/postgresql-on-a-linux-vm/" class="article-date">
+  <time datetime="2018-03-31T12:00:00.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PostgreSQL on a Linux VM
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>You will need to install Ubuntu on your virtual host, I used <a target="_blank" rel="noopener" href="https://carlpaton.co.za/vmware-workstation-player/">VMware Workstation Player</a> and ubuntu-17.10.1-server-amd64.iso</p>
+<p>I called my instance ‘Ubuntu PSQL’ and used carl/carl username and password for authentication. Once the VM is running you can install postgresql:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br><span class="line">sudo apt-get install postgresql postgresql-contrib</span><br><span class="line">sudo apt-get install openssh-server</span><br><span class="line">ip addr show</span><br></pre></td></tr></table></figure>
+
+<p>You can then <a target="_blank" rel="noopener" href="https://carlpaton.co.za/putty/">putty</a> to the server, this is easier as you can paste commands.</p>
+<p>To check the PostgreSQL server is running you can query it with <em>psql –version</em></p>
+<p>All of my examples below were on version 9.6</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#Check the PSQL version</span><br><span class="line">psql --version</span><br><span class="line"></span><br><span class="line">#Check status</span><br><span class="line">service --status-all</span><br><span class="line">sudo pg_lsclusters</span><br><span class="line"></span><br><span class="line">#Other service commands</span><br><span class="line">sudo service postgresql status</span><br><span class="line">sudo service postgresql restart</span><br><span class="line">sudo service postgresql stop</span><br><span class="line">sudo service postgresql start</span><br></pre></td></tr></table></figure>
+
+<h3 id="Configuration-updates"><a href="#Configuration-updates" class="headerlink" title="Configuration updates"></a>Configuration updates</h3><p>The following configuration updates will be needed, I used nano to edit the files but you can use any other editor such as <a target="_blank" rel="noopener" href="http://www.informit.com/articles/article.aspx?p=1670957&seqNum=3">vi</a></p>
+<h4 id="pg-hba-conf"><a href="#pg-hba-conf" class="headerlink" title="pg_hba.conf"></a>pg_hba.conf</h4><p>Set the METHOD to ‘trust’ under ‘# Database administrative login by Unix domain socket’</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo nano &#x2F;etc&#x2F;postgresql&#x2F;9.6&#x2F;main&#x2F;pg_hba.conf</span><br><span class="line"></span><br><span class="line"># Database administrative login by Unix domain socket</span><br><span class="line">local all postgres trust</span><br></pre></td></tr></table></figure>
+
+<p>You can also restrict access by IP or IP range:</p>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">192.168.0.254&#x2F;32 &#x3D; ip address of 192.168.0.254</span><br><span class="line">192.168.0.1&#x2F;24 &#x3D; range of ip&#39;s from 192.168.0.1 to 192.168.0.1.255</span><br></pre></td></tr></table></figure>
+
+<p>Also see <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Subnetwork">Subnet mask</a></p>
+<p>Allow all connections:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- allow the lot</span><br><span class="line">host all all all md5</span><br><span class="line"></span><br><span class="line">-- allow by username</span><br><span class="line">host all USERNAME 0.0.0.0&#x2F;0 md5</span><br></pre></td></tr></table></figure>
+
+<h4 id="postgresql-conf"><a href="#postgresql-conf" class="headerlink" title="postgresql.conf"></a>postgresql.conf</h4><p>Set the the following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo nano &#x2F;etc&#x2F;postgresql&#x2F;9.6&#x2F;main&#x2F;postgresql.conf</span><br><span class="line"></span><br><span class="line">listen_addresses &#x3D; &#39;*&#39;</span><br><span class="line">log_statement &#x3D; &#39;all&#39; </span><br><span class="line">log_hostname &#x3D; on</span><br><span class="line">log_line_prefix &#x3D; &#39;%m [%p] [%r] %q%u@%d &#39;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Update-password"><a href="#Update-password" class="headerlink" title="Update password"></a>Update password</h3><p>You can update the root password</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#set password</span><br><span class="line">sudo -u postgres psql postgres</span><br><span class="line">\password postgres</span><br><span class="line">[newpassword]</span><br><span class="line">\q</span><br><span class="line">#test user&#x2F;pass </span><br><span class="line">(Requires pg_hba.conf change to trust)</span><br><span class="line"></span><br><span class="line">psql -U postgres -W</span><br><span class="line">[newpassword]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Tail-logs"><a href="#Tail-logs" class="headerlink" title="Tail logs"></a>Tail logs</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tail -f &#x2F;var&#x2F;log&#x2F;postgresql&#x2F;postgresql-9.6-main.log</span><br><span class="line">CRTL C ~ to quit</span><br></pre></td></tr></table></figure>
+
+<h3 id="Backup-amp-Restore"><a href="#Backup-amp-Restore" class="headerlink" title="Backup &amp; Restore"></a>Backup &amp; Restore</h3><p>See <a target="_blank" rel="noopener" href="https://carlpaton.co.za/putty/">putty</a> if you need to copy a dump file to the server from your windows PC.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;Create the dump file</span><br><span class="line">sudo -Su postgres PGCLUSTER&#x3D;&quot;9.6&#x2F;main&quot; pg_dump -v -Fc productiondbname -f &#x2F;tmp&#x2F;production20180503.dump</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;Create a new database</span><br><span class="line">sudo -u postgres psql -c &quot;CREATE DATABASE production20180503 OWNER &#x3D; postgres TABLESPACE pg_default;&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;Restore</span><br><span class="line">sudo -u postgres pg_restore --dbname &quot;production20180503&quot; --verbose &#x2F;tmp&#x2F;production20180503.dump</span><br></pre></td></tr></table></figure>
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="http://suite.opengeo.org/docs/latest/dataadmin/pgGettingStarted/firstconnect.html">http://suite.opengeo.org/docs/latest/dataadmin/pgGettingStarted/firstconnect.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/9.1/static/runtime-config-logging.html">https://www.postgresql.org/docs/9.1/static/runtime-config-logging.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cisco.com/c/en/us/about/press/internet-protocol-journal/back-issues/table-contents-12/ip-addresses.html">https://www.cisco.com/c/en/us/about/press/internet-protocol-journal/back-issues/table-contents-12/ip-addresses.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/postgresql-on-a-linux-vm/" data-id="ckml3zlz700cjpoon8khi8jth" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/setup-kubernetes-local-machine-solutions/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Setup Kubernetes Local-machine
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/nlog/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">NLog</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Raspberry Pi Cluster - Kubernetes | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="WIP  Sweet so K8’s is Kubernetes right, so whats K3’s? Simple answer - Its lightweight Kubernetes for ARM processors which run on Raspberry Pi’s &lt;3 I was inspired by Jeff Geerling’s Turing Pi Clus">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Raspberry Pi Cluster - Kubernetes">
+<meta property="og:url" content="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-kubernetes/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="WIP  Sweet so K8’s is Kubernetes right, so whats K3’s? Simple answer - Its lightweight Kubernetes for ARM processors which run on Raspberry Pi’s &lt;3 I was inspired by Jeff Geerling’s Turing Pi Clus">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-09-27T11:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-07T03:40:33.532Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="wip">
+<meta property="article:tag" content="raspberry pi">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="ansible">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-raspberry-pi-cluster-kubernetes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/raspberry-pi-cluster-kubernetes/" class="article-date">
+  <time datetime="2020-09-27T11:00:00.000Z" itemprop="datePublished">2020-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Raspberry Pi Cluster - Kubernetes
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
+<p>Sweet so K8’s is <code>Kubernetes</code> right, so whats K3’s? Simple answer - Its lightweight <code>Kubernetes</code> for ARM processors which run on Raspberry Pi’s &lt;3 I was inspired by <a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PL2_OBreMn7Frk57NLmLheAaSSpJLLL90G">Jeff Geerling’s Turing Pi Cluster</a> videos to try do more with my Pi 4 boards! </p>
+<p>Kubernetes comes in many distributions and flavours as show by the <a target="_blank" rel="noopener" href="https://landscape.cncf.io/">CNCF Cloud Native Landscape (the group that maintains kubernetes)</a>. I have chosen to focus on <a target="_blank" rel="noopener" href="https://rancher.com/docs/k3s/latest/en/">K3S by Rancher Labs</a> which has an extremely light footprint thanks to the amazing work by <a target="_blank" rel="noopener" href="https://github.com/ibuildthecloud">Darren Shepherd</a> (Chief Architect at Rancher Labs).</p>
+<blockquote>
+<p>“We wanted an installation of Kubernetes that was half the size in terms of memory footprint. Kubernetes is a 10-letter word stylized as K8s. So something half as big as Kubernetes would be a 5-letter word stylized as K3s. There is no long form of K3s and no official pronunciation. rancher.com”</p>
+</blockquote>
+<h3 id="K3S-Kubernetes-ecosystem"><a href="#K3S-Kubernetes-ecosystem" class="headerlink" title="K3S Kubernetes ecosystem"></a>K3S Kubernetes ecosystem</h3><p>Kubernetes has the following common terms:</p>
+<ul>
+<li><strong>K3S Server</strong> </li>
+<li>-The server node that handles the <code>kubectl</code> commands</li>
+<li>-There can be several server nodes. </li>
+<li>-Also known as <code>master</code> </li>
+<li>-Runs the <code>k3s server</code></li>
+<li><strong>K3S Agent</strong> </li>
+<li>-The worker node, there can be several worker nodes.</li>
+<li>-Runs the <code>k3s agent</code></li>
+<li><strong>Container</strong> </li>
+<li>-This is a running <code>Docker Image</code> like <a target="_blank" rel="noopener" href="https://hub.docker.com/r/carlpaton/nginx-pi-demo">carlpaton/nginx-pi-demo</a></li>
+<li><strong>Pods</strong> </li>
+<li>-This is the <code>Kubernetes ecosystem</code> running on a node which is running containers. </li>
+<li>-Note the containers dont necessarily need to be contributing to a common goal to be considered part of the pod.</li>
+<li><strong>Node</strong> </li>
+<li>-This is the machine that runs and instance of <code>Kubernetes</code>, this can be a Virtual Machine, PC, Laptop or in my case a Raspberry Pi.</li>
+<li><strong>Cluster</strong> </li>
+<li>-This is several <code>Nodes</code> connected to gether on the same network.</li>
+</ul>
+<p>![Raspberry Pi Cluster](/d/raspberry-pi-cluster-kubernetes/overview of kubernetes k3s.jpg)</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://rancher.com/docs/k3s/latest/en/architecture/">https://rancher.com/docs/k3s/latest/en/architecture/</a></li>
+</ul>
+<h3 id="Setup-Hardware-and-OS"><a href="#Setup-Hardware-and-OS" class="headerlink" title="Setup Hardware and OS"></a>Setup Hardware and OS</h3><p>I used the same <a href="/2019/10/raspberry-pi-cluster-setup-os/">OS Steps (For Cluster)</a> steps and used the image <a target="_blank" rel="noopener" href="https://www.raspberrypi.org/downloads/raspberry-pi-os/">2020-08-20-raspios-buster-armhf-lite</a>. </p>
+<p>Then, this cluster has two nodes:</p>
+<ul>
+<li><code>node1</code> (server node) ~ runs the <code>k3s server</code></li>
+<li><code>node3</code> (worker node) ~ runs the <code>k3s agent</code></li>
+</ul>
+<h3 id="Setup-Passwordless-SSH-Access"><a href="#Setup-Passwordless-SSH-Access" class="headerlink" title="Setup Passwordless SSH Access"></a>Setup Passwordless SSH Access</h3><p>See the <code>No passphrase</code> section on this <a href="/2019/10/passwordless-ssh-access/">passwordless SSH access</a> post.</p>
+<h3 id="Setup-K3s"><a href="#Setup-K3s" class="headerlink" title="Setup K3s"></a>Setup K3s</h3><p>This can either be done manually (on each node) or with a Playbook.</p>
+<h4 id="Setup-K3s-Manual"><a href="#Setup-K3s-Manual" class="headerlink" title="Setup K3s (Manual)"></a>Setup K3s (Manual)</h4><p>Enable <code>container features</code> in the kernel:</p>
+<p><strong>node1</strong> and <strong>node3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo -i</span><br><span class="line">cd ..&#x2F;..&#x2F;</span><br><span class="line">cd boot</span><br><span class="line">nano cmdline.txt</span><br></pre></td></tr></table></figure>
+
+<p>Then add <code>cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory</code> to the end, then reboot</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+
+<p>Using a utility script from Rancher Labs run the followng <code>curl</code> command:</p>
+<p><strong>node1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sfL https:&#x2F;&#x2F;get.k3s.io | sh -s - --write-kubeconfig-mode 644         ~ install     </span><br><span class="line">sudo systemctl status k3s                                                  ~ confirm server is running</span><br><span class="line">kubectl get nodes                                                          ~ check nodes</span><br></pre></td></tr></table></figure>
+
+<p>You will then see <code>[INFO]  systemd: Starting k3s</code>. To get the join key:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cat &#x2F;var&#x2F;lib&#x2F;rancher&#x2F;k3s&#x2F;server&#x2F;node-token</span><br><span class="line"></span><br><span class="line">K10604bc55a643203542d97aafd91b0b0c2dc4233d46a1dc3a20a8f4ccf7d16fb50::server:09149feb4ee470a2eff3d3d1e4a83c43</span><br></pre></td></tr></table></figure>
+
+<p><strong>node3</strong></p>
+<p>Im not sure why the script below doesnt start the <code>worker</code> K3S agent but it does install and configure it.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export K3S_URL&#x3D;&quot;https:&#x2F;&#x2F;192.168.1.79:6443&quot;</span><br><span class="line">export K3S_TOKEN&#x3D;&quot;K10604bc55a643203542d97aafd91b0b0c2dc4233d46a1dc3a20a8f4ccf7d16fb50::server:09149feb4ee470a2eff3d3d1e4a83c43&quot;</span><br><span class="line">curl -sfL https:&#x2F;&#x2F;get.k3s.io | sh -s - --write-kubeconfig-mode 644</span><br></pre></td></tr></table></figure>
+
+<p>You will then see <code>[INFO]  systemd: Starting k3s-agent</code></p>
+<p>I had to then manually start the agent:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo k3s agent --server $&#123;K3S_URL&#125; --token $&#123;K3S_TOKEN&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The problem with this is when the SSH session is closed the agent is terminated too. I fixed this by <a href="/2020/10/raspberry-create-a-service/">creating a system service</a>.</p>
+<p><strong>node1</strong></p>
+<p>After that all the nodes started up and made a cluster automagically &lt;3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl get node -o wide</span><br><span class="line">kubectl get nodes</span><br><span class="line">kubectl version</span><br><span class="line">kubectl cluster-info</span><br></pre></td></tr></table></figure>
+
+<h4 id="Setup-K3s-Playbook"><a href="#Setup-K3s-Playbook" class="headerlink" title="Setup K3s (Playbook)"></a>Setup K3s (Playbook)</h4><p>THIS DID NOT WORK FOR ME :( #sad</p>
+<p>I tried to followed Jeff’s advice and use <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=goclfp6a2IQ">ansible</a> to manage all of the Raspberry Pi’s with this <a target="_blank" rel="noopener" href="https://github.com/rancher/k3s-ansible">ansible playbook from Rancher Labs</a>.</p>
+<p><strong>node1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git ansible</span><br></pre></td></tr></table></figure>
+
+<p>Clone the playbook from Rancher labs and copy the <code>inventory/sample</code> folder to the name of your cluster. I called mine <code>carl-cluster</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;rancher&#x2F;k3s-ansible</span><br><span class="line"></span><br><span class="line">cd k3s-ansible</span><br><span class="line">cp -R inventory&#x2F;sample inventory&#x2F;carl-cluster</span><br></pre></td></tr></table></figure>
+
+<p>Set the hosts, these are your Raspberry Pi’s. You can use the IP or DNS.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd inventory&#x2F;carl-cluster</span><br><span class="line">nano hosts.ini</span><br></pre></td></tr></table></figure>
+
+<p>I used the following config</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[master]</span><br><span class="line">node1</span><br><span class="line"></span><br><span class="line">[node]</span><br><span class="line">node3</span><br><span class="line"></span><br><span class="line">[k3s_cluster:children]</span><br><span class="line">master</span><br><span class="line">node</span><br></pre></td></tr></table></figure>
+
+<p>Set the <code>pi</code> user in <code>group_vars</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd group_vars</span><br><span class="line">nano all.yml</span><br><span class="line"></span><br><span class="line">ansible_user: debian    ~ default value</span><br><span class="line">ansible_user: pi        ~ updated value</span><br></pre></td></tr></table></figure>
+
+<p>Then run this command to install your cluster!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ..&#x2F;..&#x2F;..&#x2F;</span><br><span class="line">ansible-playbook site.yml -i inventory&#x2F;carl-cluster&#x2F;hosts.ini</span><br></pre></td></tr></table></figure>
+
+<p>This was as far as I got with the playbook, running on <code>node1</code> complained about not being able to see <code>node1</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WIP - ACTUAL ERROR HERE</span><br></pre></td></tr></table></figure>
+
+<h3 id="Check-whats-running"><a href="#Check-whats-running" class="headerlink" title="Check whats running"></a>Check whats running</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods --all-namespaces</span><br><span class="line">kubectl get pods -n monitoring</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cluster-Monitoring"><a href="#Cluster-Monitoring" class="headerlink" title="Cluster Monitoring"></a>Cluster Monitoring</h3><p>This <code>Cluster Monitoring</code> tool was built by Carlos Eduardo and he made it work for ARM based clusters.</p>
+<p><strong>Required software install</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update                                ~ update apt cache</span><br><span class="line">apt-get install -y build-essential golang     ~ make utility and go language</span><br></pre></td></tr></table></figure>
+
+<p><strong>Switch to root and clone</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo su                                                       ~ switch to root user</span><br><span class="line">cd ~                                                          ~ go to home dir</span><br><span class="line">pwd                                                           ~ confirm dir we are in</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;carlosedp&#x2F;cluster-monitoring     ~ clone </span><br></pre></td></tr></table></figure>
+
+<p><strong>Setup</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd cluster-monitoring</span><br><span class="line">nano vars.jsonnet</span><br></pre></td></tr></table></figure>
+
+<p>Then update the following for K3S</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    name: &#39;armExporter&#39;,                         ~ this will give you CPU temp</span><br><span class="line">    enabled: true,</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    name: &#39;traefikExporter&#39;,</span><br><span class="line">    enabled: true,</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">k3s: &#123;</span><br><span class="line">    enabled: true,</span><br><span class="line">    master_ip: [&#39;192.168.1.79&#39;],                  ~ this was my master node</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">suffixDomain: &#39;192.168.1.185.nip.io&#39;,             ~ this was my worker node</span><br></pre></td></tr></table></figure>
+
+<p>Finally build the mainfest for your cluster</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">make vendor</span><br><span class="line">make                                              ~ generate YML manifests</span><br><span class="line">kubectl apply -f manifests&#x2F;setup&#x2F;</span><br><span class="line">kubectl apply -f manifests&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>Now Kuberbettes will take all these things created though these manifests and start scheduling them on nodes. Some STATUS will be <code>ContainerCreating</code> as its pulling down docker images ect.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -n monitoring</span><br><span class="line">kubectl get ingress -n monitoring          ~ will give the host name</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="http://grafana.192.168.1.185.nip.io/">http://grafana.192.168.1.185.nip.io/</a>              ~ admin admin</li>
+<li><a target="_blank" rel="noopener" href="http://prometheus.192.168.1.185.nip.io/">http://prometheus.192.168.1.185.nip.io/</a></li>
+<li><a target="_blank" rel="noopener" href="http://alertmanager.192.168.1.185.nip.io/">http://alertmanager.192.168.1.185.nip.io/</a></li>
+</ul>
+<p><strong>Get logs in pods, containers</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubectl get namespaces</span><br><span class="line">kubectl get pods -n monitoring</span><br><span class="line">kubectl logs -f -n monitoring prometheus-k8s-0</span><br><span class="line">kubectl logs -f -n monitoring prometheus-k8s-0 -c prometheus-config-reloader    ~ -c for container</span><br><span class="line">CTRL C</span><br></pre></td></tr></table></figure>
+
+<p><strong>unistall</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete -f manifests&#x2F;setup</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlosedp/cluster-monitoring#quickstart-for-k3s">https://github.com/carlosedp/cluster-monitoring#quickstart-for-k3s</a></li>
+</ul>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://k3s.io/">https://k3s.io/</a></li>
+<li><a target="_blank" rel="noopener" href="https://rancher.com/docs/k3s/latest/en/">https://rancher.com/docs/k3s/latest/en/</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.alexellis.io/test-drive-k3s-on-raspberry-pi/">https://blog.alexellis.io/test-drive-k3s-on-raspberry-pi/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-kubernetes/" data-id="ckml3zlzf00d3poon0ofpdl4p" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ansible/" rel="tag">ansible</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/" rel="tag">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry pi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/10/specflow/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Specflow
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/nginx-pi-demo/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Nginx Pi Demo</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

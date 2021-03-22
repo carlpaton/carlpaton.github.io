@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Prototype Pattern | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DefinitionThis design pattern is all about object copying, the use case would be when its easier to copy (clone) an existing object than to fully initialize a new one. Note that the existing object co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prototype Pattern">
+<meta property="og:url" content="https://carlpaton.github.io/2020/05/prototype-pattern/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="DefinitionThis design pattern is all about object copying, the use case would be when its easier to copy (clone) an existing object than to fully initialize a new one. Note that the existing object co">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-05-17T12:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-28T01:27:02.085Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="patterns principles">
+<meta property="article:tag" content="serialization">
+<meta property="article:tag" content="creational patterns">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-prototype-pattern" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/05/prototype-pattern/" class="article-date">
+  <time datetime="2020-05-17T12:00:00.000Z" itemprop="datePublished">2020-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Prototype Pattern
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>This design pattern is all about object copying, the use case would be when its easier to <strong>copy</strong> (<strong>clone</strong>) an existing object than to fully initialize a new one. Note that the existing object could be partially or fully constructed. </p>
+<p>These would be <strong>complicated objects</strong>, perhaps constructed with a <a href="/2020/04/builder-pattern/">builder</a> and you now wish to make simple changes to it for your use case.  </p>
+<p>A <strong>Deep Copy</strong> is what is required for the Prototype Pattern.</p>
+<table>
+<thead>
+<tr>
+<th>Copy</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Shallow</td>
+<td>A shallow copy is a copy of the object and its references. This means after you make the copy changes to <code>this</code> object also makes changes to the <code>other</code> object.</td>
+</tr>
+<tr>
+<td>Deep</td>
+<td>A deep copy is not just a copy of the object but a copy of all its <a href="/2018/06/value-type-vs-reference-type/">references (on the heap)</a> by making new objects which replicates the state of those references. This would need to be done <strong>recursively</strong> so you would need to make a complete copy of the object. This means the change in <code>this</code> object does not affect the <code>other</code> object.</td>
+</tr>
+</tbody></table>
+<p><strong>Caveats</strong></p>
+<ul>
+<li>When deep copying an entity, if it has a database auto assigned ID you may want to reset this as should the copied entity change and then be persisted you may update persisted data by mistake.</li>
+</ul>
+<h3 id="ICloneable"><a href="#ICloneable" class="headerlink" title="ICloneable"></a>ICloneable</h3><p><a href="/2020/05/icloneable/">Don’t use ICloneable</a> for the Prototype Pattern as it will create a shallow copy.</p>
+<ul>
+<li>[PatternsAndPrinciples/PrototypePattern/ICloneableDemo.cs](<a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/.Net">https://github.com/carlpaton/Boilerplate/blob/master/.Net</a> Core Console Application/PatternsAndPrinciples/PrototypePattern/ICloneableDemo.cs)</li>
+</ul>
+<h3 id="Copy-Constructors"><a href="#Copy-Constructors" class="headerlink" title="Copy Constructors"></a>Copy Constructors</h3><p>Don’t use <a href="/2020/05/copy-constructors/">Copy Constructors</a> as this would not be <strong>idiomatic</strong> for a <code>C#</code> developer and requires each custom type to have a copy constructor to allow traversing of the tree.</p>
+<ul>
+<li>[PatternsAndPrinciples/PrototypePattern/CopyConstructorDemo.cs](<a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/.Net">https://github.com/carlpaton/Boilerplate/blob/master/.Net</a> Core Console Application/PatternsAndPrinciples/PrototypePattern/CopyConstructorDemo.cs)</li>
+</ul>
+<h3 id="Explicit-Deep-Copy-Interface"><a href="#Explicit-Deep-Copy-Interface" class="headerlink" title="Explicit Deep Copy Interface"></a>Explicit Deep Copy Interface</h3><p>You could create your own <a href="/2020/05/explicit-deep-copy-interface/">Explicit Deep Copy Interface</a> like <code>IProtoType&lt;T&gt;</code> however this would require manual object traversing and having each dependent object in the tree implement <code>IProtoType&lt;T&gt;</code>.</p>
+<ul>
+<li>[PatternsAndPrinciples/PrototypePattern/IProtoTypeDemo.cs](<a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/.Net">https://github.com/carlpaton/Boilerplate/blob/master/.Net</a> Core Console Application/PatternsAndPrinciples/PrototypePattern/IProtoTypeDemo.cs)</li>
+</ul>
+<h3 id="Copy-Through-Serialization-Binary"><a href="#Copy-Through-Serialization-Binary" class="headerlink" title="Copy Through Serialization (Binary)"></a>Copy Through Serialization (Binary)</h3><ul>
+<li>[PatternsAndPrinciples/PrototypePattern/BinarySerializationDemo.cs](<a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/.Net">https://github.com/carlpaton/Boilerplate/blob/master/.Net</a> Core Console Application/PatternsAndPrinciples/PrototypePattern/BinarySerializationDemo.cs)</li>
+</ul>
+<p><a href="/2017/12/serialization/">Serialization</a> will be slower but will traverse the entire object tree. As we will not be persisting the serialized object to storage it can simply be kept in a <code>MemoryStream</code>.</p>
+<p>Using a <code>BinaryFormatter</code> makes the most sense as we don’t need human readable data (<a href="/tags/xml/">XML</a>, <a href="/tags/json/">JSON</a>).</p>
+<p>Create the extension method:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">ExtensionMethods</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> T <span class="title">DeepCopy</span>&lt;<span class="title">T</span>&gt;(<span class="params"><span class="keyword">this</span> T self</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">using</span> (<span class="keyword">var</span> stream = <span class="keyword">new</span> MemoryStream())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> formatter = <span class="keyword">new</span> BinaryFormatter();</span><br><span class="line">            formatter.Serialize(stream, self);</span><br><span class="line">            stream.Seek(<span class="number">0</span>, SeekOrigin.Begin); <span class="comment">// Rewind the stream with offset of 0 from the begining</span></span><br><span class="line"></span><br><span class="line">            <span class="built_in">object</span> copy = formatter.Deserialize(stream);</span><br><span class="line">            stream.Close();</span><br><span class="line">            <span class="keyword">return</span> (T)copy;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Create some classes to hold the state to be copied, <strong>caveat</strong> is the classes need to have the <code>[Serializable]</code> attribute / annotation. </p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Serializable</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Person</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> FirstName;</span><br><span class="line">    <span class="keyword">public</span> Address Address;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span>(<span class="params"><span class="built_in">string</span> firstName, Address address</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        FirstName = firstName;</span><br><span class="line">        Address = address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">ToString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">$&quot;<span class="subst">&#123;<span class="keyword">nameof</span>(FirstName)&#125;</span>: <span class="subst">&#123;FirstName&#125;</span>, <span class="subst">&#123;<span class="keyword">nameof</span>(Address)&#125;</span>: <span class="subst">&#123;Address&#125;</span>&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[<span class="meta">Serializable</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Address</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> StreetName;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> HouseNumber;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Address</span>(<span class="params"><span class="built_in">string</span> streetName, <span class="built_in">int</span> houseNumber</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        StreetName = streetName;</span><br><span class="line">        HouseNumber = houseNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">ToString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">$&quot;<span class="subst">&#123;<span class="keyword">nameof</span>(StreetName)&#125;</span>: <span class="subst">&#123;StreetName&#125;</span>, <span class="subst">&#123;<span class="keyword">nameof</span>(HouseNumber)&#125;</span>: <span class="subst">&#123;HouseNumber&#125;</span>&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Instantiate and copy</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> carl = <span class="keyword">new</span> Person(<span class="string">&quot;Carl&quot;</span>, <span class="keyword">new</span> Address(<span class="string">&quot;Sale Street&quot;</span>, <span class="number">66</span>));</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">&quot;Initial Object:&quot;</span>);</span><br><span class="line">Console.WriteLine(carl);</span><br><span class="line">Console.WriteLine(<span class="string">&quot;-----------------------&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = carl.DeepCopy();</span><br><span class="line">john.FirstName = <span class="string">&quot;John&quot;</span>;</span><br><span class="line">john.Address.HouseNumber = <span class="number">789</span>;</span><br><span class="line">john.Address.StreetName = <span class="string">&quot;Foo Street&quot;</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">&quot;Initial Object &amp; Copy:&quot;</span>);</span><br><span class="line">Console.WriteLine(carl);</span><br><span class="line">Console.WriteLine(john);</span><br></pre></td></tr></table></figure>
+
+<p>Output</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FirstName: Carl, Address: StreetName: Sale Street, HouseNumber: 66</span><br><span class="line">FirstName: John, Address: StreetName: Foo Street, HouseNumber: 789</span><br></pre></td></tr></table></figure>
+
+<h3 id="Copy-Through-Serialization-XML"><a href="#Copy-Through-Serialization-XML" class="headerlink" title="Copy Through Serialization (XML)"></a>Copy Through Serialization (XML)</h3><ul>
+<li>[PatternsAndPrinciples/PrototypePattern/XmlSerializationDemo.cs](<a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/.Net">https://github.com/carlpaton/Boilerplate/blob/master/.Net</a> Core Console Application/PatternsAndPrinciples/PrototypePattern/XmlSerializationDemo.cs)</li>
+</ul>
+<p>The classes you wish to serialize may not be open for modification, so you could use <code>XMlSerializer</code> if you cannot add the annotation. <strong>Caveat</strong> would however be that the classes need a <strong>parameterless</strong> <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/using-constructors">constructor</a>.</p>
+<p>The extension method would then look like this</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">ExtensionMethods</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> T <span class="title">DeepCopy</span>&lt;<span class="title">T</span>&gt;(<span class="params"><span class="keyword">this</span> T self</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">using</span> (<span class="keyword">var</span> stream = <span class="keyword">new</span> MemoryStream())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> xmlSerializer = <span class="keyword">new</span> XmlSerializer(<span class="keyword">typeof</span>(T));</span><br><span class="line">            xmlSerializer.Serialize(stream, self);</span><br><span class="line">            stream.Position = <span class="number">0</span>; <span class="comment">// same as `stream.Seek(0, SeekOrigin.Begin);`</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> (T) xmlSerializer.Deserialize(stream);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Copy-Through-Serialization-System-Text-Json"><a href="#Copy-Through-Serialization-System-Text-Json" class="headerlink" title="Copy Through Serialization (System.Text.Json)"></a>Copy Through Serialization (System.Text.Json)</h3><ul>
+<li>[PatternsAndPrinciples/PrototypePattern/JsonSerializationDemo.cs](<a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/.Net">https://github.com/carlpaton/Boilerplate/blob/master/.Net</a> Core Console Application/PatternsAndPrinciples/PrototypePattern/JsonSerializationDemo.cs)</li>
+<li><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/System.Text.Json/">https://www.nuget.org/packages/System.Text.Json/</a></li>
+</ul>
+<p>Some <strong>Caveats</strong> still exist:</p>
+<ul>
+<li><strong>Parameterless</strong> <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/using-constructors">constructor</a> is needed</li>
+<li>This serializer doesn’t work with fields but needs properties instead.</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Person</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> FirstName &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    ...</span><br><span class="line">        </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Person</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> FirstName;</span><br><span class="line">    ...    </span><br></pre></td></tr></table></figure>
+
+<p>The extension method would look like this:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">ExtensionMethods</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> T <span class="title">DeepCopy</span>&lt;<span class="title">T</span>&gt;(<span class="params"><span class="keyword">this</span> T self</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">using</span> (<span class="keyword">var</span> stream = <span class="keyword">new</span> MemoryStream())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> json = JsonSerializer.Serialize(self);</span><br><span class="line">            <span class="keyword">return</span> JsonSerializer.Deserialize&lt;T&gt;(json);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Copy-Through-Serialization-Newtonsoft-Json"><a href="#Copy-Through-Serialization-Newtonsoft-Json" class="headerlink" title="Copy Through Serialization (Newtonsoft.Json)"></a>Copy Through Serialization (Newtonsoft.Json)</h3><ul>
+<li>[PatternsAndPrinciples/PrototypePattern/JsonSerializationDemo2.cs](<a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/.Net">https://github.com/carlpaton/Boilerplate/blob/master/.Net</a> Core Console Application/PatternsAndPrinciples/PrototypePattern/JsonSerializationDemo2.cs)</li>
+<li><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Newtonsoft.Json/">https://www.nuget.org/packages/Newtonsoft.Json/</a></li>
+</ul>
+<p>No additional changes are needed to the class that I could see. The extension method would look like this:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">ExtensionMethods</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> T <span class="title">DeepCopy</span>&lt;<span class="title">T</span>&gt;(<span class="params"><span class="keyword">this</span> T self</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">var</span> json = JsonConvert.SerializeObject(self);</span><br><span class="line">        <span class="keyword">return</span> JsonConvert.DeserializeObject&lt;T&gt;(json);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone?view=netcore-3.1">https://docs.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone?view=netcore-3.1</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.icloneable?view=netcore-3.1">https://docs.microsoft.com/en-us/dotnet/api/system.icloneable?view=netcore-3.1</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.udemy.com/course/design-patterns-csharp-dotnet/">https://www.udemy.com/course/design-patterns-csharp-dotnet/</a></li>
+<li>[<a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/tree/master/.Net%20Core%20Console%20Application/PatternsAndPrinciples/PrototypePattern]">https://github.com/carlpaton/Boilerplate/tree/master/.Net%20Core%20Console%20Application/PatternsAndPrinciples/PrototypePattern]</a>(<a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/tree/master/.Net">https://github.com/carlpaton/Boilerplate/tree/master/.Net</a> Core Console Application/PatternsAndPrinciples/PrototypePattern)</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2020/05/prototype-pattern/" data-id="ckml3zlz800clpoon3qqdcb3k" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/creational-patterns/" rel="tag">creational patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/" rel="tag">patterns principles</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/serialization/" rel="tag">serialization</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/05/icloneable/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ICloneable
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/05/open-source/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Open Source</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Command Pattern | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Use Case: GUI Commands, multi undo&#x2F;redo, need to serialize sequence of actions&#x2F;calls. There are many use cases!  Code examples below from Dmitri Nesteruk DefinitionThe command pattern lets you build">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Command Pattern">
+<meta property="og:url" content="https://carlpaton.github.io/2020/02/command-pattern/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Use Case: GUI Commands, multi undo&#x2F;redo, need to serialize sequence of actions&#x2F;calls. There are many use cases!  Code examples below from Dmitri Nesteruk DefinitionThe command pattern lets you build">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-02-02T11:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-09T03:46:18.034Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="patterns principles">
+<meta property="article:tag" content="behavioural patterns">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-command-pattern" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/command-pattern/" class="article-date">
+  <time datetime="2020-02-02T11:00:00.000Z" itemprop="datePublished">2020-Feb</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Command Pattern
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Use Case: GUI Commands, multi undo/redo, need to serialize sequence of actions/calls. There are many use cases!</p>
+</blockquote>
+<p>Code examples below from <a target="_blank" rel="noopener" href="https://www.udemy.com/user/dmitrinesteruk/">Dmitri Nesteruk</a></p>
+<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The command pattern lets you build an object which represents an instruction to perform a particular action. This command contains all the information needed for the action to be taken.</p>
+<h3 id="Command-Example"><a href="#Command-Example" class="headerlink" title="Command Example"></a>Command Example</h3><p>Run a batch of commands on a Bank Account, these commands could then be serialized and persisted to a data store.</p>
+<ol>
+<li>Create <code>BankAccount</code> with its methods access modifiers set to internal, this means they are accessible only within files in the same assembly.</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BankAccount</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="built_in">int</span> _balance;</span><br><span class="line">  <span class="keyword">private</span> <span class="built_in">int</span> overdraftLimit = <span class="number">-500</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">BankAccount</span>(<span class="params"><span class="built_in">int</span> balance = <span class="number">0</span></span>)</span></span><br><span class="line"><span class="function"></span>  &#123;</span><br><span class="line">      _balance = balance;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">internal</span> <span class="keyword">void</span> <span class="title">Deposit</span>(<span class="params"><span class="built_in">int</span> amount</span>)</span></span><br><span class="line"><span class="function"></span>  &#123;</span><br><span class="line">    _balance += amount;</span><br><span class="line">    WriteLine(<span class="string">$&quot;Deposited $<span class="subst">&#123;amount&#125;</span>, balance is now <span class="subst">&#123;_balance&#125;</span>&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">internal</span> <span class="built_in">bool</span> <span class="title">Withdraw</span>(<span class="params"><span class="built_in">int</span> amount</span>)</span></span><br><span class="line"><span class="function"></span>  &#123;</span><br><span class="line">    <span class="keyword">if</span> (_balance - amount &gt;= overdraftLimit)</span><br><span class="line">    &#123;</span><br><span class="line">      _balance -= amount;</span><br><span class="line">      WriteLine(<span class="string">$&quot;Withdrew $<span class="subst">&#123;amount&#125;</span>, balance is now <span class="subst">&#123;_balance&#125;</span>&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">ToString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>  &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">$&quot;<span class="subst">&#123;<span class="keyword">nameof</span>(_balance)&#125;</span>: <span class="subst">&#123;_balance&#125;</span>&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Create our command interface and its implementation.</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ICommand</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Call</span>(<span class="params"></span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BankaccountCommand</span> : <span class="title">ICommand</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">enum</span> Action</span><br><span class="line">    &#123;</span><br><span class="line">        Deposit, Withdraw</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> BankAccount _account;</span><br><span class="line">    <span class="keyword">private</span> Action _action;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> _amount;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> _succeeded;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bank_accountCommand</span>(<span class="params">BankAccount account, Action action, <span class="built_in">int</span> amount</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        _account = account ?? <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentNullException(paramName: <span class="keyword">nameof</span>(_account));</span><br><span class="line">        _action = action;</span><br><span class="line">        _amount = amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Call</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">switch</span> (_action)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> Action.Deposit:</span><br><span class="line">                _account.Deposit(_amount);</span><br><span class="line">                succeeded = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> Action.Withdraw:</span><br><span class="line">                _succeeded = _account.Withdraw(_amount);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="literal">default</span>:</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentOutOfRangeException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// assumes `Deposit` is the opposite of `Withdraw`</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!_succeeded) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (_action)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> Action.Deposit:</span><br><span class="line">                _account.Withdraw(_amount);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> Action.Withdraw:</span><br><span class="line">                _account.Deposit(_amount);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="literal">default</span>:</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentOutOfRangeException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Use the commands</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bankAccount = <span class="keyword">new</span> BankAccount();</span><br><span class="line"><span class="keyword">var</span> commands = <span class="keyword">new</span> List&lt;BankAccountCommand&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">new</span> BankAccountCommand(bankAccount, BankAccountCommand.Action.Deposit, <span class="number">100</span>),</span><br><span class="line">    <span class="keyword">new</span> BankAccountCommand(bankAccount, BankAccountCommand.Action.Withdraw, <span class="number">1000</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">WriteLine(bankAccount);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> c <span class="keyword">in</span> commands)</span><br><span class="line">    c.Call();</span><br><span class="line"></span><br><span class="line">WriteLine(bankAccount);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> c <span class="keyword">in</span> Enumerable.Reverse(commands))</span><br><span class="line">    c.Undo();</span><br><span class="line"></span><br><span class="line">WriteLine(bankAccount);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Composite-Command-Example"><a href="#Composite-Command-Example" class="headerlink" title="Composite Command Example"></a>Composite Command Example</h3><p>This is a combination of the <a href="/2020/02/composite-pattern/">Composite Pattern</a> and the Command pattern. Building on the example above a Composite Command could be used to transfer money from account A to account B. This will wrap several elements into one element which has the same API.</p>
+<ol>
+<li>Extend the interface to include a <code>Succcess</code> property.</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ICommand</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Call</span>(<span class="params"></span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>(<span class="params"></span>)</span>;</span><br><span class="line">    <span class="built_in">bool</span> Success &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Create a general purpose composite command</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CompositeBankAccountCommand</span> : <span class="title">List</span>&lt;<span class="title">BankAccountCommand</span>&gt;, <span class="title">ICommand</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CompositeBankAccountCommand</span>(<span class="params">IEnumerable&lt;BankAccountCommand&gt; collection</span>) : <span class="title">base</span>(<span class="params">collection</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Call</span>(<span class="params"></span>) </span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        ForEach(cmd =&gt; cmd.Call());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>(<span class="params"></span>) </span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">      <span class="keyword">foreach</span> (<span class="keyword">var</span> cmd <span class="keyword">in</span> </span><br><span class="line">        ((IEnumerable&lt;BankAccountCommand&gt;)<span class="keyword">this</span>).Reverse())</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">if</span> (cmd.Success) cmd.Undo();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> Success </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="keyword">get</span> </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// A composite command is successful only if all of the constituent parts succeed</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.All(cmd =&gt; cmd.Success);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">set</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// Sets each `Success` - not sure if this is the best approach</span></span><br><span class="line">            <span class="keyword">foreach</span>(<span class="keyword">var</span> cmd <span class="keyword">in</span> <span class="keyword">this</span>)</span><br><span class="line">                cmd.Success = <span class="keyword">value</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Use the command to test it.</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bankAccount = <span class="keyword">new</span> BankAccount();</span><br><span class="line"><span class="keyword">var</span> deposit = <span class="keyword">new</span> BankAccountCommand(bankAccount, BankAccountCommand.Action.Deposit, <span class="number">100</span>);</span><br><span class="line"><span class="keyword">var</span> withdraw = <span class="keyword">new</span> BankAccountCommand(bankAccount, BankAccountCommand.Action.Withdraw, <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> composite = <span class="keyword">new</span> CompositeBankAccountCommand(<span class="keyword">new</span> []&#123; deposit, withdraw &#125;);</span><br><span class="line"></span><br><span class="line">composite.Call();</span><br><span class="line">WriteLine(bankAccount);</span><br><span class="line"></span><br><span class="line">composite.Undo();</span><br><span class="line">WriteLine(bankAccount);</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Now to do the money transfer command we need to change how <code>Call</code> works as we need to care that the subsequent commands succeeded. This can be accomplished by making the <code>Call</code> and <code>Undo</code> methods virtual which allows the implementation to be overridden.</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Call</span>(<span class="params"></span>)</span> &#123; &#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Undo</span>(<span class="params"></span>)</span> &#123; &#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> Success &#123; &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>Create type <code>MoneyTransferCommand</code></li>
+</ol>
+<p>This is the implementation of a composite command using infrastructure from the above.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MoneyTransferCommand</span> : <span class="title">CompositeBankAccountCommand</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MoneyTransferCommand</span> (<span class="params">BankAccount <span class="keyword">from</span>, BankAccount to, <span class="built_in">int</span> amount</span>) </span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// We inherit from a list in the base class so we can call its `AddRange` method</span></span><br><span class="line">        AddRange(<span class="keyword">new</span> [] &#123;</span><br><span class="line">            <span class="keyword">new</span> BankAccountCommand(<span class="keyword">from</span>, BankAccountCommand.Action.Withdraw, amount),</span><br><span class="line">            <span class="keyword">new</span> BankAccountCommand(to, BankAccountCommand.Action.Deposit, amount)</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// We need to override the base call command so we have consistency</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Call</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// we dont want to call a subsequent command if the previous command failed</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// this will keep a reference to the last command we envoked</span></span><br><span class="line">        BankAccountCommand last = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">foreach</span>(<span class="keyword">var</span> cmd <span class="keyword">in</span> <span class="keyword">this</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// precondition is there is no previous command or the previous command succeeded</span></span><br><span class="line">            <span class="keyword">if</span> (last == <span class="literal">null</span> || last.Success)</span><br><span class="line">            &#123;</span><br><span class="line">                cmd.Call();</span><br><span class="line">                last = cmd;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                cmd.Undo();</span><br><span class="line">                <span class="keyword">break</span>; <span class="comment">// the whole chain has failed</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>Use the composite command (happy path)</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">from</span> = <span class="keyword">new</span> BankAccount(<span class="number">100</span>);</span><br><span class="line"><span class="keyword">var</span> to = <span class="keyword">new</span> BankAccount();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> mtc = <span class="keyword">new</span> CompositeBankAccountCommand(<span class="keyword">from</span>, to, <span class="number">100</span>);</span><br><span class="line">mtc.Call();</span><br><span class="line"></span><br><span class="line">WriteLine(<span class="keyword">from</span>);</span><br><span class="line">WriteLine(to);</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>Try transfer more than the balance allows. The overridden call has checks for this so will <code>Undo</code> the command and break out of the commands.</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mtc = <span class="keyword">new</span> CompositeBankAccountCommand(<span class="keyword">from</span>, to, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.udemy.com/course/design-patterns-csharp-dotnet/">https://www.udemy.com/course/design-patterns-csharp-dotnet/</a></li>
+<li><a target="_blank" rel="noopener" href="https://exceptionnotfound.net/command-pattern-in-csharp/">https://exceptionnotfound.net/command-pattern-in-csharp/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2020/02/command-pattern/" data-id="ckml3zlw30035poonekmq4437" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/behavioural-patterns/" rel="tag">behavioural patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/" rel="tag">patterns principles</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/02/chain-of-responsibility-pattern/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Chain of Responsibility Pattern
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/02/composite-pattern/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Composite Pattern</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

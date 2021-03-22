@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Options pattern in ASP.NET Core | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="WIP  What Are Options? https:&#x2F;&#x2F;github.com&#x2F;carlpaton&#x2F;OptionsPatternDemo  The options pattern uses classes to provide strongly typed access to groups of related settings. Consider this json configurati">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Options pattern in ASP.NET Core">
+<meta property="og:url" content="https://carlpaton.github.io/2021/02/options-pattern-asp-net-core/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="WIP  What Are Options? https:&#x2F;&#x2F;github.com&#x2F;carlpaton&#x2F;OptionsPatternDemo  The options pattern uses classes to provide strongly typed access to groups of related settings. Consider this json configurati">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-02-27T11:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T05:44:40.700Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="patterns principles">
+<meta property="article:tag" content="structural patterns">
+<meta property="article:tag" content="wip">
+<meta property="article:tag" content="software testing">
+<meta property="article:tag" content="integration tests">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-options-pattern-asp-net-core" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/02/options-pattern-asp-net-core/" class="article-date">
+  <time datetime="2021-02-27T11:00:00.000Z" itemprop="datePublished">2021-Feb</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Options pattern in ASP.NET Core
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
+<h3 id="What-Are-Options"><a href="#What-Are-Options" class="headerlink" title="What Are Options?"></a>What Are Options?</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/OptionsPatternDemo">https://github.com/carlpaton/OptionsPatternDemo</a></li>
+</ul>
+<p>The options pattern uses classes to provide strongly typed access to groups of related settings. Consider this json configuration:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;TestingParam&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;UserId&quot;</span>: <span class="string">&quot;1&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;UserEmail&quot;</span>: <span class="string">&quot;foo@domain.com&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The class for the above could be <code>TestingParamSettings</code> or <code>TestingParamOptions</code> as shown below.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestingParamOptions</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> Section = <span class="string">&quot;TestingParam&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> UserId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> UserEmail &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Then in the test constructor <code>FeatureNameTests</code> inject <code>IConfiguration</code> and in the test method retrieve the data with <code>.GetSection</code> and <code>.Bind</code>.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">FeatureNameTests</span>(<span class="params">IConfiguration configuration</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    _configuration = configuration;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">FeatureName_InitialCondition_ExpectedResult</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> testingParamOptions = <span class="keyword">new</span> TestingParamOptions();</span><br><span class="line">    _configuration.GetSection(testingParamOptions.Section).Bind(testingParamOptions);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> userId = testingParamOptions.UserId; <span class="comment">// will be 1    </span></span><br><span class="line">    <span class="keyword">var</span> userEmail = testingParamOptions.UserEmail; <span class="comment">// will be foo@domain.com    </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This is really good as we then implement <a href="/2018/04/interface-segregation-principle-isp/">Interface Segregation Principle (ISP)</a> and <a href="/2018/05/single-responsibility-principle-srp/">Single Responsibility Principle (SRP)</a>.</p>
+<p>We could also bind the <code>TestingParam</code> section to the dependency injection service container we get for free in .Net Core.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    services.Configure&lt;TestingParamOptions&gt;(Configuration.GetSection(TestingParamOptions.Section));</span><br><span class="line">&#125;                                        </span><br></pre></td></tr></table></figure>
+
+<p>Then in the test constructor <code>FeatureNameTests</code> inject <code>IOptions&lt;TestingParamOptions&gt;</code> and in the test method access the member values on <code>_options</code>.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">FeatureNameTests</span>(<span class="params">IOptions&lt;TestingParamOptions&gt; options</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    _options = options.Value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">FeatureName_InitialCondition_ExpectedResult</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> userId = _options.UserId; <span class="comment">// will be 1    </span></span><br><span class="line">    <span class="keyword">var</span> userEmail = _options.UserEmail; <span class="comment">// will be foo@domain.com    </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Multiple-Configuration-Sections"><a href="#Multiple-Configuration-Sections" class="headerlink" title="Multiple Configuration Sections"></a>Multiple Configuration Sections</h3><p>This also works when multiple configuration sections bind to the same properties. These could be identified with a persona.</p>
+<p>A persona could be a user with different rights, the below are two user personas <code>UserWithAdminRights</code> and <code>UserWithStandardRights</code>. The admin user would have elevated persmissions and therefor your integration test would behave differently for that user.</p>
+<p>Consider this json configuration:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;TestingParam&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;UserWithAdminRights&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;UserId&quot;</span>: <span class="string">&quot;1&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;UserEmail&quot;</span>: <span class="string">&quot;admin.user@domain.com&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;UserWithStandardRights&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;UserId&quot;</span>: <span class="string">&quot;2&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;UserEmail&quot;</span>: <span class="string">&quot;standard.user@domain.com&quot;</span></span><br><span class="line">    &#125;    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We could have muiltiple classes to represent this data and it will work just fine however if the consumer is only concearned with parts of the object then this violates <a href="/2018/04/interface-segregation-principle-isp/">Interface Segregation Principle (ISP)</a> and <a href="/2018/05/single-responsibility-principle-srp/">Single Responsibility Principle (SRP)</a>. #sad</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestParameterOptions</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> UserWithAdminRightsOptions UserWithAdminRights;</span><br><span class="line">    <span class="keyword">public</span> UserWithStandardRightsOptions UserWithStandardRights;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UserWithAdminRightsOptions</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> Section = <span class="string">&quot;TestingParam:UserWithAdminRights&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> UserId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> UserEmail &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UserWithStandardRightsOptions</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> Section = <span class="string">&quot;TestingParam:UserWithStandardRights&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> UserId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> UserEmail &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This would then be bound in the same manner as the single settings file above.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">FeatureNameTests</span>(<span class="params">IConfiguration configuration</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    _configuration = configuration;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">FeatureName_InitialCondition_ExpectedResult</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> testingParamOptions = <span class="keyword">new</span> TestingParamOptions();</span><br><span class="line">    _configuration.GetSection(testingParamOptions.Section).Bind(testingParamOptions);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> userId = testingParamOptions.UserWithAdminRights.UserId; <span class="comment">// will be 1    </span></span><br><span class="line">    <span class="keyword">var</span> userEmail = testingParamOptions.UserWithAdminRights.UserEmail; <span class="comment">// will be foo@domain.com    </span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// testingParamOptions.UserWithStandardRights.UserEmail may not be used. This is a code smell.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Multiple-Configuration-Sections-With-A-Better-Design"><a href="#Multiple-Configuration-Sections-With-A-Better-Design" class="headerlink" title="Multiple Configuration Sections, With A Better Design."></a>Multiple Configuration Sections, With A Better Design.</h3><p>Binding these settings to a class highlights that using a member called <code>Section</code> would not work if we follow Microsofts recommendation of using one class per settings section.</p>
+<p>Consider this class file and the preceding multiple configuration sections json data.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestingParamOptions</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> UserWithAdminRights = <span class="string">&quot;UserWithAdminRights&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> UserWithStandardRights = <span class="string">&quot;UserWithStandardRights&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> UserId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> UserEmail &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>You could configure this in the applications depandancy injection pipeline using named options accessors.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    services.Configure&lt;TestingParamOptions&gt;(TestingParamOptions.UserWithAdminRights,</span><br><span class="line">                                       Configuration.GetSection(<span class="string">&quot;TestingParam:UserWithAdminRights&quot;</span>));</span><br><span class="line">    services.Configure&lt;TestingParamOptions&gt;(TopItemSettings.UserWithStandardRights,</span><br><span class="line">                                        Configuration.GetSection(<span class="string">&quot;TestingParam:UserWithStandardRights&quot;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>And then inject/resolve as follows</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FeatureNameTests</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> TestingParamOptions _userWithAdminRights;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> TestingParamOptions _userWithStandardRights;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FeatureNameTests</span>(<span class="params">IOptionsSnapshot&lt;TestingParamOptions&gt; namedOptionsAccessor</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        _userWithAdminRights = namedOptionsAccessor.Get(TestingParamOptions.UserWithAdminRights);</span><br><span class="line">        _userWithStandardRights = namedOptionsAccessor.Get(TestingParamOptions.UserWithStandardRights);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options#named-options-support-using-iconfigurenamedoptions">https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options#named-options-support-using-iconfigurenamedoptions</a></li>
+</ul>
+<h3 id="Xunit-IClassFixture"><a href="#Xunit-IClassFixture" class="headerlink" title="Xunit IClassFixture"></a>Xunit IClassFixture</h3><p>WIP</p>
+<p>This means you can have <code>appsettings.ENV1.json</code> and <code>appsettings.ENV2.json</code> with the same class representation for both environments.</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options">https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2021/02/options-pattern-asp-net-core/" data-id="ckml3zlyu00bppoon5vsgbdq4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/integration-tests/" rel="tag">integration tests</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/" rel="tag">patterns principles</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/" rel="tag">software testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/structural-patterns/" rel="tag">structural patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/03/dot-net-core-paspberry-pi/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          .NET Core on Raspberry Pi
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/02/entity-framework-core/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Entity Framework Core</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

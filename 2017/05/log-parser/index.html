@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Log Parser | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Log parser is a powerful tool by Microsoft that can be used to import log files from several applications. In the past I have found it extremely useful when debugging IIS (Internet Information Servic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Log Parser">
+<meta property="og:url" content="https://carlpaton.github.io/2017/05/log-parser/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Log parser is a powerful tool by Microsoft that can be used to import log files from several applications. In the past I have found it extremely useful when debugging IIS (Internet Information Servic">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/log-parser/log-parser.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/log-parser/iis-logging.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/log-parser/iis-logging-1.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/log-parser/iis-logging-2.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/log-parser/sql.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/log-parser/import.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/log-parser/sql-1.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/log-parser/sql-2.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/log-parser/sql-3.jpg">
+<meta property="article:published_time" content="2017-05-18T12:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-04T22:37:58.562Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="utilities">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/log-parser/log-parser.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-log-parser" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/log-parser/" class="article-date">
+  <time datetime="2017-05-18T12:00:00.000Z" itemprop="datePublished">2017-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Log Parser
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/log-parser/log-parser.jpg" alt="Log Parser"></p>
+<p>Log parser is a powerful tool by Microsoft that can be used to import log files from several applications. In the past I have found it extremely useful when debugging IIS (Internet Information Services) logs for an array of issues including slow web page response to memory leaks.</p>
+<blockquote>
+<p><em>Log parser is a powerful, versatile tool that provides universal query access to text-based data such as log files, XML files and CSV files, as well as key data sources on the Windows® operating system such as the Event Log, the Registry, the file system, and Active Directory®.</em></p>
+</blockquote>
+<p>For this article I will focus on importing and manipulating IIS logs. I assume you have access to the webserver, have installed Log Parser, SQL Server express and SQL Server Management studio. If you have not please see “References” below for download links.</p>
+<h3 id="Locate-IIS-log-files"><a href="#Locate-IIS-log-files" class="headerlink" title="Locate IIS log files"></a>Locate IIS log files</h3><p>By default the IIS logs are stored on the webserver in W3C format in the location <code>%SystemDrive%\inetpub\logs\LogFiles\</code></p>
+<p>This can be checked from IIS by selecting the “host instance” and then double clicking on “Logging”</p>
+<p><img src="/d/log-parser/iis-logging.jpg" alt="IIS Logging"></p>
+<p>The folders inside “LogFiles” correspond to the site instance ID which can be checked by selecting “Sites” then the “Site Name” and selecting “Advanced Settings…”</p>
+<p><img src="/d/log-parser/iis-logging-1.jpg" alt="IIS Logging"></p>
+<p>For the above example the folder would be “W3SVC3” where “VC3” matches the ID 3. The files inside the folder are then stored by date stamp yyMMdd</p>
+<p><img src="/d/log-parser/iis-logging-2.jpg" alt="IIS Logging"></p>
+<h3 id="Import-Logs"><a href="#Import-Logs" class="headerlink" title="Import Logs"></a>Import Logs</h3><p>Firstly create the SQL database <code>webLog</code> on your local instance, the import will automatically create the tables for you if you include the <code>-createTable:ON</code> parameter.</p>
+<p><img src="/d/log-parser/sql.jpg" alt="SQL"></p>
+<p>You can add Log Parser to your environmental variables or simply run it from “C:\Program Files (x86)\Log Parser 2.2”. I prefer to copy the files one at a time to the above location and run the import from command prompt. Once I’m done I delete the .log file to avoid confusion.</p>
+<p>For the below example I copied “u_ex161129.log” to C:\Program Files (x86)\Log Parser 2.2” from the webserver at “C:\inetpub\logs\LogFiles\W3SVC3”</p>
+<p>The import command would then be:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">LOGPARSER &quot;SELECT * INTO webLog2 FROM u_ex161129.log&quot; </span><br><span class="line">-i:W3C </span><br><span class="line">-o:SQL </span><br><span class="line">-server: DESKTOP-EBV6Q8D </span><br><span class="line">-database:webLog </span><br><span class="line">-driver:&quot;SQL Server&quot; </span><br><span class="line">-createTable:ON </span><br><span class="line">-username:sa </span><br><span class="line">-password:sasa</span><br></pre></td></tr></table></figure>
+
+<p>The successful import will then show statistics of elements processed and execution time.</p>
+<p><img src="/d/log-parser/import.jpg" alt="Import"></p>
+<p>The data can then be seen in SQL Management Studio</p>
+<p><img src="/d/log-parser/sql-1.jpg" alt="SQL"></p>
+<h3 id="Query-data-by-status-code"><a href="#Query-data-by-status-code" class="headerlink" title="Query data by status code"></a>Query data by status code</h3><p>From here you can check the status codes and their counts by date. This can help you determine pages or elements such as images that your site is having issues with.</p>
+<p>Examples:</p>
+<h3 id="404-Not-Found"><a href="#404-Not-Found" class="headerlink" title="404 Not Found"></a>404 Not Found</h3><p><em>The server has not found anything matching the Request-URI. No indication is given of whether the condition is temporary or permanent. The 410 (Gone) status code SHOULD be used if the server knows, through some internally configurable mechanism, that an old resource is permanently unavailable and has no forwarding address. This status code is commonly used when the server does not wish to reveal exactly why the request has been refused, or when no other response is applicable.</em></p>
+<h3 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500 Internal Server Error"></a>500 Internal Server Error</h3><p><em>The server encountered an unexpected condition which prevented it from fulfilling the request.</em></p>
+<p>Sample SQL statement to sort by status:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">count([csUriStem]) as cnt, [csUriStem]</span><br><span class="line">FROM [webLog].[dbo].[webLog2]</span><br><span class="line">where scStatus &#x3D; 404</span><br><span class="line">and date &#x3D; &#39;2016-11-29 00:00:00.000&#39;</span><br><span class="line">group by [csUriStem]</span><br><span class="line">order by cnt desc</span><br></pre></td></tr></table></figure>
+
+<p>Sample results</p>
+<p><img src="/d/log-parser/sql-2.jpg" alt="SQL"></p>
+<p>This means the code looked for “/images/ui-bg_inset-soft_50_fff_1x100.png” 143 times and error 404 file not found was returned.</p>
+<p>The above can be repeated for server error 500 but additional information such as the query string can be helpful</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">[csUriStem]</span><br><span class="line">,[csUriQuery]</span><br><span class="line">,[timeTaken]</span><br><span class="line">,[timeTaken] &#x2F; 60000 as timeTakenInMin</span><br><span class="line">FROM [webLog].[dbo].[webLog2]</span><br><span class="line">where scStatus &#x3D; 500</span><br><span class="line">and date &#x3D; &#39;2016-11-29 00:00:00.000&#39;</span><br><span class="line">order by timeTaken desc</span><br></pre></td></tr></table></figure>
+
+<p>This would then show pages that are broken or break under different conditions. You can also use the timeTaken field to understand how long a page is taking to break or even time out.</p>
+<h3 id="Query-data-by-execution-time"><a href="#Query-data-by-execution-time" class="headerlink" title="Query data by execution time"></a>Query data by execution time</h3><p>As mentioned above you can query the logs to see how long pages are taking to respond, this is helpful for pages that work but users complain it takes a long time to respond. Often you will get tasks such as “The website is slow” which is not very helpful so you need to figure things out for yourself.</p>
+<p>Sample SQL statement:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">[csUriStem]</span><br><span class="line">,[csUriQuery]</span><br><span class="line">,[timeTaken]</span><br><span class="line">,[timeTaken] &#x2F; 60000 as timeTakenInMin</span><br><span class="line">FROM [webLog].[dbo].[webLog2]</span><br><span class="line">where scStatus &#x3D; 200</span><br><span class="line">and date &#x3D; &#39;2016-11-29 00:00:00.000&#39;</span><br><span class="line">order by timeTaken desc</span><br></pre></td></tr></table></figure>
+
+<p>Sample results:</p>
+<p><img src="/d/log-parser/sql-3.jpg" alt="SQL"></p>
+<p>From the above results you can see that “/Payments.aspx” is the slowest page for the period taking 3 minutes to respond with status 200. It’s not broken, it’s just slow – so you may need to optimize your code or possibly index the database.</p>
+<p>The second slowest page is <code>/PrintStatement.aspx</code> with the query string <code>type=43</code> this means you can debug this page with these parameters to see why it takes 3 minutes to respond.</p>
+<p>I hope this article is useful to other software developers trying to make sense of their IIS logs. If anybody has other tips or advice on how to query the imported data please comment below.</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">W3 Web Status codes</a></li>
+<li><a target="_blank" rel="noopener" href="https://technet.microsoft.com/en-us/scriptcenter/dd919274.aspx">Log Parser 2.2 (technet.microsoft.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-za/download/details.aspx?id=24659">Download Log Parser 2.2</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads">Download Microsoft SQL Server express</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-za/download/details.aspx?id=8961">Download Microsoft SQL Server Management</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2017/05/log-parser/" data-id="ckml3zlxu008tpoon3rci8zu3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/" rel="tag">utilities</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/work-in-progress/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Work In Progress
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/fusion-charts/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Fusion Charts</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

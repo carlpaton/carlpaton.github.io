@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Testing Strategies | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="WIP   “A test strategy is an outline that describes the testing approach of the software development cycle.”   https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Test_strategy  I was recently afforded the opertunity for">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Testing Strategies">
+<meta property="og:url" content="https://carlpaton.github.io/2021/01/testing-strategies/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="WIP   “A test strategy is an outline that describes the testing approach of the software development cycle.”   https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Test_strategy  I was recently afforded the opertunity for">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-01-21T11:00:00.000Z">
+<meta property="article:modified_time" content="2021-02-25T00:01:33.723Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="wip">
+<meta property="article:tag" content="software testing">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-testing-strategies" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/testing-strategies/" class="article-date">
+  <time datetime="2021-01-21T11:00:00.000Z" itemprop="datePublished">2021-Jan</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Testing Strategies
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
+<blockquote>
+<p>“A test strategy is an outline that describes the testing approach of the software development cycle.”</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Test_strategy">https://en.wikipedia.org/wiki/Test_strategy</a></li>
+</ul>
+<p>I was recently afforded the opertunity for a deep dive into software testing strategies - it was a amazing! I’ve realized that different teams have a different understanding and naming of tests. As long as the team agree and document the stratagy all will be well in the world. Its also not always best practice to do every kind of test possible, as a team you need to agree on your working/social contracts and then add this to your DoD (Definition of done).</p>
+<h3 id="Unit-Test"><a href="#Unit-Test" class="headerlink" title="Unit Test"></a>Unit Test</h3><p>These define the smallest unit of work we can have, normally a well written method in a class that takes advantage of <a href="/2018/04/dependency-inversion-principle-dip/">dependency inversion</a>.</p>
+<p>Key points</p>
+<ul>
+<li>This will have a very narrow scope &amp; test logic would be given <code>x</code> the behaviour is <code>y</code>, this doesnt guarantee feature works</li>
+<li><a href="/2018/09/mocking-frameworks/">Mock</a> out all dependencies</li>
+<li>Pick a <a href="/2018/09/unit-testing-frameworks/">Unit Testing Framework</a></li>
+<li>Decide on a pattern and stick to it, <a target="_blank" rel="noopener" href="https://gist.github.com/carlpaton/77ae278b904cab2a19423809a69c2c67">AAA</a> is the only one I really know</li>
+</ul>
+<h3 id="Component-Test"><a href="#Component-Test" class="headerlink" title="Component Test"></a>Component Test</h3><p>This will test a deployable boundary (example: the BFF) and generally dependencies outside the boundary are mocked.</p>
+<p>Key points</p>
+<ul>
+<li>Makes sense to run this on PR builds</li>
+<li>Wiremocks are useful here</li>
+</ul>
+<h3 id="Integration-Test"><a href="#Integration-Test" class="headerlink" title="Integration Test"></a>Integration Test</h3><p>This will cross boundaries and the real implementation of resources are used, this is normally done in a UAT environment.</p>
+<p>Key points</p>
+<ul>
+<li>Ensures that the external services mocked out in <code>Component Tests</code> is right</li>
+<li>Wiremocks are useful here</li>
+</ul>
+<h3 id="End-to-end-testing-E2E-Test"><a href="#End-to-end-testing-E2E-Test" class="headerlink" title="End to end testing (E2E Test)"></a>End to end testing (E2E Test)</h3><p>These are slow, expensive and generally pretty flakey! A great testing tool for this is <a target="_blank" rel="noopener" href="https://www.cypress.io/">cypress</a></p>
+<p>Key points</p>
+<ul>
+<li>Only do these tests for thr most common flows</li>
+<li>Normally tests the happy path</li>
+<li>Driven by the UI (User Interface) and can test down the stack to the database</li>
+<li>Should cover what you would manually test after deployment</li>
+</ul>
+<h3 id="Acceptance-Test"><a href="#Acceptance-Test" class="headerlink" title="Acceptance Test"></a>Acceptance Test</h3><p>These are manual tests done by a user, should be the engineer and QA doing these to ensure they fifull the stories acceptance criteria and mandatory requirements.</p>
+<p>Key points</p>
+<ul>
+<li>Tests the UI from a user perspective and is is focused on user behaviour</li>
+</ul>
+<h3 id="Load-Test"><a href="#Load-Test" class="headerlink" title="Load Test"></a>Load Test</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://ardalis.com/load-testing-and-the-requests-per-second-curve/">https://ardalis.com/load-testing-and-the-requests-per-second-curve/</a></li>
+</ul>
+<h3 id="Penetration-Test"><a href="#Penetration-Test" class="headerlink" title="Penetration Test"></a>Penetration Test</h3><blockquote>
+<p>“A penetration test, colloquially known as a pen test, pentest or ethical hacking, is an authorized simulated cyberattack on a computer system, performed to evaluate the security of the system;”</p>
+</blockquote>
+<p>This is things like DDOS (Distributed Denial of Service) or known variabilities on the host or code base.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cipher.com/blog/the-types-of-pentests-you-must-know-about/">https://cipher.com/blog/the-types-of-pentests-you-must-know-about/</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Penetration_test">https://en.wikipedia.org/wiki/Penetration_test</a></li>
+</ul>
+<h3 id="Accessibility-Test"><a href="#Accessibility-Test" class="headerlink" title="Accessibility Test"></a>Accessibility Test</h3><p>I briefly touched on this at a previouse employer, we used <a href="https://carlpaton.github.io/2019/02/accessibility-utilities/">NVDA screen reader</a> to look for accessibility tags and help make our HTML more semantic. Things like ALT tags in images, linking text in A HREF anchors that made sense, tabindex for keyboard control ect.</p>
+<blockquote>
+<p>“Semantic HTML is the use of HTML markup to reinforce the semantics, or meaning, of the information in webpages and web applications rather than merely to define its presentation or look.”</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML">https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.w3schools.com/html/html_accessibility.asp">https://www.w3schools.com/html/html_accessibility.asp</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Semantic_HTML">https://en.wikipedia.org/wiki/Semantic_HTML</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2021/01/testing-strategies/" data-id="ckml3zm1100htpoon56ke8c02" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/" rel="tag">software testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/01/mocking-net-core-iconfiguration/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Mocking .Net Core IConfiguration
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/12/clean-architecture/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Clean Architecture</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

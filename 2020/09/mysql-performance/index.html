@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>MySQL Performance | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Over time applications that persist data to a store will have performance degradation as queries that used to return in milliseconds may now take seconds or even minutes to return. This is normal as t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL Performance">
+<meta property="og:url" content="https://carlpaton.github.io/2020/09/mysql-performance/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Over time applications that persist data to a store will have performance degradation as queries that used to return in milliseconds may now take seconds or even minutes to return. This is normal as t">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/mysql-performance/sql-execution-plan-with-issues.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/mysql-performance/sql-execution-plan.png">
+<meta property="article:published_time" content="2020-09-08T12:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-10T01:33:11.064Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/mysql-performance/sql-execution-plan-with-issues.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-mysql-performance" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/mysql-performance/" class="article-date">
+  <time datetime="2020-09-08T12:00:00.000Z" itemprop="datePublished">2020-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MySQL Performance
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Over time applications that persist data to a store will have performance degradation as queries that used to return in milliseconds may now take seconds or even minutes to return. This is normal as the application grows and it actually gets used.</p>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/installer/">MySQL Community edition</a> and <a target="_blank" rel="noopener" href="https://www.mysql.com/products/workbench/">MySQL Workbench</a> come with all the tools (for free) needed to speed things up, you just need to know where to look and its not actually that hard.</p>
+<h3 id="Where-Clause"><a href="#Where-Clause" class="headerlink" title="Where Clause"></a>Where Clause</h3><p>Assuming your SQL commands have a <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-where/">where clause</a> they can be optimized to use an index, this is just a sorted list the database engine will query first when fetching your data.</p>
+<p>The <code>WHERE</code> clause tells the engine you only want a subset of the data. Without a <code>WHERE</code> and the subsequent operators like <code>AND</code>, <code>OR</code> ect, you will always request all of the data.</p>
+<h3 id="Large-Tables"><a href="#Large-Tables" class="headerlink" title="Large Tables"></a>Large Tables</h3><p>A school boy mistake would be to simply add indexes to all tables and columns, although the engine will ignore an index if it decides its not needed, the index will need to be maintained and updated over time. It will become fragmented.</p>
+<p>Following YAGNI <a target="_blank" rel="noopener" href="https://ardalis.com/beyond-good-enough-is-waste/">(You aren’t gonna need it)</a> seems to work pretty well for me as I would rather speed up SQL Commands when they start becoming a problem.</p>
+<p>The statment below can help you identify tables to focus on, <code>count_rows</code> and <code>index_fragmented</code> are good starting points.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CONCAT(table_schema, <span class="string">&#x27;.&#x27;</span>, table_name) <span class="keyword">as</span> table_schema,</span><br><span class="line"> CONCAT(table_rows) count_rows,</span><br><span class="line"> CONCAT(ROUND(data_length <span class="operator">/</span> ( <span class="number">1024</span> <span class="operator">*</span> <span class="number">1024</span> <span class="operator">*</span> <span class="number">1024</span> ), <span class="number">2</span>), <span class="string">&#x27;G&#x27;</span>) data_size,</span><br><span class="line"> CONCAT(ROUND(index_length <span class="operator">/</span> ( <span class="number">1024</span> <span class="operator">*</span> <span class="number">1024</span> <span class="operator">*</span> <span class="number">1024</span> ), <span class="number">2</span>), <span class="string">&#x27;G&#x27;</span>) index_length,</span><br><span class="line"> CONCAT(ROUND(( data_length <span class="operator">+</span> index_length ) <span class="operator">/</span> ( <span class="number">1024</span> <span class="operator">*</span> <span class="number">1024</span> <span class="operator">*</span> <span class="number">1024</span> ), <span class="number">2</span>), <span class="string">&#x27;G&#x27;</span>) total_size,</span><br><span class="line"> ROUND(index_length <span class="operator">/</span> data_length, <span class="number">2</span>) index_fragmented</span><br><span class="line"><span class="keyword">FROM</span> information_schema.TABLES</span><br><span class="line"><span class="keyword">WHERE</span> table_schema <span class="operator">=</span> <span class="string">&#x27;foo&#x27;</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> data_length <span class="operator">+</span> index_length <span class="keyword">DESC</span></span><br><span class="line">LIMIT <span class="number">50</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/SQLStatements/blob/master/mysql/misc%20examples/identify-large-tables.sql">identify-large-tables.sql</a></li>
+</ul>
+<h3 id="Slow-Query-Log"><a href="#Slow-Query-Log" class="headerlink" title="Slow Query Log"></a>Slow Query Log</h3><p>The engine will not log these by default for performance reasons, you need to switch this on. You can find all system variables with <code>SHOW VARIABLES</code>. The statement below filters only variables realted to slow queries.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> VARIABLES <span class="keyword">where</span> variable_name </span><br><span class="line"><span class="keyword">in</span> (<span class="string">&#x27;slow_query_log&#x27;</span>, <span class="string">&#x27;log_output&#x27;</span>, <span class="string">&#x27;long_query_time&#x27;</span>, <span class="string">&#x27;slow_query_log_file&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>The defaults for these will be</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">log_output                  ~ FILE</span><br><span class="line">long_query_time             ~ 10.000000</span><br><span class="line">slow_query_log	            ~ OFF</span><br><span class="line">slow_query_log_file         ~ &#x2F;var&#x2F;lib&#x2F;mysql&#x2F;MACHINENAME-slow.log</span><br></pre></td></tr></table></figure>
+
+<p>You can also do things like <code>SHOW VARIABLES where variable_name like &#39;%query%&#39;;</code>.</p>
+<p>Although you could query that file with something like <code>tail MACHINENAME-slow.log</code>, I like to use SQL to keep the logs as its easier to digest. If your database is runnnig in a container you can create an <a href="/2018/06/docker-interactive-container-session/">Interactive Container Session</a> and connect to its terminal.</p>
+<p>If you using SQL to keep the logs, update as follows:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> slow_query_log <span class="operator">=</span> <span class="string">&#x27;ON&#x27;</span>;</span><br><span class="line"><span class="keyword">SET</span> long_query_time <span class="operator">=</span> <span class="number">1</span>;                    </span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> log_output <span class="operator">=</span> <span class="string">&#x27;TABLE&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>long_query_time</strong></p>
+<p>The <code>1</code> above means one second, you can however use milliseconds:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> long_query_time <span class="operator">=</span> <span class="number">0.1</span>;              <span class="operator">~</span> <span class="number">100</span>ms</span><br><span class="line"><span class="keyword">SET</span> long_query_time <span class="operator">=</span> <span class="number">0.5</span>;              <span class="operator">~</span> <span class="number">500</span>ms (half a <span class="keyword">second</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Then clear the logs table so you start fresh:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">TRUNCATE</span> mysql.slow_log</span><br></pre></td></tr></table></figure>
+
+<p>Then test a long running query and check the results:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> SLEEP(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> mysql.slow_log;</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">CONVERT</span>(sql_text <span class="keyword">USING</span> utf8) <span class="keyword">as</span> command_text <span class="keyword">from</span> mysql.slow_log;</span><br></pre></td></tr></table></figure>
+
+<p>Now run your application and let the engine log the slow queries for you.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/slow-query-log.html">https://dev.mysql.com/doc/refman/8.0/en/slow-query-log.html</a></li>
+</ul>
+<h3 id="Execution-Plans"><a href="#Execution-Plans" class="headerlink" title="Execution Plans"></a>Execution Plans</h3><p>Pluck out a slow query from the above and run it in <code>MySQL Workbench</code>, to the right of the results scroll down and click <code>Execution Plan</code>. Things to look out for are <code>Full Table Scan</code> (This will be red) and <code>Thick lines</code> (shows heaps of rows/data coming back)</p>
+<p><img src="/d/mysql-performance/sql-execution-plan-with-issues.png" alt="SQL Execution Plan With Issues"></p>
+<p><strong>Full Table Scan</strong></p>
+<p>You could fix this with an index, check which columns are in the <code>WHERE</code> statement or the columns you are using in your <code>JOINS</code></p>
+<p><strong>Thick lines</strong></p>
+<p>This is a bit harder, look at the amount of data being returned - do you need it? This can be fixed with simple things like swapping out <code>LEFT OUTER JOIN</code> with <code>INNER JOIN</code> as the inner returns only data where they intersect. This is not a silver bullet, your application may NEED all this data!</p>
+<p>An index CAN however fix this for you so you will need to experiment and possibly re-write some of the queries.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/workbench/en/wb-tutorial-visual-explain-dbt3.html">https://dev.mysql.com/doc/workbench/en/wb-tutorial-visual-explain-dbt3.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/execution-plan-information.html">https://dev.mysql.com/doc/refman/8.0/en/execution-plan-information.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/explain.html">https://dev.mysql.com/doc/refman/8.0/en/explain.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/workbench/en/wb-performance.html">https://dev.mysql.com/doc/workbench/en/wb-performance.html</a></li>
+</ul>
+<h3 id="Create-Index"><a href="#Create-Index" class="headerlink" title="Create Index"></a>Create Index</h3><p>This can be as simple as <code>CREATE INDEX [your index name] ON [your table name] ([your column name])</code>. Its best to find a naming convention and stick to it, the examples below are prefixed with <code>idx_</code> for index and then the column name.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX idx_id</span><br><span class="line">ON risk (id);</span><br><span class="line"></span><br><span class="line">CREATE INDEX idx_risk_id</span><br><span class="line">ON risk_line (risk_id);</span><br><span class="line"></span><br><span class="line">CREATE INDEX idx_risk_line_id</span><br><span class="line">ON re_eval (risk_line_id);</span><br><span class="line"></span><br><span class="line">CREATE INDEX idx_re_eval_id</span><br><span class="line">ON re_eval_verify (re_eval_id);</span><br></pre></td></tr></table></figure>
+
+<p>After creating the index, run the query again and click the <code>Execution Plans</code> to confirm if your change helped. Instead of <code>SCAN</code> you should hopefully see <code>SEEK</code>, no more/or less red and thin lines showing less data.</p>
+<p>You may still see <code>SCAN</code> like below but if the rows are low its probably fine.</p>
+<p><img src="/d/mysql-performance/sql-execution-plan.png" alt="SQL Execution Plan"></p>
+<p>If you make a mistake you can <code>DROP</code> the index</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> INDEX idx_risk_id <span class="keyword">ON</span> risk_line;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/create-index.html">https://dev.mysql.com/doc/refman/8.0/en/create-index.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/mysql-indexes.html">https://dev.mysql.com/doc/refman/8.0/en/mysql-indexes.html</a></li>
+</ul>
+<h3 id="Other-logging"><a href="#Other-logging" class="headerlink" title="Other logging"></a>Other logging</h3><p>If the slow querys doesnt help you can enable verbose logging. Check the current settings with:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> VARIABLES <span class="keyword">where</span> variable_name </span><br><span class="line"><span class="keyword">in</span> (<span class="string">&#x27;general_log&#x27;</span>, <span class="string">&#x27;log_output&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>The defaults for these will be</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">general_log            <span class="operator">~</span> OFF</span><br><span class="line">log_output             <span class="operator">~</span> FILE</span><br></pre></td></tr></table></figure>
+
+<p>Then update them as:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">global</span> general_log <span class="operator">=</span> <span class="string">&#x27;ON&#x27;</span>;</span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">global</span> log_output <span class="operator">=</span> <span class="string">&#x27;table&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Then truncate the table</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">TRUNCATE</span> mysql.general_log</span><br></pre></td></tr></table></figure>
+
+<p>Run the application or some SQL commands and see what it logged:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> mysql.general_log;</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">CONVERT</span>(argument <span class="keyword">USING</span> utf8) <span class="keyword">as</span> command_text <span class="keyword">from</span> mysql.general_log;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/query-log.html">https://dev.mysql.com/doc/refman/8.0/en/query-log.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2020/09/mysql-performance/" data-id="ckml3zly900a9poon94xuee02" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/09/rosetta-code-sql-datafix/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SQL Datafix
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/netify/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Netify</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

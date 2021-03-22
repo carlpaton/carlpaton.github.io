@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Specflow | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Whats Specflow?Its a library that allows for Behavior Driven Development in .NET. (BDD) using Gherkin Syntax (Given-When-Then).  “SpecFlow helps teams bind automation to feature files and share the re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Specflow">
+<meta property="og:url" content="https://carlpaton.github.io/2020/10/specflow/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Whats Specflow?Its a library that allows for Behavior Driven Development in .NET. (BDD) using Gherkin Syntax (Given-When-Then).  “SpecFlow helps teams bind automation to feature files and share the re">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-09-30T11:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-10T10:30:35.527Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="software testing">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-specflow" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/10/specflow/" class="article-date">
+  <time datetime="2020-09-30T11:00:00.000Z" itemprop="datePublished">2020-Oct</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Specflow
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Whats-Specflow"><a href="#Whats-Specflow" class="headerlink" title="Whats Specflow?"></a>Whats Specflow?</h3><p>Its a library that allows for <code>Behavior Driven Development in .NET.</code> (BDD) using <a target="_blank" rel="noopener" href="https://cucumber.io/docs/gherkin/reference/">Gherkin</a> Syntax (Given-When-Then).</p>
+<blockquote>
+<p>“SpecFlow helps teams bind automation to feature files and share the resulting examples as Living Documentation across the team and stakeholders. - specflow.org”</p>
+</blockquote>
+<p><strong>PRO</strong> - using <a target="_blank" rel="noopener" href="https://cucumber.io/docs/gherkin/reference/">Gherkin</a> and <a target="_blank" rel="noopener" href="https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-An-Example.html">Specflow</a> allows the entire team to contribute towards the test requirements, your Product Owner or Designer may not be technical but they do understand the domain so dont discount their input.</p>
+<p><strong>CON</strong> - <a target="_blank" rel="noopener" href="https://cucumber.io/docs/gherkin/reference/">Gherkin</a> and <a target="_blank" rel="noopener" href="https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-An-Example.html">Specflow</a> add additional complexity, if its just the developer writing the tests then its probably not going to add much value.</p>
+<p>SpecFlow seems pretty focused on integration testing - <a href="/2018/05/unit-tests-overview/">Code that invokes a unit of work that crosses project boundaries, uses actual external dependencies, and/or validates many different aspects about the code under test</a>.</p>
+<p>As Im using <code>Visual Studio 2019</code> I installed the extension <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=TechTalkSpecFlowTeam.SpecFlowForVisualStudio">SpecFlow for Visual Studio 2019</a>.</p>
+<h3 id="Whats-Gherkin"><a href="#Whats-Gherkin" class="headerlink" title="Whats Gherkin?"></a>Whats Gherkin?</h3><p>Its the Syntax (Given-When-Then) which are keywords, the example below is from the template <code>SpecFlow Project</code></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/SpecFlowDemo/commit/ab0ed6c8994c006f028d4c30bdaacad763452aba#diff-063b2406327895ad6a12387f95c4ed21">Features/Calculator.feature (commit ab0ed6c)</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Feature: Calculator</span><br><span class="line">	In order to avoid silly mistakes</span><br><span class="line">	As a math idiot</span><br><span class="line">	I *want* to be told the **sum** of ***two*** numbers</span><br><span class="line"></span><br><span class="line">Scenario: Add two numbers</span><br><span class="line">	Given the first number is 50</span><br><span class="line">	And the second number is 70</span><br><span class="line">	When the two numbers are added</span><br><span class="line">	Then the result should be 120</span><br></pre></td></tr></table></figure>
+
+<p>Specflow then knows how to translate the above into steps simliar to the classic <code>tripple A</code> testing pattern. </p>
+<p>All of the below will have <code>using TechTalk.SpecFlow;</code> this resolves the annotations <code>Given When Then</code> above the methods.</p>
+<p>If you place your cursor on a line in the <code>.feature</code> and press F12 (Go to definition) the IDE should navigate to the correct place in the step as shown in <code>CalculatorStepDefinitions.cs</code> below.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/SpecFlowDemo/commit/ab0ed6c8994c006f028d4c30bdaacad763452aba#diff-cbdeb46302046153db8b81354704f3e7">Steps/CalculatorStepDefinitions.cs (commit ab0ed6c)</a></li>
+</ul>
+<h4 id="Arrange"><a href="#Arrange" class="headerlink" title="Arrange"></a>Arrange</h4><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Given the first number is 50</span></span><br><span class="line"></span><br><span class="line">[<span class="meta">Given(<span class="meta-string">&quot;the first number is (.*)&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GivenTheFirstNumberIs</span>(<span class="params"><span class="built_in">int</span> number</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span> implement arrange (precondition) logic</span></span><br><span class="line"></span><br><span class="line">    _scenarioContext.Pending();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Additional <code>Arrange</code> steps are added with the keyword <code>And</code>:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// And the second number is 70</span></span><br><span class="line"></span><br><span class="line">[<span class="meta">Given(<span class="meta-string">&quot;the second number is (.*)&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GivenTheSecondNumberIs</span>(<span class="params"><span class="built_in">int</span> number</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span> implement arrange (precondition) logic</span></span><br><span class="line"></span><br><span class="line">    _scenarioContext.Pending();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Act"><a href="#Act" class="headerlink" title="Act"></a>Act</h4><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// When the two numbers are added</span></span><br><span class="line"></span><br><span class="line">[<span class="meta">When(<span class="meta-string">&quot;the two numbers are added&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">WhenTheTwoNumbersAreAdded</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span> implement act (action) logic</span></span><br><span class="line"></span><br><span class="line">    _scenarioContext.Pending();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Assert"><a href="#Assert" class="headerlink" title="Assert"></a>Assert</h4><p>The assertion can be done with any <a href="/2018/09/unit-testing-frameworks/">testing framework</a> or the <a target="_blank" rel="noopener" href="https://specflow.org/plus/">SpecFlow+ Runner</a>.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Then the result should be 120</span></span><br><span class="line"></span><br><span class="line">[<span class="meta">Then(<span class="meta-string">&quot;the result should be (.*)&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ThenTheResultShouldBe</span>(<span class="params"><span class="built_in">int</span> result</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span> implement assert (verification) logic</span></span><br><span class="line"></span><br><span class="line">    _scenarioContext.Pending();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Sweet-how-do-I-set-things-up"><a href="#Sweet-how-do-I-set-things-up" class="headerlink" title="Sweet how do I set things up?"></a>Sweet how do I set things up?</h3><p>The flow is simply and there are awesome getting started guides like <a target="_blank" rel="noopener" href="https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-An-Example.html">Getting Started With An Example</a> and <a target="_blank" rel="noopener" href="https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-A-New-Project.html">Getting Started With A New Project</a>.</p>
+<p>A summary of the core steps are with a new project are:</p>
+<ul>
+<li>Create new project from template <code>SpecFlow Project</code><ul>
+<li>This creates <a target="_blank" rel="noopener" href="https://github.com/carlpaton/SpecFlowDemo/blob/master/Features/Calculator.feature">/Features/Calculator.feature</a></li>
+<li>It also create <a target="_blank" rel="noopener" href="https://github.com/carlpaton/SpecFlowDemo/blob/master/Steps/CalculatorStepDefinitions.cs">/Steps/CalculatorStepDefinitions.cs</a></li>
+</ul>
+</li>
+<li>Create the <code>Example</code> Project, this is the code you want to test, following their example its a <code>class library</code>. <strong>EACH LINE</strong> in the <code>Scenario</code> needs to be satisfied with c# code:<ul>
+<li> <code>public void GivenTheFirstNumberIs(int number)</code>, this sets (arrange) the state <code>FirstNumber</code> </li>
+<li> <code>public void GivenTheSecondNumberIs(int number)</code> this sets (arrange) the state for <code>SecondNumber</code></li>
+<li> <code>public void WhenTheTwoNumbersAreAdded()</code> this calls some behaviour (act) : <code>_calculator.Add();</code></li>
+<li> <code>public void ThenTheResultShouldBe(int expectedResult)</code> asserts the result</li>
+</ul>
+</li>
+</ul>
+<h3 id="Scenario-Context"><a href="#Scenario-Context" class="headerlink" title="Scenario Context"></a>Scenario Context</h3><p><a target="_blank" rel="noopener" href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/ScenarioContext.html">See ScenarioContext</a></p>
+<p>The boilerplate code injected <code>ScenarioContext _scenarioContext;</code> into the constructor in <a target="_blank" rel="noopener" href="https://github.com/carlpaton/SpecFlowDemo/blob/master/IntegrationTests/Steps/CalculatorStepDefinitions.cs">CalculatorStepDefinitions.cs</a> </p>
+<blockquote>
+<p>“ScenarioContext helps you store values in a dictionary between steps. This helps you to organize your step definitions better than using private variables in step definition classes. -docs.specflow.org”</p>
+</blockquote>
+<p>This means we call things like</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_scenarioContext.Add   ~ add new key&#x2F;value</span><br><span class="line">_scenarioContext.Get   ~ get value by key</span><br><span class="line">_scenarioContext.Set   ~ update value by key</span><br></pre></td></tr></table></figure>
+
+<p>They also have something called <a target="_blank" rel="noopener" href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/Context-Injection.html">Context-Injection</a></p>
+<blockquote>
+<p>“This feature allows you to group the shared state in context classes, and inject them into every binding class that needs access to that shared state. -docs.specflow.org”</p>
+</blockquote>
+<p>To use context injection:</p>
+<ol>
+<li>Create your POCOs (simple .NET classes) representing the shared data.</li>
+<li>Define them as constructor parameters in every binding class that requires them.</li>
+<li>Save the constructor argument to instance fields, so you can use them in the step definitions.</li>
+</ol>
+<p>This means <code>CalculatorStepDefinitions</code> could be changed from creating its own <code>new Calculator();</code></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">readonly</span> ScenarioContext _scenarioContext;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">readonly</span> Calculator _calculator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">int</span> _result;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">CalculatorStepDefinitions</span>(<span class="params">ScenarioContext scenarioContext</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    _scenarioContext = scenarioContext;</span><br><span class="line">    _calculator = <span class="keyword">new</span> Calculator();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>To automagically injecting an instance based on the default constructor</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">readonly</span> Calculator _calculator;</span><br><span class="line"><span class="keyword">private</span> <span class="built_in">int</span> _result;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">CalculatorStepDefinitions</span>(<span class="params">Calculator calculator</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    _calculator = calculator;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Feature-Context"><a href="#Feature-Context" class="headerlink" title="Feature Context"></a>Feature Context</h3><p><a target="_blank" rel="noopener" href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/FeatureContext.html">See FeatureContext</a></p>
+<blockquote>
+<p>“FeatureContext persists for the duration of the execution of an entire feature, whereas ScenarioContext only persists for the duration of a scenario. -docs.specflow.org”</p>
+</blockquote>
+<p>These are useful hooks as you can have annotations like <code>[BeforeFeature]</code> and <code>[AfterFeature]</code>.<br>Note that hooks also exist for <code>Scenario Context</code>: <code>[BeforeScenario]</code> and <code>[AfterScenario]</code>.</p>
+<p>You can use either to rebind/override <code>IKernel</code> with your own mock implementations.</p>
+<p>Example from docs.specflow.or:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Binding</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Hooks</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">BeforeFeature</span>]</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">BeforeFeature</span>(<span class="params">FeatureContext featureContext</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Starting &quot;</span> + featureContext.FeatureInfo.Title);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    [<span class="meta">AfterFeature</span>]</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">AfterFeature</span>(<span class="params">FeatureContext featureContext</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Finished &quot;</span> + featureContext.FeatureInfo.Title);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/SpecFlowDemo">https://github.com/carlpaton/SpecFlowDemo</a></li>
+<li><a target="_blank" rel="noopener" href="https://specflow.org/">https://specflow.org/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-An-Example.html">https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-An-Example.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-A-New-Project.html">https://docs.specflow.org/projects/specflow/en/latest/Getting-Started/Getting-Started-With-A-New-Project.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://cucumber.io/docs/gherkin/reference/">https://cucumber.io/docs/gherkin/reference/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.specflow.org/projects/specflow/en/latest/Gherkin/Gherkin-Reference.html">https://docs.specflow.org/projects/specflow/en/latest/Gherkin/Gherkin-Reference.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2020/10/specflow/" data-id="ckml3zm0900fmpoonc66u55t0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/" rel="tag">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/10/raspberry-create-a-service/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Raspberry Pi - Create a system service
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/raspberry-pi-cluster-kubernetes/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Raspberry Pi Cluster - Kubernetes</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

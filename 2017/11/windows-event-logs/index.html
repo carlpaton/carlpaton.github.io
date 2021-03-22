@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Windows Event Logs | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Plain text files are most commonly used to log software application events such as exceptions, warnings, information or verbose data to try identify a specific problem. Although using text files can">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows Event Logs">
+<meta property="og:url" content="https://carlpaton.github.io/2017/11/windows-event-logs/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Plain text files are most commonly used to log software application events such as exceptions, warnings, information or verbose data to try identify a specific problem. Although using text files can">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/windows-event-logs/windows-event-logs.jpg">
+<meta property="article:published_time" content="2017-11-29T11:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-04T22:37:58.606Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="logging">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/windows-event-logs/windows-event-logs.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-windows-event-logs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/windows-event-logs/" class="article-date">
+  <time datetime="2017-11-29T11:00:00.000Z" itemprop="datePublished">2017-Nov</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Windows Event Logs
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/windows-event-logs/windows-event-logs.jpg" alt="Windows Event Logs"></p>
+<p>Plain text files are most commonly used to log software application events such as exceptions, warnings, information or verbose data to try identify a specific problem. Although using text files can have a performance impact there are tools optimized to handle this kind of logging such as <a target="_blank" rel="noopener" href="https://logging.apache.org/log4net/">log4net</a> or <a target="_blank" rel="noopener" href="https://serilog.net/">serilog</a>. These work very well and many developers are fans of them.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.codeproject.com/Articles/140911/log-net-Tutorial">This is a great read if you are interested in learning more about log4net</a>.</li>
+</ul>
+<p>I’m a fan of windows event logs as they are optimized by the operating system and I can view logs in the same place. That said, tools like <a target="_blank" rel="noopener" href="https://www.elastic.co/products/logstash/">logstash</a> can parse and transform a variety of logs such as windows event logs or text logs to be viewed in once place, so it just depends on your organizations setup and maturity in terms of logging infrastructure.</p>
+<blockquote>
+<p><em>KIBANA is an open source data visualization plugin for Elasticsearch. It provides visualization capabilities on top of the content indexed on an Elasticsearch cluster.</em></p>
+</blockquote>
+<p>Developers generally should not have access to production servers but the operations team can extract and provide the exported windows event viewer logs (.evtx files)</p>
+<p>It is possible to open these logs with the built in windows “Event Viewer” but the ‘Find…’ function is in my opinion not very helpful when we are trying to identify a pattern and/or display records based on custom criteria.</p>
+<p>I like to import the logs into a database and then run SQL querys to identify patterns or specific logs that are of importance to my problem domain. My ‘EventViewer’ solution was written in C# .NET and is made up of the following projects: EvtxImporter, LogViewWebApplication, Common, Repository, Sharedmodels and Tests.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/EventViewer">The source code for my application can be found here.</a></li>
+</ul>
+<h3 id="EvtxImporter"><a href="#EvtxImporter" class="headerlink" title="EvtxImporter"></a>EvtxImporter</h3><p>This is a console application that simply reads the .evtx file to memory and bulk inserts the data to our database. The data is not <a target="_blank" rel="noopener" href="http://www.studytonight.com/dbms/database-normalization.php">normalized </a>and really should be however for simplicity I’ve imported it ‘as is’ so the SQL columns matches the columns in the .evtx file and is mapped to <code>SharedModels.EventLogModel</code></p>
+<p>The high level process flow is:</p>
+<ol>
+<li>Check file location ‘LogPath’ for ‘*.evtx’ files</li>
+<li>Check if the files have been processed by looking at a watermark file <code>hamster.json</code>, this is stored in the location WaterMarkFile’</li>
+<li>Read the file and map it to <code>SharedModels.EventLogModel</code></li>
+<li>There was no count property so I manually counted the file records by looping twice using a <a href="/2020/04/c-sharp-delegates/">delegate </a>to either call my ‘Count’ or ‘Append’ methods</li>
+<li>The data is then bulk inserted</li>
+<li>The watermark is then updated</li>
+</ol>
+<h3 id="LogViewWebApplication"><a href="#LogViewWebApplication" class="headerlink" title="LogViewWebApplication"></a>LogViewWebApplication</h3><p>This is a simple MVC Web Application to read the log files, this could be used by your help desk as they will either not know how to construct SQL querys or care about them.</p>
+<h3 id="Common"><a href="#Common" class="headerlink" title="Common"></a>Common</h3><p>This is a class library for common classes.</p>
+<p>CategoryModel can be used to identify software events using the built in .NET ‘EventLog.WriteEntry’ method.</p>
+<p>Short range -32,768 to 32,767 can be used to identify logs from parts of the application. This can be anything from the users Id to values representing classes withing the application.</p>
+<p>In my class I have a ‘Categorys’ enum with values UserLogin=1, DebtorsCapture, CreditorsCapture which I use in my ‘Tests’ project. They can be anything really.</p>
+<p>The ‘EventLogger’ class is used to write to the windows event log.</p>
+<h3 id="Repository"><a href="#Repository" class="headerlink" title="Repository"></a>Repository</h3><p>This is a normal repository pattern class library with a PostgreSQL implementation, <a href="/2017/10/sllite-with-repository-pattern/">for more information on a repository pattern see this article</a>.</p>
+<h3 id="SharedModels"><a href="#SharedModels" class="headerlink" title="SharedModels"></a>SharedModels</h3><p>Im on the fence with sharing data models as this can be messy but I guess as long as your data models (repository) and view models (mvc models) are seprated you will be ok.</p>
+<p>The big advanage for my application was to share ‘EventLogModel’ between ‘EvtxImporter’ and ‘Repository’ as this model exactly represents the .evtx file which is read and persisted to the database.</p>
+<h3 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h3><p>The general rule is every class you write needs a unit test - this is often not done for several reasons including time, business requirements/policys and simply overkill. My import tool as 2 test groups.</p>
+<p>‘EventLoggerTests’ to create ‘dummy’ event logs to test with. This is not a true unit test but the ability to quickly run specifc classes and insert some test data was very useful.</p>
+<p>‘ReadEvtxFileTests’ to test reading .evtx files.</p>
+<p>Tests for the ‘Repository’ and ‘EvtxImporter.CheckFileLocation’ are still to come! \ :D /</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/csharp/csharp_delegates.htm">https://www.tutorialspoint.com/csharp/csharp_delegates.htm</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/30809133/read-event-log-file-from-path">https://stackoverflow.com/questions/30809133/read-event-log-file-from-path</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/609533/how-do-you-open-the-event-log-programatically">https://stackoverflow.com/questions/609533/how-do-you-open-the-event-log-programatically</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Kibana">https://en.wikipedia.org/wiki/Kibana</a></li>
+<li><a target="_blank" rel="noopener" href="https://logging.apache.org/log4net/">https://logging.apache.org/log4net/</a></li>
+<li><a target="_blank" rel="noopener" href="https://serilog.net/">https://serilog.net/</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.studytonight.com/dbms/database-normalization.php">http://www.studytonight.com/dbms/database-normalization.php</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2017/11/windows-event-logs/" data-id="ckml3zm1i00jcpoongg0wbip7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/logging/" rel="tag">logging</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/xml-serializer/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          XML Serializer
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/10/sqlite-with-repository-pattern/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">SQLite with a Repository Pattern</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

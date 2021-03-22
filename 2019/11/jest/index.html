@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Jest | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Jest is a javaScript testing framework. OfConverts the arguments to an observable sequence. 12const someSequence &#x3D; &amp;#123; item: &amp;#123;&amp;#125;, isLoading: false &amp;#125;const someObservableSequence$ &#x3D; of(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jest">
+<meta property="og:url" content="https://carlpaton.github.io/2019/11/jest/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Jest is a javaScript testing framework. OfConverts the arguments to an observable sequence. 12const someSequence &#x3D; &amp;#123; item: &amp;#123;&amp;#125;, isLoading: false &amp;#125;const someObservableSequence$ &#x3D; of(">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-11-24T12:01:01.000Z">
+<meta property="article:modified_time" content="2020-08-04T22:37:58.557Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="angular">
+<meta property="article:tag" content="software testing">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-jest" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/jest/" class="article-date">
+  <time datetime="2019-11-24T12:01:01.000Z" itemprop="datePublished">2019-Nov</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Jest
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Jest is a javaScript testing framework.</p>
+<h3 id="Of"><a href="#Of" class="headerlink" title="Of"></a>Of</h3><p>Converts the arguments to an observable sequence.</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> someSequence = &#123; <span class="attr">item</span>: &#123;&#125;, <span class="attr">isLoading</span>: <span class="literal">false</span> &#125;</span><br><span class="line"><span class="keyword">const</span> someObservableSequence$ = <span class="keyword">of</span>(someSequence)</span><br></pre></td></tr></table></figure>
+
+<h3 id="TestBed-with-mockReturnValue"><a href="#TestBed-with-mockReturnValue" class="headerlink" title="TestBed with mockReturnValue"></a>TestBed with mockReturnValue</h3><p>This can be called inside the tests body to mock out the function <code>getFeatures</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TestBed.get(SomeFacade).getFeatures &#x3D; jest.fn().mockReturnValue(of());</span><br></pre></td></tr></table></figure>
+
+<h3 id="Data-driven"><a href="#Data-driven" class="headerlink" title="Data driven"></a>Data driven</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">--- <span class="keyword">with</span> toBeObservable</span><br><span class="line">describe(<span class="string">&#x27;[childComponentEnabled$]&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    [</span><br><span class="line">        &#123; <span class="attr">abName</span>: <span class="literal">true</span>, <span class="attr">expected</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">abName</span>: <span class="literal">false</span>, <span class="attr">expected</span>: <span class="literal">false</span> &#125;</span><br><span class="line">    ].forEach(<span class="function">(<span class="params">&#123; abName, expected &#125;</span>) =&gt;</span></span><br><span class="line">        it(<span class="string">`should <span class="subst">$&#123;expected ? <span class="string">&#x27;&#x27;</span> : <span class="string">&#x27;not&#x27;</span>&#125;</span> use &#x27;child-component-to-maybe-show&#x27; if abName feature is <span class="subst">$&#123;abName&#125;</span>`</span>, marbles(<span class="function">(<span class="params">m</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// Arrange</span></span><br><span class="line">            <span class="keyword">const</span> fixture = TestBed.createComponent(ParentComponent);</span><br><span class="line">            <span class="keyword">const</span> testComponent = fixture.componentInstance;</span><br><span class="line">            <span class="keyword">const</span> abFeature = &lt;IAbFeature&gt; &#123;</span><br><span class="line">                name: <span class="string">&#x27;abName&#x27;</span>,</span><br><span class="line">                value: abName.toString(),</span><br><span class="line">                winningVariantName: <span class="string">&#x27;OnVariant&#x27;</span></span><br><span class="line">            &#125;;</span><br><span class="line">            TestBed.get(AbFrameworkFacade).getByName = <span class="function">() =&gt;</span> <span class="keyword">of</span>(abFeature);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Act</span></span><br><span class="line">            fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Assert</span></span><br><span class="line">            m.expect(testComponent.childComponentEnabled$).toBeObservable(<span class="string">&#x27;(a|)&#x27;</span>, &#123;</span><br><span class="line">                a: expected</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;))</span><br><span class="line">    );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">--- passing the array elements by <span class="built_in">object</span> <span class="string">`testcase`</span></span><br><span class="line">describe(<span class="string">`getSomeMethod`</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    [</span><br><span class="line">        &#123;</span><br><span class="line">            someObject: &#123;&#125;,</span><br><span class="line">            someBool: <span class="literal">true</span>,</span><br><span class="line">            someString: <span class="string">&#x27;hoe&#x27;</span>,</span><br><span class="line">            someEnum: SomeEnum.hoe,</span><br><span class="line">            expected: <span class="string">&#x27;foo&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            someObject: &#123;&#125;,</span><br><span class="line">            someBool: <span class="literal">true</span>,</span><br><span class="line">            someString: <span class="string">&#x27;bazz&#x27;</span>,</span><br><span class="line">            someEnum: SomeEnum.foo,</span><br><span class="line">            expected: <span class="string">&#x27;foo bar&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ].forEach(<span class="function"><span class="params">testcase</span> =&gt;</span> &#123;</span><br><span class="line">        it(<span class="string">`does some sweet thing,</span></span><br><span class="line"><span class="string">        testcase <span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(testcase)&#125;</span>`</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// do all the things and set `actual`</span></span><br><span class="line">			<span class="keyword">const</span> actual = <span class="string">&#x27;wat&#x27;</span>;</span><br><span class="line">            expect(actual).toBe(testcase.expected);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="toHaveBeenCalledTimes"><a href="#toHaveBeenCalledTimes" class="headerlink" title="toHaveBeenCalledTimes"></a>toHaveBeenCalledTimes</h3><p>Much like <code>.Verify</code> in <a href="/2018/12/unit-testing-with-nunit/">nunit to assert a method was called</a>. Here the <code>fakeAsync</code> and <code>tick</code> are mocking the passage of time, could be to allow subscriptions ect.</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">&#x27;UnitOfWork&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    it(<span class="string">&#x27;Reason this unit of work should have been called&#x27;</span>, fakeAsync(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// Arrange</span></span><br><span class="line">        <span class="keyword">const</span> spy = TestBed.get(SomeService).methodWeAreCheckingWasCalled = jest.fn();</span><br><span class="line"></span><br><span class="line">        TestBed.get&lt;ISomeFacade&gt;(SomeOtherService).getSomeMethod = jest.fn().mockReturnValue(<span class="keyword">of</span>(&#123;</span><br><span class="line">            item: &#123;&#125;, <span class="attr">isLoading</span>: <span class="literal">false</span></span><br><span class="line">        &#125;));</span><br><span class="line"></span><br><span class="line">        TestBed.get(SomeServiceWithoutAnInterface).getSomeMethod2 = jest.fn().mockReturnValue(<span class="keyword">of</span>(&#123;</span><br><span class="line">            item: &#123;&#125;, <span class="attr">isLoading</span>: <span class="literal">false</span> &#125;</span><br><span class="line">        ));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Act</span></span><br><span class="line">        classUnderTest.ngOnInit();</span><br><span class="line">        tick();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Assert</span></span><br><span class="line">        expect(spy).toHaveBeenCalledTimes(<span class="number">1</span>);</span><br><span class="line">    &#125;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="TBA"><a href="#TBA" class="headerlink" title="TBA"></a>TBA</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">toHaveBeenCalledWith</span><br><span class="line"></span><br><span class="line">toBeInstanceOf</span><br><span class="line"></span><br><span class="line">toBe</span><br><span class="line"></span><br><span class="line">toMatchSnapshot</span><br></pre></td></tr></table></figure>
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://jestjs.io/">https://jestjs.io/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/11/jest/" data-id="ckml3zlxh007vpoonaj68dibr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/" rel="tag">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/" rel="tag">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/11/mvc-section/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          MVC Section
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/passwordless-ssh-access/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Passwordless SSH Access</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

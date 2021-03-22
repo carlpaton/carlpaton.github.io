@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Docker, Containers – The future! | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Docker, Containers – The future!![](&#x2F;d&#x2F;docker-containers-the-future&#x2F;docker-containers-the-future 1.png) In the Information Technology space ‘buzz words’ come and go, we heard about ‘Web 2.0’ which to">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker, Containers – The future!">
+<meta property="og:url" content="https://carlpaton.github.io/2018/04/docker-containers-the-future/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Docker, Containers – The future!![](&#x2F;d&#x2F;docker-containers-the-future&#x2F;docker-containers-the-future 1.png) In the Information Technology space ‘buzz words’ come and go, we heard about ‘Web 2.0’ which to">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-04-29T00:08:24.000Z">
+<meta property="article:modified_time" content="2020-08-04T22:37:58.538Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-docker-containers-the-future" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/docker-containers-the-future/" class="article-date">
+  <time datetime="2018-04-29T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker, Containers – The future!
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Docker, Containers – The future!![](/d/docker-containers-the-future/docker-containers-the-future 1.png)</p>
+<p>In the Information Technology space ‘buzz words’ come and go, we heard about ‘Web 2.0’ which to me didn’t really mean anything besides old sites were ugly and we needed to make things better? (HTML5 did a good job of this) ‘Synergy’ was another – it was used so often it lost all meaning. Perhaps my opinion is invalid but the over use of ‘buzz words’ makes smart people sound dumb! Today we have things like ‘IoT’ which is ‘Internet of Things’ – this one makes sense as things in our lives are connected to the internet and ‘Life runs on code’.</p>
+<p>Another one I see coming up a lot is ‘Docker’ and ‘Containers’…</p>
+<p>Now Docker and Containers are not just some ‘buzz words’. Together they are by far the most exciting technology I have seen in ages, honestly the last time I was this excited about something in IT was when I wrote my first compiled application in C# and benched it against what we now call Classic ASP (VB Script) – well the C# code smashed the Classic ASP and I was hooked! Now back to Docker and to quote <a target="_blank" rel="noopener" href="https://www.pluralsight.com/authors/nigel-poulton">Nigel Poulton</a> – “if you are in any way into IT, I am telling you now, Docker and containers are going to be a massive part of your future.”</p>
+<p>I cannot agree more, once you catch on how easy Docker is to use you will simply never go back to not using it. Docker runs on Windows, Mac and Linux with most of the commands figuring the ‘voodoo’ out for you. You don’t have to be a systems administrator with years of experience to use this technology – today in IT the lines between ‘Developers’ and ‘Operations’ are blurred. You guessed it there is a buzz word for this too and its “DevOps”.</p>
+<p>The biggest problem with using anything new is either having nothing to apply it to or not really knowing how to apply it to your current problem domain. As a software developer Im often faced with this – I want to use something new and cool but know if I try use it I am probably just going to upset perfectly working code and cost my employer time which means money.</p>
+<p>I hope this article helps at least one person trying to figure out how they can (1) Use docker even if its just in their development environment and (2) Possibly integrate it into their systems.</p>
+<h3 id="Before-We-Start"><a href="#Before-We-Start" class="headerlink" title="Before We Start"></a>Before We Start</h3><p>This short video is well worth watching and explains the fundamentals.</p>
+<p>Learn Docker in 12 Minutes</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YFl2mCHdv24" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h3 id="Baby-Steps-–-Installing-Docker"><a href="#Baby-Steps-–-Installing-Docker" class="headerlink" title="Baby Steps – Installing Docker"></a>Baby Steps – Installing Docker</h3><p>You can simply install “Docker for Windows”, check “Docker Support” in a new Visual Studio 2017 project and deploy to docker from the IDE. This is pretty cool and will give you the opportunity to quick and easily fiddle with this new technology but this is not the open source path I’d encourage you to follow.</p>
+<p>If you want to work and stay relevant in today’s corporate world you have to understand that there are budget constraints. This means corporates like solutions that are “cheap” or “free”. Based on the “open source” comment above you will either be frowning right now or know that I’m going to tell you to use Linux &amp; .Net Core. You don’t have to be a Systems Administrator to use Linux, “DevOps” is here and you don’t have to dual boot your PC – just install a Virtual Machine (VM) and hack away!</p>
+<p>The “Docker for Windows” setup is pretty cool, it allows you to switch between Windows and Linux containers (The Linux voodoo runs in a Hyper V MobyLinuxVM) but my focus here is a native Windows host (My OS is Windows 10 64 bit) running a Linux Virtual Machine with the docker installation and containers all running in the Linux VM. This approach I feel will lend itself to the containers running on a bare-metal Linux host.</p>
+<h4 id="Step-1-–-Choose-a-VM-Player"><a href="#Step-1-–-Choose-a-VM-Player" class="headerlink" title="Step 1 – Choose a VM Player"></a>Step 1 – Choose a VM Player</h4><p>I really like ‘<a href="/2018/04/vmware-workstation-player/">VMware Workstation Player</a>’ as its simple to use and from what I’ve seen is rock solid. At the time of writing this I was using VMware-player-14.1.1 which does unfortunately clash with the Hyper V settings in ‘Docker For Windows’ so it may not be for everybody.</p>
+<h4 id="Step-2-–-Choose-your-Linux-Operating-System"><a href="#Step-2-–-Choose-your-Linux-Operating-System" class="headerlink" title="Step 2 – Choose your Linux Operating System"></a>Step 2 – Choose your Linux Operating System</h4><p>Ubuntu has 2 points going for it; (1) its popular so chances are somebody has already solved a problem for you and; (2) it comes with enough things installed that you don’t have to write complicated bash scripts to get things to work. Just remember that with all the additional applications installed on the OS there is more potential for an attacker to take advantage of.</p>
+<p>You can use Ubuntu’s Desktop Graphical User Interface (GUI) version but I’d suggest the Server version as this is probably what you will find at most corporates as it will maximize a servers processing power. My local VM runs ‘ubuntu-17.10.1-server’ and I make use of <a href="/2018/04/putty/">Putty</a> to SSH to it.</p>
+<p>The nice thing about Putty is you can copy and paste, I am lazy and would rather copy a known working command with parameters. A lot of developers like to rather type the commands themselves, repetition does improve cognitive function so this has merit too. Just do what works for you.</p>
+<h4 id="Step-3-–-Install-Docker-on-Ubuntu-Server"><a href="#Step-3-–-Install-Docker-on-Ubuntu-Server" class="headerlink" title="Step 3 – Install Docker on Ubuntu Server"></a>Step 3 – Install Docker on Ubuntu Server</h4><p>Follow the <a href="/2018/04/setup-docker-on-linux/">steps here to setup Docker on Linux</a>.</p>
+<h4 id="Functional-Use-Cases-for-Docker"><a href="#Functional-Use-Cases-for-Docker" class="headerlink" title="Functional Use Cases for Docker"></a>Functional Use Cases for Docker</h4><p>The examples below should help you identify somewhere in your development process where you can use Docker. None of these are at scale, all run locally on your notebook and thanks to .Net Core all work on Linux – Now I think that’s pretty cool and worth looking at!</p>
+<ol>
+<li>Database containers<ol>
+<li>Microsoft SQL Express</li>
+<li>MySQL</li>
+<li>PostgreSQL</li>
+</ol>
+</li>
+<li>.Net Core Web API<ol>
+<li>This will be our microservice to talk to the database(es)</li>
+<li>You can use Soap UI or Postman to test them</li>
+</ol>
+</li>
+<li>.Net Core MVC Web Application<ol>
+<li>A web application that consumes the Web API</li>
+</ol>
+</li>
+</ol>
+<p>Although I used 3 database containers, generally an organization will choose one database and stick with it. This was done to demonstrate (1) these database types can and do run in containers on Linux and (2) how simple it is to spin them up. For the database shell scripts you can just leave them in the root users directory but I like to create directorys for each.</p>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;mssql-server-linux&#x2F;mssql-server-linux.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="Microsoft-SQL-Express"><a href="#Microsoft-SQL-Express" class="headerlink" title="Microsoft SQL Express"></a>Microsoft SQL Express</h3><p>The <a target="_blank" rel="noopener" href="https://github.com/charleyza/DockerDemo/blob/master/Docker%20(Linux)/Ubuntu/mssql-server-linux/mssql-server-linux.sh">complete shell script can be downloaded from here</a>, the steps below run though how you can get the shell script onto the Linux VM and how to use it.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#create directory </span><br><span class="line">mkdir mssql-server-linux</span><br><span class="line"></span><br><span class="line">#change to this directory</span><br><span class="line">cd mssql-server-linux</span><br><span class="line"></span><br><span class="line">#edit script with nano text editor</span><br><span class="line">sudo nano mssql-server-linux.sh</span><br></pre></td></tr></table></figure>
+
+<p>Sudo means run as root/admin, nano is a text editor and mssql-server-linux.sh is the name of our shell script.<br>When the editor opens up, paste the commands listed below, then press ‘Ctrl x’ and enter so save the file, Y for yes and then enter.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"></span><br><span class="line">#pull the image</span><br><span class="line">sudo docker pull microsoft&#x2F;mssql-server-linux:2017-CU5</span><br><span class="line"></span><br><span class="line">#kill the container if its running</span><br><span class="line">sudo docker container kill mssql_p5</span><br><span class="line"></span><br><span class="line">#rm&#x2F;delete the container if it exists</span><br><span class="line">sudo docker rm mssql_p5</span><br><span class="line"></span><br><span class="line">#spin up a detached mssql container</span><br><span class="line">sudo docker run --name&#x3D;mssql-p5 -e &#39;ACCEPT_EULA&#x3D;Y&#39; -e &#39;SA_PASSWORD&#x3D;Password123&#39; -e &#39;MSSQL_PID&#x3D;Express&#39; -p 62005:1433 -d microsoft&#x2F;mssql-server-linux:2017-CU5</span><br><span class="line"></span><br><span class="line">#start the container</span><br><span class="line">sudo docker start mssql_p5</span><br><span class="line"></span><br><span class="line">#list containers</span><br><span class="line">sudo docker ps --all</span><br></pre></td></tr></table></figure>
+
+<p>You don’t have to map the ports like I did with -p 62005:1433; I do this so I can have more than one database container of that type on the same <a target="_blank" rel="noopener" href="https://docs.docker.com/network/bridge/#manage-a-user-defined-bridge">network bridge</a>. 2017-CU5 is the tagged version I tested with, if left off it will default to LATEST</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x mssql-server-linux.sh</span><br></pre></td></tr></table></figure>
+
+<p>This marks the shell script as executable</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo .&#x2F;mssql-server-linux.sh</span><br></pre></td></tr></table></figure>
+
+<p>This runs the shell script. Once done you can now connect to the ‘mssql_p5’ container on x.x.x.x:62005 with sa/Password123 from a client such as <a target="_blank" rel="noopener" href="https://dbeaver.jkiss.org/download/">Dbeaver</a> or <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms">SQL Server Management Studio (SSMS)</a>.</p>
+<p>Where x.x.x.x is the ip address of your Linux VM. You can run the following command to get the IP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr show</span><br></pre></td></tr></table></figure>
+
+<p>Provision the database with the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/SQLStatements/tree/master/mssql/test">SQL scripts here</a>. These are needed for the Web API project to function.</p>
+<p>This can be automated with another container running a console application or a flyway container – <a target="_blank" rel="noopener" href="https://hub.docker.com/r/boxfuse/flyway/">hub.docker.com/r/boxfuse/flyway</a></p>
+<p>For demo purposes you could even have a seed/provision call in the Web API.</p>
+<h3 id="MySQL-amp-PostgreSQL"><a href="#MySQL-amp-PostgreSQL" class="headerlink" title="MySQL &amp; PostgreSQL"></a>MySQL &amp; PostgreSQL</h3><p>The steps are 90% the same as the above, you can find sample shell scripts &amp; SQL scripts below:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerDemo/blob/master/Docker%20(Linux)/Ubuntu/mysql/mysql.sh">https://github.com/carlpaton/DockerDemo/blob/master/Docker%20(Linux)/Ubuntu/mysql/mysql.sh</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/SQLStatements/tree/master/mysql/test">MySQL SQL Scripts</a> to provision the database</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerDemo/blob/master/Docker%20(Linux)/Ubuntu/postgres/postgres.sh">https://github.com/carlpaton/DockerDemo/blob/master/Docker%20(Linux)/Ubuntu/postgres/postgres.sh</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/SQLStatements/tree/master/postgresql/test">PostgreSQL  Scripts</a> to provision the database</li>
+</ul>
+</li>
+</ul>
+<h3 id="Net-Core-Web-API"><a href="#Net-Core-Web-API" class="headerlink" title=".Net Core Web API"></a>.Net Core Web API</h3><p>Up until now we have pulled and used predefined images for the database containers. For our Application Programming Interface (API) we will still use a predefined base image but build on top of it with instructions from something called a ‘<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a>’</p>
+<p>You can organize your files in any way you want to, I use the users home directory and then create folders from there grouping things together.</p>
+<p>Create your dotnet folder and Dockerfile</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#change to the root directory (if you are still inside mssql-server-linux)</span><br><span class="line">cd\</span><br><span class="line"></span><br><span class="line">#create directory</span><br><span class="line">mkdir dotnet-webapi</span><br><span class="line"></span><br><span class="line">#change directory</span><br><span class="line">cd dotnet-webapi</span><br><span class="line"></span><br><span class="line">#edit the dockerfile</span><br><span class="line">sudo nano Dockerfile</span><br></pre></td></tr></table></figure>
+
+<p>Paste this into the Dockerfile and save it. (Check the steps above for the ‘mssql-server-linux.sh’ file if you are a bit lost)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM microsoft&#x2F;aspnetcore:2.0</span><br><span class="line">WORKDIR &#x2F;app</span><br><span class="line">COPY .&#x2F;content .</span><br><span class="line">ENTRYPOINT [&quot;dotnet&quot;, &quot;aspnetapp.dll&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>Create the shell script</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano dotnet-webapi.sh</span><br></pre></td></tr></table></figure>
+
+<p>Paste this into dotnet-webapi.sh and save it.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">sudo docker pull microsoft&#x2F;dotnet:2.0-sdk</span><br><span class="line">sudo docker container kill dotnet-webapi</span><br><span class="line">sudo docker rm dotnet-webapi</span><br><span class="line">sudo docker rmi image_name:dotnet_image_webapi</span><br><span class="line">sudo docker build -t dotnet_image_webapi .</span><br><span class="line">sudo docker run -d -p 81:80 --name dotnet-webapi dotnet_image_webapi</span><br><span class="line">sudo docker start dotnet-webapi</span><br><span class="line">sudo docker ps --all</span><br></pre></td></tr></table></figure>
+
+<p>Now the Dockerfile will need some content, you can download <a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerDemo/tree/master/Sample%20Code">the source code</a> from here and publish yourself or you can use <a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerDemo/tree/master/Docker%20(Linux)/Ubuntu/dotnet-webapi/content">the published application</a>. The key for either is to ensure you update the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerDemo/blob/master/Sample%20Code/NetCoreWebApi/NetCoreWebApi/appsettings.json">appsettings.json</a> file. (The ConnMySQL, ConnPgSQL &amp; ConnMsSQL values to match you Linux VM &amp; passwords in the shell scripts if you have changed them from the defaults I chose.)</p>
+<p>Once the connection strings are updated you will need to compress the published solution into a <a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerDemo/blob/master/Docker%20(Linux)/Ubuntu/dotnet-webapi/content.zip">content.zip archive like this one</a>.</p>
+<p>You will then need to edit <a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerDemo/blob/master/Docker%20(Linux)/Ubuntu/dotnet-webapi/copy.bat">https://github.com/carlpaton/DockerDemo/blob/master/Docker%20(Linux)/Ubuntu/dotnet-webapi/copy.bat</a> to have your Linux VM’s IP.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set PATH&#x3D;C:\Program Files\PuTTY</span><br><span class="line"></span><br><span class="line">pscp c:&#x2F;Dev-Code-School&#x2F;DockerDemo&#x2F;&quot;Docker (Linux)&quot;&#x2F;Ubuntu&#x2F;dotnet-webapi&#x2F;content.zip carl@192.168.231.134:&#x2F;home&#x2F;carl&#x2F;dotnet-webapi&#x2F;content.zip</span><br><span class="line"></span><br><span class="line">echo &quot;DONE&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Run the copy.bat file from your local host (Windows, as administrator); this will copy the compressed content.zip file to the Linux VM. There are probably more efficient ways to get the data to the VM, for me this was the simplest. Im more than happy to listen and learn about other ways to do this? (Any Linux Fundies out there?)</p>
+<p>When your containers are running on a bare metal Linux server this content should be read from a <a target="_blank" rel="noopener" href="https://docs.docker.com/storage/volumes/">volumn</a>.</p>
+<p>Ensure you have upzip installed, <a href="/2018/04/linux-commands/">see these linux commands install help it.</a></p>
+<p>Unzip the content.zip file to /dotnet/content</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo unzip content.zip</span><br></pre></td></tr></table></figure>
+
+<p>Then mark the script as executable and run it, this will spin up the MS SQL Container.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x dotnet-webapi.sh</span><br><span class="line">sudo .&#x2F;dotnet-webapi.sh</span><br></pre></td></tr></table></figure>
+
+<p>You will now be able to access the API on port 81, below are examples for each database repository (you will need to use the IP of your VM)</p>
+<p>If the API throws an error, make sure you have run the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/SQLStatements">SQL commands to provision each database</a>.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://192.168.180.130:81/api/values">http://192.168.180.130:81/api/values</a></li>
+<li><a target="_blank" rel="noopener" href="http://192.168.180.130:81/api/mssql">http://192.168.180.130:81/api/mssql</a></li>
+<li><a target="_blank" rel="noopener" href="http://192.168.180.130:81/api/mysql">http://192.168.180.130:81/api/mysql</a></li>
+<li><a target="_blank" rel="noopener" href="http://192.168.180.130:81/api/pgsql">http://192.168.180.130:81/api/pgsql</a></li>
+</ul>
+<p>If the API still doesnt work you can <a href="/2018/04/docker-commands/">check the container logs</a> with the <a target="_blank" rel="noopener" href="https://docs.docker.com/config/containers/logging/">logs command</a>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker logs dotnet-webapi</span><br><span class="line">sudo docker logs mssql_p5</span><br></pre></td></tr></table></figure>
+
+<h3 id="Net-Core-MVC-Web-Application"><a href="#Net-Core-MVC-Web-Application" class="headerlink" title=".Net Core MVC Web Application"></a>.Net Core MVC Web Application</h3><p>The steps are so similar to the Web API there is no value in repetition. The key difference is the content changes to the Web Application and the container will listen on port 80 (the Web API is on port 81)</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://192.168.180.130/">http://192.168.180.130:80</a></li>
+</ul>
+<h3 id="And-Now"><a href="#And-Now" class="headerlink" title="And Now?"></a>And Now?</h3><p>The steps above just scratch the surface of what you can do with containers. If this has peeked your interest and I really hope it has I suggest you look at the <a target="_blank" rel="noopener" href="https://docs.docker.com/compose/">docker compose command</a> tool for defining and running multi-container Docker applications.</p>
+<p>Docker Compose in 12 Minutes:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Qw9zlE3t8Ko" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h4 id="Free-self-paced-courses"><a href="#Free-self-paced-courses" class="headerlink" title="Free self-paced courses"></a>Free self-paced courses</h4><p>Docker wants to make things easy for you and have a wealth of information and <a target="_blank" rel="noopener" href="https://training.play-with-docker.com/">free self-paced courses to learn Docker</a></p>
+<p><em>” Check out the Docker Playground or join the Docker Community Slack and Docker Forums to learn, mentor and collaborate with others members of the Docker community. “</em></p>
+<h4 id="Orchestration"><a href="#Orchestration" class="headerlink" title="Orchestration"></a>Orchestration</h4><p><em>” Container Orchestration refers to the automated arrangement, coordination, and management of software containers. Container Orchestration allows users to define how to coordinate the containers in the cloud when the multi-container packaged application is deployed. “</em></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HDt_iN1hINA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><h4 id="Training-amp-Mentors"><a href="#Training-amp-Mentors" class="headerlink" title="Training &amp; Mentors"></a>Training &amp; Mentors</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://thanethomson.com/">Thane Thomson</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.nigelpoulton.com/category/docker/">Nigel Poulton</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.pluralsight.com/courses/docker-getting-started">https://www.pluralsight.com/courses/docker-getting-started</a></li>
+</ul>
+<h4 id="Docker-com"><a href="#Docker-com" class="headerlink" title="Docker.com"></a>Docker.com</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce">https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/logs/">https://docs.docker.com/engine/reference/commandline/logs/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/config/pruning/">https://docs.docker.com/config/pruning/</a></li>
+<li><a target="_blank" rel="noopener" href="https://store.docker.com/images/mssql-server-windows-express/">https://store.docker.com/images/mssql-server-windows-express/</a></li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/microsoft/mssql-server-linux/">https://hub.docker.com/r/microsoft/mssql-server-linux/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-gb/sql/linux/quickstart-install-connect-docker">https://docs.microsoft.com/en-gb/sql/linux/quickstart-install-connect-docker</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/logs/">https://docs.docker.com/engine/reference/commandline/logs/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Microsoft/mssql-docker/issues/195">https://github.com/Microsoft/mssql-docker/issues/195</a></li>
+<li><a target="_blank" rel="noopener" href="https://store.docker.com/images/mysql">https://store.docker.com/images/mysql</a></li>
+<li><a target="_blank" rel="noopener" href="https://store.docker.com/images/postgres">https://store.docker.com/images/postgres</a></li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/microsoft/aspnetcore/">https://hub.docker.com/r/microsoft/aspnetcore/</a></li>
+<li><a target="_blank" rel="noopener" href="https://store.docker.com/images/dotnet">https://store.docker.com/images/dotnet</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/examples/dotnetcore/#create-a-dockerfile-for-an-aspnet-core-application">https://docs.docker.com/engine/examples/dotnetcore/#create-a-dockerfile-for-an-aspnet-core-application</a></li>
+</ul>
+<h4 id="Linux-Operating-Systems"><a href="#Linux-Operating-Systems" class="headerlink" title="Linux Operating Systems"></a>Linux Operating Systems</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/223691/how-do-i-create-a-script-file-for-terminal-commands/223698">https://askubuntu.com/questions/223691/how-do-i-create-a-script-file-for-terminal-commands/223698</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ubuntu.com/download/desktop">https://www.ubuntu.com/download/desktop</a></li>
+<li><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/938700/how-do-i-install-docker-on-ubuntu-16-04-lts">https://askubuntu.com/questions/938700/how-do-i-install-docker-on-ubuntu-16-04-lts</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">https://docs.docker.com/install/linux/docker-ce/ubuntu/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/docker-containers-the-future/" data-id="ckml3zm2300oopoon1iqgewtr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/oauth1-and-basic-auth/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          OAuth1 And Basic Authentication
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/docker-for-windows/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Docker For Windows</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>

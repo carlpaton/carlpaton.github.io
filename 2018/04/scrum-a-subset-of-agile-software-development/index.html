@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>SCRUM, a subset of AGILE Software Development | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="![SCRUM, a subset of AGILE Software Development](&#x2F;d&#x2F;scrum-a-subset&#x2F;scrum 1.jpeg) The Basic Life Cycle of any project generally follows the following steps: Requirements -&gt; Analysis -&gt; Design -&amp;g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SCRUM, a subset of AGILE Software Development">
+<meta property="og:url" content="https://carlpaton.github.io/2018/04/scrum-a-subset-of-agile-software-development/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="![SCRUM, a subset of AGILE Software Development](&#x2F;d&#x2F;scrum-a-subset&#x2F;scrum 1.jpeg) The Basic Life Cycle of any project generally follows the following steps: Requirements -&gt; Analysis -&gt; Design -&amp;g">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-04-05T00:08:24.000Z">
+<meta property="article:modified_time" content="2021-02-19T00:47:41.213Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="agile">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-scrum-a-subset-of-agile-software-development" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/scrum-a-subset-of-agile-software-development/" class="article-date">
+  <time datetime="2018-04-05T00:08:24.000Z" itemprop="datePublished">2018-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SCRUM, a subset of AGILE Software Development
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>![SCRUM, a subset of AGILE Software Development](/d/scrum-a-subset/scrum 1.jpeg)</p>
+<p>The Basic Life Cycle of any project generally follows the following steps: Requirements -&gt; Analysis -&gt; Design -&gt; Code -&gt; Test. This is the waterfall model which most companies are following without even knowing it is indeed a documented methodology.</p>
+<p>Many software developers don’t even document their code, this is not an assumption on my part but rather an observation from working with several developers on separate projects though my career and also snorkeling though code examples online.</p>
+<p>Generally if you ask a developer “What is software testing?” you will receive comments like “My code compiled… what more do you want from me?” or “Dude, I wrote some unit tests…” or even worse “I think we did some Agile”</p>
+<p>Besides the last example, for general small projects this is normally enough, the requirements may have been scribbled on a piece of paper or white board and 5 minutes later the developer was frantically mashing his keyboard to meet a ridiculous deadline and building a solution he doesn’t really understand. For many of us this is the reality however you are not working smart, you will eventually burn out and your software will not be something you can be proud of.</p>
+<p>If this sounds like your organization then you need to change. The first step is to take a step back and try understand what the software development life cycle is, how you are already managing it in your business and how you can improve things.</p>
+<p>![Oh boy](/d/scrum-a-subset/scrum 2.jpeg)</p>
+<p>The seven most expensive words in business: are “<a target="_blank" rel="noopener" href="https://www.linkedin.com/feed/update/urn:li:activity:6257351448409972736/">We have always done it that way.</a>”</p>
+<p>The following is my understanding of SCRUM, a subset of AGILE software development methodologies to help promote a disciplined and collaborative working environment within a team.</p>
+<h3 id="Stake-Holders"><a href="#Stake-Holders" class="headerlink" title="Stake Holders"></a>Stake Holders</h3><p>Stake holders in this context refers to anybody that the project or software touches. This includes Business owner(s), Project Manager(s), Development team even the end users.</p>
+<h3 id="Sprint-Planning-and-Defining-Acceptance-Criteria"><a href="#Sprint-Planning-and-Defining-Acceptance-Criteria" class="headerlink" title="Sprint Planning and Defining Acceptance Criteria"></a>Sprint Planning and Defining Acceptance Criteria</h3><p>Few developers have the privilege to start a brand new project with a well-documented specification, for the bulk of us we will work on existing systems with a product backlog of features and known bugs. This is not a bad thing, detailed specification documents are not a requirement for quality software. Few companies can afford to document software as well as, <a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/ms228593.aspx">for example the C# Language Specification</a>.</p>
+<p>At the sprint planning meeting items from the product backlog are prioritized and a select number of items are included in the sprint based on the size of the team. Your sprints should be two weeks long and each developer have at least 60 hours’ worth of work for that sprint. This is around 6 hours a day which takes into account interruptions and cognitive load, remember if you are working smart you don’t have to work that hard. Never over load your best staff with all the workload – its very bad management to punish a hard worker simply because they are good at their job. Rather share the load and try upskill the rest of the team. This way after a few sprints you will a team of skilled staff.</p>
+<p>The hours per sprint have to be attainable, if developers have to work overtime to meet the sprint deadline you need to go back to the drawing board in your planning meeting and probably acceptance criteria. Rather let them deliver quality code than poorly planned and buggy software.</p>
+<p>The software does not have to be release at the end of each sprint, several sprints can make up a single release.</p>
+<p>Before you begin doing anything your tasks requirements or “Acceptance Criteria” needs to as clear as possible written in plain English using the Ubiquitous Language for references as defined by your business. This should preferably be done by the Project Manager with input from all stakeholders at the sprint planning meeting.</p>
+<p>The sprint planning meeting can unfortunately take up an entire day but as your team matures this meeting will shorten and the rewards will be very clear.</p>
+<p>Once the Acceptance Criteria is defined this is what will be built by the developer, tested by the Quality Assurance testers, Tested by Business at User Acceptance and released into live. It cannot change during the sprint as this will cause development creep which is not agile.</p>
+<h3 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h3><p>A story is the feature or module that the developer is going to build. It would include the acceptance criteria along with a brief description of the feature or bug fix. It’s a good idea to include testing data for both the developers and Quality Assurance teams – remember they may not have domain knowledge of the business / underlying business data so try give them all the information up front.</p>
+<p>Example: Testing data can include database id’s to query, names to lookup on, date ranges ect. It will be determined by the story.</p>
+<h3 id="Story-Points"><a href="#Story-Points" class="headerlink" title="Story Points"></a>Story Points</h3><p>Story points is an interesting measurement as it is determined by the team at sprint planning and is based on their understanding of the story, the team being all stake holders. Everybody has their say and often your story points can change based on others input when they motivate their “choice”.</p>
+<blockquote>
+<p><strong>*Story point</strong> is an arbitrary measure used by Scrum teams. This is used to measure the effort required to implement a <strong>story</strong>. In simple terms its a number that tells the team how hard the <strong>story</strong> is. Hard could be related to complexity, Unknowns and effort.*</p>
+</blockquote>
+<p>I have found that using the <a target="_blank" rel="noopener" href="https://www.livescience.com/37470-fibonacci-sequence.html">fibonacci sequence</a> on que cards speeds up this process as it reduces guess work.</p>
+<p>Printing que cards is rather silly as there are several apps for your smartphone that allow you to chooses these numbers. Example: <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=artarmin.android.scrum.poker&hl=en">Scrum Poker Cards (Agile)</a> by <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/dev?id=9135165741484938670&hl=en">artArmin</a></p>
+<p>The format is very simple:</p>
+<p><strong>Round 1</strong> – the team will be briefed on the story, everybody gets a vote using their que cards. The highest and lowest numbers need to then motivate their choice. For example a low point of 1 would then need to be motivated why they feel it’s a simple change or fix. Likewise a higher point of say 40 would need to motivate why the feel this is a difficult change or fix. This is extremely valuable as the team will learn from each other – business would understand the code domain better and developers will gain knowledge of the business domain.</p>
+<p><strong>Round 2</strong> – repeat the votes based on what you have just heard. It’s important to take this seriously and not just vote random numbers. If you don’t have knowledge of the area rather abstain or better ask questions. Remember the only stupid question is the one you don’t ask.</p>
+<p>The majority vote then carries and that is then used as the story point score for that story.</p>
+<h3 id="Stand-Up"><a href="#Stand-Up" class="headerlink" title="Stand-Up!"></a>Stand-Up!</h3><p><em>WHO: Scrum team</em></p>
+<p>Every day, preferably in the mornings the team need to have a stand-up, they each need to answer and ask some simple questions:</p>
+<ul>
+<li>What did you work on yesterday?</li>
+<li>What are you working on today?</li>
+<li>What obstacles are in your way?</li>
+</ul>
+<p>This will help the team work together and also assure business that their needs are indeed being worked on. All stakeholders need to be present or at very least have a proxy present to voice their concerns / progress ect.</p>
+<h3 id="Release-Notes"><a href="#Release-Notes" class="headerlink" title="Release Notes"></a>Release Notes</h3><p>During development it is a good idea to produce release notes and send them out via email once a day, they don’t have to be overly complicated. A simple table showing the reference number linking back to your project tracking system, the story headline and its location or who its assigned to.</p>
+<p>![Release Notes](/d/scrum-a-subset/scrum 3.jpeg)</p>
+<h3 id="Velocity"><a href="#Velocity" class="headerlink" title="Velocity"></a>Velocity</h3><p>This is helpful for managers to motivate for things like incentives, new team members or to simply justify a team’s size or even existence.</p>
+<blockquote>
+<p><em>The metric is calculated by reviewing work the team successfully completed during previous sprints; for example, if the team completed 10 stories during a two-week *<em>sprint</em></em> and each story was worth 3 story points, then the team’s <strong>velocity</strong> is 30 story points per <strong>sprint</strong>.*</p>
+</blockquote>
+<p>It also helps identify mental fatigue or when it’s time to move developers into another team or role.</p>
+<h3 id="Sprint-Retrospective"><a href="#Sprint-Retrospective" class="headerlink" title="Sprint Retrospective"></a>Sprint Retrospective</h3><p><em>WHO: Scrum team</em></p>
+<p>This is such an important meeting as it is an open form for the stakeholders to express how they felt the past sprint went. Simple questions to ask include:</p>
+<ul>
+<li>What worked in the sprint?</li>
+<li>What did not work?</li>
+<li>How can we improve for the next sprint?</li>
+</ul>
+<p>The idea is never to ostracize a staff member, if somebody constantly is not pulling their weight it is for their managers to deal with. Never judge a peer when they drop the ball, judge them by how quickly they pick it up again and run with the task.</p>
+<h3 id="Sprint-Review"><a href="#Sprint-Review" class="headerlink" title="Sprint Review"></a>Sprint Review</h3><p><em>WHO: Scrum team &amp; Stakeholders</em></p>
+<p>Opportunity for</p>
+<ul>
+<li>Product Owner to showcase what the team has been working on, highlight risks, what we will look at next and time lines in this quarter and the next quarter. This sets expectations.</li>
+<li>Designers to showcase their visions and alignment to company wide copy.</li>
+<li>Developers to demo technical things or functional product slices.</li>
+</ul>
+<p>Its common for large companys to combine these reviews by pods/squads that serve a common slice of the business. </p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>Agile teams are constantly evolving, when something doesn’t work try change it for the better. This is a mind-set that needs to be achieved.</p>
+<p>Research what other teams are doing but never try implement something for the sake of it – if your team is performing well even with antiquated techniques it’s not always a good idea to change things.</p>
+<p>Never forget <strong>Product</strong> is a Team sport.</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="http://www.agilenutshell.com/scrum">http://www.agilenutshell.com/scrum</a></li>
+<li><a target="_blank" rel="noopener" href="http://whatis.techtarget.com/definition/Agile-velocity">http://whatis.techtarget.com/definition/Agile-velocity</a></li>
+<li><a target="_blank" rel="noopener" href="https://agilefaq.wordpress.com/2007/11/13/what-is-a-story-point/">https://agilefaq.wordpress.com/2007/11/13/what-is-a-story-point/</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.livescience.com/37470-fibonacci-sequence.html">http://www.livescience.com/37470-fibonacci-sequence.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cprime.com/resources/what-is-agile-what-is-scrum/">https://www.cprime.com/resources/what-is-agile-what-is-scrum/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.scrumalliance.org/why-scrum">https://www.scrumalliance.org/why-scrum</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.tamingdata.com/2010/07/08/the-project-management-tree-swing-cartoon-past-and-present/">http://www.tamingdata.com/2010/07/08/the-project-management-tree-swing-cartoon-past-and-present/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/04/scrum-a-subset-of-agile-software-development/" data-id="ckml3zlzy00eopoong4hagzwl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agile/" rel="tag">agile</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/convert-list-to-string-with-delimiter/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Convert List to string with delimiter
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/stopwatch/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Stopwatch</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/options-pattern-asp-net-core/">Options pattern in ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/entity-framework-core/">Entity Framework Core</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/mocking-ilogger/">Mocking ILogger</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 10px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+</body>
+</html>
