@@ -20,15 +20,15 @@ ga('send', 'pageview');
   
   <title>.NET Core on Raspberry Pi | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Raspberry Pi’s can run C# controlling the GPIO with the librarys below. I had a hoon at https:&#x2F;&#x2F;github.com&#x2F;carlpaton&#x2F;SweetPi.  System.Device.Gpio | System.Device.Gpio Namespace Iot.Device.Bindings  LE">
+  <meta name="description" content="Raspberry Pi’s can run C# controlling the GPIO with the librarys below. I had a hoon at https:&#x2F;&#x2F;github.com&#x2F;carlpaton&#x2F;SweetPi.  System.Device.Gpio and System.Device.Gpio Namespace Iot.Device.Bindings">
 <meta property="og:type" content="article">
 <meta property="og:title" content=".NET Core on Raspberry Pi">
 <meta property="og:url" content="https://carlpaton.github.io/2021/03/dot-net-core-paspberry-pi/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Raspberry Pi’s can run C# controlling the GPIO with the librarys below. I had a hoon at https:&#x2F;&#x2F;github.com&#x2F;carlpaton&#x2F;SweetPi.  System.Device.Gpio | System.Device.Gpio Namespace Iot.Device.Bindings  LE">
+<meta property="og:description" content="Raspberry Pi’s can run C# controlling the GPIO with the librarys below. I had a hoon at https:&#x2F;&#x2F;github.com&#x2F;carlpaton&#x2F;SweetPi.  System.Device.Gpio and System.Device.Gpio Namespace Iot.Device.Bindings">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-03-05T11:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-06T08:18:04.668Z">
+<meta property="article:modified_time" content="2021-03-23T03:35:47.141Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="c#">
 <meta property="article:tag" content="raspberry pi">
@@ -139,22 +139,63 @@ ga('send', 'pageview');
       
         <p>Raspberry Pi’s can run <a target="_blank" rel="noopener" href="http://localhost:4000/tags/c/">C#</a> controlling the <a href="/2019/12/pi-resources/">GPIO</a> with the librarys below. I had a hoon at <a target="_blank" rel="noopener" href="https://github.com/carlpaton/SweetPi">https://github.com/carlpaton/SweetPi</a>.</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/System.Device.Gpio">System.Device.Gpio</a> | <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.device.gpio">System.Device.Gpio Namespace</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/System.Device.Gpio">System.Device.Gpio</a> and <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.device.gpio">System.Device.Gpio</a> Namespace</li>
 <li><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Iot.Device.Bindings">Iot.Device.Bindings</a></li>
 </ul>
-<h3 id="LED"><a href="#LED" class="headerlink" title="LED"></a>LED</h3><ul>
+<h3 id="Install-Net-Core"><a href="#Install-Net-Core" class="headerlink" title="Install .Net Core"></a>Install .Net Core</h3><p>I tried to use the <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script">dotnet-install scripts</a> and even after manually adding to path it didnt work. So I did it manually:</p>
+<p>Update the OS</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+
+<p>Check for dotnet and install it</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dotnet --info                      ~ fails: &#39;dotnet1&#39; is not recognized as an internal or external command, operable program or batch file.</span><br><span class="line">echo $0                            ~ expect &#96;bash&#96;</span><br></pre></td></tr></table></figure>
+
+<p>At the time these were latest but always check <a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/download/dotnet/3.1">dotnet.microsoft.com/download</a> for the latest versions.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir dev</span><br><span class="line">cd dev</span><br><span class="line">wget https:&#x2F;&#x2F;download.visualstudio.microsoft.com&#x2F;download&#x2F;pr&#x2F;349f13f0-400e-476c-ba10-fe284b35b932&#x2F;44a5863469051c5cf103129f1423ddb8&#x2F;dotnet-sdk-3.1.102-linux-arm.tar.gz</span><br><span class="line">wget https:&#x2F;&#x2F;download.visualstudio.microsoft.com&#x2F;download&#x2F;pr&#x2F;8ccacf09-e5eb-481b-a407-2398b08ac6ac&#x2F;1cef921566cb9d1ca8c742c9c26a521c&#x2F;aspnetcore-runtime-3.1.2-linux-arm.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>The tar command is also used to extract tar archives: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir dotnet-arm32</span><br><span class="line">tar zxf dotnet-sdk-3.1.102-linux-arm.tar.gz -C $HOME&#x2F;dev&#x2F;dotnet-arm32</span><br><span class="line">tar zxf aspnetcore-runtime-3.1.2-linux-arm.tar.gz -C $HOME&#x2F;dev&#x2F;dotnet-arm32</span><br><span class="line"></span><br><span class="line">export DOTNET_ROOT&#x3D;$HOME&#x2F;dev&#x2F;dotnet-arm32</span><br><span class="line">export PATH&#x3D;$PATH:$HOME&#x2F;dev&#x2F;dotnet-arm32</span><br><span class="line"></span><br><span class="line">dotnet --info                      ~ works</span><br></pre></td></tr></table></figure>
+
+<p>Adding <code>export</code> above only adds it for that session, you can perminantly add it as follows</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">echo $PATH                        ~ wont have &#96;dev&#x2F;dotnet&#96;</span><br><span class="line">sudo nano ~&#x2F;.bashrc               ~ edit PATH in [~&#x2F;.bashrc] file</span><br><span class="line"></span><br><span class="line">At the bottom of the file add the exports. Save and exit.</span><br><span class="line"></span><br><span class="line">export DOTNET_ROOT&#x3D;$HOME&#x2F;dev&#x2F;dotnet-arm32</span><br><span class="line">export PATH&#x3D;$PATH:$HOME&#x2F;dev&#x2F;dotnet-arm32</span><br><span class="line"></span><br><span class="line">source ~&#x2F;.bashrc                 ~ reload the [~&#x2F;.bashrc] file </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/iot/deployment">https://docs.microsoft.com/en-us/dotnet/iot/deployment</a></li>
+<li><a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/download">https://dotnet.microsoft.com/download</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.raspberrypi.org/blog/visual-studio-code-comes-to-raspberry-pi/">https://www.raspberrypi.org/blog/visual-studio-code-comes-to-raspberry-pi/</a></li>
+<li><a target="_blank" rel="noopener" href="https://edi.wang/post/2019/9/29/setup-net-core-30-runtime-and-sdk-on-raspberry-pi-4">https://edi.wang/post/2019/9/29/setup-net-core-30-runtime-and-sdk-on-raspberry-pi-4</a></li>
+<li><a target="_blank" rel="noopener" href="https://elbruno.com/2020/01/05/raspberrypi-how-to-solve-dotnet-core-not-recognized-after-reboot/">https://elbruno.com/2020/01/05/raspberrypi-how-to-solve-dotnet-core-not-recognized-after-reboot/</a></li>
+</ul>
+<h3 id="Install-VS-Code"><a href="#Install-VS-Code" class="headerlink" title="Install VS Code"></a>Install VS Code</h3><p>I like to edit and run the code on the Pi, VS code can be used with the <a href="/2019/09/ide-visual-studio-code/">C# extensions</a>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update </span><br><span class="line">sudo apt install code -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="Hardware-ideas-amp-Help"><a href="#Hardware-ideas-amp-Help" class="headerlink" title="Hardware ideas &amp; Help"></a>Hardware ideas &amp; Help</h3><p>Its amazing the things people share online, helps noobs like me!</p>
+<p><strong>LED</strong></p>
+<ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/dotnet/iot/blob/main/samples/led-blink/README.md">Blink an LED with .NET Core on a Raspberry Pi</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=S0jY6ClycrM">Peter Gallagher: LED GPIO</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=BY6d8JoGS2E">Industry40tv: LED GPIO</a></li>
 </ul>
-<h3 id="Servos"><a href="#Servos" class="headerlink" title="Servos"></a>Servos</h3><ul>
+<p><strong>LEDS &amp; Resistors</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=BWYy3qZ315U&amp;t=225s">https://www.youtube.com/watch?v=BWYy3qZ315U&amp;t=225s</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=hduuUDiku80">https://www.youtube.com/watch?v=hduuUDiku80</a></li>
+</ul>
+<p><strong>Servos</strong></p>
+<ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/dotnet/iot/tree/main/src/devices/ServoMotor">Servo Motor</a></li>
 <li><a target="_blank" rel="noopener" href="https://gist.github.com/jsturtevant/6aa9832d0072438c1069">Windows IoT 10 Servo Motor Example</a></li>
 </ul>
-<h4 id="Sensor"><a href="#Sensor" class="headerlink" title="Sensor"></a>Sensor</h4><ul>
+<p><strong>Sensor</strong></p>
+<ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=j8homytc3g4">DHT11 - Digital temperature and humidity sensor.</a></li>
 </ul>
-
+<p><strong>Breadboards</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://magpi.raspberrypi.org/articles/breadboard-tutorial">https://magpi.raspberrypi.org/articles/breadboard-tutorial</a></li>
+</ul>
+<h3 id="Netstat-amp-UFW"><a href="#Netstat-amp-UFW" class="headerlink" title="Netstat &amp; UFW"></a>Netstat &amp; UFW</h3><p>You can confirm if the port is listing on your Pi with <code>netstat -nltp</code>, it needs to have a <code>Local Address</code> of <code>:::5001</code> this means its listing to the outside world.</p>
+<p>All ports on the Pi should be open but if this still doesnt work you can try Uncomplicated Firewall (UFW) which is a front-end to iptables.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get install ufw</span><br><span class="line">ufw status</span><br><span class="line">ufw allow in from any to any port 5001</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
