@@ -27,11 +27,13 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="In cryptography, a salt is random data that is used as an additional input to a one-way function that “hashes” data, a password or passphrase. Salts are closely related to the concept of nonce. The pr">
 <meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/salted-hash/password-hash-salt-1.png">
 <meta property="article:published_time" content="2018-05-02T00:08:24.000Z">
-<meta property="article:modified_time" content="2020-08-06T05:35:57.313Z">
+<meta property="article:modified_time" content="2021-03-24T07:25:05.069Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="c#">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/salted-hash/password-hash-salt-1.png">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -137,7 +139,7 @@ ga('send', 'pageview');
       
         <p>In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cryptography">cryptography</a>, a <strong>salt</strong> is <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Random_Number_Generator">random</a> data that is used as an additional input to a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/One-way_function">one-way function</a> that “<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">hashes</a>” <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Data_(computing)">data</a>, a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Password">password</a> or <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Passphrase">passphrase</a>. Salts are closely related to the concept of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cryptographic_nonce">nonce</a>. The primary function of salts is to defend against <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Dictionary_attacks">dictionary attacks</a> or against its hashed equivalent, a pre-computed <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rainbow_table">rainbow table</a> attack.</p>
 <p>This can be visually demonstrated as:</p>
-<p>![visually demonstrated](/d/salted-hash/password-hash-salt 1.png)</p>
+<p><img src="/d/salted-hash/password-hash-salt-1.png" alt="visually demonstrated"></p>
 <h3 id="Cool-how-do-we-do-this-in-code"><a href="#Cool-how-do-we-do-this-in-code" class="headerlink" title="Cool, how do we do this in code?"></a>Cool, how do we do this in code?</h3><p>Consider the following username and password:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var email &#x3D; &quot;howdy@carlpaton.co.za&quot;;</span><br><span class="line">var password &#x3D; &quot;qwerty&quot;;</span><br></pre></td></tr></table></figure>
 

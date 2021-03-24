@@ -20,19 +20,33 @@ ga('send', 'pageview');
   
   <title>Docker Compose Demo | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="![Dock Compose](&#x2F;d&#x2F;docker-compose-demo&#x2F;compose-demo 1.png) To demonstrate the power of docker compose and Infrastructure as code (IaC) I put together the following functional example. I must also give">
+  <meta name="description" content="To demonstrate the power of docker compose and Infrastructure as code (IaC) I put together the following functional example. I must also give credit to Godfrey Sisimogang for his input into the initi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker Compose Demo">
 <meta property="og:url" content="https://carlpaton.github.io/2018/08/docker-compose-demo/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="![Dock Compose](&#x2F;d&#x2F;docker-compose-demo&#x2F;compose-demo 1.png) To demonstrate the power of docker compose and Infrastructure as code (IaC) I put together the following functional example. I must also give">
+<meta property="og:description" content="To demonstrate the power of docker compose and Infrastructure as code (IaC) I put together the following functional example. I must also give credit to Godfrey Sisimogang for his input into the initi">
 <meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-1.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-2.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-3.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-4.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-5.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-6.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-7.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-8.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-9.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-10.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-11.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-12.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-13.png">
 <meta property="article:published_time" content="2018-08-02T00:08:24.000Z">
-<meta property="article:modified_time" content="2020-08-04T22:37:58.537Z">
+<meta property="article:modified_time" content="2021-03-23T08:31:42.638Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="docker compose">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/docker-compose-demo/compose-demo-1.png">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -136,7 +150,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>![Dock Compose](/d/docker-compose-demo/compose-demo 1.png)</p>
+        <p><img src="/d/docker-compose-demo/compose-demo-1.png" alt="Dock Compose"></p>
 <p>To demonstrate the power of docker compose and <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Infrastructure_as_Code">Infrastructure as code (IaC)</a> I put together the following functional example. I must also give credit to <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/godfrey-sisimogang-73a15a42/">Godfrey Sisimogang</a> for his input into the initial process flow – thank you my mate.</p>
 <p>All of the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerCompose">source code</a> is <a target="_blank" rel="noopener" href="https://opensource.org/licenses/MIT">open source MIT</a> and I encourage fellow software craftsmen to fork the scripts and adapt for functional use.</p>
 <h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>The Eco-systems is made up of the following layers</p>
@@ -174,7 +188,7 @@ ga('send', 'pageview');
 </ol>
 </li>
 </ol>
-<p>![Overview](/d/docker-compose-demo/compose-demo 2.jpg)</p>
+<p><img src="/d/docker-compose-demo/compose-demo-2.jpg" alt="Overview"></p>
 <ul>
 <li>Created with <a target="_blank" rel="noopener" href="http://draw.io/">http://draw.io</a></li>
 </ul>
@@ -184,7 +198,7 @@ ga('send', 'pageview');
 <ol>
 <li><p>Create a new virtual machine with Virtual Box</p>
 <ol>
-<li>Set the ‘Network’ to ‘<a target="_blank" rel="noopener" href="https://www.linuxbabe.com/virtualbox/a-pretty-good-introduction-to-virtualbox-bridged-networking-mode">Bridged Adapter</a>‘, the VM will then get an IP from your local <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol">DHCP service</a> and be in the same range as your laptop.<br>![Run Scripts](/d/docker-compose-demo/compose-demo 3.png)</li>
+<li>Set the ‘Network’ to ‘<a target="_blank" rel="noopener" href="https://www.linuxbabe.com/virtualbox/a-pretty-good-introduction-to-virtualbox-bridged-networking-mode">Bridged Adapter</a>‘, the VM will then get an IP from your local <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol">DHCP service</a> and be in the same range as your laptop.<br><img src="/d/docker-compose-demo/compose-demo-3.png" alt="Run Scripts"></li>
 <li>I used ubuntu-17.10.1-server-amd64.iso</li>
 </ol>
 </li>
@@ -208,7 +222,7 @@ ga('send', 'pageview');
 <li><p>Create a directory compose-demo</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir compose-demo</span><br><span class="line">cd compose-demo</span><br></pre></td></tr></table></figure></li>
 </ol>
-<p>![Run Scripts](/d/docker-compose-demo/compose-demo 4.png)</p>
+<p><img src="/d/docker-compose-demo/compose-demo-4.png" alt="Run Scripts"></p>
 <ol start="6">
 <li>With nano create the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerCompose/blob/master/compose.sh">compose.sh</a> shell script and paste in the values from <a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerCompose/blob/master/compose.sh">github</a> and mark the script as executable</li>
 </ol>
@@ -227,23 +241,23 @@ ga('send', 'pageview');
 <ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerCompose/blob/master/angular-web/Dockerfile">Dockerfile</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerCompose/blob/master/angular-web/index.html">index.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerCompose/blob/master/angular-web/nginx.conf">nginx.conf</a><br>![Run Scripts](/d/docker-compose-demo/compose-demo 5.png)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerCompose/blob/master/angular-web/nginx.conf">nginx.conf</a><br><img src="/d/docker-compose-demo/compose-demo-5.png" alt="Run Scripts"></li>
 </ol>
 </li>
 <li><p>Edit the index.html file to use the IP of the VM and target the API port</p>
-<p>![Run Scripts](/d/docker-compose-demo/compose-demo 6.png)</p>
+<p><img src="/d/docker-compose-demo/compose-demo-6.png" alt="Run Scripts"></p>
 </li>
 <li><p>Create the flyway-git-clone directory</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ..</span><br><span class="line">mkdir flyway-git-clone</span><br><span class="line">cd flyway-git-clone</span><br></pre></td></tr></table></figure></li>
 <li><p>Copy or create the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerCompose/blob/master/flyway-git-clone/Dockerfile">Dockerfile</a> into this directory</p>
-<p>![Run Scripts](/d/docker-compose-demo/compose-demo 7.png)</p>
+<p><img src="/d/docker-compose-demo/compose-demo-7.png" alt="Run Scripts"></p>
 </li>
 <li><p>Change back up a directory to ‘compose-demo’, your folder should look like this now</p>
 </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ..</span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
 
-<p>![Run Scripts](/d/docker-compose-demo/compose-demo 8.png)</p>
+<p><img src="/d/docker-compose-demo/compose-demo-8.png" alt="Run Scripts"></p>
 <ol start="15">
 <li>Run <a target="_blank" rel="noopener" href="https://github.com/carlpaton/DockerCompose/blob/master/compose.sh">compose.sh</a></li>
 </ol>
@@ -253,10 +267,10 @@ ga('send', 'pageview');
 
 <p>This will then run though the overview layers above, once complete you can browse the angular container which will call the API and display the fizz buzz data.</p>
 <p>Exit code 0 means the container completed its life without any issues.</p>
-<p>![Run Scripts](/d/docker-compose-demo/compose-demo 9.png)</p>
+<p><img src="/d/docker-compose-demo/compose-demo-9.png" alt="Run Scripts"></p>
 <ol start="16">
 <li><p>Exit compose</p>
-<p>![Run Scripts](/d/docker-compose-demo/compose-demo 10.png)</p>
+<p><img src="/d/docker-compose-demo/compose-demo-10.png" alt="Run Scripts"></p>
 </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL C</span><br></pre></td></tr></table></figure>
@@ -266,7 +280,7 @@ ga('send', 'pageview');
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker ps --all</span><br></pre></td></tr></table></figure>
 
-<p>![Run Scripts](/d/docker-compose-demo/compose-demo 11.png)</p>
+<p><img src="/d/docker-compose-demo/compose-demo-11.png" alt="Run Scripts"></p>
 <ol start="18">
 <li>You can now startup just the required containers with start.sh<ol>
 <li>This will only start the database, API and Angular Web containers</li>
@@ -277,9 +291,9 @@ ga('send', 'pageview');
 
 <p>You can then call the API directly, example <em><a target="_blank" rel="noopener" href="http://10.0.0.108:3000/fizzbuzz_data">http://10.0.0.108:3000/fizzbuzz_data</a></em></p>
 <p>The IP of your container will depend on your Host VM and DHCP server.</p>
-<p>![Run Scripts](/d/docker-compose-demo/compose-demo 12.png)</p>
+<p><img src="/d/docker-compose-demo/compose-demo-12.png" alt="Run Scripts"></p>
 <h3 id="Testing-Angular"><a href="#Testing-Angular" class="headerlink" title="Testing Angular"></a>Testing Angular</h3><p>You can then also call the angular application, example <em><a target="_blank" rel="noopener" href="http://10.0.0.108:8080/">http://10.0.0.108:8080/</a></em></p>
-<p>![Run Scripts](/d/docker-compose-demo/compose-demo 13.png)</p>
+<p><img src="/d/docker-compose-demo/compose-demo-13.png" alt="Run Scripts"></p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/compose-file/#depends_on">https://docs.docker.com/compose/compose-file/#depends_on</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/startup-order/">https://docs.docker.com/compose/startup-order/</a></li>

@@ -20,22 +20,27 @@ ga('send', 'pageview');
   
   <title>Raspberry Pi Cluster - Docker Swarm | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="![Docker Swarm LOL](&#x2F;d&#x2F;raspberry-pi-cluster-swarm&#x2F;docker swarm lol.jpg) Following on from the post Raspberry Pi Cluster which created a cluster of PI’s and used parallel computing to execute and share">
+  <meta name="description" content="Following on from the post Raspberry Pi Cluster which created a cluster of PI’s and used parallel computing to execute and share the workload using Python … I figured it was time to do the same thing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Raspberry Pi Cluster - Docker Swarm">
 <meta property="og:url" content="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-swarm/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="![Docker Swarm LOL](&#x2F;d&#x2F;raspberry-pi-cluster-swarm&#x2F;docker swarm lol.jpg) Following on from the post Raspberry Pi Cluster which created a cluster of PI’s and used parallel computing to execute and share">
+<meta property="og:description" content="Following on from the post Raspberry Pi Cluster which created a cluster of PI’s and used parallel computing to execute and share the workload using Python … I figured it was time to do the same thing">
 <meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/docker-swarm-lol.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/alexellis2-visualizer.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/nginx-pi-demo.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer-load-balancing.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer-swarm-leave.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer-after-adding-nginx-foo.jpg">
 <meta property="article:published_time" content="2020-09-23T12:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-28T21:03:09.669Z">
+<meta property="article:modified_time" content="2021-03-24T05:52:27.155Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="raspberry pi">
 <meta property="article:tag" content="nginx">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/nginx-pi-demo.jpg">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/docker-swarm-lol.jpg">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -139,7 +144,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>![Docker Swarm LOL](/d/raspberry-pi-cluster-swarm/docker swarm lol.jpg)</p>
+        <p><img src="/d/raspberry-pi-cluster-swarm/docker-swarm-lol.jpg" alt="Docker Swarm LOL"></p>
 <p>Following on from the post <a href="/2019/10/raspberry-pi-cluster/">Raspberry Pi Cluster</a> which created a cluster of PI’s and used parallel computing to execute and share the workload using Python … I figured it was time to do the same thing using Docker Swarm.</p>
 <p>Docker Swarm is not dead although its long term future is unknown. I’d take <a target="_blank" rel="noopener" href="https://nigelpoulton.com/blog/f/swarm-vs-kubernetes-2020-update">Nigel Poulton’s</a> word on this as as he is a domain expert. I figured knowing some Swarm will probably help at some point but DevOps are probably better off focusing more attention on kubernetes as its future is super bright!</p>
 <p>On that note… Swarm is simple to setup and has a shallow learning curve. Not all companys need <a href="/2020/09/raspberry-pi-cluster-kubernetes/">complex container orchestration tools like kubernetes</a> that can automatically replicate to nodes in the cluster under load. With Swarm the replication is done manually with commands like <code>docker service scale</code>.</p>
@@ -234,7 +239,7 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pi@node1:~ $ sudo docker service ls</span><br><span class="line">ID                  NAME                MODE                REPLICAS            IMAGE                              PORTS</span><br><span class="line">nswh5q71ho6f        viz                 replicated          1&#x2F;1                 alexellis2&#x2F;visualizer-arm:latest   *:8080-&gt;8080&#x2F;tcp</span><br></pre></td></tr></table></figure>
 
 <p>The UI is then avaible at - <a target="_blank" rel="noopener" href="http://node1:8080/">http://node1:8080/</a></p>
-<p>![alexellis2/visualizer-arm:latest](/d/raspberry-pi-cluster-swarm/alexellis2 visualizer.jpg)</p>
+<p><img src="/d/raspberry-pi-cluster-swarm/alexellis2-visualizer.jpg" alt="alexellis2/visualizer-arm:latest"></p>
 <h3 id="Nginx-Services"><a href="#Nginx-Services" class="headerlink" title="Nginx Services"></a>Nginx Services</h3><p>The examples below use the image <a target="_blank" rel="noopener" href="https://hub.docker.com/r/carlpaton/nginx-pi-demo">carlpaton/nginx-pi-demo</a> to display some information about the host node, this is useful as we can then see the <code>Server name</code> and <code>Server address</code> changes. Details about this image and how I created it can be found at <a href="/2020/09/nginx-pi-demo/">nginx-pi-demo</a>.</p>
 <p>When you create a service you can initialze it with <code>--replicas n</code> where n is the amount of running instance you want. The below will create 2 instance of <code>nginx-2</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker service create --replicas 2 --name nginx-2 -p 8081:80 carlpaton&#x2F;nginx-pi-demo</span><br><span class="line">docker service inspect --pretty nginx-2                                  ~ inspect the service, --pretty formats the output, default is json</span><br></pre></td></tr></table></figure>
@@ -251,7 +256,7 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service scale nginx-manual&#x3D;2</span><br></pre></td></tr></table></figure>
 
 <p>If you now look at the <a target="_blank" rel="noopener" href="http://node1:8080/">visualizer tool</a> you can see Docker Swarm is auto load balancing between the nodes :D</p>
-<p>![Load Balancing](/d/raspberry-pi-cluster-swarm/visualizer load balancing.jpg)</p>
+<p><img src="/d/raspberry-pi-cluster-swarm/visualizer-load-balancing.jpg" alt="Load Balancing"></p>
 <h3 id="Delete-a-service"><a href="#Delete-a-service" class="headerlink" title="Delete a service"></a>Delete a service</h3><p>To delete a service run <code>rm</code>, the below will create a dummy server <code>nginx-delete</code> and then delete it. <strong>WARNING!</strong> <code>rm</code> will trash the service without confirming. </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker service create --name nginx-delete -p 8083:80 carlpaton&#x2F;nginx-pi-demo</span><br><span class="line">docker service rm nginx-delete</span><br></pre></td></tr></table></figure>
 
@@ -259,7 +264,7 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh node3</span><br><span class="line">docker swarm leave</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
 
 <p>After leaving the swarm the manager <code>node1</code> moves the load for you.</p>
-<p>![After Delete](/d/raspberry-pi-cluster-swarm/visualizer swarm leave.jpg)</p>
+<p><img src="/d/raspberry-pi-cluster-swarm/visualizer-swarm-leave.jpg" alt="After Delete"></p>
 <p>If you want to add the node back you need to first delete node completely from the manager.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh node1</span><br><span class="line">docker node rm node3                        ~ run from manager</span><br><span class="line">docker node rm 8i5q2rtb555tpqquc8a0ujdan    ~ if node3 name is ambiguous use the id from &#96;sudo docker node ls&#96;</span><br></pre></td></tr></table></figure>
 
@@ -267,7 +272,7 @@ ga('send', 'pageview');
 <p>Even if you restart the service the nodes will not auto load balance (this is by design to avoid disruption). Swarm will add new services to nodes doing the least amount of work, so the idea is they will eventually balance out.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker service update nginx-manual                                                        ~ this restarts the service but will not load balance</span><br><span class="line">docker service create --replicas 2 --name nginx-foo -p 8084:80 carlpaton&#x2F;nginx-pi-demo    ~ add &#96;nginx-foo&#96;</span><br></pre></td></tr></table></figure>
 
-<p>![After adding nginx-foo](/d/raspberry-pi-cluster-swarm/visualizer after adding nginx-foo.jpg)</p>
+<p><img src="/d/raspberry-pi-cluster-swarm/visualizer-after-adding-nginx-foo.jpg" alt="After adding nginx-foo"></p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/swarm/manage-nodes/">https://docs.docker.com/engine/swarm/manage-nodes/</a></li>
 </ul>

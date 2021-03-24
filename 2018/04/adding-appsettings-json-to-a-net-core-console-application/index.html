@@ -27,11 +27,15 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="Firstly add the appsettings.json file to the solution 12345&amp;#123;   &quot;AppSettings&quot;: &amp;#123;   &quot;Key1&quot;: &quot;This is the value for Key1&quot;  &amp;#125;&amp;#125;  Set the .json file to copy">
 <meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/adding-appsettings-json-to-a-net-core-console-application/appsettings-1.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/adding-appsettings-json-to-a-net-core-console-application/appsettings-2.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/adding-appsettings-json-to-a-net-core-console-application/appsettings-3.png">
 <meta property="article:published_time" content="2018-04-02T00:08:24.000Z">
-<meta property="article:modified_time" content="2020-08-04T22:37:58.510Z">
+<meta property="article:modified_time" content="2021-03-23T08:26:42.861Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="net core">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/adding-appsettings-json-to-a-net-core-console-application/appsettings-1.png">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -139,14 +143,14 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   &quot;AppSettings&quot;: &#123;</span><br><span class="line">   &quot;Key1&quot;: &quot;This is the value for Key1&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Set the .json file to copy to the output directory (this is the bin folder)</p>
-<p>![Copy if newer](/d/adding-appsettings-json-to-a-net-core-console-application/appsettings 1.png)</p>
+<p><img src="/d/adding-appsettings-json-to-a-net-core-console-application/appsettings-1.png" alt="Copy if newer"></p>
 <p>Add Microsoft.Extensions.Configuration.Json from Nuget</p>
-<p>![Microsoft.Extensions.Configuration.Json](/d/adding-appsettings-json-to-a-net-core-console-application/appsettings 2.png)</p>
+<p><img src="/d/adding-appsettings-json-to-a-net-core-console-application/appsettings-2.png" alt="Microsoft.Extensions.Configuration.Json"></p>
 <p>The read the file</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">IConfiguration config &#x3D; new ConfigurationBuilder()</span><br><span class="line"> .AddJsonFile(&quot;appsettings.json&quot;, true, true)</span><br><span class="line"> .Build();</span><br><span class="line"></span><br><span class="line">var key1 &#x3D; config[&quot;AppSettings:Key1&quot;];</span><br><span class="line">Console.WriteLine(key1);</span><br></pre></td></tr></table></figure>
 
 <p>Run the code!</p>
-<p>![Run the code](/d/adding-appsettings-json-to-a-net-core-console-application/appsettings 3.png)</p>
+<p><img src="/d/adding-appsettings-json-to-a-net-core-console-application/appsettings-3.png" alt="Run the code"></p>
 
       
     </div>

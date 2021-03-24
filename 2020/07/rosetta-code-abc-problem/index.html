@@ -27,12 +27,14 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="This is a Rosetta Code post. StoryYou are given a collection of ABC blocks (maybe like the ones you had when you were a kid). There are twenty blocks with two letters on each block. A complete alphabe">
 <meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/rosetta-code-abc-problem/blocks-example.jpg">
 <meta property="article:published_time" content="2020-07-02T12:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-11T22:35:07.790Z">
+<meta property="article:modified_time" content="2021-03-24T07:21:55.211Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="c#">
 <meta property="article:tag" content="rosetta code">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/rosetta-code-abc-problem/blocks-example.jpg">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -148,7 +150,7 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; can_make_word(&quot;A&quot;)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; can_make_word(&quot;BARK&quot;)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; can_make_word(&quot;BOOK&quot;)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; can_make_word(&quot;TREAT&quot;)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; can_make_word(&quot;COMMON&quot;)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; can_make_word(&quot;SQUAD&quot;)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; can_make_word(&quot;CONFUSE&quot;)</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
 
 <p>The word <code>BARK</code> was made up using blocks as follows:</p>
-<p>![BARK](/d/rosetta-code-abc-problem/blocks example.jpg)</p>
+<p><img src="/d/rosetta-code-abc-problem/blocks-example.jpg" alt="BARK"></p>
 <h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p>For the possible solutions blow, each time I ran the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/Boilerplate/blob/master/Rosetta%20Code/ABC_Problem/net/Program.cs">console application</a> I got a different result in terms of elapsed time. I guess an average of a few runs would be the best to have an unbiased result but the below paints a pretty clear picture (for me anyway) that the action deligate is the fastest.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ForeachLoop:    00:00:00.0056731</span><br><span class="line">ActionDelegate: 00:00:00.0015526  &lt; fastest run and solution</span><br><span class="line">Regex:          00:00:00.0122734</span><br><span class="line"></span><br><span class="line">ForeachLoop:    00:00:00.0077697</span><br><span class="line">ActionDelegate: 00:00:00.0016330</span><br><span class="line">Regex:          00:00:00.0170153</span><br><span class="line"></span><br><span class="line">ForeachLoop:    00:00:00.0080737</span><br><span class="line">ActionDelegate: 00:00:00.0015944</span><br><span class="line">Regex:          00:00:00.0170100</span><br></pre></td></tr></table></figure>
 

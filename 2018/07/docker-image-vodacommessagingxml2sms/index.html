@@ -20,18 +20,29 @@ ga('send', 'pageview');
   
   <title>Docker Image for SMS | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="![Docker Image for SMS](&#x2F;d&#x2F;docker-image-vodacommessagingxml2sms&#x2F;sms 1.png) This docker image allows for a microservice to run within your LAN (Local Area Network) to accept POST and GET requests. The">
+  <meta name="description" content="This docker image allows for a microservice to run within your LAN (Local Area Network) to accept POST and GET requests. The POST needs a JSON (Java Script Object Notation) object in its body to sent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker Image for SMS">
 <meta property="og:url" content="https://carlpaton.github.io/2018/07/docker-image-vodacommessagingxml2sms/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="![Docker Image for SMS](&#x2F;d&#x2F;docker-image-vodacommessagingxml2sms&#x2F;sms 1.png) This docker image allows for a microservice to run within your LAN (Local Area Network) to accept POST and GET requests. The">
+<meta property="og:description" content="This docker image allows for a microservice to run within your LAN (Local Area Network) to accept POST and GET requests. The POST needs a JSON (Java Script Object Notation) object in its body to sent">
 <meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-image-vodacommessagingxml2sms/sms-1.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-image-vodacommessagingxml2sms/sms-2.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-image-vodacommessagingxml2sms/sms-3.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-image-vodacommessagingxml2sms/sms-4.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-image-vodacommessagingxml2sms/sms-5.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-image-vodacommessagingxml2sms/sms-6.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-image-vodacommessagingxml2sms/sms-7.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-image-vodacommessagingxml2sms/sms-8.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-image-vodacommessagingxml2sms/sms-9.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/docker-image-vodacommessagingxml2sms/sms-10.png">
 <meta property="article:published_time" content="2018-07-12T00:08:24.000Z">
-<meta property="article:modified_time" content="2020-08-04T22:37:58.539Z">
+<meta property="article:modified_time" content="2021-03-23T08:36:21.050Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/docker-image-vodacommessagingxml2sms/sms-1.png">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -135,7 +146,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>![Docker Image for SMS](/d/docker-image-vodacommessagingxml2sms/sms 1.png)</p>
+        <p><img src="/d/docker-image-vodacommessagingxml2sms/sms-1.png" alt="Docker Image for SMS"></p>
 <p>This docker image allows for a microservice to run within your LAN (Local Area Network) to accept POST and GET requests. The POST needs a JSON (Java Script Object Notation) object in its body to sent the SMS and the GET needs a watermark id to query for logs. The logs confirm the status of the message, example “delivered”. Authentication to Vodacom Messaging is handled by the container.</p>
 <p>The image (which builds to a container) is called <em>carlpaton/vodacommessagingxml2sms</em> and is available at <a target="_blank" rel="noopener" href="https://store.docker.com/community/images/carlpaton/vodacommessagingxml2sms">https://store.docker.com/community/images/carlpaton/vodacommessagingxml2sms</a></p>
 <p>The code running in the container is written in C# (C-Sharp) and is a Microsoft WEB API project running on .NET Core 2. The Massive value in using .NET Core is it will run on Linux which will appeal to corporates.</p>
@@ -143,10 +154,10 @@ ga('send', 'pageview');
 <p>Although the world has moved on with instant messaging clients like WhatsApp and even E-mail (Electronic mail), in South Africa SMS is still hugely popular with corporates needing to communicate with their client base in a ubiquitous manner.</p>
 <p>The XML2SMS product is a tool aimed at developers to integrate SMS capabilities into their applications, this can be used for a number of event driven messages such as access tokens or OTP (One Time Pin) for banking applications or real-time notifications of spend or activity. Every SMS Is tracked with status updates available of delivery for auditing purposes.</p>
 <h3 id="Ubuntu-Server"><a href="#Ubuntu-Server" class="headerlink" title="Ubuntu Server"></a>Ubuntu Server</h3><p>All my testing was done on Ubuntu Server version 17 running as a virtual machine hosted on my notebook which runs Windows 10. Ubuntu then hosted docker, the images and containers.</p>
-<p>![This setup reminded me of this meme, its good to laugh at things.](/d/docker-image-vodacommessagingxml2sms/sms 2.png)</p>
+<p><img src="/d/docker-image-vodacommessagingxml2sms/sms-2.png" alt="This setup reminded me of this meme, its good to laugh at things."></p>
 <p>If you are un-familiar with Docker &amp; its capabilities I suggest you go through my article “<a href="/2018/04/docker-containers-the-future/">Docker -Containers  – The future</a>” before going any further, if you are already using docker and want to either publish your own containers or see a summary of how to use mine see “<a target="_blank" rel="noopener" href="https://carlpaton.co.za/building-docker-images/">Building Docker Images</a>”</p>
 <h3 id="Still-Unsure"><a href="#Still-Unsure" class="headerlink" title="Still Unsure?"></a>Still Unsure?</h3><p>If you are reading this and are still puzzling how to use my image perhaps this illustration will help clear things up for you.</p>
-<p>![Docker Image for SMS](/d/docker-image-vodacommessagingxml2sms/sms 3.png)</p>
+<p><img src="/d/docker-image-vodacommessagingxml2sms/sms-3.png" alt="Docker Image for SMS"></p>
 <h3 id="Steps-By-Step"><a href="#Steps-By-Step" class="headerlink" title="Steps By Step"></a>Steps By Step</h3><p>You can use <a target="_blank" rel="noopener" href="https://carlpaton.co.za/docker-for-windows/">docker for windows</a> but for the purpose of this demo I have focused on Ubuntu Server in the configuration described above.</p>
 <ol>
 <li>Setup Docker on Linux, <a target="_blank" rel="noopener" href="https://carlpaton.co.za/setup-docker-on-linux/">there are detailed steps here</a> to setup your VM Player (Virtual Machine Player), the hosted Linux OS (Operating System)</li>
@@ -162,34 +173,34 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOCKMODE_ENVIRONMENT&#x3D;1</span><br></pre></td></tr></table></figure>
 
 <p>During development the container can mock the response from the SMS Gateway, set this flag to 1 for mocking or 0 to send the SMS Request to Vodacom Messaging. The implementation of this in the code is pretty crap, I think it would be better refactored to a factory pattern.</p>
-<p>![Docker Image for SMS](/d/docker-image-vodacommessagingxml2sms/sms 4.png)</p>
+<p><img src="/d/docker-image-vodacommessagingxml2sms/sms-4.png" alt="Docker Image for SMS"></p>
 <p>Editing the file on the server with nano</p>
-<p>![Docker Image for SMS](/d/docker-image-vodacommessagingxml2sms/sms 5.png)</p>
+<p><img src="/d/docker-image-vodacommessagingxml2sms/sms-5.png" alt="Docker Image for SMS"></p>
 <ol start="3">
 <li>Create your [shell script to pull the image &amp; spin up the container](<a target="_blank" rel="noopener" href="https://github.com/charleyza/VodacommessagingXml2sms/blob/master/Docker/Hosted">https://github.com/charleyza/VodacommessagingXml2sms/blob/master/Docker/Hosted</a> on store.docker.com/xml2sms.cloud.docker.com.sh) (Remember to mark it executable with chmod +x)</li>
 </ol>
 <p>Below is the content of my script:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">--- This tells the script to run with bash</span><br><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"></span><br><span class="line">--- This pulls the image locally, the tag v1.0.0 can be omitted for latest.</span><br><span class="line">--- I’ve found when developing its best to specify a version so you know the </span><br><span class="line">--- only change is in your own code. </span><br><span class="line">docker pull carlpaton&#x2F;vodacommessagingxml2sms:v1.0.0</span><br><span class="line"></span><br><span class="line">--- If the container is already built and running as xml2sms, stop it.</span><br><span class="line">sudo docker container kill xml2sms</span><br><span class="line"></span><br><span class="line">--- Delete the container you just stopped. </span><br><span class="line">--- The value with the above steps is repatability. </span><br><span class="line">sudo docker rm xml2sms</span><br><span class="line"></span><br><span class="line">--- This spins up the new container. </span><br><span class="line">--- -d means run detached, </span><br><span class="line">--- -p is the port mapping 81 external to Linux and 80 internal to the container, </span><br><span class="line">--- name is the containers name followed by which image to build from. </span><br><span class="line">sudo docker run --env-file&#x3D;env_file_name.env -d -p 81:80 --name xml2sms carlpaton&#x2F;vodacommessagingxml2sms:v1.0.0</span><br><span class="line"></span><br><span class="line">--- start the container you just created</span><br><span class="line">sudo docker start xml2sms</span><br><span class="line"></span><br><span class="line">--- Display all the containers on the host.</span><br><span class="line">sudo docker ps –all</span><br></pre></td></tr></table></figure>
 
-<p>![Docker Image for SMS](/d/docker-image-vodacommessagingxml2sms/sms 6.png)</p>
+<p><img src="/d/docker-image-vodacommessagingxml2sms/sms-6.png" alt="Docker Image for SMS"></p>
 <p>Execute the shell script above:</p>
-<p>![Docker Image for SMS](/d/docker-image-vodacommessagingxml2sms/sms 7.png)</p>
+<p><img src="/d/docker-image-vodacommessagingxml2sms/sms-7.png" alt="Docker Image for SMS"></p>
 <ol start="4">
 <li>Send a POST request with a JSON object to the container and note the response.</li>
 </ol>
 <p>If you set MOCKMODE_ENVIRONMENT=1 then the container will not call Vodacom Messaging but rather mock the response. The below are example POST methods from <a target="_blank" rel="noopener" href="https://www.getpostman.com/">postman</a>.</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/charleyza/VodacommessagingXml2sms/blob/master/Docker/postman.txt">Details on the postman configuration can be found here</a>.</p>
 <p>This shows the postman’s POST:</p>
-<p>![Docker Image for SMS](/d/docker-image-vodacommessagingxml2sms/sms 8.png)</p>
+<p><img src="/d/docker-image-vodacommessagingxml2sms/sms-8.png" alt="Docker Image for SMS"></p>
 <p>Note the key returned was 202, this will be used in the GET below.</p>
 <ol start="5">
 <li>GET a HTTP request to the container with the watermark ID received in the POST above.</li>
 </ol>
-<p>![Docker Image for SMS](/d/docker-image-vodacommessagingxml2sms/sms 9.png)</p>
+<p><img src="/d/docker-image-vodacommessagingxml2sms/sms-9.png" alt="Docker Image for SMS"></p>
 <p>You can then query the containers logs with:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker logs xml2sms</span><br></pre></td></tr></table></figure>
 
-<p>![Docker Image for SMS](/d/docker-image-vodacommessagingxml2sms/sms 10.png)</p>
+<p><img src="/d/docker-image-vodacommessagingxml2sms/sms-10.png" alt="Docker Image for SMS"></p>
 <h3 id="Open-Source"><a href="#Open-Source" class="headerlink" title="Open Source"></a>Open Source</h3><p>All this code is open source and licenced MIT (Massachusetts Institute of Technology) so I encourage developers to fork the code and adapt to work for their environment. Some ideas I can think of would include</p>
 <ul>
 <li>HTTPS Traffic to the container from your applications</li>
