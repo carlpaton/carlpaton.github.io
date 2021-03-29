@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>CNC Machine Scratch Build | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="WIP  Following on the CMC Machine post where I tried to understand the flow from Computer Aided Design (CAD) to Computer Aided Manufacturing (CAM) and finally to Computer Numerical Control (CNC) I fe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CNC Machine Scratch Build">
+<meta property="og:url" content="https://carlpaton.github.io/2021/03/cnc-machine-scratch-build/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="WIP  Following on the CMC Machine post where I tried to understand the flow from Computer Aided Design (CAD) to Computer Aided Manufacturing (CAM) and finally to Computer Numerical Control (CNC) I fe">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine/xyz-axis.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-01.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-07.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-03.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-02.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-06.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-router-bracket.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-10.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-11.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-12.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-08.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-09.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-04.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-13.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-14.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cnc-machine-scratch-build/cnc-machine-05.png">
+<meta property="article:published_time" content="2021-03-27T11:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-29T09:16:20.925Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="wip">
+<meta property="article:tag" content="raspberry pi">
+<meta property="article:tag" content="iot">
+<meta property="article:tag" content="wood work">
+<meta property="article:tag" content="arduino">
+<meta property="article:tag" content="cnc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/cnc-machine/xyz-axis.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-cnc-machine-scratch-build" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/cnc-machine-scratch-build/" class="article-date">
+  <time datetime="2021-03-27T11:00:00.000Z" itemprop="datePublished">2021-Mar</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CNC Machine Scratch Build
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
+<p>Following on the <a href="/2021/03/cnc-machine/">CMC Machine</a> post where I tried to understand the flow from <code>Computer Aided Design (CAD)</code> to <code>Computer Aided Manufacturing (CAM)</code> and finally to <code>Computer Numerical Control (CNC)</code> I felt I was in a good space to look at scratch building a Machine. Although it is possible to purchase a kit, its a lot more expensive and I was inspired by <a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCnRwrrMKMCvcHhY5hhE3YZw">Gökmen ALTUNTAŞ</a> to build a CNC Machine with a wood frame.</p>
+<p>These are some of the DIY Kits I looked at, the cost was just too high for my pocket!</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.inventables.com/technologies/x-carve">Inventables X-Carve</a> - USD2999</li>
+<li><a target="_blank" rel="noopener" href="https://www.aliexpress.com/item/1005001689987581.html">QueenBee PRO</a> - USD1000 (approx ex import duty, shipping and GTS)</li>
+</ul>
+<h3 id="Gokmen-Altuntas-CNC-Machine-Scratch-Build"><a href="#Gokmen-Altuntas-CNC-Machine-Scratch-Build" class="headerlink" title="Gokmen Altuntas CNC Machine Scratch Build"></a>Gokmen Altuntas CNC Machine Scratch Build</h3><p>I thought a good place to start is watch and understand the two part Youtube series, then document the steps and finally cost it. At 600mm by 400mm working bed area I felt this is a pretty good first machine.</p>
+<p>DIY CNC Router Part 1 // Building a Small CNC Router</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qab0aceb7uw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>DIY CNC Router Part 2 // Building a Small CNC Router</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TTEhwzCbWMA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h3 id="Building-the-machine"><a href="#Building-the-machine" class="headerlink" title="Building the machine"></a>Building the machine</h3><p>Trying to un-pack the videos into steps I can follow.</p>
+<p><img src="/d/cnc-machine/xyz-axis.png" alt="XYZ Axis - Cartesian Coordinate System"></p>
+<h4 id="Base-Frame-Y-Axis"><a href="#Base-Frame-Y-Axis" class="headerlink" title="Base Frame / Y-Axis"></a>Base Frame / Y-Axis</h4><p>The base frame is just a rectangle with the 12mm Linear Rail for the <code>Y Axis</code>. </p>
+<p><img src="/d/cnc-machine-scratch-build/cnc-machine-01.png" alt="CNC Machine base"></p>
+<p><img src="/d/cnc-machine-scratch-build/cnc-machine-07.png" alt="Y-Axis lead screw mount"></p>
+<h4 id="X-Axis"><a href="#X-Axis" class="headerlink" title="X-Axis"></a>X-Axis</h4><p><img src="/d/cnc-machine-scratch-build/cnc-machine-03.png" alt="CNC Machine router bracket mount"></p>
+<p><img src="/d/cnc-machine-scratch-build/cnc-machine-02.png" alt="CNC Machine with bed removed"></p>
+<h4 id="Z-Axis"><a href="#Z-Axis" class="headerlink" title="Z-Axis"></a>Z-Axis</h4><p><img src="/d/cnc-machine-scratch-build/cnc-machine-06.png" alt="Building up the gantry height"></p>
+<p><img src="/d/cnc-machine-scratch-build/cnc-machine-router-bracket.png" alt="CNC Machine router bracket"></p>
+<p><img src="/d/cnc-machine-scratch-build/cnc-machine-10.png" alt="Foo"></p>
+<p><img src="/d/cnc-machine-scratch-build/cnc-machine-11.png" alt="Foo"></p>
+<p><img src="/d/cnc-machine-scratch-build/cnc-machine-12.png" alt="Foo"></p>
+<p><img src="/d/cnc-machine-scratch-build/cnc-machine-08.png" alt="Z-Axis Router Mount"></p>
+<p><img src="/d/cnc-machine-scratch-build/cnc-machine-09.png" alt="Foo"></p>
+<h4 id="Bed"><a href="#Bed" class="headerlink" title="Bed"></a>Bed</h4><p><img src="/d/cnc-machine-scratch-build/cnc-machine-04.png" alt="CNC Machine with bed"></p>
+<p><img src="/d/cnc-machine-scratch-build/cnc-machine-13.png" alt="Raw bed with keyhole/T-slot grooves"></p>
+<p><img src="/d/cnc-machine-scratch-build/cnc-machine-14.png" alt="Sacrificial masonite wood"></p>
+<h4 id="CNC-Machine-in-action"><a href="#CNC-Machine-in-action" class="headerlink" title="CNC Machine in action"></a>CNC Machine in action</h4><p><img src="/d/cnc-machine-scratch-build/cnc-machine-05.png" alt="CNC Machine in action"></p>
+<h3 id="Shopping-List"><a href="#Shopping-List" class="headerlink" title="Shopping List"></a>Shopping List</h3><p>Details on each of these <a href="/2021/03/cnc-machine/">parts is in this post</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Details</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Linear Guide Rail</td>
+<td>2x 600mm SBR12 Linear Guide Rail</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2x 400mm SBR12 Linear Guide Rail</td>
+<td><a target="_blank" rel="noopener" href="https://bit.ly/2GSWhDv%E2%80%8B">Ali Express</a></td>
+</tr>
+<tr>
+<td>Rods</td>
+<td>2x 12mm by 18cm rods</td>
+<td></td>
+</tr>
+<tr>
+<td>Coupling Bore</td>
+<td>x3 Aluminum Alloy 5x8</td>
+<td><a target="_blank" rel="noopener" href="https://bit.ly/3mbvvGN%E2%80%8B">Ali Express</a></td>
+</tr>
+<tr>
+<td>Linear Bearing</td>
+<td>8x SBR12UU</td>
+<td><a target="_blank" rel="noopener" href="https://bit.ly/3kdXNym%E2%80%8B">Ali Express</a></td>
+</tr>
+<tr>
+<td></td>
+<td>4x SCE12</td>
+<td><a target="_blank" rel="noopener" href="http://www.makershop.co.nz/Bearings/10mmLinear/SCS10UU">makershop.co.nz ~ SCS10UU :(</a></td>
+</tr>
+<tr>
+<td>Lead Screw &amp; Nuts</td>
+<td>1x 600mm T8 Lead Screw with lead 4mm</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1x 400mm T8 Lead Screw with lead 4mm</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1x 200mm T8 Lead Screw with lead 4mm</td>
+<td><a target="_blank" rel="noopener" href="https://bit.ly/2FqdGTB%E2%80%8B">Ali Express</a></td>
+</tr>
+<tr>
+<td></td>
+<td>x3 T8 Nut for lead screw with lead 4mm</td>
+<td><a target="_blank" rel="noopener" href="https://bit.ly/33pJAYA">Ali Express</a></td>
+</tr>
+<tr>
+<td>Bearings</td>
+<td>x3 698 zz bearing</td>
+<td><a target="_blank" rel="noopener" href="https://nzminiaturebearings.com/product/8x19x6-mm-698-ZZ-Bearing.html">nzminiaturebearings.com</a></td>
+</tr>
+<tr>
+<td>Stepper Motors</td>
+<td>x3 NEMA 17 17HS4401</td>
+<td><a target="_blank" rel="noopener" href="https://www.trademe.co.nz/3024612797">trademe.co.nz</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://bit.ly/2ZP308n%E2%80%8B">Ali Express</a></td>
+</tr>
+<tr>
+<td></td>
+<td>or x3 NEMA 17 High torque</td>
+<td><a target="_blank" rel="noopener" href="https://www.trademe.co.nz/3025910539">trademe.co.nz</a></td>
+</tr>
+<tr>
+<td>Mounting Plate</td>
+<td>x2 NEMA 17 42-Series</td>
+<td><a target="_blank" rel="noopener" href="https://bit.ly/2RondwS%E2%80%8B">Ali Express</a></td>
+</tr>
+<tr>
+<td>Drivers</td>
+<td>x3 L298N Stepper Motor Driver</td>
+<td><a target="_blank" rel="noopener" href="https://www.trademe.co.nz/3025327682">trademe.co.nz</a></td>
+</tr>
+<tr>
+<td>Micro Controller</td>
+<td>Arduino Uno + 4pcs DRV8825 Stepper-Motor Driver + CNC Shield v3</td>
+<td><a target="_blank" rel="noopener" href="https://www.trademe.co.nz/3023322576">trademe.co.nz</a></td>
+</tr>
+<tr>
+<td></td>
+<td>Arduino Uno + 4pcs A4988 Stepper-Motor Driver + CNC Shield v3</td>
+<td><a target="_blank" rel="noopener" href="https://www.trademe.co.nz/3023102863">trademe.co.nz</a></td>
+</tr>
+<tr>
+<td></td>
+<td>Original 3018 CNC Control Board</td>
+<td><a target="_blank" rel="noopener" href="https://bit.ly/2ZurTpl%E2%80%8B">Ali Express</a></td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2021/03/cnc-machine-scratch-build/" data-id="ckmu2uljn0006csonhl8s5np5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/arduino/" rel="tag">arduino</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cnc/" rel="tag">cnc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iot/" rel="tag">iot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry pi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wood-work/" rel="tag">wood work</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/03/fusion-360/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Autodesk Fusion 360
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/03/cnc-machine/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CNC Machine</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/fusion-360/">Autodesk Fusion 360</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/cnc-machine-scratch-build/">CNC Machine Scratch Build</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/cnc-machine/">CNC Machine</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/c-sharp-hosted-service/">C# Hosted Service</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/dot-net-core-paspberry-pi/">.NET Core on Raspberry Pi</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.11px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 16.11px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.89px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.56px;">arduino</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.44px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 19.44px;">c#</a> <a href="/tags/cad/" style="font-size: 10.56px;">cad</a> <a href="/tags/cam/" style="font-size: 10.56px;">cam</a> <a href="/tags/client-side-scripting/" style="font-size: 11.11px;">client side scripting</a> <a href="/tags/cnc/" style="font-size: 11.11px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 11.11px;">iot</a> <a href="/tags/javascript/" style="font-size: 10.56px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.56px;">jquery</a> <a href="/tags/json/" style="font-size: 11.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.11px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 10.56px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 20px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.11px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.11px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 11.67px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.22px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.56px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.33px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 17.78px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.11px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
