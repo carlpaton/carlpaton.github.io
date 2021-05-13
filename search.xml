@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>SQL Full-Text Search</title>
+      <link href="2021/05/sql-full-text-search/"/>
+      <url>2021/05/sql-full-text-search/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p><a href="/2017/06/work-in-progress/">WIP</a></p></blockquote><blockquote><p>“Full-Text Search in SQL Server and Azure SQL Database lets users and applications run full-text queries against character-based data in SQL Server tables.”</p></blockquote><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://docs.microsoft.com/en-us/sql/relational-databases/search/full-text-search">https://docs.microsoft.com/en-us/sql/relational-databases/search/full-text-search</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> sql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Rapid Prototyping</title>
+      <link href="2021/05/rapid-prototyping/"/>
+      <url>2021/05/rapid-prototyping/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p><a href="/2017/06/work-in-progress/">WIP</a></p></blockquote><h3 id="Low-fidelity-prototypes"><a href="#Low-fidelity-prototypes" class="headerlink" title="Low-fidelity prototypes"></a>Low-fidelity prototypes</h3><p>This could be a paper based prototype.</p><iframe width="560" height="315" src="https://www.youtube.com/embed/JMjozqJS44M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://miro.com/templates/wireframe-tool/?utm_source=google&utm_medium=cpc&utm_campaign=S%7CGOO%7CNB%7CNZ%7CALL-EN%7CCore&utm_adgroup=dsa&adgroupid=120704179190&utm_custom=12126975766&utm_content=492754101065&utm_term=&matchtype=b&device=c&location=1011036&gclid=Cj0KCQjwvr6EBhDOARIsAPpqUPG-RfNQZVDymzt3jo2lzMfcuOg_Ndz3O4YqNlXGjULWz9IRTHkmG3QaAiHBEALw_wcB">Miro - App Wireframe Template</a></li><li><a href="https://blog.adobe.com/en/publish/2017/11/29/prototyping-difference-low-fidelity-high-fidelity-prototypes-use.html#gs.0i83f0">https://blog.adobe.com/en/publish/2017/11/29/prototyping-difference-low-fidelity-high-fidelity-prototypes-use.html#gs.0i83f0</a></li><li><a href="https://www.invisionapp.com/inside-design/low-fi-vs-hi-fi-prototyping/">https://www.invisionapp.com/inside-design/low-fi-vs-hi-fi-prototyping/</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> design </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Cryptography</title>
       <link href="2021/04/cryptography/"/>
       <url>2021/04/cryptography/</url>
@@ -4371,11 +4409,13 @@
       <link href="2018/06/value-type-vs-reference-type/"/>
       <url>2018/06/value-type-vs-reference-type/</url>
       
-        <content type="html"><![CDATA[<p><img src="/d/value-type-vs-reference-type/valref-1.png" alt="Value Type vs Reference Type"></p><p>The Types in .NET Framework are either treated by Value Type or by Reference Type.</p><p>A <strong>Value Type</strong> stores its contents in memory allocated on the stack. When you created a Value Type, a single space in memory is allocated to store the value and that variable directly holds a value.</p><p><em>Example: Struct &amp; all the built-in numeric types</em></p><p><strong>Reference Types</strong> are used by a reference which holds a reference (address) to the object but not the object itself. Because reference types represent the address of the variable rather than the data itself, assigning a reference variable to another doesn’t copy the data. Instead it creates a second copy of the reference, which refers to the same location of the heap as the original value.</p><p><em>Example: Class</em></p><p>By default an a class instance as an object is passed to methods by value, to change this (if you want the method to alter the object, pass it with the ref keyword</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var myObj &#x3D; new SomeClass();</span><br><span class="line">SomeMethodThatChangesTheObjectValues(ref myObj)</span><br><span class="line">&#x2F;&#x2F;do something, perhaps pass back to the view?</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/basic-types">https://docs.microsoft.com/en-us/dotnet/csharp/basic-types</a></li><li><a href="http://net-informations.com/faq/general/valuetype-referencetype.htm">http://net-informations.com/faq/general/valuetype-referencetype.htm</a></li><li><a href="https://stackoverflow.com/questions/5057267/what-is-the-difference-between-a-reference-type-and-value-type-in-c">https://stackoverflow.com/questions/5057267/what-is-the-difference-between-a-reference-type-and-value-type-in-c</a></li><li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/ref">https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/ref</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p><img src="/d/value-type-vs-reference-type/valref-1.png" alt="Value Type vs Reference Type"></p><p>The Types in .NET Framework are either treated by Value Type or by Reference Type.</p><h3 id="Value-Type"><a href="#Value-Type" class="headerlink" title="Value Type"></a>Value Type</h3><p>A <strong>Value Type</strong> stores its contents in memory allocated on the stack. When you created a Value Type, a single space in memory is allocated to store the value and that variable directly holds a value.</p><blockquote><p>In C#, all the “things” declared with the following list of type declarations are Value types (because they are from System.ValueType):</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">bool</span><br><span class="line">byte</span><br><span class="line">char</span><br><span class="line">decimal</span><br><span class="line">double</span><br><span class="line">enum</span><br><span class="line">float</span><br><span class="line">int</span><br><span class="line">long</span><br><span class="line">sbyte</span><br><span class="line">short</span><br><span class="line">struct</span><br><span class="line">uint</span><br><span class="line">ulong</span><br><span class="line">ushort</span><br></pre></td></tr></table></figure><h3 id="Reference-Types"><a href="#Reference-Types" class="headerlink" title="Reference Types"></a>Reference Types</h3><p><strong>Reference Types</strong> are used by a reference which holds a reference (address) to the object but not the object itself. Because reference types represent the address of the variable rather than the data itself, assigning a reference variable to another doesn’t copy the data. Instead it creates a second copy of the reference, which refers to the same location of the heap as the original value.</p><blockquote><p>All the “things” declared with the types in this list are Reference types (and inherit from System.Object… except, of course, for object which is the System.Object object):</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class</span><br><span class="line">interface</span><br><span class="line">delegate</span><br><span class="line">object</span><br><span class="line">string</span><br></pre></td></tr></table></figure><p>By default a class instance as an object is passed to methods by value, to change this if you want the method to alter the object, pass it with the ref keyword.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var myObj &#x3D; new SomeClass();</span><br><span class="line"></span><br><span class="line">SomeMethodThatChangesTheObjectValues(ref myObj)</span><br><span class="line">&#x2F;&#x2F;do something magical</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/basic-types">https://docs.microsoft.com/en-us/dotnet/csharp/basic-types</a></li><li><a href="http://net-informations.com/faq/general/valuetype-referencetype.htm">http://net-informations.com/faq/general/valuetype-referencetype.htm</a></li><li><a href="https://stackoverflow.com/questions/5057267/what-is-the-difference-between-a-reference-type-and-value-type-in-c">https://stackoverflow.com/questions/5057267/what-is-the-difference-between-a-reference-type-and-value-type-in-c</a></li><li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/ref">https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/ref</a></li><li><a href="https://www.c-sharpcorner.com/article/C-Sharp-heaping-vs-stacking-in-net-part-i">https://www.c-sharpcorner.com/article/C-Sharp-heaping-vs-stacking-in-net-part-i</a></li></ul>]]></content>
       
       
       
         <tags>
+            
+            <tag> c# </tag>
             
             <tag> patterns principles </tag>
             
