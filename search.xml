@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Wire Mocks</title>
+      <link href="2021/05/wiremocks/"/>
+      <url>2021/05/wiremocks/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p><a href="/2017/06/work-in-progress/">WIP</a></p></blockquote><blockquote><p>“The core feature of WireMock is the ability to return predefined HTTP responses for requests matching criteria.”</p></blockquote><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://github.com/WireMock-Net/WireMock.Net/wiki/Stubbing">https://github.com/WireMock-Net/WireMock.Net/wiki/Stubbing</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> software testing </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Polymorphic Deserialization</title>
       <link href="2021/05/polymorphic-deserialization/"/>
       <url>2021/05/polymorphic-deserialization/</url>
