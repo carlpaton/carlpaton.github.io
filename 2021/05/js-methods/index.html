@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="WIP  Some basic Javascript methods for JS noobs like me!  addEventListeneraddEventListener() sets up a function that will be called whenever the specified event is delivered to the target, here it wi">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-05-18T12:00:00.000Z">
-<meta property="article:modified_time" content="2021-06-01T09:33:27.613Z">
+<meta property="article:modified_time" content="2021-06-02T08:43:42.175Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="javascript">
@@ -141,11 +141,35 @@ ga('send', 'pageview');
 </blockquote>
 <p>Some basic Javascript methods for JS noobs like me! </p>
 <h3 id="addEventListener"><a href="#addEventListener" class="headerlink" title="addEventListener"></a>addEventListener</h3><p><code>addEventListener()</code> sets up a function that will be called whenever the specified event is delivered to the target, here it will fire when the DOM is loaded. This is the same as jQuerys <code>$(document).ready(function() &#123; &#125;);</code>.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, <span class="function">() =&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;foo&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>The syntax is <code>[TARGET].addEventListener(&#39;event&#39;, function)</code>, common targets include</p>
+<ul>
+<li>element</li>
+<li>document</li>
+<li>window</li>
+</ul>
+<p>Some common events</p>
+<ul>
+<li>onclick</li>
+<li>keydown</li>
+<li>keypress</li>
+<li>keyup</li>
+<li>click</li>
+<li>auxclick</li>
+<li>contextmenu</li>
+<li>mousedown</li>
+<li>mouseenter</li>
+<li>mouseleave</li>
+<li>mouseover</li>
+<li>mouseout</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, <span class="function">() =&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;foo&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">&#x27;keyup&#x27;</span>, control);</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener">https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener</a></li>
 </ul>
+<h3 id="removeEventListener"><a href="#removeEventListener" class="headerlink" title="removeEventListener"></a>removeEventListener</h3><p>Removes the event listner.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.removeEventListener(<span class="string">&#x27;keyup&#x27;</span>, control);</span><br></pre></td></tr></table></figure>
+
 <h3 id="querySelector"><a href="#querySelector" class="headerlink" title="querySelector"></a>querySelector</h3><p><code>querySelector()</code> returns the first Element within the document that matches the specified selector</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> grid = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.grid&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
@@ -214,7 +238,13 @@ ga('send', 'pageview');
 <ul>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some</a></li>
 </ul>
-<h3 id="Todo"><a href="#Todo" class="headerlink" title="Todo"></a>Todo</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- keyCode()</span><br><span class="line">- splice()</span><br><span class="line">- clearInterval()</span><br><span class="line">- innerHTML()</span><br><span class="line">- every()</span><br></pre></td></tr></table></figure>
+<h3 id="keyCode-DEPRICATED"><a href="#keyCode-DEPRICATED" class="headerlink" title="keyCode (DEPRICATED)"></a>keyCode (DEPRICATED)</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">control</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e.keyCode === <span class="number">37</span>) &#123; </span><br><span class="line">        moveLeft()</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.keyCode === <span class="number">38</span>) &#123; </span><br><span class="line">        rotate();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.keyCode === <span class="number">39</span>) &#123; </span><br><span class="line">        moveRight();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.keyCode === <span class="number">40</span>) &#123; </span><br><span class="line">        moveDown();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">&#x27;keyup&#x27;</span>, control);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode">https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode</a></li>
+<li><a target="_blank" rel="noopener" href="http://keycode.info/">http://keycode.info/</a></li>
+</ul>
+<h3 id="Todo"><a href="#Todo" class="headerlink" title="Todo"></a>Todo</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- splice()</span><br><span class="line">- clearInterval()</span><br><span class="line">- innerHTML()</span><br><span class="line">- every()</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/grid-based-javascript-games/">https://github.com/carlpaton/grid-based-javascript-games/</a></li>
