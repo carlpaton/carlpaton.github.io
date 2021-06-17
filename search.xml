@@ -4,11 +4,32 @@
   
     
     <entry>
+      <title>Data-tier Application Component Package (DACPAC)</title>
+      <link href="2021/06/dacpac/"/>
+      <url>2021/06/dacpac/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p><a href="/2017/06/work-in-progress/">WIP</a></p></blockquote><blockquote><p>“A DACPAC (Data-tier Application Component Package) is a package that contains the state of your database. It is generated from tools such as SQL Projects that you can create from Visual Studio 2017.”</p></blockquote><h3 id="EF-DacPacs"><a href="#EF-DacPacs" class="headerlink" title="EF DacPacs"></a>EF DacPacs</h3><p>WIP</p><h3 id="EF-migrations"><a href="#EF-migrations" class="headerlink" title="EF migrations"></a>EF migrations</h3><p>This is done with <code>dotnet-ef</code>, example commands could be:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dotnet ef migrations add MeaningfulMigrationName</span><br><span class="line">dotnet ef database update</span><br></pre></td></tr></table></figure><ul><li><a href="/2021/02/entity-framework-core/">See Entity Framework Core</a> </li></ul><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://blog.raph.ws/2019/01/migrations-vs-dacpacs/">https://blog.raph.ws/2019/01/migrations-vs-dacpacs/</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> wip </tag>
+            
+            <tag> sql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Invert A Binary Tree</title>
       <link href="2021/06/rosetta-code-invert-a-binary-tree/"/>
       <url>2021/06/rosetta-code-invert-a-binary-tree/</url>
       
-        <content type="html"><![CDATA[<p>This is a <a href="/2020/07/rosetta-code/">Rosetta Code</a> post.</p><p>I’m fortunate to work with super smart people, sometimes these smart people tell me about code problems - today I was asked if I knew how to invert a binary tree. (I did not know how)</p><h3 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h3><p>An inverted form of a Binary Tree is another Binary Tree with left and right children of all non-leaf nodes interchanged. You may also call it the mirror of the input tree.</p><p><img src="/d/rosetta-code-invert-a-binary-tree/invert-binary-tree-example.png" alt="Invert Binary Tree Example"></p><ul><li><a href="https://afteracademy.com/blog/invert-a-binary-tree">https://afteracademy.com/blog/invert-a-binary-tree</a></li></ul><p>Some notes from my google-neering</p><ul><li><p>A Tree is used to represent data in a hierarchical format</p></li><li><p>Every node in a tree has 2 components (Data and References) </p></li><li><p>The top node of the tree is called the Root node and the 2 products under it are called “Left Subtree” and “Right Subtree”.</p></li><li><p>There are 3 types of binary trees:</p><ul><li><code>Strict</code> Each node has either two children or none.</li><li><code>Full</code> Each Non-leaf node has two children and all the leaf nodes are at the same level.</li><li><code>Complete</code> If all the levels are completely filled, except the last level and the last level has all the keys as left as possible</li></ul></li><li><p><a href="https://www.c-sharpcorner.com/article/tree-data-structure/">https://www.c-sharpcorner.com/article/tree-data-structure/</a></p></li></ul><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>Given the binary tree from the story above, invert it so its values show as the example Output. Its important to remember that its a mirror image so the left and right children are swapped. (Dont try flip it so the root node is at the bottom)</p><h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p>First go understand what tree data structure look like and how they can be represented in code.</p><ul><li><a href="https://www.c-sharpcorner.com/article/tree-data-structure/">https://www.c-sharpcorner.com/article/tree-data-structure/</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<blockquote><p><a href="/2017/06/work-in-progress/">WIP</a></p></blockquote><p>This is a <a href="/2020/07/rosetta-code/">Rosetta Code</a> post.</p><p>I’m fortunate to work with super smart people, sometimes these smart people tell me about code problems - today I was asked if I knew how to invert a binary tree. (I did not know how)</p><h3 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h3><p>An inverted form of a Binary Tree is another Binary Tree with left and right children of all non-leaf nodes interchanged. You may also call it the mirror of the input tree.</p><p><img src="/d/rosetta-code-invert-a-binary-tree/invert-binary-tree-example.png" alt="Invert Binary Tree Example"></p><ul><li><a href="https://afteracademy.com/blog/invert-a-binary-tree">https://afteracademy.com/blog/invert-a-binary-tree</a></li></ul><p>Some notes from my google-neering</p><ul><li><p>A Tree is used to represent data in a hierarchical format</p></li><li><p>Every node in a tree has 2 components (Data and References) </p></li><li><p>The top node of the tree is called the Root node and the 2 products under it are called “Left Subtree” and “Right Subtree”.</p></li><li><p>There are 3 types of binary trees:</p><ul><li><code>Strict</code> Each node has either two children or none.</li><li><code>Full</code> Each Non-leaf node has two children and all the leaf nodes are at the same level.</li><li><code>Complete</code> If all the levels are completely filled, except the last level and the last level has all the keys as left as possible</li></ul></li><li><p><a href="https://www.c-sharpcorner.com/article/tree-data-structure/">https://www.c-sharpcorner.com/article/tree-data-structure/</a></p></li></ul><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>Given the binary tree from the story above, invert it so its values show as the example Output. Its important to remember that its a mirror image so the left and right children are swapped. (Dont try flip it so the root node is at the bottom)</p><h3 id="Task-2"><a href="#Task-2" class="headerlink" title="Task 2"></a>Task 2</h3><p>Given the following binary tree, invert it from the specified node.</p><p><img src="/d/rosetta-code-invert-a-binary-tree/invert-binary-tree-from-specified-node.png" alt="Task 2: Invert from specified node"></p><h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p>First go understand what tree data structure look like and how they can be represented in code.</p><ul><li><a href="https://www.c-sharpcorner.com/article/tree-data-structure/">https://www.c-sharpcorner.com/article/tree-data-structure/</a></li></ul>]]></content>
       
       
       
@@ -95,6 +116,50 @@
             <tag> c# </tag>
             
             <tag> rosetta code </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>AngleSharp (.NET library)</title>
+      <link href="2021/05/anglesharp/"/>
+      <url>2021/05/anglesharp/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p><a href="/2017/06/work-in-progress/">WIP</a></p></blockquote><blockquote><p>“AngleSharp is a .NET library that gives you the ability to parse angle bracket based hyper-texts like HTML, SVG, and MathML.”</p></blockquote><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://github.com/AngleSharp/AngleSharp">https://github.com/AngleSharp/AngleSharp</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> utilities </tag>
+            
+            <tag> .net library </tag>
+            
+            <tag> orm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LINQ to DB</title>
+      <link href="2021/05/linq2db/"/>
+      <url>2021/05/linq2db/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p><a href="/2017/06/work-in-progress/">WIP</a></p></blockquote><p>This is a type safe ORM a work colleague told me about, this is my hoon with it!</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://github.com/linq2db/linq2db">https://github.com/linq2db/linq2db</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> wip </tag>
+            
+            <tag> orm </tag>
             
         </tags>
       
