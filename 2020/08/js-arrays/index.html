@@ -18,17 +18,17 @@ ga('send', 'pageview');
 
 
   
-  <title>JS Arrays | Carl Paton | There are no silly questions</title>
+  <title>Javascript Array | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Array.fromCreates a new, shallow-copied Array instance from an array-like or iterable object. 1let squares &#x3D; Array.from(document.querySelectorAll(&amp;#x27;.grid div&amp;#x27;));   https:&#x2F;&#x2F;developer.mozilla.o">
+  <meta name="description" content="The JavaScript Array class is a global object that is used in the construction of arrays; which are high-level, list-like objects. Array.fromCreates a new, shallow-copied Array instance from an array-">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS Arrays">
+<meta property="og:title" content="Javascript Array">
 <meta property="og:url" content="https://carlpaton.github.io/2020/08/js-arrays/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Array.fromCreates a new, shallow-copied Array instance from an array-like or iterable object. 1let squares &#x3D; Array.from(document.querySelectorAll(&amp;#x27;.grid div&amp;#x27;));   https:&#x2F;&#x2F;developer.mozilla.o">
+<meta property="og:description" content="The JavaScript Array class is a global object that is used in the construction of arrays; which are high-level, list-like objects. Array.fromCreates a new, shallow-copied Array instance from an array-">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-08-19T12:00:00.000Z">
-<meta property="article:modified_time" content="2021-05-24T08:31:10.202Z">
+<meta property="article:modified_time" content="2021-07-31T11:46:51.466Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary">
@@ -127,7 +127,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      JS Arrays
+      Javascript Array
     </h1>
   
 
@@ -135,23 +135,66 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Array-from"><a href="#Array-from" class="headerlink" title="Array.from"></a>Array.from</h3><p>Creates a new, shallow-copied Array instance from an array-like or iterable object.</p>
+        <p>The <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">JavaScript</a> Array class is a global object that is used in the construction of arrays; which are high-level, list-like objects.</p>
+<h3 id="Array-from"><a href="#Array-from" class="headerlink" title="Array.from"></a>Array.from</h3><p>Creates a new, shallow-copied Array instance from an array-like or iterable object.</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> squares = <span class="built_in">Array</span>.from(<span class="built_in">document</span>.querySelectorAll(<span class="string">&#x27;.grid div&#x27;</span>));</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from</a></li>
 </ul>
-<h3 id="Fill"><a href="#Fill" class="headerlink" title="Fill"></a>Fill</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.state &#x3D; &#123;</span><br><span class="line">    squares: Array(9).fill(null),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="concat"><a href="#concat" class="headerlink" title="concat"></a>concat</h3><p>Merge two arrays together.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> planets = [<span class="string">&#x27;Mars&#x27;</span>];</span><br><span class="line"><span class="keyword">var</span> items = [ <span class="string">&#x27;Pluto&#x27;</span>, <span class="string">&#x27;Uranus&#x27;</span>, <span class="string">&#x27;Saturn&#x27;</span>, <span class="string">&#x27;Earth&#x27;</span> ];</span><br><span class="line"><span class="built_in">console</span>.log(planets.concat(items));</span><br><span class="line"><span class="comment">// [&quot;Mars&quot;, &quot;Pluto&quot;, &quot;Uranus&quot;, &quot;Saturn&quot;, &quot;Earth&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat</a></li>
+</ul>
+<h3 id="every"><a href="#every" class="headerlink" title="every"></a>every</h3><p>The <code>every()</code> method tests whether all elements in the array pass the test implemented by the provided function.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every</a></li>
+</ul>
+<h3 id="fill"><a href="#fill" class="headerlink" title="fill"></a>fill</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.state &#x3D; &#123;</span><br><span class="line">    squares: Array(9).fill(null),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/reactjs-tic-tac-toe/blob/master/my-app/src/index.js">https://github.com/carlpaton/reactjs-tic-tac-toe/blob/master/my-app/src/index.js</a></li>
 </ul>
-<h3 id="Slice"><a href="#Slice" class="headerlink" title="Slice"></a>Slice</h3><p>Call <code>.slice()</code> to create a copy of the squares array to modify instead of modifying the existing array.</p>
+<h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h3><p>The inbuilt <code>forEach()</code> method executes a provided function once for each array element.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> names = [<span class="string">&#x27;foo&#x27;</span>, <span class="string">&#x27;bar&#x27;</span>];</span><br><span class="line"></span><br><span class="line">name.forEach(<span class="function"><span class="params">name</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;hello &#x27;</span> + name);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach</a></li>
+</ul>
+<h3 id="some"><a href="#some" class="headerlink" title="some"></a>some</h3><p>The <code>some()</code> method tests whether at least one element in the array passes the test implemented by the provided function.</p>
+<p>So for the below if any of the the functions <code>functionA</code> or <code>functionB</code> return true then the result is true.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">itemArray.some(functionA, functionB);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some</a></li>
+</ul>
+<h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><p>Call <code>.slice()</code> to create a copy of the squares array to modify instead of modifying the existing array.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const squares &#x3D; this.state.squares.slice();</span><br><span class="line">squares[i] &#x3D; &#39;X&#39;;</span><br><span class="line">this.setState(&#123;squares: squares&#125;);</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.w3schools.com/jsref/jsref_slice_array.asp">https://www.w3schools.com/jsref/jsref_slice_array.asp</a></li>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice</a></li>
+</ul>
+<h3 id="splice"><a href="#splice" class="headerlink" title="splice"></a>splice</h3><p>Mutates an array by removing items/items in an array and replace them with new ones. Usage is <code>itemArray.splice(startIndex, deleteCount, [NEW ARRAY ITEMS])</code></p>
+<p>Example to delete items</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> planets = [<span class="string">&#x27;Mars&#x27;</span>, <span class="string">&#x27;Saturn&#x27;</span>, <span class="string">&#x27;Pluto&#x27;</span>, <span class="string">&#x27;Earth&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(planets.splice(<span class="number">2</span>, <span class="number">1</span>)); <span class="comment">// this will delete &#x27;Pluto&#x27;</span></span><br><span class="line"><span class="comment">// [&quot;Mars&quot;, &quot;Saturn&quot;, &quot;Earth&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<p>Example to add items</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> planets = [<span class="string">&#x27;Mars&#x27;</span>, <span class="string">&#x27;Saturn&#x27;</span>, <span class="string">&#x27;Earth&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(planets.splice(<span class="number">1</span>, <span class="number">0</span>, <span class="string">&#x27;Pluto&#x27;</span>, <span class="string">&#x27;Uranus&#x27;</span>)); <span class="comment">// 1 for the first index, and 0 as we dont want to delete anything</span></span><br><span class="line"><span class="comment">// [&quot;Mars&quot;, &quot;Pluto&quot;, &quot;Uranus&quot;, &quot;Saturn&quot;, &quot;Earth&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<p>Example to remove all after an index</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> planets = [<span class="string">&#x27;Mars&#x27;</span>, <span class="string">&#x27;Pluto&#x27;</span>, <span class="string">&#x27;Uranus&#x27;</span>, <span class="string">&#x27;Saturn&#x27;</span>, <span class="string">&#x27;Earth&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(planets.splice(<span class="number">1</span>));</span><br><span class="line"><span class="comment">// [&quot;Pluto&quot;, &quot;Uranus&quot;, &quot;Saturn&quot;, &quot;Earth&quot;]</span></span><br><span class="line"><span class="built_in">console</span>.log(planets);</span><br><span class="line"><span class="comment">// [&quot;Mars&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice</a></li>
+</ul>
+<h3 id="length"><a href="#length" class="headerlink" title="length"></a>length</h3><p>The <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length">Array.prototype.length</a> property of an object which is an instance of type Array sets or returns the number of elements in that array. The value is an unsigned, 32-bit integer that is always numerically greater than the highest index in the array.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="string">&#x27;foo&#x27;</span>, <span class="string">&#x27;bar&#x27;</span>, <span class="string">&#x27;baz&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;arr.length = &#x27;</span> + arr.length);</span><br><span class="line"><span class="comment">// arr.length = 3</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length</a></li>
 </ul>
 
       
@@ -215,23 +258,23 @@ ga('send', 'pageview');
       <ul>
         
           <li>
+            <a href="/2021/07/js-math/">Javascript Math</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/js-json/">Javascript JSON</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/docker-networking/">Docker Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/dynamic-program-analysis/">Dynamic Program Analysis</a>
+          </li>
+        
+          <li>
             <a href="/2021/07/k6-performance-testing/">K6 Performance Testing</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/oauth2-delegation-token/">OAuth2 - Delegation Token</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/dacpac/">Data-tier Application Component Package (DACPAC)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/rosetta-code-invert-a-binary-tree/">Invert A Binary Tree</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/remote-procedure-call/">Remote Procedure Call (gRPC)</a>
           </li>
         
       </ul>
@@ -243,7 +286,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/net-library/" style="font-size: 11.58px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.53px;">agile</a> <a href="/tags/angular/" style="font-size: 15.26px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 14.21px;">architecture</a> <a href="/tags/arduino/" style="font-size: 11.05px;">arduino</a> <a href="/tags/authentication/" style="font-size: 13.16px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.21px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.74px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.53px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.53px;">cad</a> <a href="/tags/cam/" style="font-size: 10.53px;">cam</a> <a href="/tags/client-side-scripting/" style="font-size: 11.05px;">client side scripting</a> <a href="/tags/cnc/" style="font-size: 11.58px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.53px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.58px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.11px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.05px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.63px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 16.84px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.05px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 11.05px;">encryption</a> <a href="/tags/food/" style="font-size: 11.05px;">food</a> <a href="/tags/git/" style="font-size: 11.58px;">git</a> <a href="/tags/hexo/" style="font-size: 10.53px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.11px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 12.11px;">iot</a> <a href="/tags/javascript/" style="font-size: 11.05px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.53px;">jquery</a> <a href="/tags/json/" style="font-size: 11.58px;">json</a> <a href="/tags/kibana/" style="font-size: 10.53px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.53px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.68px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.11px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.11px;">linux</a> <a href="/tags/logging/" style="font-size: 11.58px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.58px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.89px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.16px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.05px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.11px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.53px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.05px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.58px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.47px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.05px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.11px;">python</a> <a href="/tags/random/" style="font-size: 11.05px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.32px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.05px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.53px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 12.63px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 13.16px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.37px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.79px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.53px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.05px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.53px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.68px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.53px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.53px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.95px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.53px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.53px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.16px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 18.42px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.05px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+      <a href="/tags/net-library/" style="font-size: 11.58px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.53px;">agile</a> <a href="/tags/angular/" style="font-size: 15.26px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 14.21px;">architecture</a> <a href="/tags/arduino/" style="font-size: 11.05px;">arduino</a> <a href="/tags/authentication/" style="font-size: 13.16px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.21px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.74px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.53px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.53px;">cad</a> <a href="/tags/cam/" style="font-size: 10.53px;">cam</a> <a href="/tags/client-side-scripting/" style="font-size: 11.05px;">client side scripting</a> <a href="/tags/cnc/" style="font-size: 11.58px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.53px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.58px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.11px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.05px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.63px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 16.84px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.05px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 11.05px;">encryption</a> <a href="/tags/food/" style="font-size: 11.05px;">food</a> <a href="/tags/git/" style="font-size: 11.58px;">git</a> <a href="/tags/hexo/" style="font-size: 10.53px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.11px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 12.11px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.11px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.53px;">jquery</a> <a href="/tags/json/" style="font-size: 11.58px;">json</a> <a href="/tags/kibana/" style="font-size: 10.53px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.53px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.68px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.11px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.11px;">linux</a> <a href="/tags/logging/" style="font-size: 11.58px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.58px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.89px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.16px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.05px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.11px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.53px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.05px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.58px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.47px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.05px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.11px;">python</a> <a href="/tags/random/" style="font-size: 11.05px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.32px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.05px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.53px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 12.63px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 13.16px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.37px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.79px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.53px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.05px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.53px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.68px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.53px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.53px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.95px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.53px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.53px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.16px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 18.42px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.05px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
     </div>
   </div>
 
