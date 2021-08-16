@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Feature Management - Launch Darkly | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="“LaunchDarkly provides simple, scalable feature flag &amp; toggle management (feature management) for the modern enterprise.”  You can create a trial account at launchdarkly.com and their docs are a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Feature Management - Launch Darkly">
+<meta property="og:url" content="https://carlpaton.github.io/2021/08/feature-management-launchdarkly/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="“LaunchDarkly provides simple, scalable feature flag &amp; toggle management (feature management) for the modern enterprise.”  You can create a trial account at launchdarkly.com and their docs are a">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/feature-management-launchdarkly/launch-darkly.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/feature-management-launchdarkly/user-withkey.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/feature-management-launchdarkly/user-builder.jpg">
+<meta property="article:published_time" content="2021-08-10T12:00:00.000Z">
+<meta property="article:modified_time" content="2021-08-16T09:10:54.272Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="patterns principles">
+<meta property="article:tag" content="feature management">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/feature-management-launchdarkly/launch-darkly.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-feature-management-launchdarkly" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/08/feature-management-launchdarkly/" class="article-date">
+  <time datetime="2021-08-10T12:00:00.000Z" itemprop="datePublished">2021-Aug</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Feature Management - Launch Darkly
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/feature-management-launchdarkly/launch-darkly.jpg" alt="Feature Management - Launch Darkly"></p>
+<blockquote>
+<p>“LaunchDarkly provides simple, scalable feature flag &amp; toggle management (feature management) for the modern enterprise.”</p>
+</blockquote>
+<p>You can create a trial account at <a target="_blank" rel="noopener" href="https://launchdarkly.com/">launchdarkly.com</a> and their docs are at <a target="_blank" rel="noopener" href="https://docs.launchdarkly.com/sdk/server-side/dotnet">docs.launchdarkly.com</a> are really good.</p>
+<p>All the code snippets below are available at <a target="_blank" rel="noopener" href="https://github.com/carlpaton/LaunchDarklyDemo">https://github.com/carlpaton/LaunchDarklyDemo</a></p>
+<h2 id="Launch-Darkly-packages"><a href="#Launch-Darkly-packages" class="headerlink" title="Launch Darkly packages"></a>Launch Darkly packages</h2><p>The API’s for the Launch Darkly client are avalible in these SDKs</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/LaunchDarkly.Client/">LaunchDarkly.Client</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/LaunchDarkly.ServerSdk/">LaunchDarkly.ServerSdk</a></li>
+</ul>
+<h2 id="Launch-Darkly-Projects-amp-Environments"><a href="#Launch-Darkly-Projects-amp-Environments" class="headerlink" title="Launch Darkly Projects &amp; Environments"></a>Launch Darkly Projects &amp; Environments</h2><p>Each Launch Darkly project can have multiple environments, the default project is called <code>Default Project</code> but you can add more.</p>
+<p>Each environment has its own <code>SDK key</code>, when creating the client this is a required parameter. The default environments are <code>Test</code> and <code>Production</code>. Its sensible for your code to have no knowledge of the environments and simply rely on the correct <code>SDK key</code> to be injected.</p>
+<p>Example client:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> launchDarklyClient = <span class="keyword">new</span> LdClient(_sdkKey);</span><br><span class="line">services.AddSingleton&lt;ILdClient&gt;(launchDarklyClient);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Segments"><a href="#Segments" class="headerlink" title="Segments"></a>Segments</h3><p>Segments can be applied to a flag.</p>
+<h2 id="Local-development"><a href="#Local-development" class="headerlink" title="Local development"></a>Local development</h2><p>When developing locally the <code>LdClient</code> can be configured to return pre-defined settings. This would also be useful when running integration tests.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (_environment.IsDevelopment() </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> dataSource = FileData</span><br><span class="line">        .DataSource()</span><br><span class="line">        .FilePaths(<span class="string">&quot;foo/bar/LocalLdClientFeatures.json&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> config = Configuration.Builder(_sdkKey)</span><br><span class="line">        .DataSource(dataSource)</span><br><span class="line">        .Events(Components.NoEvents)</span><br><span class="line">        .Build();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> launchDarklyClient = <span class="keyword">new</span> LdClient(config);</span><br><span class="line">    services.AddSingleton&lt;ILdClient&gt;(launchDarklyClient);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SDK"><a href="#SDK" class="headerlink" title="SDK"></a>SDK</h2><h3 id="BoolVariation"><a href="#BoolVariation" class="headerlink" title="BoolVariation"></a>BoolVariation</h3><p>The examples below assume <code>_sdkKey</code> is injected and the features <code>sweet-feature-name-1</code> and <code>sweet-feature-name-2</code> has been configured in Launch Darkly.</p>
+<p><strong>User.WithKey</strong></p>
+<p>This works with both <code>LaunchDarkly.Client</code> or <code>LaunchDarkly.ServerSdk</code>. </p>
+<p>This example will return true only when the <code>userId</code> of <code>cc04e5b8-b483-47fe-8ce6-0098487e91a8</code> is configured in Launch Darkly under the flag <code>sweet-feature-name-1</code>.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> defaultValue = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">var</span> userId = <span class="string">&quot;cc04e5b8-b483-47fe-8ce6-0098487e91a8&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> featureName = <span class="string">&quot;sweet-feature-name-1&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ldClient = <span class="keyword">new</span> LdClient(_sdkKey);</span><br><span class="line"><span class="keyword">var</span> ldUser = User.WithKey(userId);</span><br><span class="line"><span class="keyword">var</span> allowed = ldClient.BoolVariation(featureName, ldUser, defaultValue);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">&quot;CheckByUserKey: userId=&#123;0&#125; returned allowed=&#123;1&#125;&quot;</span>, userId, allowed);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/d/feature-management-launchdarkly/user-withkey.jpg" alt="User.WithKey"></p>
+<p><strong>User.Builder</strong></p>
+<p>This only works with <code>LaunchDarkly.ServerSdk</code>.</p>
+<p>This example will return true when either of the following is configured in Launch Darkly under the flag <code>sweet-feature-name-2</code>. These are custom fields in Launch Darkly.</p>
+<ul>
+<li><code>cityId</code> of <code>ea2b6efc-020d-4469-a993-1bd5baf78adc</code><br>OR</li>
+<li><code>regionId</code> of <code>nz</code></li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> defaultValue = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">var</span> userId = Guid.NewGuid().ToString().ToLowerInvariant(); <span class="comment">// this is not validated in LD</span></span><br><span class="line"><span class="keyword">var</span> cityId = <span class="string">&quot;ea2b6efc-020d-4469-a993-1bd5baf78adc&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> regionId = <span class="string">&quot;nz&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> featureName = <span class="string">&quot;sweet-feature-name-2&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ldClient = <span class="keyword">new</span> LdClient(_sdkKey);</span><br><span class="line"><span class="keyword">var</span> ldUser = User</span><br><span class="line">    .Builder(userId)</span><br><span class="line">    .Custom(<span class="string">&quot;CityId&quot;</span>, cityId)</span><br><span class="line">    .Custom(<span class="string">&quot;RegionId&quot;</span>, regionId)</span><br><span class="line">    .Build();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> allowed = ldClient.BoolVariation(featureName, ldUser, defaultValue);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">&quot;CheckByCustom: cityId=&#123;0&#125; with regionId=&#123;1&#125; returned allowed=&#123;2&#125;&quot;</span>, </span><br><span class="line">    cityId, </span><br><span class="line">    regionId, </span><br><span class="line">    allowed);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/d/feature-management-launchdarkly/user-builder.jpg" alt="User.Builder"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2021/08/feature-management-launchdarkly/" data-id="cks6j7kbi00012kon710zdpf2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/feature-management/" rel="tag">feature management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/" rel="tag">patterns principles</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/08/feature-management-dot-net/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Feature Management - Dot Net
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/07/js-math/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Javascript Math</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/08/dependency-injection-container-console-app/">Dependency Injection Container In Console App</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/feature-management-dot-net/">Feature Management - Dot Net</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/feature-management-launchdarkly/">Feature Management - Launch Darkly</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/js-math/">Javascript Math</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/js-json/">Javascript JSON</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.58px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.53px;">agile</a> <a href="/tags/angular/" style="font-size: 15.26px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 14.21px;">architecture</a> <a href="/tags/arduino/" style="font-size: 11.05px;">arduino</a> <a href="/tags/authentication/" style="font-size: 13.16px;">authentication</a> <a href="/tags/aws/" style="font-size: 14.21px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.74px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.53px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.53px;">cad</a> <a href="/tags/cam/" style="font-size: 10.53px;">cam</a> <a href="/tags/client-side-scripting/" style="font-size: 11.05px;">client side scripting</a> <a href="/tags/cnc/" style="font-size: 11.58px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.53px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.58px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.11px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.05px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.16px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 16.84px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.05px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 11.05px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.53px;">feature management</a> <a href="/tags/food/" style="font-size: 11.05px;">food</a> <a href="/tags/git/" style="font-size: 11.58px;">git</a> <a href="/tags/hexo/" style="font-size: 10.53px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.11px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 12.11px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.11px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.53px;">jquery</a> <a href="/tags/json/" style="font-size: 11.58px;">json</a> <a href="/tags/kibana/" style="font-size: 10.53px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.53px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.68px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.11px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.11px;">linux</a> <a href="/tags/logging/" style="font-size: 11.58px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.58px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.89px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.16px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.05px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.11px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.53px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.05px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.58px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.47px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.05px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.11px;">python</a> <a href="/tags/random/" style="font-size: 11.05px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.32px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.05px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.53px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 12.63px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 13.16px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.37px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.79px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.53px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.05px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.53px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.68px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.53px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.53px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.95px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.53px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.53px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.16px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 18.42px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.05px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
