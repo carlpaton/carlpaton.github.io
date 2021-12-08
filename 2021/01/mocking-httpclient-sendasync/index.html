@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="In the past the only way I’ve known how to deal with mocking Http&#x2F;Web clients is to wrap the methods using a custom interface. This is a lot of overhead and I feel teaches us its ok to write code that">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-26T11:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-07T01:17:57.539Z">
+<meta property="article:modified_time" content="2021-12-08T04:38:49.395Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="software testing">
 <meta property="article:tag" content="mocking">
@@ -164,6 +164,7 @@ ga('send', 'pageview');
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> response = <span class="keyword">new</span> HttpResponseMessage &#123; </span><br><span class="line">  StatusCode = HttpStatusCode.OK </span><br><span class="line">  Content = <span class="keyword">new</span> StringContent(<span class="string">@&quot;[&#123; &quot;&quot;id&quot;&quot;: 1, &quot;&quot;desc&quot;&quot;: &quot;&quot;foo&quot;&quot;&#125;]&quot;</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>Then define a <code>.Setup</code> to return the response above. As <code>SendAsync</code> is protected we need to use <code>.Protected()</code></p>
+<p>Note that if in your implementation of <code>HttpClient</code> calls <code>.GetAsync(...)</code> this will still work as internally <code>GetAsync</code> will eventually call <code>SendAsync</code>.</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">httpMessageHandlerMock</span><br><span class="line">  .Protected()</span><br><span class="line">  .Setup&lt;Task&lt;HttpResponseMessage&gt;&gt;(</span><br><span class="line">    <span class="string">&quot;SendAsync&quot;</span>,</span><br><span class="line">    ItExpr.IsAny&lt;HttpRequestMessage&gt;(),</span><br><span class="line">    ItExpr.IsAny&lt;CancellationToken&gt;())</span><br><span class="line">  .ReturnsAsync(response);</span><br></pre></td></tr></table></figure>
 
 <p>Create the client for dependancy injection</p>
