@@ -20,15 +20,15 @@ ga('send', 'pageview');
   
   <title>HTTP Retry with Polly | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Polly allows http retries with exponential backoff so if the resource you are trying to reach throws a transient error (an error that should resolve itself) like 500 (Server Error), 408 (Request Timeo">
+  <meta name="description" content="Polly allows http retries with exponential backoff so if the resource you are trying to reach throws a transient error (an error that should resolve itself) like 500 (Server Error) or 408 (Request Tim">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP Retry with Polly">
 <meta property="og:url" content="https://carlpaton.github.io/2021/12/http-retry-polly/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Polly allows http retries with exponential backoff so if the resource you are trying to reach throws a transient error (an error that should resolve itself) like 500 (Server Error), 408 (Request Timeo">
+<meta property="og:description" content="Polly allows http retries with exponential backoff so if the resource you are trying to reach throws a transient error (an error that should resolve itself) like 500 (Server Error) or 408 (Request Tim">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-12-05T11:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-06T22:36:46.385Z">
+<meta property="article:modified_time" content="2021-12-08T23:29:40.589Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="c#">
 <meta property="article:tag" content="web api">
@@ -136,8 +136,9 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Polly allows http retries with exponential backoff so if the resource you are trying to reach throws a transient error (an error that should resolve itself) like <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500">500 (Server Error)</a>, <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408">408 (Request Timeout)</a> or <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404">404 (Not Found)</a> the request will auto-magically be re-tried x times with an increased back-off (the period between re-tries) before giving up.</p>
-<p>It can also do other cool things like</p>
+        <p>Polly allows http retries with exponential backoff so if the resource you are trying to reach throws a transient error (an error that should resolve itself) like <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500">500 (Server Error)</a> or <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408">408 (Request Timeout)</a> then the request will auto-magically be re-tried x times with an increased back-off (the period between re-tries) before giving up.</p>
+<p>We can include <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404">404 (Not Found)</a> but that depends on the use case, in some API’s 404 means the data you were looking for is not avalible. Example if <code>GET /person/1</code> responded in 404 it COULD mean 1 doesnt exist but the resource is still there.</p>
+<p>Polly can also do other cool things listed below but I’ll focus on simple retry.</p>
 <ul>
 <li>Circuit Breaker</li>
 <li>Fallback</li>
@@ -162,6 +163,15 @@ ga('send', 'pageview');
 <p>Here <code>onRetryAsync</code> is passed a deligate inline method that just writes out a message. This was helpful when manually testing my worker as its a console application. </p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IAsyncPolicy&lt;HttpResponseMessage&gt; <span class="title">GetRetryPolicy</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> retryCount = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">var</span> retrySleepDuration = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> HttpPolicyExtensions</span><br><span class="line">        .HandleTransientHttpError()</span><br><span class="line">        .OrResult(msg =&gt; msg.StatusCode == System.Net.HttpStatusCode.NotFound)</span><br><span class="line">        .WaitAndRetryAsync(</span><br><span class="line">            retryCount, </span><br><span class="line">            retryAttempt =&gt; TimeSpan.FromSeconds(Math.Pow(retrySleepDuration, retryAttempt)),</span><br><span class="line">            onRetryAsync: (_, _) =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;GetRetryPolicy retrying...&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> Task.CompletedTask;</span><br><span class="line">            &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="Building-on-WaitAndRetryAsync-gt-onRetry-onRetryAsync"><a href="#Building-on-WaitAndRetryAsync-gt-onRetry-onRetryAsync" class="headerlink" title="Building on WaitAndRetryAsync =&gt; onRetry/onRetryAsync"></a>Building on WaitAndRetryAsync =&gt; onRetry/onRetryAsync</h3><p>The 3rd parameter of <code>onRetry</code> is an int which represents <code>retryAttempt</code>, this can be added to logs.</p>
+<p>I also wasnt sure on the value of using async when its just a log, so I switched it out.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.WaitAndRetryAsync(</span><br><span class="line">    retryCount,</span><br><span class="line">    retryAttempt =&gt; TimeSpan.FromSeconds(Math.Pow(retrySleepDuration, retryAttempt)),</span><br><span class="line">    onRetry: (_, _, retryAttempt, _) =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;Retry attempt (<span class="subst">&#123;retryAttempt&#125;</span> of <span class="subst">&#123;retryCount&#125;</span>)&quot;</span>);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.stevejgordon.co.uk/polly-using-context-to-obtain-retry-count-diagnostics">https://www.stevejgordon.co.uk/polly-using-context-to-obtain-retry-count-diagnostics</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/App-vNext/Polly/issues/505">https://github.com/App-vNext/Polly/issues/505</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/App-vNext/Polly/wiki/Polly-and-HttpClientFactory#use-case-exchanging-information-between-policy-execution-and-calling-code">https://github.com/App-vNext/Polly/wiki/Polly-and-HttpClientFactory#use-case-exchanging-information-between-policy-execution-and-calling-code</a></li>
+</ul>
 <h2 id="Unit-tests"><a href="#Unit-tests" class="headerlink" title="Unit tests"></a>Unit tests</h2><p>You may be tempted to create additional infastructure and unit test an <a href="/2021/01/mocking-httpclient-sendasync/">injected HttpClient with mocked out http responses</a> but its simpler to just unit test the extension method. This can be done with a simple <code>DummyMethod</code> that keeps track of its invocations and has a sorted and predefined collection of response http status codes.</p>
 <p>For this test the following should be true per invocation</p>
 <ul>
