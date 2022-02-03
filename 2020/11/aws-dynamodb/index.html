@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Amazon Dynamodb | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="WIP   Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com  Keys - 2 types of Primary KeysValid da">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Amazon Dynamodb">
+<meta property="og:url" content="https://carlpaton.github.io/2020/11/aws-dynamodb/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="WIP   Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com  Keys - 2 types of Primary KeysValid da">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-11-04T11:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-02T23:30:22.786Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="wip">
+<meta property="article:tag" content="aws">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-aws-dynamodb" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/aws-dynamodb/" class="article-date">
+  <time datetime="2020-11-04T11:00:00.000Z" itemprop="datePublished">2020-Nov</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Amazon Dynamodb
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
+<blockquote>
+<p>Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com</p>
+</blockquote>
+<h2 id="Keys-2-types-of-Primary-Keys"><a href="#Keys-2-types-of-Primary-Keys" class="headerlink" title="Keys - 2 types of Primary Keys"></a>Keys - 2 types of Primary Keys</h2><p>Valid data types for primary keys: <code>String</code>, <code>Number</code> and <code>Binary</code>.</p>
+<ul>
+<li>Partition Key</li>
+</ul>
+<p>Partition Key by itself and it must be unique in the table.</p>
+<ul>
+<li>Composite primary key </li>
+</ul>
+<p>Combination of Partition Key and a Sort Key which makes it a composite primary key. Individually, the partition key and the sort key does not need to be unique, but the combination of both which makes it into a primary key needs to be unique.</p>
+<h2 id="Indexes"><a href="#Indexes" class="headerlink" title="Indexes"></a>Indexes</h2><h3 id="Secondary-indexes"><a href="#Secondary-indexes" class="headerlink" title="Secondary indexes"></a>Secondary indexes</h3><p>Create one or more secondary indexes if we want to query data from the table using an alternate key. (Optional)</p>
+<p>A secondary index is a data structure that contains a subset of attributes from a table. A table can have multiple secondary indexes.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.CoreComponents.html#HowItWorks.CoreComponents.SecondaryIndexes">Secondary Indexes</a></li>
+</ul>
+<h3 id="Global-secondary-index"><a href="#Global-secondary-index" class="headerlink" title="Global secondary index"></a>Global secondary index</h3><p>An index with a partition key and a sort key that can be different from those on the base table. A global secondary index is considered “global” because queries on the index can span all of the data in the base table, across all partitions. A global secondary index is stored in its own partition space away from the base table and scales separately from the base table.</p>
+<p>e.g. A global secondary index has Year as Partition Key and Song as Sort Key, we can get a list of records with “Year = 2015 &amp; Song begins with ‘A’”</p>
+<h3 id="Local-secondary-index"><a href="#Local-secondary-index" class="headerlink" title="Local secondary index"></a>Local secondary index</h3><p>An index that has the same partition key as the base table, but a different sort key. A local secondary index is “local” in the sense that every partition of a local secondary index is scoped to a base table partition that has the same partition key value.</p>
+<p>e.g. A local secondary index has Artist as Partition key and Year as Sort key, we can now get a list of records with “Artist = ‘Cold Play’ &amp; Year &gt; 2010”</p>
+<h2 id="Locking"><a href="#Locking" class="headerlink" title="Locking"></a>Locking</h2><p>The SDK provides some settings that we can simply turn on/off. Consistent Read is one of them.</p>
+<h3 id="Consistent-Read"><a href="#Consistent-Read" class="headerlink" title="Consistent Read"></a>Consistent Read</h3><p><code>Eventually consistent reads</code> - By default is when you read data from a table, the response might not reflect the results of a recently completed write operation. The response might include some stale data. If you repeat your read request after a short time, the response should return the latest data.</p>
+<p><code>Strongly consistent reads</code> - When you request a strongly consistent read, DynamoDB returns a response with the most up-to-date data, reflecting the updates from all prior write operations that were successful.<br>but it has a higher latency and it uses more throughput capacity</p>
+<h3 id="Optimistic-Locking"><a href="#Optimistic-Locking" class="headerlink" title="Optimistic Locking"></a>Optimistic Locking</h3><p>This can be easily enabled/disabled in the table.</p>
+<p>We can add a version number column to our table to enable optimistic locking. When updating the item, it checks whether the version of the item matches the one stored in DynamoDB. If not, it throws exception. If version is the same, DynamoDB updates the record and automatically increments the version number.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">DynamoDBVersion</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="built_in">int</span>? VersionNumber &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBMapper.OptimisticLocking.html">Optimistic Locking with Version Number</a></li>
+</ul>
+<h2 id="Data-Types"><a href="#Data-Types" class="headerlink" title="Data Types"></a>Data Types</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html#HowItWorks.DataTypes">Data Types</a></li>
+</ul>
+<h3 id="Scalar-Types"><a href="#Scalar-Types" class="headerlink" title="Scalar Types"></a>Scalar Types</h3><p>Represent exactly one value.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Number</span><br><span class="line">String</span><br><span class="line">Binary ~ base 64 encoded</span><br><span class="line">Boolean</span><br><span class="line">Null</span><br></pre></td></tr></table></figure>
+
+<h3 id="Document-Types"><a href="#Document-Types" class="headerlink" title="Document Types"></a>Document Types</h3><p>Can represent a complex structure with nested attributes such as a JSON document.</p>
+<ul>
+<li><code>List</code> </li>
+</ul>
+<p>A list Can be a combination of data types</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyCoolList [&quot;Foo&quot;, &quot;Bar&quot;, 42]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Map</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    Pineapple: &quot;Pen&quot;</span><br><span class="line">    Notes: [</span><br><span class="line">        &quot;Do&quot;: &quot;Better&quot;,</span><br><span class="line">        &#123;</span><br><span class="line">            Thing : &#123;</span><br><span class="line">                Id : 42</span><br><span class="line">                Message : &quot;The answer&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Set-Types"><a href="#Set-Types" class="headerlink" title="Set Types"></a>Set Types</h3><p>Can represent multiple scalar values, the types in the set need to be the same, else it needs to be a <code>List</code> type</p>
+<ul>
+<li><code>String Set</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&quot;Foo&quot;, &quot;Bar&quot;, &quot;Biz&quot;, &quot;Bat&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Number Set</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[-42, 42, 142]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Binary Set</code></li>
+</ul>
+<p>This is <a target="_blank" rel="noopener" href="https://www.base64encode.org/">base64 encoded</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&quot;NDI&#x3D;&quot;, &quot;bGlmZQ&#x3D;&#x3D;&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>NDI=</code> = 42</li>
+<li><code>bGlmZQ==</code> = life</li>
+</ul>
+<h2 id="Intefaces"><a href="#Intefaces" class="headerlink" title="Intefaces"></a>Intefaces</h2><h3 id="Low-Level-Interfaces"><a href="#Low-Level-Interfaces" class="headerlink" title="Low-Level Interfaces"></a>Low-Level Interfaces</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-low-level">Low-Level Model</a></li>
+</ul>
+<blockquote>
+<p>The low-level programming model wraps direct calls to the DynamoDB service. You access this model through the Amazon.DynamoDBv2 namespace.</p>
+</blockquote>
+<h3 id="Document-Interfaces"><a href="#Document-Interfaces" class="headerlink" title="Document Interfaces"></a>Document Interfaces</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-document">Document Model</a></li>
+</ul>
+<blockquote>
+<p>The document programming model provides an easier way to work with data in DynamoDB. This model is specifically intended for accessing tables and items in tables. You access this model through the Amazon.DynamoDBv2.DocumentModel namespace.</p>
+</blockquote>
+<h3 id="Object-Persistence-Interface"><a href="#Object-Persistence-Interface" class="headerlink" title="Object Persistence Interface"></a>Object Persistence Interface</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-object-persistence">Object Persistence Model</a></li>
+</ul>
+<blockquote>
+<p>The object persistence programming model is specifically designed for storing, loading, and querying .NET objects in DynamoDB. You access this model through the Amazon.DynamoDBv2.DataModel namespace.</p>
+</blockquote>
+<h2 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h2><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _client = AmazonDynamoDBClient(awsOptions.SecretAccessKey, awsOptions.AccessKeyId)</span><br></pre></td></tr></table></figure>
+
+<h3 id="GetItemAsync"><a href="#GetItemAsync" class="headerlink" title="GetItemAsync"></a>GetItemAsync</h3><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> key = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>,AttributeValue&gt;() &#123; &#123; <span class="string">&quot;Id&quot;</span>, <span class="keyword">new</span> AttributeValue &#123; N = <span class="string">&quot;42&quot;</span> &#125; &#125; &#125;;</span><br><span class="line"><span class="keyword">var</span> request = <span class="keyword">new</span> GetItemRequest</span><br><span class="line">&#123;</span><br><span class="line">    TableName = _dynamoDbOptions.TableName,</span><br><span class="line">    Key = key</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">_client.GetItemAsync(request);</span><br></pre></td></tr></table></figure>
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LowLevelDotNetItemCRUD.html">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LowLevelDotNetItemCRUD.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2020/11/aws-dynamodb/" data-id="ckz7fjpmo000070on9dtd5d7n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/" rel="tag">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/11/malva-pudding/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Malva Pudding
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/sql-parameter-sniffing/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">SQL Parameter Sniffing</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/integration-tests/">Integration Tests</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/personal-development-plan/">Personal Development Plan</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/cinewhoop-bumblebee-v3/">Cinewhoop Bumblebee V3</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/object-calisthenics/">Object Calisthenics</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/testing-with-cancellation-token/">Testing with CancellationToken</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.58px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.53px;">agile</a> <a href="/tags/angular/" style="font-size: 15.26px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 14.21px;">architecture</a> <a href="/tags/arduino/" style="font-size: 11.05px;">arduino</a> <a href="/tags/authentication/" style="font-size: 12.63px;">authentication</a> <a href="/tags/aws/" style="font-size: 15.26px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.74px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.53px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.53px;">cad</a> <a href="/tags/cam/" style="font-size: 10.53px;">cam</a> <a href="/tags/client-side-scripting/" style="font-size: 11.05px;">client side scripting</a> <a href="/tags/cnc/" style="font-size: 11.58px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.53px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.58px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.11px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.05px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.63px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 16.84px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.05px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 11.05px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.53px;">feature management</a> <a href="/tags/food/" style="font-size: 11.05px;">food</a> <a href="/tags/git/" style="font-size: 11.58px;">git</a> <a href="/tags/hexo/" style="font-size: 10.53px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.11px;">ide</a> <a href="/tags/integration-tests/" style="font-size: 10px;">integration tests</a> <a href="/tags/iot/" style="font-size: 12.11px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.11px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.53px;">jquery</a> <a href="/tags/json/" style="font-size: 11.58px;">json</a> <a href="/tags/kibana/" style="font-size: 10.53px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.53px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.68px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.11px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.11px;">linux</a> <a href="/tags/logging/" style="font-size: 11.58px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.58px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.37px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 12.63px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.05px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.11px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.53px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.05px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.58px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.47px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.05px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.11px;">python</a> <a href="/tags/random/" style="font-size: 11.58px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.32px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 11.05px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.53px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 12.63px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.63px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.89px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.79px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.53px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.05px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.53px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.68px;">structural patterns</a> <a href="/tags/threading/" style="font-size: 10.53px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.53px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.42px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.53px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.53px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 13.16px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 18.95px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.05px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
