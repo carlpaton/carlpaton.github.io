@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="WIP   “A test strategy is an outline that describes the testing approach of the software development cycle.”   https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Test_strategy  I was recently afforded the opertunity for">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-21T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-01-30T17:06:11.063Z">
+<meta property="article:modified_time" content="2022-02-09T07:00:28.648Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="software testing">
@@ -155,27 +155,28 @@ ga('send', 'pageview');
 <li>Decide on a pattern and stick to it, <a target="_blank" rel="noopener" href="https://gist.github.com/carlpaton/77ae278b904cab2a19423809a69c2c67">AAA</a> is the only one I really know</li>
 </ul>
 <p>See <a href="/2018/05/unit-tests-overview/">Unit Tests Overview</a> for more details.</p>
-<h3 id="Component-Test"><a href="#Component-Test" class="headerlink" title="Component Test"></a>Component Test</h3><p>This will test a deployable boundary (example: the BFF) and generally dependencies outside the boundary are mocked.</p>
+<h3 id="Component-Test"><a href="#Component-Test" class="headerlink" title="Component Test"></a>Component Test</h3><p>This will test a deployable boundary and generally dependencies outside the boundary are mocked.</p>
 <p>Key points</p>
 <ul>
 <li>Makes sense to run this on PR builds (and Master builds)</li>
 <li>Wiremocks are useful here</li>
 </ul>
-<h3 id="Integration-Test"><a href="#Integration-Test" class="headerlink" title="Integration Test"></a>Integration Test</h3><p>This will cross boundaries and the real implementation of resources are used, this is normally done in a UAT environment.</p>
+<h3 id="Integration-Test"><a href="#Integration-Test" class="headerlink" title="Integration Test"></a>Integration Test</h3><p>This will cross boundaries and the real implementation of resources are used, this is normally done in a UAT environment. Depending on data constraints this can also be done in Production but thats not always possible or sensible if it impacts what your clients will see.</p>
 <p>Key points</p>
 <ul>
-<li>This can be run on Master builds</li>
+<li>This can be run after Master is deployed to UAT</li>
 <li>Ensures that the external services that were mocked out in <code>Component Tests</code> are right</li>
 </ul>
 <p>See <a href="/2022/01/integration-tests/">Integration Tests</a> for more details.</p>
-<h3 id="End-to-end-testing-E2E-Test"><a href="#End-to-end-testing-E2E-Test" class="headerlink" title="End to end testing (E2E Test)"></a>End to end testing (E2E Test)</h3><p>These are slow, expensive and generally pretty flakey! A great testing tool for this is <a target="_blank" rel="noopener" href="https://www.cypress.io/">cypress</a></p>
+<h3 id="End-to-end-testing-E2E-Test"><a href="#End-to-end-testing-E2E-Test" class="headerlink" title="End to end testing (E2E Test)"></a>End to end testing (E2E Test)</h3><h4 id="Front-End"><a href="#Front-End" class="headerlink" title="Front End"></a>Front End</h4><p>These are slow, expensive and generally pretty flakey! A great testing tool for this is <a target="_blank" rel="noopener" href="https://www.cypress.io/">cypress</a></p>
 <p>Key points</p>
 <ul>
-<li>Only do these tests for thr most common flows</li>
+<li>Only do these tests for the most common flows</li>
 <li>Normally tests the happy path</li>
 <li>Driven by the UI (User Interface) and can test down the stack to the database</li>
 <li>Should cover what you would manually test after deployment</li>
 </ul>
+<h4 id="Back-End"><a href="#Back-End" class="headerlink" title="Back End"></a>Back End</h4><p>Its often thought that E2E is only for the front end but this is not true, you can have E2E tests that tests the end to end functionality of a worker process.</p>
 <h3 id="Acceptance-Test"><a href="#Acceptance-Test" class="headerlink" title="Acceptance Test"></a>Acceptance Test</h3><p>These are manual tests done by a user, should be the engineer and QA doing these to ensure they fifull the stories acceptance criteria and mandatory requirements.</p>
 <p>Key points</p>
 <ul>
@@ -200,6 +201,11 @@ ga('send', 'pageview');
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML">https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.w3schools.com/html/html_accessibility.asp">https://www.w3schools.com/html/html_accessibility.asp</a></li>
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Semantic_HTML">https://en.wikipedia.org/wiki/Semantic_HTML</a></li>
+</ul>
+<h3 id="Other-tests"><a href="#Other-tests" class="headerlink" title="Other tests"></a>Other tests</h3><ul>
+<li>System Testing</li>
+<li>Feature Testing</li>
+<li>Functional Testing</li>
 </ul>
 
       

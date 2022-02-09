@@ -20,15 +20,15 @@ ga('send', 'pageview');
   
   <title>Amazon Dynamodb | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP   Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com  Keys - 2 types of Primary KeysValid da">
+  <meta name="description" content="WIP   Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com  Programming InterfacesOh boy there are">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Amazon Dynamodb">
 <meta property="og:url" content="https://carlpaton.github.io/2020/11/aws-dynamodb/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP   Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com  Keys - 2 types of Primary KeysValid da">
+<meta property="og:description" content="WIP   Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com  Programming InterfacesOh boy there are">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-11-04T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-02T23:30:22.786Z">
+<meta property="article:modified_time" content="2022-02-09T07:06:36.883Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="aws">
@@ -142,7 +142,49 @@ ga('send', 'pageview');
 <blockquote>
 <p>Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com</p>
 </blockquote>
-<h2 id="Keys-2-types-of-Primary-Keys"><a href="#Keys-2-types-of-Primary-Keys" class="headerlink" title="Keys - 2 types of Primary Keys"></a>Keys - 2 types of Primary Keys</h2><p>Valid data types for primary keys: <code>String</code>, <code>Number</code> and <code>Binary</code>.</p>
+<h2 id="Programming-Interfaces"><a href="#Programming-Interfaces" class="headerlink" title="Programming Interfaces"></a>Programming Interfaces</h2><p>Oh boy there are 3!</p>
+<h3 id="Low-Level-Interfaces"><a href="#Low-Level-Interfaces" class="headerlink" title="Low-Level Interfaces"></a>Low-Level Interfaces</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-low-level">Low-Level Model</a></li>
+</ul>
+<blockquote>
+<p>The low-level programming model wraps direct calls to the DynamoDB service. You access this model through the Amazon.DynamoDBv2 namespace.</p>
+</blockquote>
+<h4 id="Low-Level-Client"><a href="#Low-Level-Client" class="headerlink" title="Low-Level Client"></a>Low-Level Client</h4><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> IAmazonDynamoDB <span class="title">GetAmazonDynamoDbClient</span>(<span class="params">DynamoDbOptions dynamoDbOptions</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> config = <span class="keyword">new</span> AmazonDynamoDBConfig()</span><br><span class="line">    &#123;</span><br><span class="line">        ServiceURL = dynamoDbOptions.ServiceUrl</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// This expects `access key` and `secret access key` to either be set in:</span></span><br><span class="line">    <span class="comment">// the system file .aws\credentials</span></span><br><span class="line">    <span class="comment">// OR</span></span><br><span class="line">    <span class="comment">// as environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> AmazonDynamoDBClient(config);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>GetItemAsync</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> key = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>,AttributeValue&gt;() &#123; &#123; <span class="string">&quot;Id&quot;</span>, <span class="keyword">new</span> AttributeValue &#123; N = <span class="string">&quot;42&quot;</span> &#125; &#125; &#125;;</span><br><span class="line"><span class="keyword">var</span> request = <span class="keyword">new</span> GetItemRequest</span><br><span class="line">&#123;</span><br><span class="line">    TableName = _dynamoDbOptions.TableName,</span><br><span class="line">    Key = key</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns the item attributes for the given key</span></span><br><span class="line">_client.GetItemAsync(request);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Document-Interfaces"><a href="#Document-Interfaces" class="headerlink" title="Document Interfaces"></a>Document Interfaces</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-document">Document Model</a></li>
+</ul>
+<blockquote>
+<p>The document programming model provides an easier way to work with data in DynamoDB. This model is specifically intended for accessing tables and items in tables. You access this model through the Amazon.DynamoDBv2.DocumentModel namespace.</p>
+</blockquote>
+<h3 id="Object-Persistence-Interface"><a href="#Object-Persistence-Interface" class="headerlink" title="Object Persistence Interface"></a>Object Persistence Interface</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-object-persistence">Object Persistence Model</a></li>
+</ul>
+<blockquote>
+<p>The object persistence programming model is specifically designed for storing, loading, and querying .NET objects in DynamoDB. You access this model through the Amazon.DynamoDBv2.DataModel namespace.</p>
+</blockquote>
+<h4 id="Object-Persistence-Client"><a href="#Object-Persistence-Client" class="headerlink" title="Object Persistence Client"></a>Object Persistence Client</h4><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Amazon.DynamoDBv2;</span><br><span class="line"><span class="keyword">using</span> Amazon.DynamoDBv2.DataModel;</span><br><span class="line"><span class="keyword">using</span> Amazon.Extensions.NETCore.Setup;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.DependencyInjection;</span><br><span class="line"></span><br><span class="line"><span class="comment">// creating the client as part of the .net application startup using IServiceCollection</span></span><br><span class="line"><span class="keyword">var</span> options = <span class="keyword">new</span> AWSOptions();</span><br><span class="line">options.DefaultClientConfig.ServiceURL = <span class="string">&quot;http://localhost:4001&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> config = <span class="keyword">new</span> DynamoDBOperationConfig</span><br><span class="line">&#123;</span><br><span class="line">    TableNamePrefix = <span class="string">&quot;My-Cool-Table-&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">services.AddAWSService&lt;IAmazonDynamoDB&gt;(options);</span><br><span class="line">services.AddSingleton&lt;IDynamoDBContext&gt;(p =&gt; ActivatorUtilities.CreateInstance&lt;DynamoDBContext&gt;(p, config));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// creating the client manually could be used with integration tests</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> IDynamoDBContext <span class="title">GetDynamoDBContext</span>(<span class="params">DynamoDbOptions dynamoDbOptions</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> dynamoDBContextConfig = <span class="keyword">new</span> DynamoDBContextConfig()</span><br><span class="line">    &#123;</span><br><span class="line">        TableNamePrefix = <span class="string">&quot;My-Cool-Table-&quot;</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> amazonDynamoDBConfig = <span class="keyword">new</span> AmazonDynamoDBConfig()</span><br><span class="line">    &#123;</span><br><span class="line">        ServiceURL = <span class="string">&quot;http://localhost:4001&quot;</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> client = <span class="keyword">new</span> AmazonDynamoDBClient(amazonDynamoDBConfig);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// This expects `access key` and `secret access key` to either be set in:</span></span><br><span class="line">    <span class="comment">// the system file .aws\credentials</span></span><br><span class="line">    <span class="comment">// OR</span></span><br><span class="line">    <span class="comment">// as environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DynamoDBContext(client, dynamoDBContextConfig);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>LoadAsync</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">await</span> _dynamoDbContext.LoadAsync&lt;MyTableSchema&gt;(keyId);</span><br></pre></td></tr></table></figure>
+
+<p>Where the class <code>MyTableSchema</code> is defined below. Note that <code>DynamoDBHashKey</code> is the partition key.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">DynamoDBTable(<span class="meta-string">&quot;MyTableName&quot;</span>)</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyTableSchema</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">DynamoDBHashKey</span>] </span><br><span class="line">    <span class="keyword">public</span> Guid KeyId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    [<span class="meta">DynamoDBProperty</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> SomeString &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    </span><br><span class="line">    [<span class="meta">DynamoDBProperty</span>]</span><br><span class="line">    <span class="keyword">public</span> Guid SomeGuid &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>MyTableName can also include enums using <code>IPropertyConverter</code> implemented in <code>MyEnumConverter</code></p>
+<p>See <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBContext.ArbitraryDataMapping.html">Mapping Arbitrary Data with DynamoDB Using the AWS SDK for .NET Object Persistence Model</a></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">DynamoDBProperty(typeof(MyEnumConverter))</span>]</span><br><span class="line"><span class="keyword">public</span> MyEnum MyEnum &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a>Keys</h2><p>There are 2 types of Primary Keys and their valid data types are <code>String</code>, <code>Number</code> and <code>Binary</code>.</p>
 <ul>
 <li>Partition Key</li>
 </ul>
@@ -173,7 +215,7 @@ ga('send', 'pageview');
 <h2 id="Data-Types"><a href="#Data-Types" class="headerlink" title="Data Types"></a>Data Types</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html#HowItWorks.DataTypes">Data Types</a></li>
 </ul>
-<h3 id="Scalar-Types"><a href="#Scalar-Types" class="headerlink" title="Scalar Types"></a>Scalar Types</h3><p>Represent exactly one value.</p>
+<h3 id="Scalar-Types"><a href="#Scalar-Types" class="headerlink" title="Scalar Types"></a>Scalar Types</h3><p>Scalar Types represent exactly one value</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Number</span><br><span class="line">String</span><br><span class="line">Binary ~ base 64 encoded</span><br><span class="line">Boolean</span><br><span class="line">Null</span><br></pre></td></tr></table></figure>
 
 <h3 id="Document-Types"><a href="#Document-Types" class="headerlink" title="Document Types"></a>Document Types</h3><p>Can represent a complex structure with nested attributes such as a JSON document.</p>
@@ -209,28 +251,6 @@ ga('send', 'pageview');
 <li><code>NDI=</code> = 42</li>
 <li><code>bGlmZQ==</code> = life</li>
 </ul>
-<h2 id="Intefaces"><a href="#Intefaces" class="headerlink" title="Intefaces"></a>Intefaces</h2><h3 id="Low-Level-Interfaces"><a href="#Low-Level-Interfaces" class="headerlink" title="Low-Level Interfaces"></a>Low-Level Interfaces</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-low-level">Low-Level Model</a></li>
-</ul>
-<blockquote>
-<p>The low-level programming model wraps direct calls to the DynamoDB service. You access this model through the Amazon.DynamoDBv2 namespace.</p>
-</blockquote>
-<h3 id="Document-Interfaces"><a href="#Document-Interfaces" class="headerlink" title="Document Interfaces"></a>Document Interfaces</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-document">Document Model</a></li>
-</ul>
-<blockquote>
-<p>The document programming model provides an easier way to work with data in DynamoDB. This model is specifically intended for accessing tables and items in tables. You access this model through the Amazon.DynamoDBv2.DocumentModel namespace.</p>
-</blockquote>
-<h3 id="Object-Persistence-Interface"><a href="#Object-Persistence-Interface" class="headerlink" title="Object Persistence Interface"></a>Object Persistence Interface</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-object-persistence">Object Persistence Model</a></li>
-</ul>
-<blockquote>
-<p>The object persistence programming model is specifically designed for storing, loading, and querying .NET objects in DynamoDB. You access this model through the Amazon.DynamoDBv2.DataModel namespace.</p>
-</blockquote>
-<h2 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h2><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _client = AmazonDynamoDBClient(awsOptions.SecretAccessKey, awsOptions.AccessKeyId)</span><br></pre></td></tr></table></figure>
-
-<h3 id="GetItemAsync"><a href="#GetItemAsync" class="headerlink" title="GetItemAsync"></a>GetItemAsync</h3><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> key = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>,AttributeValue&gt;() &#123; &#123; <span class="string">&quot;Id&quot;</span>, <span class="keyword">new</span> AttributeValue &#123; N = <span class="string">&quot;42&quot;</span> &#125; &#125; &#125;;</span><br><span class="line"><span class="keyword">var</span> request = <span class="keyword">new</span> GetItemRequest</span><br><span class="line">&#123;</span><br><span class="line">    TableName = _dynamoDbOptions.TableName,</span><br><span class="line">    Key = key</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">_client.GetItemAsync(request);</span><br></pre></td></tr></table></figure>
-
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LowLevelDotNetItemCRUD.html">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LowLevelDotNetItemCRUD.html</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html</a></li>
