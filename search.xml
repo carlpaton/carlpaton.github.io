@@ -4745,11 +4745,11 @@
     
     
     <entry>
-      <title>Gitflow Workflow</title>
+      <title>Git Workflows</title>
       <link href="2018/08/gitflow-workflow/"/>
       <url>2018/08/gitflow-workflow/</url>
       
-        <content type="html"><![CDATA[<p>This is a development model by <a href="https://nvie.com/about/">Vincent Driessen</a></p><ul><li><a href="https://nvie.com/posts/a-successful-git-branching-model/">https://nvie.com/posts/a-successful-git-branching-model/</a><ul><li><a href="https://nvie.com/files/Git-branching-model.pdf">https://nvie.com/files/Git-branching-model.pdf</a></li></ul></li></ul><p><img src="/d/gitflow-workflow/git-1.jpg" alt="Giflow"></p><p><a href="https://pdf2jpg.net/"><em>Converted with https://pdf2jpg.net</em></a></p><p>Other implementations:</p><ul><li><a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow">https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h2 id="Trunk-Based"><a href="#Trunk-Based" class="headerlink" title="Trunk Based"></a>Trunk Based</h2><p>Developers collaborate on code in a single branch called ‘trunk’ this is <code>main/master/default</code> what ever its called now.</p><ul><li><a href="https://trunkbaseddevelopment.com/">https://trunkbaseddevelopment.com/</a></li><li><a href="https://www.atlassian.com/continuous-delivery/continuous-integration/trunk-based-development">https://www.atlassian.com/continuous-delivery/continuous-integration/trunk-based-development</a></li></ul><h2 id="Gitflow"><a href="#Gitflow" class="headerlink" title="Gitflow"></a>Gitflow</h2><p>This is a development model by <a href="https://nvie.com/about/">Vincent Driessen</a></p><ul><li><a href="https://nvie.com/posts/a-successful-git-branching-model/">https://nvie.com/posts/a-successful-git-branching-model/</a><ul><li><a href="https://nvie.com/files/Git-branching-model.pdf">https://nvie.com/files/Git-branching-model.pdf</a></li></ul></li></ul><p><img src="/d/gitflow-workflow/git-1.jpg" alt="Giflow"></p><p><a href="https://pdf2jpg.net/"><em>Converted with https://pdf2jpg.net</em></a></p><p>Other implementations:</p><ul><li><a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow">https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow</a></li></ul>]]></content>
       
       
       
