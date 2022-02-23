@@ -4,6 +4,50 @@
   
     
     <entry>
+      <title>Swagger Annotations</title>
+      <link href="2022/02/swagger-annotations/"/>
+      <url>2022/02/swagger-annotations/</url>
+      
+        <content type="html"><![CDATA[<p>Namespace <code>Swashbuckle.Swagger.Annotations</code></p><p>All swagger configuration can be done in the <a href="/2018/07/swagger-swashbuckle-aspnetcore/">applications start up config</a> however there are times when either the API is old or for some reason you only need to document a single end point, perhaps the project is massive and core configuration changes are not possible but swagger was configured in a basic form at some point.</p><p>Annotations allow us to decorate certain methods which supports the above premise.</p><h2 id="SwaggerOperation"><a href="#SwaggerOperation" class="headerlink" title="SwaggerOperation"></a>SwaggerOperation</h2><p>This sets the operation id to what ever value you specify, this is helpful if the default is duplicated elsewhere in the API.</p><p>The operation id in OpenAPI is the field <code>operationId: Controller_MethodName_VERB</code> this needs to always be unique and will be used in the Swagger UI to navigate between methods.</p><p>To set this, decorate your method with:</p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">SwaggerOperation(OperationId = <span class="meta-string">&quot;Controller_MethodName_VERB&quot;</span>)</span>]</span><br></pre></td></tr></table></figure><h2 id="SwaggerResponseRemoveDefaults"><a href="#SwaggerResponseRemoveDefaults" class="headerlink" title="SwaggerResponseRemoveDefaults"></a>SwaggerResponseRemoveDefaults</h2><p>This is an interesting annotation as it removes the default <code>OK 200</code> response that all endpoints automagically get from swagger. This is useful when your endpoint is creating a new resource and you want to follow best practice by returning a <code>Created 201</code> instead.</p><p>To set this, decorate your method with:</p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">SwaggerResponseRemoveDefaults</span>]</span><br><span class="line">[<span class="meta">SwaggerResponse(HttpStatusCode.Created, <span class="meta-string">&quot;The cool thing was created.&quot;</span>)</span>]</span><br></pre></td></tr></table></figure><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul><li><a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle">Get started with Swashbuckle and ASP.NET Core</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> web api </tag>
+            
+            <tag> swagger </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Libman</title>
+      <link href="2022/02/libman/"/>
+      <url>2022/02/libman/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>Library Manager (LibMan) is a lightweight, client-side library acquisition tool. LibMan downloads popular libraries and frameworks from the file system or from a content delivery network (CDN)</p></blockquote><p>For the life of me I cannot figure out why a <code>libman.json</code> file is not included by default when I scaffold an ASP.NET MVC project - this file is used by Library Manager (LibMan) to download the libraries that the scaffold brought down for me in <code>wwwroot\lib</code>. These are things like bootstrap and jquery. </p><p>As soon as I add this folder to my <code>.gitignore</code> (example below) they wont be commited which means when another developer pulls down the repository or I delete the folder and clone again the client side files are not there and the UI looks like trash :(</p><p>So what I now do is create the <code>libman.json</code> file as soon as possible.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lib</span><br><span class="line">packages</span><br><span class="line">*.suo</span><br><span class="line">*.vs</span><br><span class="line">.vs</span><br><span class="line">&#x2F;.vs&#x2F;config&#x2F;applicationhost.config</span><br><span class="line">bin</span><br><span class="line">obj</span><br></pre></td></tr></table></figure><p>Thankfully Visual Studio has this <code>Manage Client-Side Libraries...</code> option which lets me search for these files and add them. </p><p><img src="/d/libman/manage-client-side-libraries.png" alt="Manage client side libraries"></p><p>Selecting this option will open the json file which can be manually edited.</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;1.0&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;defaultProvider&quot;</span>: <span class="string">&quot;unpkg&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;libraries&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;library&quot;</span>: <span class="string">&quot;bootstrap@5.1.0&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;destination&quot;</span>: <span class="string">&quot;wwwroot/lib/bootstrap/&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;library&quot;</span>: <span class="string">&quot;jquery@3.5.1&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;destination&quot;</span>: <span class="string">&quot;wwwroot/lib/jquery/&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;library&quot;</span>: <span class="string">&quot;jquery-validation@1.19.3&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;destination&quot;</span>: <span class="string">&quot;wwwroot/lib/jquery-validation/&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;library&quot;</span>: <span class="string">&quot;jquery-validation-unobtrusive@3.2.11&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;destination&quot;</span>: <span class="string">&quot;wwwroot/lib/jquery-validation-unobtrusive/&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Alternatively in solution explorer, right-click the folder <code>wwwroot</code> and choose <code>Add</code> &gt; <code>Client-Side Library</code></p><p><img src="/d/libman/add-client-side-library.png" alt="Add client side library"></p><p>I’ve had luck with providers <code>cdnjs</code> and <code>unpkg</code>.</p><p>If you then delete <code>wwwroot/lib</code> or clone a project that had this excluded you can restore the libraries by right clicking <code>libman.json</code> and selecting <code>Restore Client-Side Libraries</code></p><p><img src="/d/libman/restore-client-side-libraries.png" alt="Restore Client-Side Libraries"></p><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul><li><a href="https://docs.microsoft.com/en-us/aspnet/core/client-side/libman/">Client-side library acquisition in ASP.NET Core with LibMan</a></li><li><a href="https://docs.microsoft.com/en-us/aspnet/core/client-side/libman/libman-vs">Use LibMan with ASP.NET Core in Visual Studio</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> jquery </tag>
+            
+            <tag> mvc </tag>
+            
+            <tag> client side </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Redis Types</title>
       <link href="2022/02/redis-types/"/>
       <url>2022/02/redis-types/</url>
@@ -4270,7 +4314,7 @@
             
             <tag> angular </tag>
             
-            <tag> client side scripting </tag>
+            <tag> client side </tag>
             
         </tags>
       
@@ -5111,6 +5155,8 @@
             
             <tag> web api </tag>
             
+            <tag> swagger </tag>
+            
         </tags>
       
     </entry>
@@ -5250,7 +5296,7 @@
       
         <tags>
             
-            <tag> client side scripting </tag>
+            <tag> client side </tag>
             
         </tags>
       
@@ -7037,9 +7083,9 @@
       
         <tags>
             
-            <tag> client side scripting </tag>
-            
             <tag> jquery </tag>
+            
+            <tag> client side </tag>
             
         </tags>
       
