@@ -20,16 +20,17 @@ ga('send', 'pageview');
   
   <title>AWS Lightsail | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Having a hoon with AWS Lightsail! References https:&#x2F;&#x2F;aws.amazon.com&#x2F;getting-started&#x2F;hands-on&#x2F;host-net-web-app&#x2F;">
+  <meta name="description" content="WIP   Amazon Lightsail is a virtual private server (VPS) provider and is the easiest way to get started with AWS for developers, small businesses, students, and other users who need a solution to bui">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AWS Lightsail">
 <meta property="og:url" content="https://carlpaton.github.io/2021/08/aws-lightsail/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Having a hoon with AWS Lightsail! References https:&#x2F;&#x2F;aws.amazon.com&#x2F;getting-started&#x2F;hands-on&#x2F;host-net-web-app&#x2F;">
+<meta property="og:description" content="WIP   Amazon Lightsail is a virtual private server (VPS) provider and is the easiest way to get started with AWS for developers, small businesses, students, and other users who need a solution to bui">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-08-19T12:00:00.000Z">
-<meta property="article:modified_time" content="2021-08-20T01:22:20.613Z">
+<meta property="article:modified_time" content="2022-03-03T17:53:03.744Z">
 <meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="wip">
 <meta property="article:tag" content="aws">
 <meta name="twitter:card" content="summary">
   
@@ -135,9 +136,58 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Having a hoon with AWS Lightsail!</p>
-<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/getting-started/hands-on/host-net-web-app/">https://aws.amazon.com/getting-started/hands-on/host-net-web-app/</a></li>
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
+<blockquote>
+<p>Amazon Lightsail is a virtual private server (VPS) provider and is the easiest way to get started with AWS for developers, small businesses, students, and other users who need a solution to build and host their applications on cloud. - <a target="_blank" rel="noopener" href="https://aws.amazon.com/lightsail/faq/">https://aws.amazon.com/lightsail/faq/</a></p>
+</blockquote>
+<h2 id="Access-command-line-interface"><a href="#Access-command-line-interface" class="headerlink" title="Access command-line interface"></a>Access command-line interface</h2><p>The user needs to have full access or specific access to Lightsail actions.</p>
+<ol>
+<li>Create a policy, search for service <code>lightsail</code></li>
+<li>Allowed actions</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GetContainerServices (no resources need to be set)</span><br><span class="line">CreateContainerService (Resources -&gt; Specific [Any in this account])</span><br><span class="line"></span><br><span class="line">* I eventually gave up and selected &#96;All Lightsail actions (lightsail:*)&#96;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Tag if you want (it is best practice)</li>
+<li>Create policy as <code>CarlLightsailFullAccess</code></li>
+<li>Attach the new policy to your <code>User Group</code> under permissions</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonlightsail.html">Actions, resources, and condition keys for Amazon Lightsail</a></li>
+<li><a target="_blank" rel="noopener" href="https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-how-to-set-up-access-keys-to-use-sdk-api-cli">Create an access key to use the Amazon Lightsail API or the AWS Command Line Interface</a></li>
+</ul>
+<h2 id="Containers-command-line-interface"><a href="#Containers-command-line-interface" class="headerlink" title="Containers command-line interface"></a>Containers command-line interface</h2><p>The code used below is at <a target="_blank" rel="noopener" href="https://github.com/carlpaton/LightsailDemo">https://github.com/carlpaton/LightsailDemo</a></p>
+<ol>
+<li>Create the container service </li>
+</ol>
+<p>The name will used in the public domain, example <code>https://container-service-42.xxx.ap-southeast-2.cs.amazonlightsail.com/</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">aws lightsail create-container-service --service-name container-service-42 --power micro --scale 1</span><br><span class="line"></span><br><span class="line">aws lightsail get-container-services</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Build you application container</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t flask-container .</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Push the container to lightsail</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aws lightsail push-container-image --service-name webinar --label flask-container --image flask-container</span><br><span class="line">note the label example &#96;:webinar.flask-container.25&#96;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Deploy the container</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws lightsail create-container-services-deployment --service-name webinar --containers file:&#x2F;&#x2F;containers.json --public-endpoint file:&#x2F;&#x2F;public-endpoint.json</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=6S2brobgmBA">Getting Started with Amazon Lightsail Containers: An Easy-to-Use Containers Service - AWS Online Tech Talks</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Operations.html">lightsail API Operations (Actions)</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/lightsail/index.html#cli-aws-lightsail">lightsail CLI Reference</a></li>
+</ul>
+<h3 id="Other-References"><a href="#Other-References" class="headerlink" title="Other References"></a>Other References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/getting-started/hands-on/host-net-web-app/">Publish a .NET application to a Windows Server instance in Amazon Lightsail</a></li>
+<li><a target="_blank" rel="noopener" href="https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-services">Container services in Amazon Lightsail</a></li>
 </ul>
 
       
@@ -146,7 +196,7 @@ ga('send', 'pageview');
       <a data-url="https://carlpaton.github.io/2021/08/aws-lightsail/" data-id="cksswbm8b00004kon8y3rhwvq" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/" rel="tag">aws</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/" rel="tag">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
 
     </footer>
   </div>
@@ -229,7 +279,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/net-library/" style="font-size: 11.67px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.56px;">agile</a> <a href="/tags/angular/" style="font-size: 15.56px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 14.44px;">architecture</a> <a href="/tags/arduino/" style="font-size: 11.11px;">arduino</a> <a href="/tags/authentication/" style="font-size: 12.78px;">authentication</a> <a href="/tags/aws/" style="font-size: 15.56px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 15px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.56px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.56px;">cad</a> <a href="/tags/cam/" style="font-size: 10.56px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.67px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.56px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 11.67px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.56px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.67px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.22px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.78px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 17.22px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 11.11px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.56px;">feature management</a> <a href="/tags/food/" style="font-size: 11.11px;">food</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/hexo/" style="font-size: 10.56px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.22px;">ide</a> <a href="/tags/iot/" style="font-size: 12.22px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.22px;">javascript</a> <a href="/tags/jquery/" style="font-size: 11.11px;">jquery</a> <a href="/tags/json/" style="font-size: 12.22px;">json</a> <a href="/tags/kibana/" style="font-size: 10.56px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.56px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.89px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.22px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.22px;">linux</a> <a href="/tags/logging/" style="font-size: 11.67px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.67px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.78px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.22px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.56px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.67px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.67px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.44px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/random/" style="font-size: 11.67px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.67px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 14.44px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10.56px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.56px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 12.78px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.78px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.33px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.11px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.56px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.56px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.89px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.56px;">swagger</a> <a href="/tags/threading/" style="font-size: 10.56px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.56px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.89px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.56px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.56px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.11px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 18.89px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.11px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+      <a href="/tags/net-library/" style="font-size: 11.58px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.53px;">agile</a> <a href="/tags/angular/" style="font-size: 15.26px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 14.21px;">architecture</a> <a href="/tags/arduino/" style="font-size: 11.05px;">arduino</a> <a href="/tags/authentication/" style="font-size: 12.63px;">authentication</a> <a href="/tags/aws/" style="font-size: 15.26px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.74px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.53px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.53px;">cad</a> <a href="/tags/cam/" style="font-size: 10.53px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.58px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.53px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 11.58px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.53px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.58px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12.11px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11.05px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.63px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 16.84px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11.05px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 11.05px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.53px;">feature management</a> <a href="/tags/food/" style="font-size: 11.05px;">food</a> <a href="/tags/git/" style="font-size: 11.58px;">git</a> <a href="/tags/hexo/" style="font-size: 10.53px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.11px;">ide</a> <a href="/tags/iot/" style="font-size: 12.11px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.11px;">javascript</a> <a href="/tags/jquery/" style="font-size: 11.05px;">jquery</a> <a href="/tags/json/" style="font-size: 12.11px;">json</a> <a href="/tags/kibana/" style="font-size: 10.53px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.53px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.68px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12.11px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12.11px;">linux</a> <a href="/tags/logging/" style="font-size: 11.58px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.58px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.37px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.16px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.05px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12.11px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.53px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.58px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.58px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.47px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.05px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.11px;">python</a> <a href="/tags/random/" style="font-size: 11.58px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.32px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 14.21px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10.53px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.53px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 12.63px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.63px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 17.89px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.79px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.53px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11.05px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.53px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.68px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.53px;">swagger</a> <a href="/tags/threading/" style="font-size: 10.53px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.53px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.42px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.53px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.53px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.79px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 18.95px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.05px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
     </div>
   </div>
 
