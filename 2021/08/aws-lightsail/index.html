@@ -30,7 +30,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/aws-lightsail/aws-lightsail.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/aws-lightsail/deployment.png">
 <meta property="article:published_time" content="2021-08-19T12:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-05T05:01:04.956Z">
+<meta property="article:modified_time" content="2022-03-05T06:11:06.241Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="aws">
 <meta name="twitter:card" content="summary">
@@ -142,18 +142,19 @@ ga('send', 'pageview');
 <blockquote>
 <p>Amazon Lightsail is a virtual private server (VPS) provider and is the easiest way to get started with AWS for developers, small businesses, students, and other users who need a solution to build and host their applications on cloud. - <a target="_blank" rel="noopener" href="https://aws.amazon.com/lightsail/faq/">https://aws.amazon.com/lightsail/faq/</a></p>
 </blockquote>
-<p>Its supports <code>instances</code>, <code>containers</code>, <code>databases</code> and many other simple AWS features. For this post I will focus on <code>containers</code>. </p>
+<p>Its supports <code>instances</code>, <code>containers</code>, <code>databases</code> and many other simple AWS features. For this post I will focus on <code>containers</code>. I initially made this post following <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=6S2brobgmBA">Getting Started with Amazon Lightsail Containers: An Easy-to-Use Containers Service - AWS Online Tech Talks</a> and then later fixed my mistakes following <a target="_blank" rel="noopener" href="https://aws.amazon.com/getting-started/hands-on/setup-an-nginx-reverse-proxy/">How to Setup an Nginx Reverse Proxy</a></p>
 <h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><h3 id="Access-command-line-interface"><a href="#Access-command-line-interface" class="headerlink" title="Access command-line interface"></a>Access command-line interface</h3><p>The user needs to have full access or specific access to Lightsail actions.</p>
 <ol>
 <li>Create a policy, search for service <code>lightsail</code></li>
 <li>Allowed actions</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GetContainerServices (no resources need to be set)</span><br><span class="line">CreateContainerService (Resources -&gt; Specific [Any in this account])</span><br><span class="line"></span><br><span class="line">* I eventually gave up and selected &#96;All Lightsail actions (lightsail:*)&#96;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GetContainerServices (no resources need to be set)</span><br><span class="line">CreateContainerService (Resources -&gt; Specific [Any in this account])</span><br></pre></td></tr></table></figure>
 
+<p>I eventually gave up and selected <code>All Lightsail actions (lightsail:*)</code> hence using the <code>FullAccess</code> suffix below.</p>
 <ol start="3">
-<li>Tag if you want (it is best practice)</li>
+<li>Tag the infastructure, it is best practice and can be used for audits and other automation</li>
 <li>Create policy as <code>CarlLightsailFullAccess</code></li>
-<li>Attach the new policy to your <code>User Group</code> under permissions</li>
+<li>Attach the new policy to your <code>User Group</code> under permissions, its best practice to add users to groups so they inherit policys</li>
 </ol>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/index.html">Lightsail CLI v2</a></li>
@@ -169,24 +170,22 @@ ga('send', 'pageview');
 <li>The Lightsail Control (lightsailctl) plugin was not found</li>
 </ul>
 <p>I also got the error <code>The Lightsail Control (lightsailctl) plugin was not found</code>, I fixed this following the post <a target="_blank" rel="noopener" href="https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-install-software#install-lightsailctl-on-windows">Install the lightsailctl plugin on Windows</a></p>
-<h2 id="Containers-command-line-interface"><a href="#Containers-command-line-interface" class="headerlink" title="Containers: command-line interface"></a>Containers: command-line interface</h2><p>As I have more than one local profile I add <code>--profile carlos</code> to these commands.</p>
-<p>The code used below is at <a target="_blank" rel="noopener" href="https://github.com/carlpaton/LightsailDemo">https://github.com/carlpaton/LightsailDemo</a></p>
+<h2 id="Containers-command-line-interface"><a href="#Containers-command-line-interface" class="headerlink" title="Containers: command-line interface"></a>Containers: command-line interface</h2><p>As I have more than one local profile I add <code>--profile carlos</code> to these commands. All the code used below is at <a target="_blank" rel="noopener" href="https://github.com/carlpaton/LightsailDemo">https://github.com/carlpaton/LightsailDemo</a> and the AWS example is at <a target="_blank" rel="noopener" href="https://github.com/awsgeek/lightsail-containers-nginx">https://github.com/awsgeek/lightsail-containers-nginx</a></p>
 <ol>
-<li>Create the container service </li>
+<li>Create the container service and query the service. The name will used in the public domain, example <code>container-service-42</code> so the complete URL could be <code>https://container-service-42.xxx.ap-southeast-2.cs.amazonlightsail.com/</code></li>
 </ol>
-<p>The name will used in the public domain, example <code>https://container-service-42.xxx.ap-southeast-2.cs.amazonlightsail.com/</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aws --profile carlos lightsail create-container-service --service-name container-service-42 --power micro --scale 1</span><br><span class="line">aws --profile carlos lightsail get-container-services</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
 <li>Build you application container and test it locally</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -t app-image .&#x2F;app&#x2F;                           &#x2F;&#x2F; build locally</span><br><span class="line">docker rm -f app-image                                     &#x2F;&#x2F; trash existing from past tests</span><br><span class="line">docker run --name app-container -p 5000:5000 -d app-image  &#x2F;&#x2F; run to test</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f app-container                                 &#x2F;&#x2F; trash existing from past tests</span><br><span class="line">docker build -t app-image .&#x2F;app&#x2F;                           &#x2F;&#x2F; build locally</span><br><span class="line">docker run --name app-container -p 5000:5000 -d app-image  &#x2F;&#x2F; run to test</span><br></pre></td></tr></table></figure>
 
 <p>We also need to build the proxy image if its going to be used.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t proxy-image .&#x2F;proxy&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f proxy-container</span><br><span class="line">docker build -t proxy-image .&#x2F;proxy&#x2F;</span><br></pre></td></tr></table></figure>
 
 <p>Testing the proxy image is not 100% possible as it will probably need <code>host.docker.internal:5000</code> in the place of <code>server $&#123;APP_HOST&#125;:$&#123;APP_PORT&#125;;</code> but you can atleast test the config for syntax errors.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f proxy-container</span><br><span class="line">docker run --env APP_HOST&#x3D;localhost --env APP_PORT&#x3D;5000 --env NGINX_ENVSUBST_OUTPUT_DIR&#x3D;&#x2F;ect&#x2F;nginx --name proxy-container -p 82:80 -d proxy-image</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --env APP_HOST&#x3D;localhost --env APP_PORT&#x3D;5000 --env NGINX_ENVSUBST_OUTPUT_DIR&#x3D;&#x2F;ect&#x2F;nginx --name proxy-container -p 82:80 -d proxy-image</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
 <li>Push the container to lightsail, you can do this many times and the docker tag (the number right at the end) will increment for you. The local image name is not used in Lightsail - they will refere to it as <code>SERVICE-NAME.LABLE-NAME.1</code> where 1 is the version which increments.</li>
