@@ -28,9 +28,9 @@ ga('send', 'pageview');
 <meta property="og:description" content="Amazon Lightsail is a virtual private server (VPS) provider and is the easiest way to get started with AWS for developers, small businesses, students, and other users who need a solution to build an">
 <meta property="og:locale">
 <meta property="og:image" content="https://carlpaton.github.io/d/aws-lightsail/aws-lightsail.png">
-<meta property="og:image" content="https://carlpaton.github.io/d/aws-lightsail/deployment.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/aws-lightsail/deploy.png">
 <meta property="article:published_time" content="2021-08-19T12:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-05T06:11:06.241Z">
+<meta property="article:modified_time" content="2022-03-08T04:13:17.986Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="aws">
 <meta name="twitter:card" content="summary">
@@ -202,7 +202,7 @@ ga('send', 'pageview');
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws --profile carlos lightsail create-container-service-deployment --service-name container-service-42 --containers file:&#x2F;&#x2F;containers.json --public-endpoint file:&#x2F;&#x2F;public-endpoint.json</span><br></pre></td></tr></table></figure>
 
-<p><img src="/d/aws-lightsail/deployment.png" alt="After deployment "></p>
+<p><img src="/d/aws-lightsail/deploy.png" alt="After deployment "></p>
 <p>If you dont want to use the proxy then just set the public endpoint in <code>public-endpoint.json</code> to be as the below and remove the <code>proxy</code> attribute and its children from <code>containers.json</code></p>
 <ul>
 <li>public-endpoint.json</li>
