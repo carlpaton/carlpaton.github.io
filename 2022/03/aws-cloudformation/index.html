@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>AWS CloudFormation | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="WIP  Terraform !&#x3D; CloudFormation Terraform and CloudFormation are both infrastructure-as-code (IaC) tools. CloudFormation is developed by AWS and only manages AWS resources. Terraform is developed by">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS CloudFormation">
+<meta property="og:url" content="https://carlpaton.github.io/2022/03/aws-cloudformation/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="WIP  Terraform !&#x3D; CloudFormation Terraform and CloudFormation are both infrastructure-as-code (IaC) tools. CloudFormation is developed by AWS and only manages AWS resources. Terraform is developed by">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-03-08T11:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-08T23:30:49.047Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="wip">
+<meta property="article:tag" content="aws">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-aws-cloudformation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/03/aws-cloudformation/" class="article-date">
+  <time datetime="2022-03-08T11:00:00.000Z" itemprop="datePublished">2022-Mar</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AWS CloudFormation
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
+<h2 id="Terraform-CloudFormation"><a href="#Terraform-CloudFormation" class="headerlink" title="Terraform != CloudFormation"></a>Terraform != CloudFormation</h2><blockquote>
+<p>Terraform and CloudFormation are both infrastructure-as-code (IaC) tools. CloudFormation is developed by AWS and only manages AWS resources. Terraform is developed by HashiCorp and can manage resources across a wide range of cloud vendors. - <a target="_blank" rel="noopener" href="https://www.toptal.com/terraform/terraform-vs-cloudformation">https://www.toptal.com/terraform/terraform-vs-cloudformation</a></p>
+</blockquote>
+<h2 id="Importing-existing-resources-into-a-stack"><a href="#Importing-existing-resources-into-a-stack" class="headerlink" title="Importing existing resources into a stack"></a>Importing existing resources into a stack</h2><p>If you are like me, the <a href="/2019/09/aws-install-and-configure-cli/">AWS CLI</a> is a confusing place and you like using the <a target="_blank" rel="noopener" href="https://aws.amazon.com/console/">AWS Console</a> to create resources. I do however want the process to be repeatable and strongly support infrastructure-as-code (IaC). Luckly for noobs like me, CloudFormation supports creating stacks from existing resources! Beauti!</p>
+<p>This means I can use the pretty GUI to create a resource (and figure out its nuances) and once It works the way I want it to I can then import it as a <code>template</code>. Note that <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-supported-resources.html">not all resources can do this</a> but AWS will probably be adding them all in the future.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-existing-stack.html">https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-existing-stack.html</a></li>
+</ul>
+<h3 id="Example-AWS-Lightsail"><a href="#Example-AWS-Lightsail" class="headerlink" title="Example - AWS Lightsail"></a>Example - AWS Lightsail</h3><p>Using <a href="/2021/08/aws-lightsail/">AWS Lightsail</a> as an example I created a container service with a deployment. This was done from the CLI but once it was running I wanted to be able to re-deploy in the future with CloudFormation.</p>
+<h4 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h4><p>Gotchas</p>
+<p>a. The <code>DeletionPolicy</code> has to be set else it will shout at you.<br>b. The Resource name has to be alphanumeric, ie <code>container-service-42</code> wont work but <code>containerservice42</code> will -_-</p>
+<p>The actual setup:</p>
+<ol>
+<li><p>From the AWS console select <code>Stacks</code> -&gt; <code>Create stack</code> -&gt; <code>With existing reources (import resources)</code></p>
+</li>
+<li><p>Specify a template. I used their <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-new-stack.html">example</a> this to create a template suitable for my Lightsail purpose and called it <code>container-service-42.json</code></p>
+</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lightsail-container.html">https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lightsail-container.html</a></li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;AWSTemplateFormatVersion&quot;</span>: <span class="string">&quot;2010-09-09&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;Description&quot;</span>: <span class="string">&quot;Service 42&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;Resources&quot;</span>: &#123;</span><br><span class="line">		<span class="attr">&quot;containerservice42&quot;</span>: &#123;</span><br><span class="line">			<span class="attr">&quot;Type&quot;</span>: <span class="string">&quot;AWS::Lightsail::Container&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;DeletionPolicy&quot;</span>: <span class="string">&quot;Retain&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;Properties&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;ContainerServiceDeployment&quot;</span>:&#123;</span><br><span class="line">                    <span class="attr">&quot;Containers&quot;</span> : [ &#123;</span><br><span class="line">                        <span class="attr">&quot;Command&quot;</span> : [<span class="string">&quot;python&quot;</span>, <span class="string">&quot;./app.py&quot;</span>],</span><br><span class="line">                        <span class="attr">&quot;ContainerName&quot;</span> : <span class="string">&quot;app&quot;</span>,</span><br><span class="line">                        <span class="attr">&quot;Image&quot;</span> : <span class="string">&quot;:containerservice42.app-image.18&quot;</span>,</span><br><span class="line">                        <span class="attr">&quot;Ports&quot;</span> : [ &#123;</span><br><span class="line">                            <span class="attr">&quot;Port&quot;</span> : <span class="string">&quot;5000&quot;</span>,</span><br><span class="line">                            <span class="attr">&quot;Protocol&quot;</span> : <span class="string">&quot;HTTP&quot;</span></span><br><span class="line">                        &#125; ]</span><br><span class="line">                    &#125; ]</span><br><span class="line">                &#125;,</span><br><span class="line">				<span class="attr">&quot;IsDisabled&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">				<span class="attr">&quot;Power&quot;</span>: <span class="string">&quot;micro&quot;</span>,</span><br><span class="line">				<span class="attr">&quot;Scale&quot;</span>: <span class="number">1</span>,</span><br><span class="line">				<span class="attr">&quot;ServiceName&quot;</span>: <span class="string">&quot;container-service-42&quot;</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>Identify resources. I set the value servicename=containerservice42</p>
+</li>
+<li><p>Specify stack details. I used their example <code>ImportTestStack</code></p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2022/03/aws-cloudformation/" data-id="cl0ix8ab500002sondizf09j5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/" rel="tag">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/03/minimal-api-instant-apis/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Minimal API InstantAPIs</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/aws-cloudformation/">AWS CloudFormation</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/minimal-api-instant-apis/">Minimal API InstantAPIs</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/minimal-api/">Minimal API</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/mocking-ihttpcontextaccessor/">Mocking IHttpContextAccessor</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/cloudevents/">Cloud Events</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.5px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.5px;">agile</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 14px;">architecture</a> <a href="/tags/arduino/" style="font-size: 11px;">arduino</a> <a href="/tags/authentication/" style="font-size: 12.5px;">authentication</a> <a href="/tags/aws/" style="font-size: 15.5px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.5px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.5px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.5px;">cad</a> <a href="/tags/cam/" style="font-size: 10.5px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.5px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.5px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 11.5px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.5px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.5px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.5px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 17px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 11px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.5px;">feature management</a> <a href="/tags/food/" style="font-size: 11px;">food</a> <a href="/tags/git/" style="font-size: 11.5px;">git</a> <a href="/tags/hexo/" style="font-size: 10.5px;">hexo</a> <a href="/tags/ide/" style="font-size: 12px;">ide</a> <a href="/tags/iot/" style="font-size: 12px;">iot</a> <a href="/tags/javascript/" style="font-size: 12px;">javascript</a> <a href="/tags/jquery/" style="font-size: 11px;">jquery</a> <a href="/tags/json/" style="font-size: 12px;">json</a> <a href="/tags/kibana/" style="font-size: 10.5px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.5px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.5px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12px;">linux</a> <a href="/tags/logging/" style="font-size: 11.5px;">logging</a> <a href="/tags/mocking/" style="font-size: 12px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.5px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.5px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.5px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.5px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.5px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/random/" style="font-size: 11.5px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.5px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 14px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10.5px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.5px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 12.5px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.5px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.5px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.5px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.5px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.5px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.5px;">swagger</a> <a href="/tags/threading/" style="font-size: 10.5px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.5px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.5px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.5px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.5px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Minimal API InstantAPIs | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Simple CRUD API from Jeffrey Fritz. It supports DbContext and an API based on JSON file. The JSON file is a good alternative to JSON Server as it will not pull down 100s of node modules that I actuall">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Minimal API InstantAPIs">
+<meta property="og:url" content="https://carlpaton.github.io/2022/03/minimal-api-instant-apis/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Simple CRUD API from Jeffrey Fritz. It supports DbContext and an API based on JSON file. The JSON file is a good alternative to JSON Server as it will not pull down 100s of node modules that I actuall">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-03-08T11:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-08T21:27:53.779Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="c#">
+<meta property="article:tag" content="web api">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-minimal-api-instant-apis" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/03/minimal-api-instant-apis/" class="article-date">
+  <time datetime="2022-03-08T11:00:00.000Z" itemprop="datePublished">2022-Mar</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Minimal API InstantAPIs
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Simple CRUD API from <a target="_blank" rel="noopener" href="https://github.com/csharpfritz/InstantAPIs">Jeffrey Fritz</a>. It supports DbContext and an API based on JSON file. The JSON file is a good alternative to <a href="/2022/02/json-server/">JSON Server</a> as it will not pull down 100s of node modules that I actually dont understand.</p>
+<p>The value of this Instant APIs is I can bring up my BFF in minutes and focus my time on building my front end application. The contract often changes as we build out the front end so if the BFF is flexible its a huge win.</p>
+<p>See <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vCSWXAOEpBo">Jeffrey Fritz - Build Web APIs Instantly for your Web Application with ASP.NET Core 6</a></p>
+<p>Another alternative package is <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=z32_7KgCr6c">Fast Endpoints (package)</a> which would be well worth checking out.</p>
+<h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><ol>
+<li>Create the project and install <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Fritz.InstantAPIs/">Fritz.InstantAPIs</a></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dotnet new web -o DemoApi -f net6.0</span><br><span class="line">cd DemoApi </span><br><span class="line"></span><br><span class="line">dotnet add package Fritz.InstantAPIs --prerelease</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Create the json file, example <code>db.json</code>. At the time of writing this guids are not supported as the primary key #sad</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;products&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;pizza&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="number">2</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;pineapple pizza&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;customers&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;pizza&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Update <code>Program.cs</code> as follows</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Mock;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);</span><br><span class="line"><span class="keyword">var</span> app = builder.Build();</span><br><span class="line"></span><br><span class="line">app.UseJsonRoutes(o =&gt; o.SetFilename(<span class="string">&quot;db.json&quot;</span>));</span><br><span class="line"></span><br><span class="line">app.Run();</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Run the app</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet run</span><br></pre></td></tr></table></figure>
+
+<h3 id="Postman-requests"><a href="#Postman-requests" class="headerlink" title="Postman requests"></a>Postman requests</h3><p><a target="_blank" rel="noopener" href="https://www.postman.com/">Postman</a> is the most popular API platform tool but you can use anything you like such as <a href="/2018/02/soapui-aspnet-web-api/">SoapUI</a>.</p>
+<p>You can then run postman requests </p>
+<h4 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET https:&#x2F;&#x2F;localhost:7203&#x2F;products</span><br></pre></td></tr></table></figure>
+
+<p>response 200</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;pizza&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;id&quot;</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;pineapple pizza&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h4 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST https:&#x2F;&#x2F;localhost:7203&#x2F;products</span><br><span class="line"></span><br><span class="line">BODY</span><br><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;foo&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>response 200</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;foo&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="GET-id"><a href="#GET-id" class="headerlink" title="GET {id}"></a>GET {id}</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET https:&#x2F;&#x2F;localhost:7203&#x2F;products&#x2F;5</span><br></pre></td></tr></table></figure>
+
+<p>response 200</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;foo&quot;,</span><br><span class="line">    &quot;Id&quot;: 5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="DELETE-id"><a href="#DELETE-id" class="headerlink" title="DELETE {id}"></a>DELETE {id}</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE https:&#x2F;&#x2F;localhost:7239&#x2F;customers&#x2F;1</span><br></pre></td></tr></table></figure>
+
+<p>response 200</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<h3 id="Swagger"><a href="#Swagger" class="headerlink" title="Swagger"></a>Swagger</h3><p>You can then also add swagger support, this would probably be more useful if you are using the <code>Dbcontext</code> and plan to use the API for more than just local development of your front end application.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Mock;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);</span><br><span class="line"></span><br><span class="line"><span class="comment">//swag!</span></span><br><span class="line">builder.Services.AddEndpointsApiExplorer();</span><br><span class="line">builder.Services.AddSwaggerGen();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = builder.Build();</span><br><span class="line"></span><br><span class="line">app.UseJsonRoutes(o =&gt; o.SetFilename(<span class="string">&quot;db.json&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//sawg!</span></span><br><span class="line">app.UseSwagger();</span><br><span class="line">app.UseSwaggerUI();</span><br><span class="line"></span><br><span class="line">app.Run();</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2022/03/minimal-api-instant-apis/" data-id="cl0ix8abh00032son2mxkf3kl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web-api/" rel="tag">web api</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/03/aws-cloudformation/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          AWS CloudFormation
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/minimal-api/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Minimal API</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/aws-cloudformation/">AWS CloudFormation</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/minimal-api-instant-apis/">Minimal API InstantAPIs</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/minimal-api/">Minimal API</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/mocking-ihttpcontextaccessor/">Mocking IHttpContextAccessor</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/cloudevents/">Cloud Events</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.5px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.5px;">agile</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 14px;">architecture</a> <a href="/tags/arduino/" style="font-size: 11px;">arduino</a> <a href="/tags/authentication/" style="font-size: 12.5px;">authentication</a> <a href="/tags/aws/" style="font-size: 15.5px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.5px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.5px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.5px;">cad</a> <a href="/tags/cam/" style="font-size: 10.5px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.5px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.5px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 11.5px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.5px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.5px;">creational patterns</a> <a href="/tags/css/" style="font-size: 12px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/ddd/" style="font-size: 11px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.5px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 17px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 11px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 11px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.5px;">feature management</a> <a href="/tags/food/" style="font-size: 11px;">food</a> <a href="/tags/git/" style="font-size: 11.5px;">git</a> <a href="/tags/hexo/" style="font-size: 10.5px;">hexo</a> <a href="/tags/ide/" style="font-size: 12px;">ide</a> <a href="/tags/iot/" style="font-size: 12px;">iot</a> <a href="/tags/javascript/" style="font-size: 12px;">javascript</a> <a href="/tags/jquery/" style="font-size: 11px;">jquery</a> <a href="/tags/json/" style="font-size: 12px;">json</a> <a href="/tags/kibana/" style="font-size: 10.5px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.5px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.5px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 12px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 12px;">linux</a> <a href="/tags/logging/" style="font-size: 11.5px;">logging</a> <a href="/tags/mocking/" style="font-size: 12px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.5px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11px;">mysql</a> <a href="/tags/net-core/" style="font-size: 12px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.5px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.5px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.5px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.5px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/random/" style="font-size: 11.5px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.5px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 14px;">reactjs</a> <a href="/tags/redis/" style="font-size: 10.5px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.5px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 12.5px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.5px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.5px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.5px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 11px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.5px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.5px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.5px;">swagger</a> <a href="/tags/threading/" style="font-size: 10.5px;">threading</a> <a href="/tags/typescript/" style="font-size: 10.5px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.5px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.5px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.5px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
