@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>Data Structures and Algorithms in C#</title>
+      <link href="2022/03/data-structures-algorithms-in-c-sharp/"/>
+      <url>2022/03/data-structures-algorithms-in-c-sharp/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p><a href="/2017/06/work-in-progress/">WIP</a></p></blockquote><h2 id="Why-care"><a href="#Why-care" class="headerlink" title="Why care?"></a>Why care?</h2><p>Suitable data structures affect the performance of your application. You can increase quality and performance by choosing the right data structure and accomanying algorithm.</p><h2 id="Data-Structures"><a href="#Data-Structures" class="headerlink" title="Data Structures"></a>Data Structures</h2><ul><li><p>Arrays</p></li><li><p>Lists</p><ul><li>Linked List</li></ul></li><li><p>Stacks</p></li><li><p>Queues</p></li><li><p>Dictionaries</p></li><li><p>Hash sets</p><ul><li>Hashtable</li></ul></li><li><p>Trees</p></li><li><p>Graphs</p></li></ul><h2 id="Algorithms"><a href="#Algorithms" class="headerlink" title="Algorithms"></a>Algorithms</h2><ul><li><p>Binary Search</p></li><li><p>Binary Search Tree | <a href="/2021/06/rosetta-code-invert-a-binary-tree/">Invert A Binary Tree</a></p></li><li><p>Sorting Algorithms</p><ul><li>Quick Sort</li><li>Merge Sort</li><li>Time Sort</li><li>Heap Sort</li><li>Bubble Sort</li><li>Insertion Sort</li><li>Tree Sort</li><li>Shell Sort</li><li>Bucket Sort</li><li>Radix Sort</li><li>Counting Sort</li><li>Cube Sort</li></ul></li></ul><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul><li><a href="https://dev.to/adavidoaiei/fundamental-data-structures-and-algorithms-in-c-4ocf">Fundamental Data Structures and Algorithms in C#</a></li><li><a href="https://www.amazon.com/Data-Structures-Algorithms-possibilities-applications-ebook-dp-B079P4TP2X/dp/B079P4TP2X/">C# Data Structures and Algorithms: Explore the possibilities of C# for developing a variety of efficient applications</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> c# </tag>
+            
+            <tag> wip </tag>
+            
+            <tag> data structures algorithms </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>AWS CloudFormation</title>
       <link href="2022/03/aws-cloudformation/"/>
       <url>2022/03/aws-cloudformation/</url>
@@ -57,8 +80,6 @@
         <tags>
             
             <tag> c# </tag>
-            
-            <tag> wip </tag>
             
             <tag> web api </tag>
             
@@ -426,7 +447,7 @@
       <link href="2021/11/special-case-pattern/"/>
       <url>2021/11/special-case-pattern/</url>
       
-        <content type="html"><![CDATA[<blockquote><p><a href="/2017/06/work-in-progress/">WIP</a></p></blockquote><blockquote><p>“A subclass that provides special behavior for particular cases.” - martinfowler.com</p></blockquote><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://martinfowler.com/eaaCatalog/specialCase.html">https://martinfowler.com/eaaCatalog/specialCase.html</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<blockquote><p>“Use Case: When you need to return an alternate object of the same base type which will controll the flow of the application. Example: UserServiceClient can return a UserNotFound object instead of throwing a custom UserServiceException or having serialization exception caught in the consumer of the service.”</p></blockquote><h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><blockquote><p>“A subclass that provides special behavior for particular cases.” - martinfowler.com</p></blockquote><h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>Consider the following <code>UserServiceClient</code> with method <code>GetUserAsync</code></p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;UserDto&gt; <span class="title">GetUserAsync</span>(<span class="params">Guid userId, CancellationToken cancellationToken</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">var</span> request = <span class="keyword">new</span> HttpRequestMessage(HttpMethod.Get, <span class="string">$&quot;Users/<span class="subst">&#123;userId&#125;</span>&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> response = <span class="keyword">await</span> _client.SendAsync(request, cancellationToken);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> content = <span class="keyword">await</span> response.Content.ReadAsStringAsync(cancellationToken);</span><br><span class="line">    <span class="keyword">return</span> JsonSerializer.Deserialize&lt;UserDto&gt;(content);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>The return type <code>UserDto</code> is a simple data transfer object.</p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UserDto</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> Guid Id &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>If the service returns 404 with no content this will throw <code>JsonException</code> as content will be null. We can fix this with the following steps:</p><ol><li>Add a virtual method to <code>UserDto</code> called <code>Found()</code> and return true</li></ol><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UserDto</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> Guid Id &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> Confirms if the User exists and was returned from the User Service.</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span><span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> <span class="title">Found</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ol start="2"><li>Create the <code>UserNotFound</code> object that inherits from <code>UserDto</code> and overrides the <code>Found</code> method which can then return false</li></ol><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UserNotFound</span> : <span class="title">UserDto</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span><span class="doctag">&lt;inheritdoc/&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> <span class="title">Found</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ol start="3"><li>In the <code>GetUserAsync</code> method inside <code>UserServiceClient</code> check the status code. Here we assume 404 (not found) but you could check for any other code like 500 and respond with either <code>UserServiceException</code> or another object like <code>UserError</code></li></ol><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;UserDto&gt; <span class="title">GetUserAsync</span>(<span class="params">Guid userId, CancellationToken cancellationToken</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">var</span> request = <span class="keyword">new</span> HttpRequestMessage(HttpMethod.Get, <span class="string">$&quot;Users/<span class="subst">&#123;userId&#125;</span>&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> response = <span class="keyword">await</span> _client.SendAsync(request, cancellationToken);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!response.IsSuccessStatusCode)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// additionally we would add logging here</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UserNotFound();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> content = <span class="keyword">await</span> response.Content.ReadAsStringAsync(cancellationToken);</span><br><span class="line">    <span class="keyword">return</span> JsonSerializer.Deserialize&lt;UserDto&gt;(content);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ol start="4"><li>In the consumer we would then check the response</li></ol><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> user = <span class="keyword">await</span> _userServiceClient.GetUserAsync(userId, cancellationToken)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!user.Found()) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// not found logic, probably return here</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// assume found, normal logic here</span></span><br></pre></td></tr></table></figure><p>This code now has some defensive checks using the Special Case Pattern.</p><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://martinfowler.com/eaaCatalog/specialCase.html">https://martinfowler.com/eaaCatalog/specialCase.html</a></li></ul>]]></content>
       
       
       
@@ -435,8 +456,6 @@
             <tag> patterns principles </tag>
             
             <tag> structural patterns </tag>
-            
-            <tag> wip </tag>
             
         </tags>
       
@@ -616,6 +635,25 @@
     
     
     <entry>
+      <title>SA NZ Timezones</title>
+      <link href="2021/08/sa-nz-timezones/"/>
+      <url>2021/08/sa-nz-timezones/</url>
+      
+        <content type="html"><![CDATA[<p>Timezones are hard! These are the timezone differences between my home country South Africa and my adopted home New Zealand.</p><p>During daylight savings which is from late September to early April NZ is <code>New Zealand Daylight Time (NZDT)</code> which is the same as <code>GMT +13:00</code>.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">NZ      SA</span><br><span class="line">16:005:00</span><br><span class="line">17:006:00</span><br><span class="line">18:007:00</span><br><span class="line">19:008:00</span><br><span class="line">20:009:00</span><br><span class="line">21:0010:00</span><br><span class="line">22:0011:00</span><br><span class="line">23:0012:00</span><br><span class="line">00:0013:00</span><br><span class="line">01:0014:00</span><br></pre></td></tr></table></figure><p>Outside daylight savings which is from early April till late September to  NZ is <code>GMT +12:00</code></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">NZ      SA</span><br><span class="line">15:005:00</span><br><span class="line">16:006:00</span><br><span class="line">17:007:00</span><br><span class="line">18:008:00</span><br><span class="line">19:009:00</span><br><span class="line">20:0010:00</span><br><span class="line">21:0011:00</span><br><span class="line">22:0012:00</span><br><span class="line">23:0013:00</span><br><span class="line">00:0014:00</span><br></pre></td></tr></table></figure><p>Note that SA is <code>GMT +2</code></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> random </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>AWS Lightsail</title>
       <link href="2021/08/aws-lightsail/"/>
       <url>2021/08/aws-lightsail/</url>
@@ -748,8 +786,6 @@
             
             <tag> docker </tag>
             
-            <tag> wip </tag>
-            
         </tags>
       
     </entry>
@@ -873,6 +909,8 @@
             <tag> wip </tag>
             
             <tag> rosetta code </tag>
+            
+            <tag> data structures algorithms </tag>
             
         </tags>
       
