@@ -30,7 +30,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/aws-lightsail/aws-lightsail.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/aws-lightsail/deploy.png">
 <meta property="article:published_time" content="2021-08-19T12:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-08T22:48:47.456Z">
+<meta property="article:modified_time" content="2022-03-11T08:30:46.337Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="aws">
 <meta name="twitter:card" content="summary">
@@ -143,6 +143,7 @@ ga('send', 'pageview');
 <p>Amazon Lightsail is a virtual private server (VPS) provider and is the easiest way to get started with AWS for developers, small businesses, students, and other users who need a solution to build and host their applications on cloud. - <a target="_blank" rel="noopener" href="https://aws.amazon.com/lightsail/faq/">https://aws.amazon.com/lightsail/faq/</a></p>
 </blockquote>
 <p>Its supports <code>instances</code>, <code>containers</code>, <code>databases</code> and many other simple AWS features. For this post I will focus on <code>containers</code>. I initially made this post following <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=6S2brobgmBA">Getting Started with Amazon Lightsail Containers: An Easy-to-Use Containers Service - AWS Online Tech Talks</a> and then later fixed my mistakes following <a target="_blank" rel="noopener" href="https://aws.amazon.com/getting-started/hands-on/setup-an-nginx-reverse-proxy/">How to Setup an Nginx Reverse Proxy</a></p>
+<p>Additional blog post <a target="_blank" rel="noopener" href="https://aws.amazon.com/blogs/aws/lightsail-containers-an-easy-way-to-run-your-containers-in-the-cloud/">Lightsail Containers: An Easy Way to Run your Containers in the Cloud</a></p>
 <h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><h3 id="Access-command-line-interface"><a href="#Access-command-line-interface" class="headerlink" title="Access command-line interface"></a>Access command-line interface</h3><p>The user needs to have full access or specific access to Lightsail actions.</p>
 <ol>
 <li>Create a policy, search for service <code>lightsail</code></li>
@@ -170,7 +171,7 @@ ga('send', 'pageview');
 <li>The Lightsail Control (lightsailctl) plugin was not found</li>
 </ul>
 <p>I also got the error <code>The Lightsail Control (lightsailctl) plugin was not found</code>, I fixed this following the post <a target="_blank" rel="noopener" href="https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-install-software#install-lightsailctl-on-windows">Install the lightsailctl plugin on Windows</a></p>
-<h2 id="Containers-command-line-interface"><a href="#Containers-command-line-interface" class="headerlink" title="Containers: command-line interface"></a>Containers: command-line interface</h2><p>As I have more than one local profile I add <code>--profile carlos</code> to these commands. All the code used below is at <a target="_blank" rel="noopener" href="https://github.com/carlpaton/LightsailDemo">https://github.com/carlpaton/LightsailDemo</a> and the AWS example is at <a target="_blank" rel="noopener" href="https://github.com/awsgeek/lightsail-containers-nginx">https://github.com/awsgeek/lightsail-containers-nginx</a></p>
+<h2 id="Containers-Command-Line-Interface"><a href="#Containers-Command-Line-Interface" class="headerlink" title="Containers: Command Line Interface"></a>Containers: Command Line Interface</h2><p>As I have more than one local profile I add <code>--profile carlos</code> to these commands. All the code used below is at <a target="_blank" rel="noopener" href="https://github.com/carlpaton/LightsailDemo">https://github.com/carlpaton/LightsailDemo</a> and the AWS example is at <a target="_blank" rel="noopener" href="https://github.com/awsgeek/lightsail-containers-nginx">https://github.com/awsgeek/lightsail-containers-nginx</a></p>
 <ol>
 <li>Clone the code and hop into the folder</li>
 </ol>
