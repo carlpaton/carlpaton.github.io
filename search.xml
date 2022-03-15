@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>Charlieplexing LEDs</title>
+      <link href="2022/03/charlieplexing-leds/"/>
+      <url>2022/03/charlieplexing-leds/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p><a href="/2017/06/work-in-progress/">WIP</a></p></blockquote><p>Controlling a <a href="/2020/05/pi-led-control/">LED (light-emitting diode)</a> is the <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">hello world</a> of electronics. Its often the first simple circuit we create. Most of the notes below came from <a href="https://www.youtube.com/watch?v=b44VGTaCSk8">a quick look at Charlieplexing</a> by <a href="https://www.youtube.com/channel/UCezJOfu7OtqGzd5xrP3q6WA">Brian Lough</a></p><p>The problem with doing this is it teaches us we need one General Purpose Input/Output (GPIO) pin to control something simple like our LED. For a Raspberry Pi which has 40 pins, 26 are GPIO so thats atleast 26 LEDs.</p><p>What if you need to control other things with those GPIO’s on the Pi or you have a much simpler micro controller such as the PIC10F200. The PIC10F200 only has 8 pins, of which 3 are GPIO so we would assume it can only control 3 LEDs. </p><p>With Charlieplexing it can in-fact control 6.</p><p><img src="/d/charlieplexing-leds/pic10f200.png" alt="pic10f200"></p><p>This is calculated with <code>N * (N - 1)</code> where <code>N</code> is the number of GPIO pins your controller has</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">N * (N - 1)</span><br><span class="line">3 * (3 - 1)</span><br><span class="line">3 * 2</span><br><span class="line">&#x3D; 6</span><br></pre></td></tr></table></figure><h2 id="How-does-this-work"><a href="#How-does-this-work" class="headerlink" title="How does this work?"></a>How does this work?</h2><p>For every pair of GPIO there are 2 LEDs placed in operside polarity, LEDs will only work when the current flows from their positive to negative. Charlieplexing exploits this so the LED can be connected in a circuit.</p><p><img src="/d/charlieplexing-leds/pairs.png" alt="charlieplexing pairs"></p><p>Using the diagrams above we will need to set the polaritys as follows to light up each LED (one at a time), <code>x</code> means disconnected which is often marked as <code>Z</code> in tables for Charlieplexing. Brian noted with the x and its what I would have used so I rolled with it.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">A     |     B     |     C     |     #LED</span><br><span class="line">--------------------------------------------</span><br><span class="line">LOW       HIGH        x              1</span><br><span class="line">HIGH      LOW         x              2</span><br><span class="line">x         LOW         HIGH           3</span><br><span class="line">x         HIGH        LOW            4</span><br><span class="line">HIGH      x           LOW            5</span><br><span class="line">LOW       x           HIGH           6</span><br></pre></td></tr></table></figure><p>The digrams above have a resistor per LED, this would be necessary if each LED is a different colour and has a different forward voltage drop. If they are all the same colour their voltage drop will be the same and we can then use 3 resistors.</p><p><img src="/d/charlieplexing-leds/3gpio-3resistors.png" alt="charlieplexing 3 gpio 3 resistors"></p><h2 id="What-does-this-look-like-for-4-GPIO"><a href="#What-does-this-look-like-for-4-GPIO" class="headerlink" title="What does this look like for 4 GPIO?"></a>What does this look like for 4 GPIO?</h2><p>This would be <code>4 * (4 - 1)</code> = <code>12</code> LEDs</p><p><img src="/d/charlieplexing-leds/4gpio.png" alt="4 GPIO"></p><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul><li><a href="https://www.youtube.com/watch?v=TvsLWEJ4kNI">How to Use a Simple Microcontroller Part 1 - An Introduction (PIC10F200)</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> wip </tag>
+            
+            <tag> raspberry pi </tag>
+            
+            <tag> iot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Data Structures and Algorithms in C#</title>
       <link href="2022/03/data-structures-algorithms-in-c-sharp/"/>
       <url>2022/03/data-structures-algorithms-in-c-sharp/</url>
