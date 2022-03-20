@@ -20,19 +20,21 @@ ga('send', 'pageview');
   
   <title>Charlieplexing LEDs | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Controlling a LED (light-emitting diode) is the hello world of electronics. Its often the first simple circuit we create. Most of the notes below came from a quick look at Charlieplexing by Brian Loug">
+  <meta name="description" content="The Charlieplexing technique is named after its inventor, Charlie Allen, who invented the technique in 1995.  Controlling a LED (light-emitting diode) is the hello world of electronics. Its often the">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Charlieplexing LEDs">
 <meta property="og:url" content="https://carlpaton.github.io/2022/03/charlieplexing-leds/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Controlling a LED (light-emitting diode) is the hello world of electronics. Its often the first simple circuit we create. Most of the notes below came from a quick look at Charlieplexing by Brian Loug">
+<meta property="og:description" content="The Charlieplexing technique is named after its inventor, Charlie Allen, who invented the technique in 1995.  Controlling a LED (light-emitting diode) is the hello world of electronics. Its often the">
 <meta property="og:locale">
 <meta property="og:image" content="https://carlpaton.github.io/d/charlieplexing-leds/pairs-ab.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/charlieplexing-leds/pairs-ac.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/charlieplexing-leds/pairs-bc.png">
-<meta property="og:image" content="https://carlpaton.github.io/d/charlieplexing-leds/4gpio.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/charlieplexing-leds/4gpio-pairs-cd.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/charlieplexing-leds/4gpio-pairs-bd.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/charlieplexing-leds/4gpio-pairs-ad.png">
 <meta property="article:published_time" content="2022-03-14T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-20T07:52:38.421Z">
+<meta property="article:modified_time" content="2022-03-20T09:47:44.063Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="raspberry pi">
 <meta property="article:tag" content="iot">
@@ -141,25 +143,36 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Controlling a <a href="/2020/05/pi-led-control/">LED (light-emitting diode)</a> is the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">hello world</a> of electronics. Its often the first simple circuit we create. Most of the notes below came from <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=b44VGTaCSk8">a quick look at Charlieplexing</a> by <a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCezJOfu7OtqGzd5xrP3q6WA">Brian Lough</a> and <a target="_blank" rel="noopener" href="https://www.circuitbread.com/tutorials/christmas-lights-special-microcontroller-basics-pic10f200">Christmas Lights Special - Microcontroller Basics (PIC10F200) at circuitbread.com</a></p>
+        <blockquote>
+<p>The Charlieplexing technique is named after its inventor, Charlie Allen, who invented the technique in 1995.</p>
+</blockquote>
+<p>Controlling a <a href="/2020/05/pi-led-control/">LED (light-emitting diode)</a> is the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">hello world</a> of electronics. Its often the first simple circuit we create. Most of the notes below came from <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=b44VGTaCSk8">a quick look at Charlieplexing</a> by <a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCezJOfu7OtqGzd5xrP3q6WA">Brian Lough</a> and <a target="_blank" rel="noopener" href="https://www.circuitbread.com/tutorials/christmas-lights-special-microcontroller-basics-pic10f200">Christmas Lights Special - Microcontroller Basics (PIC10F200) at circuitbread.com</a></p>
 <p>The problem with doing this is it teaches us we need one General Purpose Input/Output (GPIO) pin to control something simple like our LED. For a Raspberry Pi which has 40 pins, 26 are GPIO so thats atleast 26 LEDs.</p>
 <p>What if you need to control other things with those GPIO’s on the Pi or you have a much simpler micro controller such as the PIC10F200. The PIC10F200 only has 8 pins, of which 3 are GPIO so we would assume it can only control 3 LEDs. </p>
 <p>With Charlieplexing it can in-fact control 6.</p>
 <p>This is calculated with <code>N * (N - 1)</code> where <code>N</code> is the number of GPIO pins your controller has</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">N * (N - 1)</span><br><span class="line">3 * (3 - 1)</span><br><span class="line">3 * 2</span><br><span class="line">&#x3D; 6</span><br></pre></td></tr></table></figure>
 
-<h2 id="How-does-this-work"><a href="#How-does-this-work" class="headerlink" title="How does this work?"></a>How does this work?</h2><p>For every pair of GPIO there are 2 LEDs placed in operside polarity, LEDs will only work when the current flows from their positive to negative. Charlieplexing exploits this so the LED can be connected in a circuit.</p>
+<h2 id="How-does-this-work"><a href="#How-does-this-work" class="headerlink" title="How does this work?"></a>How does this work?</h2><p>I drew these diagrams using <a target="_blank" rel="noopener" href="https://www.circuit-diagram.org/">https://www.circuit-diagram.org/</a></p>
+<p>For every pair of GPIO there are 2 LEDs placed in operside polarity, LEDs will only work when the current flows from their positive to negative. Charlieplexing exploits this so the LED can be connected in a circuit.</p>
 <p><img src="/d/charlieplexing-leds/pairs-ab.png" alt="charlieplexing pairs AB"></p>
 <p><img src="/d/charlieplexing-leds/pairs-ac.png" alt="charlieplexing pairs AC"></p>
 <p><img src="/d/charlieplexing-leds/pairs-bc.png" alt="charlieplexing pairs BC"></p>
-<p>Using the diagrams above we will need to set the polaritys as follows to light up each LED (one at a time), <code>x</code> means disconnected which is often marked as <code>Z</code> in tables for Charlieplexing. Brian noted with the x and its what I would have used so I rolled with it.</p>
+<p>Using the diagrams above we will need to set the polaritys as follows to light up each LED (one at a time), <code>x</code> means disconnected which is often marked as <code>Z</code> in tables for Charlieplexing. Brian noted with the x and its what I would have used so I rolled with it. ¯\<em>(ツ)</em>/¯</p>
 <p>GPIO can be one of 3 states: <code>high voltage</code>, <code>low voltage</code> or <code>High z / high impedance (OFF)</code>. The truth table below shows the states above. Note that these diagrams show 1 resistor per wire but if the LEDs were all different colours they could have their own resistors to accommodate the voltage drop.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">A     |     B     |     C     |     #LED</span><br><span class="line">--------------------------------------------</span><br><span class="line">LOW       HIGH        x              1</span><br><span class="line">HIGH      LOW         x              2</span><br><span class="line">x         LOW         HIGH           3</span><br><span class="line">x         HIGH        LOW            4</span><br><span class="line">HIGH      x           LOW            5</span><br><span class="line">LOW       x           HIGH           6</span><br></pre></td></tr></table></figure>
 
 <h2 id="4-GPIO"><a href="#4-GPIO" class="headerlink" title="4 GPIO"></a>4 GPIO</h2><p>This would be <code>4 * (4 - 1)</code> = <code>12</code> LEDs</p>
-<p><img src="/d/charlieplexing-leds/4gpio.png" alt="4 GPIO"></p>
+<p><img src="/d/charlieplexing-leds/4gpio-pairs-cd.png" alt="4 GPIO pairs CD"></p>
+<p><img src="/d/charlieplexing-leds/4gpio-pairs-bd.png" alt="4 GPIO pairs BD"></p>
+<p><img src="/d/charlieplexing-leds/4gpio-pairs-ad.png" alt="4 GPIO pairs AD"></p>
+<p>Truth table expanding from the GPIO 3 table.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">A     |     B     |     C     |     D     |     #LED</span><br><span class="line">--------------------------------------------------------</span><br><span class="line">x          x           LOW         HIGH          7</span><br><span class="line">x          x           HIGH        LOW           8</span><br><span class="line">x          LOW         x           HIGH          9</span><br><span class="line">x          HIGH        x           LOW           10</span><br><span class="line">LOW        x           x           HIGH          11</span><br><span class="line">HIGH       x           x           LOW           12</span><br></pre></td></tr></table></figure>
+
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://circuitdigest.com/microcontroller-projects/charlieplexing-arduino-to-control-12-leds-with-4-gpio-pins">Charlieplexing Arduino - Controlling 12 LEDs with 4 GPIO Pins</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Z_8y7bryid8&list=PLfYdTiQCV_p4b7kQh-rnBs5UtgzQ6Ij-V&index=9">DIY Christmas Lights with a Microcontroller - Charlieplexing LEDs (PIC10F200) | Christmas Special</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Charlieplexing">https://en.wikipedia.org/wiki/Charlieplexing</a></li>
 </ul>
 
       
