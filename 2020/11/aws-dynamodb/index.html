@@ -20,15 +20,15 @@ ga('send', 'pageview');
   
   <title>Amazon Dynamodb | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP   Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com  Programming InterfacesOh boy there are">
+  <meta name="description" content="WIP   Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com   What Is Amazon DynamoDB?  Programming">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Amazon Dynamodb">
 <meta property="og:url" content="https://carlpaton.github.io/2020/11/aws-dynamodb/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP   Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com  Programming InterfacesOh boy there are">
+<meta property="og:description" content="WIP   Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com   What Is Amazon DynamoDB?  Programming">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-11-04T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-09T05:05:34.322Z">
+<meta property="article:modified_time" content="2022-03-20T20:15:57.369Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="aws">
@@ -142,7 +142,10 @@ ga('send', 'pageview');
 <blockquote>
 <p>Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com</p>
 </blockquote>
-<h2 id="Programming-Interfaces"><a href="#Programming-Interfaces" class="headerlink" title="Programming Interfaces"></a>Programming Interfaces</h2><p>Oh boy there are 3!</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html">What Is Amazon DynamoDB?</a></li>
+</ul>
+<h2 id="Programming-Interfaces"><a href="#Programming-Interfaces" class="headerlink" title="Programming Interfaces"></a>Programming Interfaces</h2><p>Oh boy there are 3! <a target="_blank" rel="noopener" href="https://aws.amazon.com/blogs/developer/dynamodb-apis/">See DynamoDB APIs</a></p>
 <h3 id="Low-Level-Interfaces"><a href="#Low-Level-Interfaces" class="headerlink" title="Low-Level Interfaces"></a>Low-Level Interfaces</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-low-level">Low-Level Model</a></li>
 </ul>
@@ -156,14 +159,19 @@ ga('send', 'pageview');
 </ul>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> key = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>,AttributeValue&gt;() &#123; &#123; <span class="string">&quot;Id&quot;</span>, <span class="keyword">new</span> AttributeValue &#123; N = <span class="string">&quot;42&quot;</span> &#125; &#125; &#125;;</span><br><span class="line"><span class="keyword">var</span> request = <span class="keyword">new</span> GetItemRequest</span><br><span class="line">&#123;</span><br><span class="line">    TableName = _dynamoDbOptions.TableName,</span><br><span class="line">    Key = key</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns the item attributes for the given key</span></span><br><span class="line">_client.GetItemAsync(request);</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LowLevelDotNetItemCRUD.html">Working with Items: .NET</a></li>
+</ul>
 <h3 id="Document-Interfaces"><a href="#Document-Interfaces" class="headerlink" title="Document Interfaces"></a>Document Interfaces</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-document">Document Model</a></li>
+<li><a target="_blank" rel="noopener" href="https://benfoster.io/blog/20200615-querying-a-dynamodb-partition-with-dotnet/">Querying and paging a DynamoDB Partition using .NET</a></li>
 </ul>
 <blockquote>
 <p>The document programming model provides an easier way to work with data in DynamoDB. This model is specifically intended for accessing tables and items in tables. You access this model through the Amazon.DynamoDBv2.DocumentModel namespace.</p>
 </blockquote>
 <h3 id="Object-Persistence-Interface"><a href="#Object-Persistence-Interface" class="headerlink" title="Object Persistence Interface"></a>Object Persistence Interface</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/dynamodb-intro.html#dynamodb-intro-apis-object-persistence">Object Persistence Model</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBContext.QueryScan.html">Example: Query and Scan in DynamoDB Using the AWS SDK for .NET Object Persistence Model</a></li>
 </ul>
 <blockquote>
 <p>The object persistence programming model is specifically designed for storing, loading, and querying .NET objects in DynamoDB. You access this model through the Amazon.DynamoDBv2.DataModel namespace.</p>
@@ -181,6 +189,9 @@ ga('send', 'pageview');
 <p>Optionally we can add <code>DynamoDBRangeKey</code> as a sort key.</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">DynamoDBTable(<span class="meta-string">&quot;Audit&quot;</span>)</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyTableSchema</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">DynamoDBHashKey</span>] </span><br><span class="line">    <span class="keyword">public</span> Guid KeyId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    [<span class="meta">DynamoDBProperty</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> SomeString &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    </span><br><span class="line">    [<span class="meta">DynamoDBProperty</span>]</span><br><span class="line">    <span class="keyword">public</span> Guid SomeGuid &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DeclarativeTagsList.html">DynamoDB Attributes</a></li>
+</ul>
 <p>DynamoDBHashKey,DynamoDBRangeKey and DynamoDBProperty can also include enums using <code>IPropertyConverter</code> implemented in <code>MyEnumConverter</code></p>
 <p>See <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBContext.ArbitraryDataMapping.html">Mapping Arbitrary Data with DynamoDB Using the AWS SDK for .NET Object Persistence Model</a></p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">DynamoDBProperty(typeof(MyEnumConverter))</span>]</span><br><span class="line"><span class="keyword">public</span> MyEnum MyEnum &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br></pre></td></tr></table></figure>
@@ -201,6 +212,9 @@ ga('send', 'pageview');
 </ul>
 <h3 id="Global-secondary-index"><a href="#Global-secondary-index" class="headerlink" title="Global secondary index"></a>Global secondary index</h3><p>An index with a partition key and a sort key that can be different from those on the base table. A global secondary index is considered “global” because queries on the index can span all of the data in the base table, across all partitions. A global secondary index is stored in its own partition space away from the base table and scales separately from the base table.</p>
 <p>e.g. A global secondary index has Year as Partition Key and Song as Sort Key, we can get a list of records with “Year = 2015 &amp; Song begins with ‘A’”</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-6.html">Step 6: Create a Global Secondary Index</a></li>
+</ul>
 <h3 id="Local-secondary-index"><a href="#Local-secondary-index" class="headerlink" title="Local secondary index"></a>Local secondary index</h3><p>An index that has the same partition key as the base table, but a different sort key. A local secondary index is “local” in the sense that every partition of a local secondary index is scoped to a base table partition that has the same partition key value.</p>
 <p>e.g. A local secondary index has Artist as Partition key and Year as Sort key, we can now get a list of records with “Artist = ‘Cold Play’ &amp; Year &gt; 2010”</p>
 <h2 id="Locking"><a href="#Locking" class="headerlink" title="Locking"></a>Locking</h2><p>The SDK provides some settings that we can simply turn on/off. Consistent Read is one of them.</p>
@@ -251,10 +265,6 @@ ga('send', 'pageview');
 <ul>
 <li><code>NDI=</code> = 42</li>
 <li><code>bGlmZQ==</code> = life</li>
-</ul>
-<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LowLevelDotNetItemCRUD.html">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LowLevelDotNetItemCRUD.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html</a></li>
 </ul>
 
       
