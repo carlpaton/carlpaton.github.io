@@ -18,24 +18,25 @@ ga('send', 'pageview');
 
 
   
-  <title>Microcontrollers And Assembly Code | Carl Paton | There are no silly questions</title>
+  <title>Microcontrollers and Assembly Code | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="These are notes I made while watching the amazing tutorials from Circuit Bread and circuitbread.com Assembly Code In computer programming, assembly language (or assembler language), is any low-level p">
+  <meta name="description" content="These are notes I made while watching the amazing tutorials from Circuit Bread and circuitbread.com Assembly Code In computer programming, assembly language (or assembler language), is any low-level">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Microcontrollers And Assembly Code">
+<meta property="og:title" content="Microcontrollers and Assembly Code">
 <meta property="og:url" content="https://carlpaton.github.io/2022/03/microcontroller-assembly-code/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="These are notes I made while watching the amazing tutorials from Circuit Bread and circuitbread.com Assembly Code In computer programming, assembly language (or assembler language), is any low-level p">
+<meta property="og:description" content="These are notes I made while watching the amazing tutorials from Circuit Bread and circuitbread.com Assembly Code In computer programming, assembly language (or assembler language), is any low-level">
 <meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/microcontrollers-assembly-code/binary-assembly-highlevel.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/microcontrollers-assembly-code/pic10f200.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/microcontrollers-assembly-code/turning-on-a-led.png">
 <meta property="article:published_time" content="2022-03-19T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-20T08:15:41.447Z">
+<meta property="article:modified_time" content="2022-03-20T20:00:28.776Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="iot">
 <meta property="article:tag" content="assembly">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://carlpaton.github.io/d/microcontrollers-assembly-code/pic10f200.png">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/microcontrollers-assembly-code/binary-assembly-highlevel.png">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -131,7 +132,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      Microcontrollers And Assembly Code
+      Microcontrollers and Assembly Code
     </h1>
   
 
@@ -139,15 +140,16 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>These are notes I made while watching the amazing tutorials from <a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UClKevSwDIU8NTyF2DAK0G0Q">Circuit Bread</a> and <a target="_blank" rel="noopener" href="https://www.circuitbread.com/">circuitbread.com</a></p>
+        <p><img src="/d/microcontrollers-assembly-code/binary-assembly-highlevel.png" alt="binary-assembly-highlevel"></p>
+<p>These are notes I made while watching the amazing tutorials from <a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UClKevSwDIU8NTyF2DAK0G0Q">Circuit Bread</a> and <a target="_blank" rel="noopener" href="https://www.circuitbread.com/">circuitbread.com</a></p>
 <h2 id="Assembly-Code"><a href="#Assembly-Code" class="headerlink" title="Assembly Code"></a>Assembly Code</h2><blockquote>
 <p>In computer programming, assembly language (or assembler language), is any low-level programming language in which there is a very strong correspondence between the instructions in the language and the architecture’s machine code instructions. - <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Assembly_language">wikipedia.org</a></p>
 </blockquote>
-<h3 id="4-Main-parts"><a href="#4-Main-parts" class="headerlink" title="4 Main parts"></a>4 Main parts</h3><ul>
-<li><code>label</code> - is a section of the code, partially for the human to understand what is going on. Can also be used as a reference within the code</li>
+<h3 id="Four-main-parts-of-Assembly"><a href="#Four-main-parts-of-Assembly" class="headerlink" title="Four main parts of Assembly"></a>Four main parts of Assembly</h3><ul>
+<li><code>labels</code> - is a section of the code, partially for the human to understand what is going on. Can also be used as a reference within the code</li>
 <li><code>instructions</code> - its a way of taking a word and shortening it up using a subset of letters (often the first letters of the word). This then reperesents something so you dont have to type out the whole word/sentence each time. These are also known as <code>numonics</code> / <code>operational code</code></li>
 </ul>
-<p>Examples</p>
+<p>Instruction examples</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BSF           - Bit Set F. A set bit makes a pin high and clear bit makes a pin low</span><br><span class="line">DECFSZ        - Decrement if not zero</span><br><span class="line">MOVLW         - MOVe Literal to W. &#96;W&#96; is the working register. You have to put things in the working register to do any logic to&#x2F;with it (ie: muiltip[ly the value by another value. Both values need to be in the working register)</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -156,8 +158,16 @@ ga('send', 'pageview');
 </ul>
 <h2 id="Hardware-amp-Software"><a href="#Hardware-amp-Software" class="headerlink" title="Hardware &amp; Software"></a>Hardware &amp; Software</h2><p>Some key terms and notes</p>
 <ul>
+<li><code>IC</code> is integrated circuit (its the microcontroller)</li>
 <li><code>PC</code> is the Program Counter which is where you are in the program (feels like the stack in .net)</li>
-<li><code>stack</code> this small PIC10F200 has two levels of stack used to store the memory addresses when calling sub routines like a GOTO</li>
+<li><code>stack</code> this small PIC10F200 has two levels of stack used to store the memory addresses when calling sub routines like a <code>GOTO</code></li>
+</ul>
+<p>There are many microcontrollers on the market and each vendor has proprietary and often trade marked technologies. Most of my notes are on <a target="_blank" rel="noopener" href="https://www.microchip.com/">PIC microcontrollers by microchip</a>. Others I found online are</p>
+<ul>
+<li>Atmel<ul>
+<li><a href="/d/microcontrollers-assembly-code/ATTiny85.pdf">ATTiny85 IC 8 pin DIP8</a></li>
+</ul>
+</li>
 </ul>
 <h3 id="PIC10F200"><a href="#PIC10F200" class="headerlink" title="PIC10F200"></a>PIC10F200</h3><ul>
 <li><a href="/d/microcontrollers-assembly-code/PIC10F2XX.pdf">PIC10F2XX.pdf</a></li>
@@ -194,6 +204,7 @@ ga('send', 'pageview');
 <li><a href="/d/microcontrollers-assembly-code/PIC16F8X.pdf">PIC16F8X.pdf</a></li>
 </ul>
 <h3 id="PICKit-3-PICKit-4"><a href="#PICKit-3-PICKit-4" class="headerlink" title="PICKit 3 / PICKit 4"></a>PICKit 3 / PICKit 4</h3><p>This is the programmer / debugger (The ICD series are the more expensive none hobby ones)</p>
+<p>You can also use an arduino as the programmer but I found a cheap PICKit 3 locally so rolled with it.</p>
 <h3 id="MPLAB-X-8-7x"><a href="#MPLAB-X-8-7x" class="headerlink" title="MPLAB X / 8.7x"></a>MPLAB X / 8.7x</h3><p>This is the the Integrated Development Environment (IDE)</p>
 <p>Note that <a target="_blank" rel="noopener" href="https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide">MPLAB X</a> will only work with the PICKit 4 / 3, if you have a PICKit 2 you need to use <a target="_blank" rel="noopener" href="https://ww1.microchip.com/downloads/en/DeviceDoc/MPLAB_IDE_8_76.zip">8.7.6</a></p>
 <h2 id="Projects"><a href="#Projects" class="headerlink" title="Projects"></a>Projects</h2><p>These are the simple projects involving LEDs that noobs like me can understand! (kind of)</p>
@@ -295,7 +306,7 @@ ga('send', 'pageview');
       <ul>
         
           <li>
-            <a href="/2022/03/microcontroller-assembly-code/">Microcontrollers And Assembly Code</a>
+            <a href="/2022/03/microcontroller-assembly-code/">Microcontrollers and Assembly Code</a>
           </li>
         
           <li>
