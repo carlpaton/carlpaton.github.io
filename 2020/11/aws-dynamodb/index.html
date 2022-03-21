@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="WIP   Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. - docs.aws.amazon.com   What Is Amazon DynamoDB?  Programming">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-11-04T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-20T20:15:57.369Z">
+<meta property="article:modified_time" content="2022-03-21T08:10:51.155Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="aws">
@@ -209,6 +209,7 @@ ga('send', 'pageview');
 <p>A secondary index is a data structure that contains a subset of attributes from a table. A table can have multiple secondary indexes.</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.CoreComponents.html#HowItWorks.CoreComponents.SecondaryIndexes">Secondary Indexes</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LCICli.html">Working with Local Secondary Indexes: AWS CLI</a></li>
 </ul>
 <h3 id="Global-secondary-index"><a href="#Global-secondary-index" class="headerlink" title="Global secondary index"></a>Global secondary index</h3><p>An index with a partition key and a sort key that can be different from those on the base table. A global secondary index is considered “global” because queries on the index can span all of the data in the base table, across all partitions. A global secondary index is stored in its own partition space away from the base table and scales separately from the base table.</p>
 <p>e.g. A global secondary index has Year as Partition Key and Song as Sort Key, we can get a list of records with “Year = 2015 &amp; Song begins with ‘A’”</p>
