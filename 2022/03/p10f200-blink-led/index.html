@@ -20,15 +20,15 @@ ga('send', 'pageview');
   
   <title>p10f200 Blink LED | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="How to Blink an LED - Part 6 Microcontroller Basics (PIC10F200)  This has a delay loop to turn on the LED, dely the loop, turn it off and repeat. This gives out eyes a chance to see the LED change st">
+  <meta name="description" content="How to Blink an LED - Part 6 Microcontroller Basics (PIC10F200)  This has a delay loop to turn on the LED, dely the loop, turn it off and repeat. This gives our eyes a chance to see the LED change st">
 <meta property="og:type" content="article">
 <meta property="og:title" content="p10f200 Blink LED">
 <meta property="og:url" content="https://carlpaton.github.io/2022/03/p10f200-blink-led/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="How to Blink an LED - Part 6 Microcontroller Basics (PIC10F200)  This has a delay loop to turn on the LED, dely the loop, turn it off and repeat. This gives out eyes a chance to see the LED change st">
+<meta property="og:description" content="How to Blink an LED - Part 6 Microcontroller Basics (PIC10F200)  This has a delay loop to turn on the LED, dely the loop, turn it off and repeat. This gives our eyes a chance to see the LED change st">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-03-24T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-25T05:04:06.032Z">
+<meta property="article:modified_time" content="2022-03-26T02:22:51.486Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="iot">
 <meta property="article:tag" content="assembly">
@@ -139,7 +139,7 @@ ga('send', 'pageview');
         <ul>
 <li><a target="_blank" rel="noopener" href="https://www.circuitbread.com/tutorials/how-to-blink-an-led-part-6-microcontroller-basics-pic10f200">How to Blink an LED - Part 6 Microcontroller Basics (PIC10F200)</a></li>
 </ul>
-<p>This has a delay loop to turn on the LED, dely the loop, turn it off and repeat. This gives out eyes a chance to see the LED change state.</p>
+<p>This has a delay loop to turn on the LED, dely the loop, turn it off and repeat. This gives our eyes a chance to see the LED change state.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;p10f200.inc&quot;</span><br><span class="line">; CONFIG</span><br><span class="line">   __CONFIG _WDT_OFF &amp; _CP_OFF &amp; _MCLRE_OFF</span><br><span class="line">   ORG 0x0000</span><br><span class="line">INIT</span><br><span class="line">   MOVLW  ~(1 &lt;&lt; T0CS)     ; enable GPIO2</span><br><span class="line">   OPTION    </span><br><span class="line">   MOVLW ~(1 &lt;&lt; GP2)       ; set and GP2 as an output</span><br><span class="line">   TRIS GPIO</span><br><span class="line">LOOP</span><br><span class="line">   BSF GPIO, GP2           ; set GP2</span><br><span class="line">   CALL DELAY              ; call DELAY subroutine</span><br><span class="line">   BCF GPIO, GP2           ; reset GP2</span><br><span class="line">   CALL DELAY              ; call DELAY subroutine</span><br><span class="line">   GOTO LOOP               ; loop forever</span><br><span class="line"> </span><br><span class="line">DELAY                      ; start DELAY subroutine here</span><br><span class="line">    MOVLW D&#39;162&#39;               ; load initial value for the delay</span><br><span class="line">    MOVWF 10                   ; copy the value to the register 0x10</span><br><span class="line">    MOVWF 11                   ; copy the value to the register 0x11</span><br><span class="line">DELAY_LOOP                 ; start delay loop</span><br><span class="line">    DECFSZ 10, F               ; decrement the register 0x10 and check if not zero</span><br><span class="line">    GOTO DELAY_LOOP            ; if not then go to the DELAY_LOOP label</span><br><span class="line">    DECFSZ 11, F               ; else decrement the register 0x11, check if it is not 0</span><br><span class="line">    GOTO DELAY_LOOP            ; if not then go to the DELAY_LOOP label</span><br><span class="line">    RETLW 0                    ; else return from the subroutine</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
 
 <h3 id="Charlieplexing-LEDs"><a href="#Charlieplexing-LEDs" class="headerlink" title="Charlieplexing LEDs"></a>Charlieplexing LEDs</h3><ul>
