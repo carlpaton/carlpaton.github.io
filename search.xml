@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>Front End Application Organisation</title>
+      <link href="2022/04/front-end-app-/"/>
+      <url>2022/04/front-end-app-/</url>
+      
+        <content type="html"><![CDATA[<p>Just a space to keep track of opinionated ways to organise front end application code.</p><h3 id="Having-a-crack"><a href="#Having-a-crack" class="headerlink" title="Having a crack"></a>Having a crack</h3><p>This is hard! ¯\_(ツ)__/¯</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">spa</span><br><span class="line">│___src</span><br><span class="line">    │___components</span><br><span class="line">    │   │___GlobalSpinner</span><br><span class="line">    │   │       - globalSpinner.css</span><br><span class="line">    │   │       - GlobalSpinner.js</span><br><span class="line">    │   │       - GlobalSpinner.test.js</span><br><span class="line">    │   │___RandomComments</span><br><span class="line">    │           - RandomComments.js</span><br><span class="line">    │           - RandomComments.test.js</span><br><span class="line">    │___context</span><br><span class="line">    │        - GlobalSpinnerContext.js</span><br><span class="line">    │___hooks</span><br><span class="line">    │        - useApiHook.ts</span><br><span class="line">    │___services</span><br><span class="line">    │        - getTeamleads.ts </span><br><span class="line">    │        - updateAudit.ts </span><br><span class="line">    │</span><br><span class="line">    │___context</span><br><span class="line">    │        - favicon-32.png</span><br><span class="line">    │        - logo.png</span><br><span class="line">    │___types</span><br><span class="line">    │        - Audit.ts</span><br><span class="line">    │        - TeamLead.ts</span><br><span class="line">    - App.css</span><br><span class="line">    - App.js</span><br><span class="line">    - index.js</span><br></pre></td></tr></table></figure><h3 id="Ducks"><a href="#Ducks" class="headerlink" title="Ducks"></a>Ducks</h3><p>Ducks is just a convention, its a way of organising features. </p><p>Here <code>clients</code> is the feature</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">spa</span><br><span class="line">│___src</span><br><span class="line">    │___redux</span><br><span class="line">        │___ducks</span><br><span class="line">            │___clients</span><br><span class="line">                   - actions.ts</span><br><span class="line">                   - reducers.ts</span><br><span class="line">                   - sagas.ts</span><br><span class="line">                   - selectors.ts</span><br></pre></td></tr></table></figure><ul><li><a href="https://www.freecodecamp.org/news/scaling-your-redux-app-with-ducks-6115955638be/">Scaling your Redux App with ducks</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> reactjs </tag>
+            
+            <tag> typescript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>React JS Redux Toolkit</title>
       <link href="2022/04/reactjs-redux-toolkit/"/>
       <url>2022/04/reactjs-redux-toolkit/</url>
@@ -27,7 +48,26 @@
       <link href="2022/04/reactjs-use-context/"/>
       <url>2022/04/reactjs-use-context/</url>
       
-        <content type="html"><![CDATA[<p>When you dont need a store (yet) you can just use <code>useContext</code></p><ul><li><a href="https://blog.webdevsimplified.com/2020-06/use-context/">https://blog.webdevsimplified.com/2020-06/use-context/</a></li><li><a href="https://www.youtube.com/watch?v=5LrDIWkK_Bc">https://www.youtube.com/watch?v=5LrDIWkK_Bc</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p>When you dont need a store (yet) you can just use <code>useContext</code>, this hook helps avoid prop drilling and components taking a dependency on props they dont use other than passing to children components.</p><ul><li><a href="https://www.telerik.com/blogs/how-to-use-context-api-with-hooks-efficiently-while-avoiding-performance-bottlenecks">https://www.telerik.com/blogs/how-to-use-context-api-with-hooks-efficiently-while-avoiding-performance-bottlenecks</a><ul><li><a href="https://github.com/carlpaton/react-usecontext">https://github.com/carlpaton/react-usecontext</a></li></ul></li><li><a href="https://blog.webdevsimplified.com/2020-06/use-context/">https://blog.webdevsimplified.com/2020-06/use-context/</a></li><li><a href="https://www.youtube.com/watch?v=5LrDIWkK_Bc">https://www.youtube.com/watch?v=5LrDIWkK_Bc</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> reactjs </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>React Login Authentication</title>
+      <link href="2022/04/reactjs-login-authentication/"/>
+      <url>2022/04/reactjs-login-authentication/</url>
+      
+        <content type="html"><![CDATA[<ul><li><a href="https://www.digitalocean.com/community/tutorials/how-to-add-login-authentication-to-react-applications">https://www.digitalocean.com/community/tutorials/how-to-add-login-authentication-to-react-applications</a></li></ul>]]></content>
       
       
       
@@ -2358,7 +2398,7 @@
       <link href="2020/08/reactjs-hooks/"/>
       <url>2020/08/reactjs-hooks/</url>
       
-        <content type="html"><![CDATA[<ul><li><a href="/2020/08/reactjs-use-state/">useState</a></li><li><a href="/2020/08/reactjs-use-effect/">useEffect</a></li><li><a href="/2020/08/reactjs-use-params/">useParams</a></li><li>useContext (for using React’s context)</li><li>withRouter </li><li>useReducer (for doing Redux-like reducers)</li><li>useRefs (for when you need to have programmatic access to a DOM node)</li><li>useRef</li></ul><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul><li><a href="https://www.freecodecamp.org/news/beginner-react-project-build-basic-forms-using-react-hooks/">https://www.freecodecamp.org/news/beginner-react-project-build-basic-forms-using-react-hooks/</a></li><li><a href="https://www.freecodecamp.org/news/react-typescript-how-to-set-up-types-on-hooks/">https://www.freecodecamp.org/news/react-typescript-how-to-set-up-types-on-hooks/</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<ul><li><a href="/2020/08/reactjs-use-state/">useState</a></li><li><a href="/2020/08/reactjs-use-effect/">useEffect</a></li><li><a href="/2020/08/reactjs-use-params/">useParams</a></li><li><a href="/2022/04/reactjs-use-context/">useContext - when you dont need a store(yet)</a></li><li>withRouter </li><li>useReducer (for doing Redux-like reducers)</li><li>useRefs (for when you need to have programmatic access to a DOM node)</li><li>useRef</li></ul><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul><li><a href="https://www.freecodecamp.org/news/beginner-react-project-build-basic-forms-using-react-hooks/">https://www.freecodecamp.org/news/beginner-react-project-build-basic-forms-using-react-hooks/</a></li><li><a href="https://www.freecodecamp.org/news/react-typescript-how-to-set-up-types-on-hooks/">https://www.freecodecamp.org/news/react-typescript-how-to-set-up-types-on-hooks/</a></li></ul>]]></content>
       
       
       
@@ -5534,7 +5574,7 @@
       <link href="2018/07/state-management-front-end/"/>
       <url>2018/07/state-management-front-end/</url>
       
-        <content type="html"><![CDATA[<p>There are many state management strategies, which ever you choose the <a href="https://redux-toolkit.js.org/">Redux Toolkit</a> will make your life easier.</p><h3 id="Ducks"><a href="#Ducks" class="headerlink" title="Ducks"></a>Ducks</h3><p>Ducks is just a convention, its a way of organising features. </p><p>Here <code>clients</code> is the feature</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">src\redux\ducks\clients\</span><br><span class="line">               \clients\actions.ts</span><br><span class="line">           \clients\reducers.ts</span><br><span class="line">   \clients\sagas.ts</span><br><span class="line">   \clients\selectors.ts</span><br></pre></td></tr></table></figure><ul><li><a href="https://www.freecodecamp.org/news/scaling-your-redux-app-with-ducks-6115955638be/">Scaling your Redux App with ducks</a></li></ul><h3 id="Redux-with-Saga"><a href="#Redux-with-Saga" class="headerlink" title="Redux with Saga"></a>Redux with Saga</h3><p><img src="/d/state-management-front-end/redux-with-saga.jpg" alt="Redux with Saga"></p><h3 id="Redux-Thunk"><a href="#Redux-Thunk" class="headerlink" title="Redux Thunk"></a>Redux Thunk</h3><blockquote><p>Redux Thunk is middleware that allows you to return functions, rather than just actions, within Redux. This allows for delayed actions, including working with promises.</p></blockquote><ul><li><a href="https://www.freecodecamp.org/news/redux-thunk-explained-with-examples/">Redux Thunk Explained with Examples</a></li></ul><h3 id="Facade-abstraction"><a href="#Facade-abstraction" class="headerlink" title="Facade abstraction"></a>Facade abstraction</h3><p>A facade is used to abstract away the store pattern from the components. </p><p><img src="/d/state-management-front-end/tme.png" alt="Facade Abstraction, Drawn by Kristy Johnstone"></p><ul><li><a href="https://medium.com/default-to-open/understanding-a-large-scale-angular-app-with-ngrx-80f9fc5660cc">Understanding a large scale angular app with ngrx</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p>There are many state management strategies, which ever you choose the <a href="https://redux-toolkit.js.org/">Redux Toolkit</a> will make your life easier.</p><p>Also see the <a href="/2022/04/front-end-app-/">ducks</a> convention.</p><h3 id="Redux-with-Saga"><a href="#Redux-with-Saga" class="headerlink" title="Redux with Saga"></a>Redux with Saga</h3><p><img src="/d/state-management-front-end/redux-with-saga.jpg" alt="Redux with Saga"></p><h3 id="Redux-Thunk"><a href="#Redux-Thunk" class="headerlink" title="Redux Thunk"></a>Redux Thunk</h3><blockquote><p>Redux Thunk is middleware that allows you to return functions, rather than just actions, within Redux. This allows for delayed actions, including working with promises.</p></blockquote><ul><li><a href="https://www.freecodecamp.org/news/redux-thunk-explained-with-examples/">Redux Thunk Explained with Examples</a></li></ul><h3 id="Facade-Abstraction"><a href="#Facade-Abstraction" class="headerlink" title="Facade Abstraction"></a>Facade Abstraction</h3><p>A facade is used to abstract away the store pattern from the components. </p><p><img src="/d/state-management-front-end/tme.png" alt="Facade Abstraction, Drawn by Kristy Johnstone"></p><ul><li><a href="https://medium.com/default-to-open/understanding-a-large-scale-angular-app-with-ngrx-80f9fc5660cc">Understanding a large scale angular app with ngrx</a></li></ul>]]></content>
       
       
       
