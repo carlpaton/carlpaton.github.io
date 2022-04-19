@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Infinite Scrolling Through Paginated Results With jQuery</title>
+      <link href="2022/04/jquery-paginate-results-scroll/"/>
+      <url>2022/04/jquery-paginate-results-scroll/</url>
+      
+        <content type="html"><![CDATA[<p>This is a <a href="/2020/07/rosetta-code/">Rosetta Code</a> post.</p><h3 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h3><p>You have a page on your website that displays data from the <a href="https://jsonplaceholder.typicode.com/todos/">jsonplaceholder todos rest API</a>. All 200 rows are displayed at once which is inefficient.</p><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>Pagenate through <code>n</code> results using infinite scrolling like a Facebook feed. </p><p>You must</p><ul><li>Use jQuery and javascript</li><li>Paginate using <code>_start</code> (the page) and <code>_limit</code> (the size) for each request. </li><li>When the user scrolls to the bottom of the screen fetch the next <code>n</code> results auto-magically \ :D / </li></ul><p>The user will have the experience of infinite scrolling which will save their data and reduce unnecessary requests.</p><h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><ul><li><a href="/d/jquery-paginate-results-scroll/index.htm">Running example code</a></li></ul><p>Once the document loads fire the first <code>get</code>, there after listen to the scroll event, use <code>checkpos</code> to determine if the user is at the bottom of the screen, increment the <code>start</code> variable and <code>get</code> the next page. </p><p>Repeat this until the known <code>max</code> is reached.</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> start = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> limit = <span class="number">40</span>;</span><br><span class="line"><span class="keyword">let</span> max = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkpos</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> top = <span class="built_in">Math</span>.floor($(<span class="built_in">window</span>).scrollTop())</span><br><span class="line">    <span class="keyword">let</span> docheight = $(<span class="built_in">document</span>).height()</span><br><span class="line">    <span class="keyword">let</span> windowheight = $(<span class="built_in">window</span>).height()</span><br><span class="line">    <span class="keyword">let</span> percentage = (<span class="number">100</span> * (top + windowheight)) / docheight;</span><br><span class="line">    <span class="keyword">return</span> percentage == <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handlerow</span>(<span class="params">todo</span>) </span>&#123;</span><br><span class="line">    $(<span class="string">&quot;#table tbody:last&quot;</span>).append(<span class="string">&quot;&lt;tr&gt;&lt;td&gt;&quot;</span> + todo.id + <span class="string">&quot;&lt;/td&gt;&lt;td&gt;&quot;</span> + todo.title + <span class="string">&quot;&lt;/td&gt;&lt;/tr&gt;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    $.get(<span class="string">&quot;https://jsonplaceholder.typicode.com/todos/?_start=&quot;</span> + start + <span class="string">&quot;&amp;_limit=&quot;</span> + limit, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        data.map(<span class="function"><span class="params">todo</span> =&gt;</span></span><br><span class="line">            handlerow(todo)</span><br><span class="line">        );</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    get()</span><br><span class="line">    $(<span class="built_in">window</span>).scroll(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (checkpos()) &#123;</span><br><span class="line">            start = start + limit;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (start &gt;= max) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            get();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>Limitations include</p><ul><li>This will only fire when the user scrolls right to the bottom, a percentage of 95 could be used instead however the scroll event will need tweaking. <code>checkpos</code> is already doing a percentage calculation with this in mind</li><li>If the initial <code>get</code> returns less data than that which causes the y-axis scroll to display, the scroll listener will never fire</li><li>The API’s used in <code>checkpos</code> may not work in all browsers ¯\<em>(ツ)</em>/¯</li></ul><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://stackoverflow.com/questions/14035180/jquery-load-more-data-on-scroll">https://stackoverflow.com/questions/14035180/jquery-load-more-data-on-scroll</a></li><li><a href="https://stackoverflow.com/questions/36280104/jquery-stop-infinite-scroll-triggering-untill-next-page-is-loaded">https://stackoverflow.com/questions/36280104/jquery-stop-infinite-scroll-triggering-untill-next-page-is-loaded</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> rosetta code </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Front End Application Organisation</title>
       <link href="2022/04/front-end-app-/"/>
       <url>2022/04/front-end-app-/</url>
@@ -136,6 +155,8 @@
             
             <tag> typescript </tag>
             
+            <tag> reactjs class-based </tag>
+            
         </tags>
       
     </entry>
@@ -156,6 +177,8 @@
             <tag> reactjs </tag>
             
             <tag> typescript </tag>
+            
+            <tag> reactjs class-based </tag>
             
         </tags>
       
