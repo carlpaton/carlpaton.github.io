@@ -20,20 +20,23 @@ ga('send', 'pageview');
   
   <title>Data Structures and Algorithms in C# | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP  Why care?Suitable data structures affect the performance of your application. You can increase quality and performance by choosing the right data structure and accomanying algorithm. Data Struct">
+  <meta name="description" content="Data structures and Algorithms apply to any programining language, the examples I seek to collate are in C# as its currently my language of choice. Why care?Suitable data structures affect the perform">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Data Structures and Algorithms in C#">
 <meta property="og:url" content="https://carlpaton.github.io/2022/03/data-structures-algorithms-in-c-sharp/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP  Why care?Suitable data structures affect the performance of your application. You can increase quality and performance by choosing the right data structure and accomanying algorithm. Data Struct">
+<meta property="og:description" content="Data structures and Algorithms apply to any programining language, the examples I seek to collate are in C# as its currently my language of choice. Why care?Suitable data structures affect the perform">
 <meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/data-structures-algorithms-in-c-sharp/linked-list.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/data-structures-algorithms-in-c-sharp/binary-search-tree.png">
 <meta property="article:published_time" content="2022-03-11T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-11T20:45:08.280Z">
+<meta property="article:modified_time" content="2022-04-27T12:40:09.802Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="c#">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="data structures algorithms">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/data-structures-algorithms-in-c-sharp/linked-list.png">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -137,57 +140,79 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+        <p>Data structures and Algorithms apply to any programining language, the examples I seek to collate are in <a href="/tags/c/">C#</a> as its currently my language of choice.</p>
+<h1 id="Why-care"><a href="#Why-care" class="headerlink" title="Why care?"></a>Why care?</h1><p>Suitable data structures affect the performance of your application. You can increase quality and performance by choosing the right data structure and accomanying algorithm. This feels like something we should care about. Additionally the topics below are worth understanding.</p>
+<h2 id="Big-O-notation"><a href="#Big-O-notation" class="headerlink" title="Big O notation"></a>Big O notation</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/linear-time-vs-logarithmic-time-big-o-notation-6ef4227051fb">Linear Time vs. Logarithmic Time — Big O Notation</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Big_O_notation">https://en.wikipedia.org/wiki/Big_O_notation</a></li>
+</ul>
+<blockquote>
+<p>“In computer science, it is useful in the analysis of algorithms” - wikipedia.org</p>
 </blockquote>
-<h2 id="Why-care"><a href="#Why-care" class="headerlink" title="Why care?"></a>Why care?</h2><p>Suitable data structures affect the performance of your application. You can increase quality and performance by choosing the right data structure and accomanying algorithm.</p>
-<h2 id="Data-Structures"><a href="#Data-Structures" class="headerlink" title="Data Structures"></a>Data Structures</h2><ul>
-<li><p>Arrays</p>
-</li>
-<li><p>Lists</p>
 <ul>
-<li>Linked List</li>
+<li><code>Logarithmic</code> time (Complexity Analysis) is faster than a <code>Linear</code> time operations because it runs in <code>O(log n)</code></li>
+<li>One of my peers once explained this to me as being able to use this in regards to problem solving: Example: what’s the big O of <code>xs.map(...).filter(...).find(...)</code></li>
 </ul>
-</li>
-<li><p>Stacks</p>
-</li>
-<li><p>Queues</p>
-</li>
-<li><p>Dictionaries</p>
-</li>
-<li><p>Hash sets</p>
+<h2 id="Sliding-Window-Technique"><a href="#Sliding-Window-Technique" class="headerlink" title="Sliding Window Technique"></a>Sliding Window Technique</h2><p>Involves manipulating two pointers or two indices at the same time as you’re traversing thought something like a string or an array. Basically you have a left pointer/index and a right pointer/index and your move them simultaneously in an array or a string. (could be to count frequency of characters)</p>
+<h2 id="Recursion"><a href="#Recursion" class="headerlink" title="Recursion"></a>Recursion</h2><p>A lot of problems can be solved easily with recursion (as apposed to iteratively). This produces cleaner and less code than an iterative approach. Example problems that help you understand recursion include: </p>
 <ul>
-<li>Hashtable</li>
+<li><code>n fibonacci</code> </li>
+<li><code>calculate height of binary tree</code> or the <code>depths of nodes in a binary tree</code></li>
 </ul>
-</li>
-<li><p>Trees</p>
-</li>
-<li><p>Graphs</p>
-</li>
-</ul>
-<h2 id="Algorithms"><a href="#Algorithms" class="headerlink" title="Algorithms"></a>Algorithms</h2><ul>
-<li><p>Binary Search</p>
-</li>
-<li><p>Binary Search Tree | <a href="/2021/06/rosetta-code-invert-a-binary-tree/">Invert A Binary Tree</a></p>
-</li>
-<li><p>Sorting Algorithms</p>
+<h2 id="Dynamic-Programming-DP"><a href="#Dynamic-Programming-DP" class="headerlink" title="Dynamic Programming (DP)"></a>Dynamic Programming (DP)</h2><p>It means being able to solve a problem that is complex by first solving a smaller version of that problem. To solve that small version of the problem you solve an even smaller version of that problem, until you can solve a trivial version of the problem. The only way to get good at DP is to do a lot of DP!</p>
+<h1 id="Data-Structures"><a href="#Data-Structures" class="headerlink" title="Data Structures"></a>Data Structures</h1><blockquote>
+<p>“In computer science, a data structure is a data organization, management, and storage format that enables efficient access and modification.” - <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Data_structure">https://en.wikipedia.org/wiki/Data_structure</a></p>
+</blockquote>
+<h2 id="Graphs"><a href="#Graphs" class="headerlink" title="Graphs"></a>Graphs</h2><p>Graph Traversals</p>
 <ul>
-<li>Quick Sort</li>
-<li>Merge Sort</li>
-<li>Time Sort</li>
-<li>Heap Sort</li>
-<li>Bubble Sort</li>
-<li>Insertion Sort</li>
-<li>Tree Sort</li>
-<li>Shell Sort</li>
-<li>Bucket Sort</li>
-<li>Radix Sort</li>
-<li>Counting Sort</li>
-<li>Cube Sort</li>
+<li>Depth First Search (DFS)</li>
+<li>Breadth-first search (BFS)</li>
+</ul>
+<h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><p>Also see <a href="/2021/06/reverse-a-linked-list/">Reverse a Linked List</a></p>
+<p><img src="/d/data-structures-algorithms-in-c-sharp/linked-list.png" alt="linked-list"></p>
+<h2 id="Trees"><a href="#Trees" class="headerlink" title="Trees"></a>Trees</h2><p>Suffix Trees</p>
+<h2 id="Heaps"><a href="#Heaps" class="headerlink" title="Heaps"></a>Heaps</h2><p>Basically like binary trees and usually min/max heaps that have a special property.<br>Helpful when you need to repeatedly find the smallest and largest values in groups of values.</p>
+<h2 id="Binary-Search-Tree"><a href="#Binary-Search-Tree" class="headerlink" title="Binary Search Tree"></a>Binary Search Tree</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://youtu.be/dYWz6wqvEEs">Tutorial 19 - Binary Search Trees in C#</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=pN1RWeX47tg">Binary Search Tree implemented in C#</a></li>
+</ul>
+<p>Also see <a href="/2021/06/rosetta-code-invert-a-binary-tree/">Invert A Binary Tree</a></p>
+<ul>
+<li>None-linear, meaning they have a Left and a Right pointer</li>
+<li>Searching<ul>
+<li>if the value of the data is &lt; this node, go left</li>
+<li>if the value of the data is &gt;= this node, go right</li>
 </ul>
 </li>
+<li>Each pass cuts the data in half</li>
+<li>Logarithmic performance for<ul>
+<li>Searching</li>
+<li>Inserting new data</li>
+<li>Updating data</li>
 </ul>
+</li>
+<li>Dynamic</li>
+<li>An un-balanced tree (possibly from sorted data) will have performance issues</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">log 2 n          ~ log base 2 of n</span><br><span class="line">                 ~ how many times can you chop it in half</span><br></pre></td></tr></table></figure>
+
+<p>Example <code>log base 2 of 16 = 4</code> this is how many times we can chop 16 in half.</p>
+<p><img src="/d/data-structures-algorithms-in-c-sharp/binary-search-tree.png" alt="binary-search-tree"></p>
+<p>Example code to traverse recursively</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">BstNode</span> &#123;</span><br><span class="line">  <span class="built_in">int</span> data;</span><br><span class="line">  BstNode left;</span><br><span class="line">  BstNode right;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Traverse</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (left != <span class="literal">null</span>) &#123;</span><br><span class="line">    left.Traverse();</span><br><span class="line">  &#125;</span><br><span class="line">  Console.WriteLine(<span class="keyword">this</span>.data);</span><br><span class="line">  <span class="keyword">if</span> (right != <span class="literal">null</span>) &#123;</span><br><span class="line">    right.Traverse();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Arrays</span><br><span class="line">Dictionaries</span><br><span class="line">Hash sets &#x2F; Hashtable</span><br><span class="line">Queues</span><br><span class="line">Stacks</span><br></pre></td></tr></table></figure>
+
+<h1 id="Algorithms"><a href="#Algorithms" class="headerlink" title="Algorithms"></a>Algorithms</h1><h2 id="Binary-Search"><a href="#Binary-Search" class="headerlink" title="Binary Search"></a>Binary Search</h2><p>Binary search is an algorithm for finding an element in binary search tree.</p>
+<h2 id="Quick-Sort"><a href="#Quick-Sort" class="headerlink" title="Quick Sort"></a>Quick Sort</h2><p>Choose a pivot and swap elements that are smaller to the left of the pivot and bigger to the right of the pivot</p>
+<h2 id="Merge-Sort"><a href="#Merge-Sort" class="headerlink" title="Merge Sort"></a>Merge Sort</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/merge-sort/">https://www.geeksforgeeks.org/merge-sort/</a></li>
+</ul>
+<p>Merge Sort is a Divide and Conquer algorithm. It divides the input array into two halves, calls itself for the two halves, and then it merges the two sorted halves.</p>
+<h2 id="TODO-1"><a href="#TODO-1" class="headerlink" title="TODO"></a>TODO</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Bubble Sort</span><br><span class="line">Bucket Sort</span><br><span class="line">Cube Sort</span><br><span class="line">Counting Sort</span><br><span class="line">Heap Sort</span><br><span class="line">Insertion Sort</span><br><span class="line">Radix Sort</span><br><span class="line">Shell Sort</span><br><span class="line">Time Sort</span><br><span class="line">Tree Sort</span><br></pre></td></tr></table></figure>
+
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Ge0Udbws1kc">The 10 Most Important Concepts For Coding Interviews (algorithms and data structures) - Clément Mihailescu</a></li>
 <li><a target="_blank" rel="noopener" href="https://dev.to/adavidoaiei/fundamental-data-structures-and-algorithms-in-c-4ocf">Fundamental Data Structures and Algorithms in C#</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.amazon.com/Data-Structures-Algorithms-possibilities-applications-ebook-dp-B079P4TP2X/dp/B079P4TP2X/">C# Data Structures and Algorithms: Explore the possibilities of C# for developing a variety of efficient applications</a></li>
 </ul>
@@ -281,7 +306,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.91px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.87px;">arduino</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/authentication/" style="font-size: 13.04px;">authentication</a> <a href="/tags/aws/" style="font-size: 15.65px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.43px;">cad</a> <a href="/tags/cam/" style="font-size: 10.43px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 11.3px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10px;">d3 printing</a> <a href="/tags/data-structures-algorithms/" style="font-size: 10.43px;">data structures algorithms</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.61px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 16.96px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.87px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.43px;">feature management</a> <a href="/tags/food/" style="font-size: 10.87px;">food</a> <a href="/tags/git/" style="font-size: 11.3px;">git</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.74px;">ide</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.17px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.74px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.83px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.87px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.43px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.3px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.87px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 11.74px;">python</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.52px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.43px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.43px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 13.48px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.26px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.22px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/threading/" style="font-size: 10.43px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.7px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.09px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.13px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.87px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.91px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.87px;">arduino</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/authentication/" style="font-size: 13.04px;">authentication</a> <a href="/tags/aws/" style="font-size: 15.65px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.43px;">cad</a> <a href="/tags/cam/" style="font-size: 10.43px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 11.3px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10px;">d3 printing</a> <a href="/tags/data-structures-algorithms/" style="font-size: 10.87px;">data structures algorithms</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.61px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 16.96px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.87px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.43px;">feature management</a> <a href="/tags/food/" style="font-size: 10.87px;">food</a> <a href="/tags/git/" style="font-size: 11.3px;">git</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.74px;">ide</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.17px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.74px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.83px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.87px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.43px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.3px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.87px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 11.74px;">python</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.52px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.43px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.43px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 13.91px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.26px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.22px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/threading/" style="font-size: 10.43px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.7px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.09px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.13px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.87px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
     </div>
   </div>
 
