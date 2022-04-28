@@ -18,25 +18,24 @@ ga('send', 'pageview');
 
 
   
-  <title>Data Structures and Algorithms in C# | Carl Paton | There are no silly questions</title>
+  <title>Data Structures and Algorithms | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Data structures and Algorithms apply to any programining language, the examples I seek to collate are in C# as its currently my language of choice. Why care?Suitable data structures affect the perform">
+  <meta name="description" content="WIP  Why care?Suitable data structures affect the performance of your application. You can increase quality and performance by choosing the right data structure and accomanying algorithm. This feels">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Data Structures and Algorithms in C#">
-<meta property="og:url" content="https://carlpaton.github.io/2022/03/data-structures-algorithms-in-c-sharp/index.html">
+<meta property="og:title" content="Data Structures and Algorithms">
+<meta property="og:url" content="https://carlpaton.github.io/2022/03/data-structures-algorithms/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Data structures and Algorithms apply to any programining language, the examples I seek to collate are in C# as its currently my language of choice. Why care?Suitable data structures affect the perform">
+<meta property="og:description" content="WIP  Why care?Suitable data structures affect the performance of your application. You can increase quality and performance by choosing the right data structure and accomanying algorithm. This feels">
 <meta property="og:locale">
-<meta property="og:image" content="https://carlpaton.github.io/d/data-structures-algorithms-in-c-sharp/linked-list.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/data-structures-algorithms-in-c-sharp/singly-linked-list.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures-algorithms-in-c-sharp/binary-search-tree.png">
 <meta property="article:published_time" content="2022-03-11T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-27T12:40:09.802Z">
+<meta property="article:modified_time" content="2022-04-28T10:11:24.496Z">
 <meta property="article:author" content="Carl Paton">
-<meta property="article:tag" content="c#">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="data structures algorithms">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://carlpaton.github.io/d/data-structures-algorithms-in-c-sharp/linked-list.png">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/data-structures-algorithms-in-c-sharp/singly-linked-list.png">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -118,9 +117,9 @@ ga('send', 'pageview');
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-data-structures-algorithms-in-c-sharp" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-data-structures-algorithms" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2022/03/data-structures-algorithms-in-c-sharp/" class="article-date">
+    <a href="/2022/03/data-structures-algorithms/" class="article-date">
   <time datetime="2022-03-11T11:00:00.000Z" itemprop="datePublished">2022-Mar</time>
 </a>
     
@@ -132,7 +131,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      Data Structures and Algorithms in C#
+      Data Structures and Algorithms
     </h1>
   
 
@@ -140,18 +139,69 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Data structures and Algorithms apply to any programining language, the examples I seek to collate are in <a href="/tags/c/">C#</a> as its currently my language of choice.</p>
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
 <h1 id="Why-care"><a href="#Why-care" class="headerlink" title="Why care?"></a>Why care?</h1><p>Suitable data structures affect the performance of your application. You can increase quality and performance by choosing the right data structure and accomanying algorithm. This feels like something we should care about. Additionally the topics below are worth understanding.</p>
-<h2 id="Big-O-notation"><a href="#Big-O-notation" class="headerlink" title="Big O notation"></a>Big O notation</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/linear-time-vs-logarithmic-time-big-o-notation-6ef4227051fb">Linear Time vs. Logarithmic Time — Big O Notation</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Big_O_notation">https://en.wikipedia.org/wiki/Big_O_notation</a></li>
-</ul>
-<blockquote>
+<h2 id="Big-O-notation"><a href="#Big-O-notation" class="headerlink" title="Big O notation"></a>Big O notation</h2><blockquote>
 <p>“In computer science, it is useful in the analysis of algorithms” - wikipedia.org</p>
 </blockquote>
 <ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=__vX2sjlpXU">Big-O notation in 5 minutes — The basics</a></li>
+<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/linear-time-vs-logarithmic-time-big-o-notation-6ef4227051fb">Linear Time vs. Logarithmic Time — Big O Notation</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Big_O_notation">Big O notation - wikipedia.org</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bigocheatsheet.com/">bigocheatsheet.com</a></li>
+</ul>
+<h3 id="Definitions"><a href="#Definitions" class="headerlink" title="Definitions"></a>Definitions</h3><ul>
+<li>Simplified analysis of an alorithms efficiency</li>
+<li>One of my peers once explained this to me as being able to use this in regards to problem solving.<ul>
+<li>Example: what’s the big O of <code>xs.map(...).filter(...).find(...)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="What-is-big-O"><a href="#What-is-big-O" class="headerlink" title="What is big O?"></a>What is big O?</h3><ul>
+<li>complexit in terms of the input size, <code>n</code></li>
+<li>abstract the efficiency of our algorithms or code from the machine (its independent)</li>
+<li>examine the basic computer steps of the code</li>
+<li>can analyze both time and space</li>
+</ul>
+<h3 id="Types-of-measurement"><a href="#Types-of-measurement" class="headerlink" title="Types of measurement"></a>Types of measurement</h3><p>Typically look at <code>worst</code> case but we have to be cognizant of <code>best</code> and <code>average</code> case, its dependant on the application/algorithm</p>
+<ul>
+<li>worst case (typically used)</li>
+<li>best case</li>
+<li>average case </li>
+</ul>
+<h3 id="General-rules"><a href="#General-rules" class="headerlink" title="General rules"></a>General rules</h3><ul>
+<li>ignore constants for trivial examples, example a running time of <code>5n</code>, it runs on the order of <code>O(n)</code>. This is because as <code>n</code> gets large the 5 no longer matters<ul>
+<li>in practice constants matter, a constant of 2 or 3 could have a large impact</li>
+</ul>
+</li>
+<li>the same way as <code>n</code> grows certain terms <code>dominate</code> others. <ul>
+<li>Example <code>O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n^2) &lt; O(2^n) &lt; O(n!)</code></li>
+<li>this means we ignore/drop lower order terms when dominated </li>
+</ul>
+</li>
+</ul>
+<h3 id="Constant-time"><a href="#Constant-time" class="headerlink" title="Constant time"></a>Constant time</h3><ul>
+<li>independent of input size, <code>n</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; 5 + (15 * 20);         ~ O(1) big O of 1</span><br></pre></td></tr></table></figure>
+
+<p>Sequence of statements in constant time</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; 5 + (15 * 20);         ~ O(1)</span><br><span class="line">y &#x3D; 15 &#x3D; 2;                ~ O(1)</span><br><span class="line">print x + y;               ~ O(1)</span><br><span class="line"></span><br><span class="line">this is 3 * O(1)</span><br><span class="line">as we drop constants is just O(1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Linear-time"><a href="#Linear-time" class="headerlink" title="Linear time"></a>Linear time</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for x in range (O, n):</span><br><span class="line">   print x;               ~ O(1)</span><br><span class="line"></span><br><span class="line">the block of code is n * O(1) which is the same as O(n)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">y &#x3D; 5 + (15 * 20);        ~ O(1)</span><br><span class="line">for x in range (O, n):</span><br><span class="line">   print x;               ~ complete for loop is O(n)</span><br><span class="line"></span><br><span class="line">total time is the summation of these two &#x3D; O(1) + O(n)</span><br><span class="line">we drop low order terms when n gets large, the time to compute y is meaningless</span><br><span class="line">the result is then O(n) this is because the for loop dominates the run time</span><br></pre></td></tr></table></figure>
+
+<h3 id="Quadratic-time"><a href="#Quadratic-time" class="headerlink" title="Quadratic time"></a>Quadratic time</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for x in range (0, n):</span><br><span class="line">   for y in range (0, n):</span><br><span class="line">      print x * y;         ~ O(1)</span><br><span class="line"></span><br><span class="line">this is executed at n * n which is O(n^2)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; 5 + (15 * 20);         ~ O(1)</span><br><span class="line">for x in range(0, n):</span><br><span class="line">   print x;                ~ complete for loop if O(n)</span><br><span class="line">for x in range(O, n):</span><br><span class="line">   for y in range(O, n):</span><br><span class="line">      print x * y;         ~ complete for the nested loops is O(n^2)</span><br><span class="line"></span><br><span class="line">the nested for loop dominates here, the result is O(n^2)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if x &gt; 0:</span><br><span class="line">   ~ O(1)</span><br><span class="line">else if x &lt; 0:</span><br><span class="line">   ~ O(log n)</span><br><span class="line">else:</span><br><span class="line">   ~ O(n^2)</span><br><span class="line"></span><br><span class="line">with big O we usually loook at worst case scenario, here the largest runtime is O(n^2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h3><ul>
 <li><code>Logarithmic</code> time (Complexity Analysis) is faster than a <code>Linear</code> time operations because it runs in <code>O(log n)</code></li>
-<li>One of my peers once explained this to me as being able to use this in regards to problem solving: Example: what’s the big O of <code>xs.map(...).filter(...).find(...)</code></li>
 </ul>
 <h2 id="Sliding-Window-Technique"><a href="#Sliding-Window-Technique" class="headerlink" title="Sliding Window Technique"></a>Sliding Window Technique</h2><p>Involves manipulating two pointers or two indices at the same time as you’re traversing thought something like a string or an array. Basically you have a left pointer/index and a right pointer/index and your move them simultaneously in an array or a string. (could be to count frequency of characters)</p>
 <h2 id="Recursion"><a href="#Recursion" class="headerlink" title="Recursion"></a>Recursion</h2><p>A lot of problems can be solved easily with recursion (as apposed to iteratively). This produces cleaner and less code than an iterative approach. Example problems that help you understand recursion include: </p>
@@ -168,8 +218,13 @@ ga('send', 'pageview');
 <li>Depth First Search (DFS)</li>
 <li>Breadth-first search (BFS)</li>
 </ul>
-<h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><p>Also see <a href="/2021/06/reverse-a-linked-list/">Reverse a Linked List</a></p>
-<p><img src="/d/data-structures-algorithms-in-c-sharp/linked-list.png" alt="linked-list"></p>
+<h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=F8AbOfQwl1c">Linked lists in 4 minutes</a></li>
+<li>Also see <a href="/2021/06/reverse-a-linked-list/">Reverse a Linked List</a></li>
+</ul>
+<p>Data structure for storing objects in linear order, each object has data and a pointer to the next object. Simliar to arrays except pointers determine ordering not the array indices.</p>
+<p>Use case could be to implement other data structures like <code>stacks</code>, <code>queues</code> and <code>hash tables</code></p>
+<p><img src="/d/data-structures-algorithms-in-c-sharp/singly-linked-list.png" alt="singly linked list"></p>
 <h2 id="Trees"><a href="#Trees" class="headerlink" title="Trees"></a>Trees</h2><p>Suffix Trees</p>
 <h2 id="Heaps"><a href="#Heaps" class="headerlink" title="Heaps"></a>Heaps</h2><p>Basically like binary trees and usually min/max heaps that have a special property.<br>Helpful when you need to repeatedly find the smallest and largest values in groups of values.</p>
 <h2 id="Binary-Search-Tree"><a href="#Binary-Search-Tree" class="headerlink" title="Binary Search Tree"></a>Binary Search Tree</h2><ul>
@@ -203,7 +258,10 @@ ga('send', 'pageview');
 
 <h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Arrays</span><br><span class="line">Dictionaries</span><br><span class="line">Hash sets &#x2F; Hashtable</span><br><span class="line">Queues</span><br><span class="line">Stacks</span><br></pre></td></tr></table></figure>
 
-<h1 id="Algorithms"><a href="#Algorithms" class="headerlink" title="Algorithms"></a>Algorithms</h1><h2 id="Binary-Search"><a href="#Binary-Search" class="headerlink" title="Binary Search"></a>Binary Search</h2><p>Binary search is an algorithm for finding an element in binary search tree.</p>
+<h1 id="Algorithms"><a href="#Algorithms" class="headerlink" title="Algorithms"></a>Algorithms</h1><h2 id="Binary-Search"><a href="#Binary-Search" class="headerlink" title="Binary Search"></a>Binary Search</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=B25Gu5r0xUg">Binary search in 3 minutes</a></li>
+</ul>
+<p>Search algorithm to find a target value in a sorted array, with each iteration half the values are eliminated.</p>
 <h2 id="Quick-Sort"><a href="#Quick-Sort" class="headerlink" title="Quick Sort"></a>Quick Sort</h2><p>Choose a pivot and swap elements that are smaller to the left of the pivot and bigger to the right of the pivot</p>
 <h2 id="Merge-Sort"><a href="#Merge-Sort" class="headerlink" title="Merge Sort"></a>Merge Sort</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/merge-sort/">https://www.geeksforgeeks.org/merge-sort/</a></li>
@@ -214,16 +272,15 @@ ga('send', 'pageview');
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Ge0Udbws1kc">The 10 Most Important Concepts For Coding Interviews (algorithms and data structures) - Clément Mihailescu</a></li>
 <li><a target="_blank" rel="noopener" href="https://dev.to/adavidoaiei/fundamental-data-structures-and-algorithms-in-c-4ocf">Fundamental Data Structures and Algorithms in C#</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.amazon.com/Data-Structures-Algorithms-possibilities-applications-ebook-dp-B079P4TP2X/dp/B079P4TP2X/">C# Data Structures and Algorithms: Explore the possibilities of C# for developing a variety of efficient applications</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2022/03/data-structures-algorithms-in-c-sharp/" data-id="cl0mv0lis0006w0on4b946vuc" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2022/03/data-structures-algorithms/" data-id="cl2iufpoq0000jcon1c49dpmu" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structures-algorithms/" rel="tag">data structures algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structures-algorithms/" rel="tag">data structures algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
 
     </footer>
   </div>
