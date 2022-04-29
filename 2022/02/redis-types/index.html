@@ -20,17 +20,18 @@ ga('send', 'pageview');
   
   <title>Redis Types | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP  Redis supports several types of data types namely String, Sorted Set, Set, List, Hash and Stream which I have been exploring in Redis Administrator String https:&#x2F;&#x2F;redis.io&#x2F;commands&#x2F;set  Strings">
+  <meta name="description" content="WIP  Redis can be used as a database, cache store, message broker, streaming engine and probably more! I was interested in the types so had a hoon, hopefully what I learn here I can apply to Redis Ad">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis Types">
 <meta property="og:url" content="https://carlpaton.github.io/2022/02/redis-types/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP  Redis supports several types of data types namely String, Sorted Set, Set, List, Hash and Stream which I have been exploring in Redis Administrator String https:&#x2F;&#x2F;redis.io&#x2F;commands&#x2F;set  Strings">
+<meta property="og:description" content="WIP  Redis can be used as a database, cache store, message broker, streaming engine and probably more! I was interested in the types so had a hoon, hopefully what I learn here I can apply to Redis Ad">
 <meta property="og:locale">
 <meta property="og:image" content="https://carlpaton.github.io/d/redis-types/string.png">
 <meta property="article:published_time" content="2022-02-18T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-19T14:37:57.685Z">
+<meta property="article:modified_time" content="2022-04-29T07:24:11.402Z">
 <meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="wip">
 <meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://carlpaton.github.io/d/redis-types/string.png">
@@ -140,31 +141,87 @@ ga('send', 'pageview');
         <blockquote>
 <p><a href="/2017/06/work-in-progress/">WIP</a></p>
 </blockquote>
-<p>Redis supports several types of data types namely <code>String</code>, <code>Sorted Set</code>, <code>Set</code>, <code>List</code>, <code>Hash</code> and <code>Stream</code> which I have been exploring in <a href="/2019/05/redis-administrator/">Redis Administrator</a></p>
-<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://redis.io/commands/set">https://redis.io/commands/set</a></li>
+<p>Redis can be used as a <code>database</code>, <code>cache store</code>, <code>message broker</code>, <code>streaming engine</code> and probably more! I was interested in the types so had a hoon, hopefully what I learn here I can apply to <a href="/2019/05/redis-administrator/">Redis Administrator</a>.</p>
+<h2 id="Playground-Docker"><a href="#Playground-Docker" class="headerlink" title="Playground - Docker"></a>Playground - Docker</h2><p>I did not want to install Redis locally and containers are cool so brought up a bride so the containers were on the same <a target="_blank" rel="noopener" href="https://docs.docker.com/network/">network</a>, <a target="_blank" rel="noopener" href="https://hub.docker.com/_/redis">redis server</a> and <a target="_blank" rel="noopener" href="https://redis.io/docs/stack/get-started/install/docker/">redis cli</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker network create --driver bridge redis-bridge-network</span><br><span class="line"></span><br><span class="line">docker run --name red-srv -d -p 6379:6379 --network redis-bridge-network redis redis-server --appendonly yes</span><br><span class="line"></span><br><span class="line"># -it mean interactive, --rm means clean up when it exits</span><br><span class="line">docker run -it --network redis-bridge-network --rm redis redis-cli -h red-srv</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/redis">https://hub.docker.com/_/redis</a></li>
 </ul>
-<p>Strings are the most basic kind of Redis value. Redis Strings are binary safe, this means that a Redis string can contain any kind of data.</p>
-<p>If the key exists it is replaced regardless of its type.</p>
-<p>Suggested redis keys are <code>object-type:id</code>, for my example below (which is the other way around) I used <code>1:2:seed_string</code>. <code>1</code> and <code>2</code> could be something sensible to the business (like a user and department id) and <code>seed_string</code> could be the human readable explanation of that data for example the department name.</p>
-<p>Searching on a partial key could then be something like <code>1:*</code> which would match anything starting with <code>1:</code>.</p>
-<p>Using the redis CLI <code>set</code> you can create the data and retrieve the data with <code>get</code></p>
+<h2 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a>Keys</h2><p>The suggested redis keys are <code>object-type:id</code>, for <a href="/2019/05/redis-administrator/">Redis Administrator</a> (which is the other way around) I used <code>1:2:seed_string</code>. 1 and 2 could be something sensible to the business (like a user and department id) and seed_string could be the human readable explanation of that data for example the department name.</p>
+<p>Searching on a partial key could then be something like <code>1:*</code> which would match anything starting with <code>1:</code>. In general redis will create a key/value if it doesnt exist should you try write to it.</p>
+<h2 id="Types"><a href="#Types" class="headerlink" title="Types"></a>Types</h2><p>Love a good type, I thrive on structure!</p>
+<h3 id="Types-String"><a href="#Types-String" class="headerlink" title="Types: String"></a>Types: String</h3><p><strong>Usage:</strong> Any kind of data as they are binary safe.</p>
+<ul>
+<li>Example store could be: integers, binary, csv, serialized json, xml, images, video, documents, sound</li>
+<li>Practice usage: caching responses that dont change often and you would then include the ttl. Could be api reponse, session storage, html pages<ul>
+<li>Can also be used for a counter as it has built in increment/decrement support (incr, incrby)</li>
+</ul>
+</li>
+</ul>
+<p>Implemented as key value pair, this is the fundamental redis data type. If the key exists it is replaced regardless of its type.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set mykey somevalue</span><br><span class="line">set mykey somevalue EX 5        ~ sets key&#x2F;value with the ttl of 5 seconds</span><br><span class="line">get mykey</span><br><span class="line">exists mykey</span><br><span class="line">del mykey</span><br><span class="line">type mykey</span><br><span class="line">expire mykey 5    ~ 5 seconds</span><br><span class="line">ttl mykey</span><br></pre></td></tr></table></figure>
+
+<p>CLI examples with a complex key and JSON serialized value. Although this is fine, a <code>Type Hash</code> may be better suited, see futher below.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; set 1:2:seed_string &#123;&quot;Id&quot;:6338,&quot;SomeGuid&quot;:&quot;cfb9aace-08e7-4b7a-9e3a-8775d366240a&quot;,&quot;DateTime&quot;:&quot;2022-02-19T04:00:57.072271+00:00&quot;&#125;</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">&gt; get 1:2:seed_string</span><br><span class="line">&#123;&quot;Id&quot;:6338,&quot;SomeGuid&quot;:&quot;cfb9aace-08e7-4b7a-9e3a-8775d366240a&quot;,&quot;DateTime&quot;:&quot;2022-02-19T04:00:57.072271+00:00&quot;&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Example data from <a target="_blank" rel="noopener" href="https://hub.docker.com/r/carlpaton/redis-administrator">Redis Administrator</a>‘s seed function could look as follows where <code>VALUE</code> is a json serialized object.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">KEY               VALUE</span><br><span class="line">1:2:seed_string   &#123;&quot;Id&quot;:6338,&quot;SomeGuid&quot;:&quot;cfb9aace-08e7-4b7a-9e3a-8775d366240a&quot;,&quot;DateTime&quot;:&quot;2022-02-19T04:00:57.072271+00:00&quot;&#125;</span><br><span class="line">2:3:seed_string   &#123;&quot;Id&quot;:2004,&quot;SomeGuid&quot;:&quot;e7e80043-bf6c-47bf-87b6-e7e801994d83&quot;,&quot;DateTime&quot;:&quot;2022-02-19T04:00:57.2217754+00:00&quot;&#125;</span><br></pre></td></tr></table></figure>
 
 <p><img src="/d/redis-types/string.png" alt="String Type : Redis Administrator"></p>
-<h3 id="Sorted-Set"><a href="#Sorted-Set" class="headerlink" title="Sorted Set"></a>Sorted Set</h3><p>Redis Sorted Sets are similar to Redis Sets, non-repeating collections of Strings. The difference is, every member of a Sorted Set is associated with a score, that is used in order to take the sorted set ordered, from the smallest to the greatest score. While members are unique, the scores may be repeated.</p>
-<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>Redis Sets are an unordered collection of strings. In Redis, you can add, remove, and test for the existence of members in O(1) time complexity.</p>
-<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>Lists of strings, sorted by insertion order. </p>
-<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>Collection of key value pairs. These are maps between string fields and string values used to represent objects.</p>
-<h3 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h3><ul>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/commands/set">https://redis.io/commands/set</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/data-types/data-types-tutorial/#strings">https://redis.io/docs/manual/data-types/data-types-tutorial/#strings</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=7CUt4yWeRQE">Redis Strings Explained - Redis</a></li>
+</ul>
+<h3 id="Type-Lists"><a href="#Type-Lists" class="headerlink" title="Type: Lists"></a>Type: Lists</h3><p><strong>Usage:</strong> ?.</p>
+<p>Implemented as linked list.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">rpush mylist A                     ~ rpush adds a new element into a list on the left (at the head)</span><br><span class="line">rpush mylist B</span><br><span class="line">rpush mylist 1 2 3 4 5 &quot;foo bar&quot;</span><br><span class="line">lpush mylist first                 ~ lpush adds a new element into a list on the right (at the tail)</span><br><span class="line">lrange mylist 0 -1                 ~ lrange extracts ranges of elements</span><br><span class="line">                                   ~ takes two indexes, the first and the last element of the range to return.</span><br><span class="line">rpop mylist                        ~ retrieving the element from the list, and eliminating it from the list, at the same time.</span><br><span class="line">                                   ~ pop elements from left and right</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/data-types/data-types-tutorial/#lists">https://redis.io/docs/manual/data-types/data-types-tutorial/#lists</a></li>
+</ul>
+<h3 id="Type-Sorted-Set"><a href="#Type-Sorted-Set" class="headerlink" title="Type: Sorted Set"></a>Type: Sorted Set</h3><p><strong>Usage:</strong> ?.</p>
+<p>A collection of unique strings, sorted by score</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">zadd hackers 1940 &quot;Alan Kay&quot;              ~ adds &quot;Alan Kay&quot; to the collection with score 1940</span><br><span class="line">zadd hackers 1957 &quot;Sophie Wilson&quot;</span><br><span class="line">zadd hackers 1953 &quot;Richard Stallman&quot;</span><br><span class="line">zadd hackers 1 &quot;carl&quot; 2 &quot;paton&quot;           ~ adding a collection by score&#x2F;value</span><br><span class="line">zrange hackers 0 -1                       ~ extracts ranges of elements</span><br><span class="line">zrevrange hackers 0 -1                    ~ extracts ranges of elements ordering the score desc</span><br><span class="line">zrange hackers 0 -1 withscores            ~ extract with scores</span><br><span class="line">zrangebyscore hackers -inf 1950           ~ return by range with a score between negative infinity and 1950</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=MUKlxdBQZ7g">Redis Sorted Sets Explained - Redis</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/data-types/data-types-tutorial/#sorted-sets">https://redis.io/docs/manual/data-types/data-types-tutorial/#sorted-sets</a></li>
+</ul>
+<h3 id="Type-Set"><a href="#Type-Set" class="headerlink" title="Type: Set"></a>Type: Set</h3><p><strong>Usage:</strong> ?.</p>
+<p>Redis Sets are an unordered collection of strings. In Redis, you can add, remove, and test for the existence of members in O(1) time complexity.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sadd myset 1 2 3             ~ adds new elements to a set</span><br><span class="line">sadd myset 42</span><br><span class="line">smembers myset               ~ returns all the members of the set value stored at key.</span><br><span class="line">spop myset                   ~ removes and returns one or more random members from the set value store at key.</span><br><span class="line">                             ~ not sure about the random, when I tested it kept removing at the end</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/data-types/data-types-tutorial/#sets">https://redis.io/docs/manual/data-types/data-types-tutorial/#sets</a></li>
+</ul>
+<h3 id="Type-Hash"><a href="#Type-Hash" class="headerlink" title="Type: Hash"></a>Type: Hash</h3><p><strong>Usage:</strong> ?.</p>
+<p>Collection of key value pairs. These are maps between string fields and string values used to represent objects.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hmset user:1000 username antirez birthyear 1977 verified 1     ~ sets multiple fields of the hash</span><br><span class="line">hget user:1000 username                                        ~ gets a single field</span><br><span class="line">hmget user:1000 username birthyear no-such-field               ~ gets an array of values</span><br><span class="line">hincrby user:1000 birthyear 10                                 ~ increments the number stored at field in the hash stored at key by increment.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/data-types/data-types-tutorial/#hashes">https://redis.io/docs/manual/data-types/data-types-tutorial/#hashes</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/commands/?group=hash">https://redis.io/commands/?group=hash</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/commands/hincrby/">https://redis.io/commands/hincrby/</a></li>
+</ul>
+<h3 id="Type-Stream"><a href="#Type-Stream" class="headerlink" title="Type: Stream"></a>Type: Stream</h3><p><strong>Usage:</strong> ?.</p>
+<ul>
 <li><a target="_blank" rel="noopener" href="https://redis.io/topics/streams-intro">https://redis.io/topics/streams-intro</a></li>
 </ul>
 <p>Models a log data structure in a more abstract way.</p>
-<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<h3 id="Type-Geospatial"><a href="#Type-Geospatial" class="headerlink" title="Type: Geospatial"></a>Type: Geospatial</h3><p><strong>Usage:</strong> ?.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.com/redis-best-practices/indexing-patterns/geospatial/">https://redis.com/redis-best-practices/indexing-patterns/geospatial/</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/commands/geopos/">https://redis.io/commands/geopos/</a></li>
+</ul>
+<h3 id="Type-Bitmaps"><a href="#Type-Bitmaps" class="headerlink" title="Type: Bitmaps"></a>Type: Bitmaps</h3><p><strong>Usage:</strong> ?.</p>
+<h3 id="Type-Hyperloglogs"><a href="#Type-Hyperloglogs" class="headerlink" title="Type: Hyperloglogs"></a>Type: Hyperloglogs</h3><p><strong>Usage:</strong> ?.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://redis.io/topics/data-types">https://redis.io/topics/data-types</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/about/">https://redis.io/docs/about/</a></li>
+<li><a target="_blank" rel="noopener" href="https://university.redis.com/courses/ru101/">https://university.redis.com/courses/ru101/</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.com/redis-enterprise/data-structures/">https://redis.com/redis-enterprise/data-structures/</a></li>
 </ul>
 
       
@@ -173,7 +230,7 @@ ga('send', 'pageview');
       <a data-url="https://carlpaton.github.io/2022/02/redis-types/" data-id="ckztbssgo00001oon5y1k5bhg" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
 
     </footer>
   </div>

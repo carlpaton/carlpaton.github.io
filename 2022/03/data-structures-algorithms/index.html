@@ -30,7 +30,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures-algorithms-in-c-sharp/singly-linked-list.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures-algorithms-in-c-sharp/binary-search-tree.png">
 <meta property="article:published_time" content="2022-03-11T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-28T10:11:24.496Z">
+<meta property="article:modified_time" content="2022-04-29T06:39:37.520Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="data structures algorithms">
@@ -182,6 +182,8 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">O(1)       ~ it takes a constant time</span><br><span class="line">           ~ like 14 nanoseconds, or three minutes no matter the amount of data in the set</span><br><span class="line"></span><br><span class="line">O(log n)   ~ time goes up linearly while the n goes up exponentially</span><br><span class="line">           ~ if it takes 1 second to compute 10 elements, it will take 2 seconds to compute 100 elements, 3 seconds to compute 1000 elements, and so on</span><br><span class="line"></span><br><span class="line">O(n)       ~ complexity of a function </span><br><span class="line">           ~ increases linearly and in direct proportion to the number of inputs.</span><br><span class="line"></span><br><span class="line">O(n log n) ~ .</span><br><span class="line"></span><br><span class="line">O(n^2)     ~ it takes n*n operations</span><br><span class="line">           ~ example is a nested loop</span><br><span class="line"></span><br><span class="line">O(n!)      ~ .</span><br></pre></td></tr></table></figure>
+
 <h3 id="Constant-time"><a href="#Constant-time" class="headerlink" title="Constant time"></a>Constant time</h3><ul>
 <li>independent of input size, <code>n</code></li>
 </ul>
@@ -194,15 +196,15 @@ ga('send', 'pageview');
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">y &#x3D; 5 + (15 * 20);        ~ O(1)</span><br><span class="line">for x in range (O, n):</span><br><span class="line">   print x;               ~ complete for loop is O(n)</span><br><span class="line"></span><br><span class="line">total time is the summation of these two &#x3D; O(1) + O(n)</span><br><span class="line">we drop low order terms when n gets large, the time to compute y is meaningless</span><br><span class="line">the result is then O(n) this is because the for loop dominates the run time</span><br></pre></td></tr></table></figure>
 
+<h3 id="Logarithmic-time"><a href="#Logarithmic-time" class="headerlink" title="Logarithmic time"></a>Logarithmic time</h3><ul>
+<li><code>Logarithmic</code> time (Complexity Analysis) is faster than a <code>Linear</code> time operations because it runs in <code>O(log n)</code></li>
+</ul>
 <h3 id="Quadratic-time"><a href="#Quadratic-time" class="headerlink" title="Quadratic time"></a>Quadratic time</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for x in range (0, n):</span><br><span class="line">   for y in range (0, n):</span><br><span class="line">      print x * y;         ~ O(1)</span><br><span class="line"></span><br><span class="line">this is executed at n * n which is O(n^2)</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; 5 + (15 * 20);         ~ O(1)</span><br><span class="line">for x in range(0, n):</span><br><span class="line">   print x;                ~ complete for loop if O(n)</span><br><span class="line">for x in range(O, n):</span><br><span class="line">   for y in range(O, n):</span><br><span class="line">      print x * y;         ~ complete for the nested loops is O(n^2)</span><br><span class="line"></span><br><span class="line">the nested for loop dominates here, the result is O(n^2)</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if x &gt; 0:</span><br><span class="line">   ~ O(1)</span><br><span class="line">else if x &lt; 0:</span><br><span class="line">   ~ O(log n)</span><br><span class="line">else:</span><br><span class="line">   ~ O(n^2)</span><br><span class="line"></span><br><span class="line">with big O we usually loook at worst case scenario, here the largest runtime is O(n^2)</span><br></pre></td></tr></table></figure>
 
-<h3 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h3><ul>
-<li><code>Logarithmic</code> time (Complexity Analysis) is faster than a <code>Linear</code> time operations because it runs in <code>O(log n)</code></li>
-</ul>
 <h2 id="Sliding-Window-Technique"><a href="#Sliding-Window-Technique" class="headerlink" title="Sliding Window Technique"></a>Sliding Window Technique</h2><p>Involves manipulating two pointers or two indices at the same time as you’re traversing thought something like a string or an array. Basically you have a left pointer/index and a right pointer/index and your move them simultaneously in an array or a string. (could be to count frequency of characters)</p>
 <h2 id="Recursion"><a href="#Recursion" class="headerlink" title="Recursion"></a>Recursion</h2><p>A lot of problems can be solved easily with recursion (as apposed to iteratively). This produces cleaner and less code than an iterative approach. Example problems that help you understand recursion include: </p>
 <ul>
