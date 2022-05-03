@@ -29,7 +29,7 @@ ga('send', 'pageview');
 <meta property="og:locale">
 <meta property="og:image" content="https://carlpaton.github.io/d/redis-types/string.png">
 <meta property="article:published_time" content="2022-02-18T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-29T07:24:11.402Z">
+<meta property="article:modified_time" content="2022-05-01T22:05:45.535Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="redis">
@@ -162,7 +162,7 @@ ga('send', 'pageview');
 <p>Implemented as key value pair, this is the fundamental redis data type. If the key exists it is replaced regardless of its type.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set mykey somevalue</span><br><span class="line">set mykey somevalue EX 5        ~ sets key&#x2F;value with the ttl of 5 seconds</span><br><span class="line">get mykey</span><br><span class="line">exists mykey</span><br><span class="line">del mykey</span><br><span class="line">type mykey</span><br><span class="line">expire mykey 5    ~ 5 seconds</span><br><span class="line">ttl mykey</span><br></pre></td></tr></table></figure>
 
-<p>CLI examples with a complex key and JSON serialized value. Although this is fine, a <code>Type Hash</code> may be better suited, see futher below.</p>
+<p>CLI examples with a complex key and JSON serialized value. Although this is fine, a type of <code>Hash</code> may be better suited, see futher below.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; set 1:2:seed_string &#123;&quot;Id&quot;:6338,&quot;SomeGuid&quot;:&quot;cfb9aace-08e7-4b7a-9e3a-8775d366240a&quot;,&quot;DateTime&quot;:&quot;2022-02-19T04:00:57.072271+00:00&quot;&#125;</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">&gt; get 1:2:seed_string</span><br><span class="line">&#123;&quot;Id&quot;:6338,&quot;SomeGuid&quot;:&quot;cfb9aace-08e7-4b7a-9e3a-8775d366240a&quot;,&quot;DateTime&quot;:&quot;2022-02-19T04:00:57.072271+00:00&quot;&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Example data from <a target="_blank" rel="noopener" href="https://hub.docker.com/r/carlpaton/redis-administrator">Redis Administrator</a>‘s seed function could look as follows where <code>VALUE</code> is a json serialized object.</p>

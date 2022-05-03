@@ -31,7 +31,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/rosetta-code-invert-a-binary-tree/invert-binary-tree-example.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/rosetta-code-invert-a-binary-tree/invert-binary-tree-from-specified-node.png">
 <meta property="article:published_time" content="2021-06-13T12:00:00.000Z">
-<meta property="article:modified_time" content="2022-05-01T07:59:27.830Z">
+<meta property="article:modified_time" content="2022-05-02T23:57:28.991Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="rosetta code">
@@ -194,6 +194,9 @@ ga('send', 'pageview');
 </li>
 <li>Use recursion to invert from there the same as we did in task 1 above</li>
 </ul>
+<p>Example code to traverse recursively</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">BstNode</span> &#123;</span><br><span class="line">  <span class="built_in">int</span> data;</span><br><span class="line">  BstNode left;</span><br><span class="line">  BstNode right;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Traverse</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (left != <span class="literal">null</span>) &#123;</span><br><span class="line">    left.Traverse();</span><br><span class="line">  &#125;</span><br><span class="line">  Console.WriteLine(<span class="keyword">this</span>.data);</span><br><span class="line">  <span class="keyword">if</span> (right != <span class="literal">null</span>) &#123;</span><br><span class="line">    right.Traverse();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://afteracademy.com/blog/invert-a-binary-tree">https://afteracademy.com/blog/invert-a-binary-tree</a></li>
 <li><a target="_blank" rel="noopener" href="https://thecodebarbarian.com/i-dont-want-to-hire-you-if-you-cant-reverse-a-binary-tree">https://thecodebarbarian.com/i-dont-want-to-hire-you-if-you-cant-reverse-a-binary-tree</a></li>
