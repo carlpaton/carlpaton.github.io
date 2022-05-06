@@ -28,12 +28,15 @@ ga('send', 'pageview');
 <meta property="og:description" content="“In computer science, a data structure is a data organization, management, and storage format that enables efficient access and modification.” - https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Data_structure  Why care">
 <meta property="og:locale">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/arrays.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/data-structures/binary-search-tree.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/data-structures/dictionary.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/singly-linked-list.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/doubly-linked-list.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/circular-linked-list.png">
-<meta property="og:image" content="https://carlpaton.github.io/d/data-structures/binary-search-tree.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/data-structures/queue.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/data-structures/stack.png">
 <meta property="article:published_time" content="2022-03-11T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-05-03T00:34:32.281Z">
+<meta property="article:modified_time" content="2022-05-06T01:11:16.218Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="data structures">
@@ -148,24 +151,20 @@ ga('send', 'pageview');
 </blockquote>
 <h1 id="Why-care"><a href="#Why-care" class="headerlink" title="Why care?"></a>Why care?</h1><p>Suitable data structures affect the performance of your application. You can increase quality and performance by choosing the right data structure and accomanying algorithm. This feels like something we should care about.</p>
 <p> Additionally <a href="/2022/03/big-o-notation/">Big O Notation</a> is worth understanding as this is how the complexity is rated.</p>
-<h2 id="Arrays"><a href="#Arrays" class="headerlink" title="Arrays"></a>Arrays</h2><p><strong>Use case</strong>: store a collection of data (can be sorted or un-sorted)<br><strong>Complexity</strong>: O(n) Linear time / complexity</p>
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><p><strong>Complexity</strong>: O(n) Linear time / complexity<br><strong>Use case</strong>: store a collection of data (can be sorted or un-sorted)</p>
 <p>An array is a linear data structure that collects elements of the same data type and stores them in a sequential manner one after the other.</p>
+<p>This is a <code>Random Access</code> data structure</p>
 <p><img src="/d/data-structures/arrays.png" alt="arrays (linear data structure, all of the same type)"></p>
 <p><strong>References</strong></p>
 <ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=fIj2PrY_UE0">The Array - Introduction to Data Structures (Episode 2)</a></li>
 <li>Also see <a href="/2020/05/c-sharp-collections-of-entities/">C# Collections of Entities</a></li>
 </ul>
-<h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><p><strong>Use case</strong>: could be to implement other data structures like <code>stacks</code>, <code>queues</code> and <code>hash tables</code>. Operations would be <code>search</code>, <code>insert</code> and <code>delete</code></p>
-<p>Data structure for storing objects in linear order, each object has data and a pointer to the next object. Simliar to arrays except pointers determine ordering not the array indices.</p>
-<p><img src="/d/data-structures/singly-linked-list.png" alt="singly linked list (pointers are in one direction)"></p>
-<p>Additionally there are <code>doubly</code> linked lists.</p>
-<p><img src="/d/data-structures/doubly-linked-list.png" alt="doubly linked list (prev pointer points to the object infront of it in the chain)"></p>
-<p>And <code>circular</code> linked lists.</p>
-<p><img src="/d/data-structures/circular-linked-list.png" alt="circular linked list (prev pointer of head object points to the tail, the next pointer of the tail object points to the head)"></p>
+<h2 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h2><p><strong>Complexity</strong>: ?<br><strong>Use case</strong>: ?</p>
+<p>TODO</p>
 <p><strong>References</strong></p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=F8AbOfQwl1c">Linked lists in 4 minutes - Michael Sambol</a></li>
-<li>Also see <a href="/2021/06/reverse-a-linked-list/">Reverse a Linked List</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=D0ll56hKReg">The ArrayList - Introduction to Data Structures (Episode 3)</a></li>
 </ul>
 <h2 id="Binary-Search-Tree"><a href="#Binary-Search-Tree" class="headerlink" title="Binary Search Tree"></a>Binary Search Tree</h2><p><strong>Complexity</strong>: O(log n) Logarithmic time / complexity<br><strong>Use case</strong>: Insert, find and delete</p>
 <p>Supports <code>Binary Search Algorithm</code> to find a targeted value in a sorted array. A tree is a collection of nodes with edges that connect them.</p>
@@ -187,9 +186,96 @@ ga('send', 'pageview');
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=mtvbVLK5xDQ">Binary Search Trees (BST) Explained in Animated Demo</a></li>
 <li>Also see <a href="/2021/06/rosetta-code-invert-a-binary-tree/">Invert A Binary Tree</a></li>
 </ul>
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Dictionaries</span><br><span class="line">Hash sets &#x2F; Hashtable</span><br><span class="line">Queues</span><br><span class="line">Stacks</span><br><span class="line"></span><br><span class="line">Trees</span><br><span class="line">- Suffix Trees</span><br><span class="line"></span><br><span class="line">Graphs </span><br><span class="line">- Graph Traversals: Depth First Search (DFS), Breadth-first search (BFS)</span><br><span class="line"></span><br><span class="line">Heaps</span><br><span class="line">- Basically like binary trees and usually min&#x2F;max heaps that have a special property.</span><br><span class="line">- Helpful when you need to repeatedly find the smallest and largest values in groups of values.</span><br></pre></td></tr></table></figure>
+<h2 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h2><p><strong>Complexity</strong>: O(1) Constant time / complexity (for insert, find and delete). This is because the hash function will tell us exactly where that key/value is stored<br><strong>Use case</strong>: Insert, find and delete</p>
+<p>A Dictionary is an abstract data structure which stores data in the form of <code>key/value pairs</code>, each value has a key associated with it and together they create a pair which is stored in the dictionary data structure as an element of that dictionary. They are also known as <code>maps</code> or <code>associative arrays</code> in some langauges, there is no functional difference and all work in almost identical ways.</p>
+<p>The most common way to implement a dictionary is using a <code>hash table/function</code>. By giving a hash function both a key and a table to map it to, it can determine what index location to store that key at in the array. Dictionaries are built upon these <code>Hash Tables</code> and the key’s in our key/value pairs are stored in memory IN these hash tables at indexes which are determined by a hash function.</p>
+<p><strong>key:</strong> Dictionaries are indexed using the key as opposed to a numerical index like an array. The key’s in a key/value pair can be pretty much any primitive data type, examples <code>int</code>, <code>string</code>, <code>double</code> ect. Keys can only appear once in the dictionary, they have to be unique. Additionally each key can only have 1 value.</p>
+<p><strong>value:</strong> The pairs can be anything, its very flexible in terms of the combinations of key/values. Examples <code>string</code>, <code>bool</code> or even another <code>dictionary</code>. Duplicate values are allowed as long as the key is unique.</p>
+<p><img src="/d/data-structures/dictionary.png" alt="dictionary index is determined by a hash of the key"></p>
+<p><strong>References</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=j0cPnbtp1_w">Dictionaries - Introduction to Data Structures (Episode 8) - NullPointer Exception</a></li>
+</ul>
+<h3 id="Hash-sets-Hashtable"><a href="#Hash-sets-Hashtable" class="headerlink" title="Hash sets / Hashtable"></a>Hash sets / Hashtable</h3><ul>
+<li>Hash tables are a way to store information so that we’re able to cut down the amount of nil values while also allowing for the information to be stored in a way that is easily accessible.</li>
+<li>A hash function will take all the keys for a given dictionary and strategically map them to a certain index location in an array so that it can eventually be retreived easily.</li>
+<li>Hash collisions <ul>
+<li>are when a hash function takes two keys, example <code>Steven</code> and <code>Sean</code>, hashes them and returns the same index. Example 9</li>
+<li>this can be resolved using either open addressing or closed addressing<ul>
+<li>open addressing will put the key in some other index location separate from the one returned to us by the hash function. Normally by looking for the next nil value in the table, this is the closest location that has no key already.</li>
+<li>closed addressing uses linked lists to chain together keys which result in the same hash value</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Graphs"><a href="#Graphs" class="headerlink" title="Graphs"></a>Graphs</h2><p><strong>Complexity</strong>: ?<br><strong>Use case</strong>: ?</p>
+<p>Graph Traversals: Depth First Search (DFS), Breadth-first search (BFS)</p>
+<p><strong>References</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=KEZX4qDyQ3s">Graphs - Introduction to Data Structures (Episode 12)</a></li>
+</ul>
+<h2 id="Heaps"><a href="#Heaps" class="headerlink" title="Heaps"></a>Heaps</h2><p><strong>Complexity</strong>: ?<br><strong>Use case</strong>: ?</p>
+<ul>
+<li>Basically like binary trees and usually min/max heaps that have a special property.</li>
+<li>Helpful when you need to repeatedly find the smallest and largest values in groups of values.</li>
+</ul>
+<p><strong>References</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=PEhPs4ZVvaw">Heaps - Introduction to Data Structures (Episode 11)</a></li>
+</ul>
+<h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><p><strong>Complexity</strong>: ?<br><strong>Use case</strong>: could be to implement other data structures like <code>stacks</code>, <code>queues</code> and <code>hash tables</code>. Operations would be <code>search</code>, <code>insert</code> and <code>delete</code></p>
+<p>Data structure for storing objects in linear order, each object has data and a pointer to the next object. Simliar to arrays except pointers determine ordering not the array indices.</p>
+<p><img src="/d/data-structures/singly-linked-list.png" alt="singly linked list (pointers are in one direction)"></p>
+<p>Additionally there are <code>doubly</code> linked lists.</p>
+<p><img src="/d/data-structures/doubly-linked-list.png" alt="doubly linked list (prev pointer points to the object infront of it in the chain)"></p>
+<p>And <code>circular</code> linked lists.</p>
+<p><img src="/d/data-structures/circular-linked-list.png" alt="circular linked list (prev pointer of head object points to the tail, the next pointer of the tail object points to the head)"></p>
+<p><strong>References</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=F8AbOfQwl1c">Linked lists in 4 minutes - Michael Sambol</a></li>
+<li>Also see <a href="/2021/06/reverse-a-linked-list/">Reverse a Linked List</a></li>
+</ul>
+<h2 id="Queues"><a href="#Queues" class="headerlink" title="Queues"></a>Queues</h2><p><strong>Complexity</strong>: </p>
+<ul>
+<li>O(n) for accessing/searching (this is because you have to go though each element to get the one you want, complexity defaults to worst case)</li>
+<li>O(1) for inserting/deleting as its always at either the <code>head</code> or <code>tail</code></li>
+</ul>
+<p><strong>Use case</strong>: Job scheduling, printer queue, modern cameras (Google pixel phones) would use them for zero shutter lag (the time between when you take a picture and what the phone actually captures) </p>
+<p>A <code>queue</code> is a sequential access data structure that follows the FIFO methodology (First-In, First-Out), this means we can only access the elements contained within it in a certain way.</p>
+<p>The first element added to the queue will always be the first one to be removed. New elements are added to the <code>tail</code> (aka <code>rear</code> or <code>back</code>) and are removed from the <code>head</code> (aka <code>front</code>) until all elements are removed.</p>
+<p>Elements are added with <code>Enqueue(object)</code> and removed with <code>Dequeue()</code>. Additionally to can <code>Peek()</code> to check whats at the head without removing it or run <code>Contains(object)</code> to check if an element value matches what you are looking for.</p>
+<p><img src="/d/data-structures/queue.png" alt="queue (FIFO)"></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">var</span> myQueue = <span class="keyword">new</span> Queue();</span><br><span class="line"></span><br><span class="line">myQueue.Enqueue(<span class="string">&quot;foo&quot;</span>);</span><br><span class="line">myQueue.Enqueue(<span class="number">42</span>);</span><br><span class="line"></span><br><span class="line">myQueue.Peek      <span class="comment">// get the head element in the queue without removing it</span></span><br><span class="line">myQueue.Dequeue   <span class="comment">// get and remove the head element</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<p><strong>References</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=1pd4yCbXoAI">The Queue - Introduction to Data Structures (Episode 5)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/c-sharp-queue-with-examples/">https://www.geeksforgeeks.org/c-sharp-queue-with-examples/</a></li>
+</ul>
+<h2 id="Stacks"><a href="#Stacks" class="headerlink" title="Stacks"></a>Stacks</h2><p><strong>Complexity</strong>:</p>
+<ul>
+<li>O(n) for accessing/searching (this is because we have to pop off elements to get to the one we are looking for, complexity defaults to worst case)</li>
+<li>O(1) for inserting/deleting as its always at the <code>head</code></li>
+</ul>
+<p><strong>Use case</strong>: Recusion uses stacks as a way of keeping of active functions/sub-routines. Undo/Redo in a word processor, back paging on web engines.</p>
+<p>This is a <code>sequential access</code> data structure, the elements can only be accessed in a particular order. Each element is dependat on the others and may only be obtained though those other elements. Elements are added using LIFO methodology (Last-In, First-Out)</p>
+<p>Last element pushed onto the stack would be the first one popped off, this means there is only one way in and out for the data.</p>
+<p>Elements are added with <code>Push(object)</code> and removed with <code>Pop()</code>. Additionally to can <code>Peek()</code> to check whats at the head without removing it or run <code>Contains(object)</code> to check if an element value matches what you are looking for.</p>
+<p><img src="/d/data-structures/stack.png" alt="stack (LIFO)"></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">var</span> myStack = <span class="keyword">new</span> Stack();</span><br><span class="line"></span><br><span class="line">myStack.Push(<span class="number">7</span>);</span><br><span class="line"></span><br><span class="line">myStack.Peek      <span class="comment">// get the head element in the queue without removing it</span></span><br><span class="line">myStack.Dequeue   <span class="comment">// get and remove the head element</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>References</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=GtJAXK4adNQ">The Stack - Introduction to Data Structures (Episode 4)</a></li>
+</ul>
+<h2 id="Trees"><a href="#Trees" class="headerlink" title="Trees"></a>Trees</h2><p><strong>Complexity</strong>: ?<br><strong>Use case</strong>: ?</p>
+<p>Suffix Trees</p>
+<p><strong>References</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=FjrY7EMqaVQ">Trees - Introduction to Data Structures (Episode 9)</a></li>
+</ul>
+<h2 id="General-References"><a href="#General-References" class="headerlink" title="General References"></a>General References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Ge0Udbws1kc">The 10 Most Important Concepts For Coding Interviews (algorithms and data structures) - Clément Mihailescu</a></li>
 <li><a target="_blank" rel="noopener" href="https://dev.to/adavidoaiei/fundamental-data-structures-and-algorithms-in-c-4ocf">Fundamental Data Structures and Algorithms in C#</a></li>
 </ul>
@@ -255,6 +341,10 @@ ga('send', 'pageview');
       <ul>
         
           <li>
+            <a href="/2022/05/sql-read-write-excel/">SQL Read, Write using Excel file</a>
+          </li>
+        
+          <li>
             <a href="/2022/04/reactjs-custom-hooks/">React JS Custom Hook</a>
           </li>
         
@@ -270,10 +360,6 @@ ga('send', 'pageview');
             <a href="/2022/04/front-end-app-/">Front End Application Organisation</a>
           </li>
         
-          <li>
-            <a href="/2022/04/reactjs-redux-toolkit/">React JS Redux Toolkit</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -283,7 +369,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.74px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 13.91px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.87px;">arduino</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/authentication/" style="font-size: 13.04px;">authentication</a> <a href="/tags/aws/" style="font-size: 15.65px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.43px;">cad</a> <a href="/tags/cam/" style="font-size: 10.43px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 11.3px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.74px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.61px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 16.96px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.87px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.43px;">feature management</a> <a href="/tags/food/" style="font-size: 10.87px;">food</a> <a href="/tags/git/" style="font-size: 11.3px;">git</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.74px;">ide</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.17px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.74px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.83px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.87px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.43px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.3px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.87px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 11.74px;">python</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.52px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.43px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.43px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 13.91px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.26px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.22px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/threading/" style="font-size: 10.43px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.7px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.09px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.13px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.87px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 14.09px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.91px;">arduino</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 13.18px;">authentication</a> <a href="/tags/aws/" style="font-size: 15.45px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 10.45px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 11.36px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.73px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/docker/" style="font-size: 16.82px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.45px;">feature management</a> <a href="/tags/food/" style="font-size: 10.91px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 11.82px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.45px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 11.82px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.27px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 10.45px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10.45px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
     </div>
   </div>
 
