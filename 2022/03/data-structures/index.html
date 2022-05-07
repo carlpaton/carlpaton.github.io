@@ -28,6 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="“In computer science, a data structure is a data organization, management, and storage format that enables efficient access and modification.” - https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Data_structure  Why care">
 <meta property="og:locale">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/arrays.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/data-structures/arraylist.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/binary-search-tree.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/dictionary.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/graph-visual-representation.png">
@@ -41,7 +42,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/queue.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/stack.png">
 <meta property="article:published_time" content="2022-03-11T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-05-06T06:21:11.719Z">
+<meta property="article:modified_time" content="2022-05-07T02:54:01.035Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="data structures">
@@ -155,18 +156,54 @@ ga('send', 'pageview');
 <p>“In computer science, a data structure is a data organization, management, and storage format that enables efficient access and modification.” - <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Data_structure">https://en.wikipedia.org/wiki/Data_structure</a></p>
 </blockquote>
 <h1 id="Why-care"><a href="#Why-care" class="headerlink" title="Why care?"></a>Why care?</h1><p>Suitable data structures affect the performance of your application. You can increase quality and performance by choosing the right data structure and accomanying algorithm. This feels like something we should care about.</p>
-<p> Additionally <a href="/2022/03/big-o-notation/">Big O Notation</a> is worth understanding as this is how the complexity is rated.</p>
-<h1 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h1><p><strong>Complexity</strong>: O(n) Linear time / complexity<br><strong>Use case</strong>: store a collection of data (can be sorted or un-sorted)</p>
+<p>Additionally <a href="/2022/03/big-o-notation/">Big O Notation</a> is worth understanding as this is how the complexity is rated.</p>
+<h1 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h1><p><strong>Complexity</strong>: O(1) Constant time / complexity to access data. Searching, Inserting, Deleteing is O(n) Linear time / complexity<br><strong>Use case</strong>: Fixed size collection that dont change, can store all types of data. Smaller tasks where you wont be interacting with the data that often</p>
 <p><img src="/d/data-structures/arrays.png" alt="arrays (linear data structure, all of the same type)"></p>
-<p>An array is a linear data structure that collects elements of the same data type and stores them in a sequential manner one after the other.</p>
-<p>This is a <code>Random Access</code> data structure</p>
+<p>An array is a linear data structure that collects elements of the same data type and stores them in a sequential manner one after the other. This is a <code>Random Access</code> data structure.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span>[] array = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">42</span>];</span><br></pre></td></tr></table></figure>
+
 <p><strong>References</strong></p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=fIj2PrY_UE0">The Array - Introduction to Data Structures (Episode 2)</a></li>
 <li>Also see <a href="/2020/05/c-sharp-collections-of-entities/">C# Collections of Entities</a></li>
 </ul>
-<h1 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h1><p><strong>Complexity</strong>: ?<br><strong>Use case</strong>: ?</p>
-<p>TODO</p>
+<h1 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h1><p><strong>Complexity</strong>: O(1) Constant time / complexity to access data. Searching, Inserting, Deleteing is O(n) Linear time / complexity<br><strong>Use case</strong>: Dynamic size, can only store object (so no primative types although they are auto boxed for you). More interactive programs where you’ll be modifying data often</p>
+<p><img src="/d/data-structures/arraylist.png" alt="arraylist)"></p>
+<p>Fundametially this is a growing array, this means an <code>ArrayList</code> is dynamic and expands as needs. Its backed by an array in memory, this is managed by the ArrayList class.</p>
+<p>The <code>ArrayList</code> stores references/pointers to the locations of its objects in memory, this is why it can grow in size. This means the data is not stored contiguously (as consecutive blocks of memory).</p>
+<p>From the class it will inherit pre-built methods that we can use, there are a few which not all langauges implement. The most common are which you could find are</p>
+<ul>
+<li>Add<ul>
+<li><code>Add(Object)</code> will append to the end of the array list where no value exists. If you pass a primative type like <code>Add(2)</code> it will convert the 2 to an <code>Integer(2)</code> object which is auto boxing</li>
+<li><code>Add(Object, index)</code> will add the element you pass at the given index. If the index is taken it will shift the values over to the next avalible index</li>
+</ul>
+</li>
+<li>Remove<ul>
+<li><code>Remove(index)</code> will remove the element at that index location</li>
+<li><code>Remove(Object)</code> will remove the first instance of that Object in the array list</li>
+<li>Both return -1 if nothing is found to be removed</li>
+<li>The size of the array list doesnt change</li>
+</ul>
+</li>
+<li>Get<ul>
+<li><code>Get(index)</code> will return the value at that location</li>
+</ul>
+</li>
+<li>Set<ul>
+<li><code>Set(index, Object)</code> is used to replace elements in the array list, it will set element at the index which you passe in to the object you also passed in</li>
+</ul>
+</li>
+<li>Clear<ul>
+<li><code>Clear</code> everything in the array list, the size doesnt change</li>
+</ul>
+</li>
+<li>toArray<ul>
+<li><code>var newArray = arrayList.toArray()</code> will convert an array list to an array, the array will be an array of objects</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arrayList = <span class="keyword">new</span> ArrayList(); <span class="comment">// auto array size will be 10</span></span><br></pre></td></tr></table></figure>
+
 <p><strong>References</strong></p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=D0ll56hKReg">The ArrayList - Introduction to Data Structures (Episode 3)</a></li>
