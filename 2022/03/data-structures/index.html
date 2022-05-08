@@ -36,13 +36,15 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/graph-directed-undirected.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/graph-cyclic-acyclic.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/graph-weight.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/data-structures/heaps.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/singly-linked-list.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/doubly-linked-list.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/circular-linked-list.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/queue.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/data-structures/stack.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/data-structures/tree.png">
 <meta property="article:published_time" content="2022-03-11T11:00:00.000Z">
-<meta property="article:modified_time" content="2022-05-07T02:54:01.035Z">
+<meta property="article:modified_time" content="2022-05-08T02:07:19.883Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="data structures">
@@ -208,16 +210,17 @@ ga('send', 'pageview');
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=D0ll56hKReg">The ArrayList - Introduction to Data Structures (Episode 3)</a></li>
 </ul>
-<h2 id="Binary-Search-Tree"><a href="#Binary-Search-Tree" class="headerlink" title="Binary Search Tree"></a>Binary Search Tree</h2><p><strong>Complexity</strong>: O(log n) Logarithmic time / complexity<br><strong>Use case</strong>: Insert, find and delete</p>
+<h1 id="Binary-Search-Tree"><a href="#Binary-Search-Tree" class="headerlink" title="Binary Search Tree"></a>Binary Search Tree</h1><p><strong>Complexity</strong>: O(log n) Logarithmic time / complexity<br><strong>Use case</strong>: Insert, find and delete</p>
 <p><img src="/d/data-structures/binary-search-tree.png" alt="binary-search-tree"></p>
 <p>Supports <code>Binary Search Algorithm</code> to find a targeted value in a sorted array. A tree is a collection of nodes with edges that connect them.</p>
 <ul>
 <li>None-linear, meaning they have a Left and a Right pointer</li>
-<li>Searching<ul>
-<li>if the value of the data is &lt; this node, go left</li>
-<li>if the value of the data is &gt;= this node, go right</li>
+<li>2 Children Max<ul>
+<li>Child to the <code>left</code> has a value <code>less</code> than or equal to itself</li>
+<li>Child on the <code>right</code> has a value <code>greater</code> than or equal to itself</li>
 </ul>
 </li>
+<li>No 2 nodes can contain the same value</li>
 <li>Each pass cuts the data in half</li>
 </ul>
 <p><strong>References</strong></p>
@@ -314,16 +317,49 @@ ga('send', 'pageview');
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=KEZX4qDyQ3s">Graphs - Introduction to Data Structures (Episode 12)</a></li>
 </ul>
-<h1 id="Heaps"><a href="#Heaps" class="headerlink" title="Heaps"></a>Heaps</h1><p><strong>Complexity</strong>: ?<br><strong>Use case</strong>: ?</p>
+<h1 id="Heaps"><a href="#Heaps" class="headerlink" title="Heaps"></a>Heaps</h1><p><strong>Use case</strong>: </p>
 <ul>
+<li>Commonly used in the implementation of <ul>
+<li><code>HeapSort</code>, a <code>sorting alorithm</code> which takes in  a list of elements, builds them into a min/max heap, and then <code>removes</code> the root node <code>continuously</code> to make a sorted list</li>
+<li><code>priority queues</code> which is an advanced data structure which your computer uses to <code>designate tasks</code> and assign computer power based on how <code>urgent</code> the matter is</li>
+</ul>
+</li>
+</ul>
+<p><img src="/d/data-structures/heaps.png" alt="heaps"></p>
+<ul>
+<li>Each node can only have 2 children</li>
+<li>A special tree where all <code>parent nodes</code> compare to their <code>children nodes</code> in some specific way<ul>
+<li>Determines <code>where</code> the data is stored</li>
+<li>Usually <code>dependent</code> on the parents node value</li>
+</ul>
+</li>
+<li>Min heap<ul>
+<li>The value at the <code>root node</code> of the tree must be the <code>minimum</code> amongst all of its children</li>
+<li>This fact must be the same <code>recursively</code> for all the parent nodes contained within the heap</li>
+</ul>
+</li>
+<li>Max heap<ul>
+<li>The value at the <code>root node</code> of the tree must be the <code>maximum</code> amongst all of its children</li>
+<li>This fact must be the same <code>recursively</code> for all the parent nodes contained within the heap</li>
+</ul>
+</li>
 <li>Basically like binary trees and usually min/max heaps that have a special property.</li>
 <li>Helpful when you need to repeatedly find the smallest and largest values in groups of values.</li>
+</ul>
+<h2 id="Adding-to-the-heap"><a href="#Adding-to-the-heap" class="headerlink" title="Adding to the heap"></a>Adding to the heap</h2><ul>
+<li>When building the heap we always start at the left, if the left child is taken then we add to the <code>right</code>. </li>
+<li>Finally <code>recursively</code> swap nodes based on the heap type <code>min</code> or <code>max</code></li>
+</ul>
+<h2 id="Deleting-from-the-heap-root-node"><a href="#Deleting-from-the-heap-root-node" class="headerlink" title="Deleting from the heap (root node)"></a>Deleting from the heap (root node)</h2><ul>
+<li>Remove root node from the heap (Well its value)</li>
+<li>Replace it with the node furthest to the right</li>
+<li><code>heapify</code> the heap by comparing the parent nodes to their children and swapping if nexessary</li>
 </ul>
 <p><strong>References</strong></p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=PEhPs4ZVvaw">Heaps - Introduction to Data Structures (Episode 11)</a></li>
 </ul>
-<h1 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h1><p><strong>Complexity</strong>: ?<br><strong>Use case</strong>: could be to implement other data structures like <code>stacks</code>, <code>queues</code> and <code>hash tables</code>. Operations would be <code>search</code>, <code>insert</code> and <code>delete</code></p>
+<h1 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h1><p><strong>Use case</strong>: could be to implement other data structures like <code>stacks</code>, <code>queues</code> and <code>hash tables</code>. Operations would be <code>search</code>, <code>insert</code> and <code>delete</code></p>
 <p>Data structure for storing objects in linear order, each object has data and a pointer to the next object. Simliar to arrays except pointers determine ordering not the array indices.</p>
 <p><img src="/d/data-structures/singly-linked-list.png" alt="singly linked list (pointers are in one direction)"></p>
 <p>Additionally there are <code>doubly</code> linked lists.</p>
@@ -368,10 +404,32 @@ ga('send', 'pageview');
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=GtJAXK4adNQ">The Stack - Introduction to Data Structures (Episode 4)</a></li>
 </ul>
-<h1 id="Trees"><a href="#Trees" class="headerlink" title="Trees"></a>Trees</h1><p><strong>Complexity</strong>: ?<br><strong>Use case</strong>: ?</p>
-<p>Trees have a specific starting point (the root node) with two branches (can also have one or no branches)</p>
+<h1 id="Trees"><a href="#Trees" class="headerlink" title="Trees"></a>Trees</h1><p><strong>Use case</strong>: Storing data in a <code>hierarchically</code> structure. File structure, Family tree, Company corporate structure.</p>
+<p>Trees store data <code>hierarchically</code> as opposed to lineraly like a list. They have a specific starting point (the root node) with two branches however they can also have one or no branches.</p>
+<p><img src="/d/data-structures/tree.png" alt="trees"></p>
 <ul>
+<li>Trees are an <code>abstract</code> data structure which contains a series of linked nodes connected together to form a <code>hierarchical representation</code> of information</li>
+<li>The topmost node of a tree is the <code>root node</code>, connected to it (if anyt) are child nodes </li>
+<li>A <code>parent node</code> has 1 or 2 child nodes</li>
+<li>Each node in a tree are called <code>vertices</code></li>
+<li>Connections between vertices are called <code>edges</code><ul>
+<li>There is only one path between any two vertices, you cannot have more than one edge connectiong two vertices</li>
+</ul>
+</li>
+<li><code>leaf nodes</code> have no children</li>
+</ul>
+<h2 id="Tree-Properties"><a href="#Tree-Properties" class="headerlink" title="Tree Properties"></a>Tree Properties</h2><ul>
+<li><code>Height</code> is the number of edges on the longest possible path down towards a leaf</li>
+<li><code>Depth</code> is the number of edges required to get from that node to the root node</li>
+</ul>
+<h2 id="Types-of-trees"><a href="#Types-of-trees" class="headerlink" title="Types of trees"></a>Types of trees</h2><p>By imposing rules and restrictions on what type of data is stored within a tree and also where we can use a tree structure to its full potential</p>
+<p>There are many types, these are just a few</p>
+<ul>
+<li>AVL Tree</li>
+<li>Binary search tree</li>
 <li>Suffix Trees</li>
+<li>Re-Black Tree</li>
+<li>N-ary Tree</li>
 </ul>
 <p><strong>References</strong></p>
 <ul>
