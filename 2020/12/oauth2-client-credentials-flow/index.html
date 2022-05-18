@@ -20,20 +20,22 @@ ga('send', 'pageview');
   
   <title>OAuth2 Client Credentials Flow | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Grant Type - Client Credentials is used when the application needs an access token to act on behalf of themselves (so not a user)  Do a POST request to https:&#x2F;&#x2F;authorisation-service.local&#x2F;token includ">
+  <meta name="description" content="Grant Type - Client Credentials is used when the application needs an access token to:  Act on behalf of themselves (so not a user) AKA Service to Service    Do a POST request to https:&#x2F;&#x2F;authorisation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OAuth2 Client Credentials Flow">
 <meta property="og:url" content="https://carlpaton.github.io/2020/12/oauth2-client-credentials-flow/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Grant Type - Client Credentials is used when the application needs an access token to act on behalf of themselves (so not a user)  Do a POST request to https:&#x2F;&#x2F;authorisation-service.local&#x2F;token includ">
+<meta property="og:description" content="Grant Type - Client Credentials is used when the application needs an access token to:  Act on behalf of themselves (so not a user) AKA Service to Service    Do a POST request to https:&#x2F;&#x2F;authorisation">
 <meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/oauth2-client-credentials-flow/client-credentials.png">
 <meta property="article:published_time" content="2020-12-03T11:00:00.000Z">
-<meta property="article:modified_time" content="2020-12-03T23:00:21.006Z">
+<meta property="article:modified_time" content="2022-05-18T23:09:04.413Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="c#">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="authentication">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/oauth2-client-credentials-flow/client-credentials.png">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -137,7 +139,12 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Grant Type - <code>Client Credentials</code> is used when the application needs an access token to act on behalf of themselves (so not a user)</p>
+        <p>Grant Type - <code>Client Credentials</code> is used when the application needs an access token to:</p>
+<ul>
+<li>Act on behalf of themselves (so not a user)</li>
+<li>AKA Service to Service</li>
+</ul>
+<p><img src="/d/oauth2-client-credentials-flow/client-credentials.png" alt="Grant Type - Client Credentials"></p>
 <ol>
 <li>Do a POST request to <code>https://authorisation-service.local/token</code> including your <code>client_id</code> and <code>client_secret</code></li>
 </ol>
