@@ -137,6 +137,9 @@ body {
   -ms-flex-direction: column;
   flex-direction: column;
 }
+summary{
+  cursor: pointer !important;
+}
 .outer {
   max-width: 1220px;
   margin: 0 auto;
