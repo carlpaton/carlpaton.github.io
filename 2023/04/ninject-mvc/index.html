@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Ninject MVC | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I needed to add dependency injection to a old ASP.NET MVC (.Net 4.8) application. For reasons it did not have DI and used some glue to new up objects. Remember kids NEW IS GLUE and #trashington. Depen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ninject MVC">
+<meta property="og:url" content="https://carlpaton.github.io/2023/04/ninject-mvc/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="I needed to add dependency injection to a old ASP.NET MVC (.Net 4.8) application. For reasons it did not have DI and used some glue to new up objects. Remember kids NEW IS GLUE and #trashington. Depen">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-04-20T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-13T09:11:10.884Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="dependency injection">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-ninject-mvc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/04/ninject-mvc/" class="article-date">
+  <time datetime="2023-04-20T12:00:00.000Z" itemprop="datePublished">2023-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ninject MVC
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I needed to add dependency injection to a old ASP.NET MVC (.Net 4.8) application. For <em>reasons</em> it did not have DI and used some glue to new up objects. Remember kids <strong>NEW IS GLUE</strong> and #trashington.</p>
+<p>Dependency injection is an implementation of <a href="/2018/04/dependency-inversion-principle-dip/">Dependency Inversion Principle (DIP)</a>. I knew how to use <a href="/2018/09/ninject/">Ninject</a> from previouse exposure but had never set it up from scatch. These are the steps I followed.</p>
+<h2 id="Ninject-MVC3"><a href="#Ninject-MVC3" class="headerlink" title="Ninject MVC3"></a>Ninject MVC3</h2><ol>
+<li>Install nuget <code>Ninject.MVC3</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package Ninject.MVC3</span><br></pre></td></tr></table></figure>
+
+<p>This gave me</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Ninject.3.2.0.0</span><br><span class="line">Ninject.MVC3.3.2.1.0</span><br><span class="line">Ninject.Web.Common.3.2.0.0</span><br><span class="line">Ninject.Web.Common.WebHost.3.2.0.0</span><br><span class="line">WebActivatorEx.2.0                    // this allows Ninject to use reflection on MVC controllers and hook into the pipeline</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>“WebActivatorEx -&gt; A package that allows other packages to execute some startup code in web apps. This package should be used over the older WebActivator, which was not strong named.”</p>
+</blockquote>
+<ol start="2">
+<li>This created <code>NinjectWebCommon</code> inside <code>APPNAME.App_Start</code> and inside its <code>RegisterServices</code> method I loaded up modules, these modules cohesively grouped the dependacies.</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> Load your modules or register your services here!</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;kernel&quot;&gt;</span>The kernel.<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">RegisterServices</span>(<span class="params">IKernel kernel</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    kernel.Load(<span class="keyword">new</span> ClientModule());   <span class="comment">// this is a group of HTTP clients</span></span><br><span class="line">    kernel.Load(<span class="keyword">new</span> ServiceModule());  <span class="comment">// this is a group of internal services</span></span><br><span class="line">    kernel.Load(<span class="keyword">new</span> FactoryModule());  <span class="comment">// this is a group of... you guessed it factorys</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Ninject can leverage refection and bind the default interface of the given types to the type. e.g. <code>Foo : IFoo</code> however Im not sure other libraries like <a href="/2018/09/autofac/">Autofac</a> or <a href="/2018/09/unity/">Unity</a> can do this so I could then glue the setup to ninject and make it hard to later change.</p>
+<p>Its simpler IMO to break these up by module and then resolve things manually so you know 100% what is being put into the dependency injection container and being made available to the application.</p>
+<p>Additionally I have some notes here on where in the application <a href="/2020/07/microservice-architecture/">Clients</a> could live and what <a href="/2020/02/factory-pattern/">Factorys</a> are.</p>
+<ol start="3">
+<li>Created these modules in <code>APPNAME.App_Start.Modules</code></li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Ninject.Modules;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">APPNAME.App_Start.Modules</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClientModule</span> : <span class="title">NinjectModule</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Load</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            Bind&lt;IService1Client&gt;().To&lt;Service1Client&gt;();</span><br><span class="line">            Bind&lt;IService2Client&gt;().To&lt;IService2Client&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This will use transient scope (objects are always different) for each request.</p>
+<p>Probably more of an opinion but I have always leaned towards starting with transient (objects are always different) and then moved over to scoped (objects are the same within a request, but different across different requests) or singleton (objects are the same for every object and every request) when it solved a problem or helped with performance.</p>
+<p>The above is the same as typing <code>Bind&lt;IService1Client&gt;().To&lt;Service1Client&gt;().InTransientScope()</code> but is not needed.</p>
+<p>You could use any of these methods from <code>Ninject.Syntax</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.InSingletonScope() // same object for ever</span><br><span class="line">.InThreadScope()    // same object in the request</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>This then allowed constructor injection as <code>IService1Client</code> for controllers inheriting from <code>Controller</code>.</li>
+</ol>
+<h2 id="Ninject-WebApi"><a href="#Ninject-WebApi" class="headerlink" title="Ninject WebApi"></a>Ninject WebApi</h2><p>For reasons of <code>hey why not?</code> this UI project also has an API. To continue to support it I did the following.</p>
+<ol>
+<li>Installed <code>Ninject.Web.WebApi</code> which gave me</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ninject.3.2.0.0 -&gt; Ninject.3.2.2.0  // compatibility bump</span><br><span class="line">Ninject.Web.WebApi.3.2.4.0</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Inside the <code>CreateKernel</code> method I added <code>GlobalConfiguration.Configuration.DependencyResolver = new Ninject.Web.WebApi.NinjectDependencyResolver(kernel);</code></li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> Creates the kernel that will manage your application.</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>The created kernel.<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> IKernel <span class="title">CreateKernel</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> kernel = <span class="keyword">new</span> StandardKernel();</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        kernel.Bind&lt;Func&lt;IKernel&gt;&gt;().ToMethod(ctx =&gt; () =&gt; <span class="keyword">new</span> Bootstrapper().Kernel);</span><br><span class="line">        kernel.Bind&lt;IHttpModule&gt;().To&lt;HttpApplicationInitializationHttpModule&gt;();</span><br><span class="line"></span><br><span class="line">        RegisterServices(kernel);</span><br><span class="line">        GlobalConfiguration.Configuration.DependencyResolver = <span class="keyword">new</span> Ninject.Web.WebApi.NinjectDependencyResolver(kernel);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> kernel;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span></span><br><span class="line">    &#123;</span><br><span class="line">        kernel.Dispose();</span><br><span class="line">        <span class="keyword">throw</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This brought in a <code>System.Web.Http</code> dependency.</p>
+<ol start="3">
+<li>Added binding redirect for System.Web.Http, I used the publicKeyToken value from the other entries as they were all the same.</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependentAssembly</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">assemblyIdentity</span> <span class="attr">name</span>=<span class="string">&quot;System.Web.Http&quot;</span> <span class="attr">publicKeyToken</span>=<span class="string">&quot;31bf3856ad364e35&quot;</span> <span class="attr">culture</span>=<span class="string">&quot;neutral&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bindingRedirect</span> <span class="attr">oldVersion</span>=<span class="string">&quot;0.0.0.0-5.2.3.0&quot;</span> <span class="attr">newVersion</span>=<span class="string">&quot;5.2.3.0&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependentAssembly</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Multiple versions of the <code>System.Web.Http</code> assembly live in <a href="/2018/05/global-assembly-cache/">Global Assembly Cache (GAC)</a>, without this redirect when built we got version <code>3.2.1.0</code> which resulted in the error <code>Could not load file or assembly &#39;System.Web.Http, Version=5.0.0.0</code> and sadness when people tried to use the application.</p>
+<ol start="4">
+<li>This then allowed constructor injection as <code>IService1Client</code> for controllers inheriting from <code>ApiController</code>.</li>
+</ol>
+<p>Life is better with dependency injection ❤️</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ninject/Ninject.Web.Mvc/wiki/Setting-up-an-MVC3-application">https://github.com/ninject/Ninject.Web.Mvc/wiki/Setting-up-an-MVC3-application</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ninject/ninject/wiki/Object-Scopes">https://github.com/ninject/ninject/wiki/Object-Scopes</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2023/04/ninject-mvc/" data-id="cll98m91j00g0qouh4fm130ko" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dependency-injection/" rel="tag">dependency injection</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/04/pi-pico-projects/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Pi Pico (RP2040) Projects
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/04/octoprint/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Octo Print</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/">Implementation - AWS Console - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/ld-restapi/">Launch Darkly Restful API</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<head>
+    <style>
+        html {
+            font-family: sans-serif;
+        }
+
+        #table {
+            border: 1px solid black;
+            width: 100%;
+        }
+
+        #table thead {
+            font-size: xx-large;
+            background: rgb(122, 121, 121);
+            text-transform: uppercase;
+        }
+
+        #table tbody tr td {
+            padding: 10px 0;
+        }
+
+        #table tbody tr:nth-child(even) {
+            background: rgb(243, 242, 242);
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        let start = 0;
+        let limit = 40;
+        let max = 200;
+
+        function checkpos() {
+            let top = Math.floor($(window).scrollTop())
+            let docheight = $(document).height()
+            let windowheight = $(window).height()
+            let percentage = (100 * (top + windowheight)) / docheight;
+            return percentage == 100;
+        }
+
+        function handlerow(todo) {
+            $("#table tbody:last").append("<tr><td>" + todo.id + "</td><td>" + todo.title + "</td></tr>");
+        }
+
+        function get() {
+            $.get("https://jsonplaceholder.typicode.com/todos/?_start=" + start + "&_limit=" + limit, function (data) {
+                data.map(todo =>
+                    handlerow(todo)
+                );
+            });
+        }
+
+        $(document).ready(function () {
+            get()
+            $(window).scroll(function () {
+                if (checkpos()) {
+                    start = start + limit;
+
+                    if (start >= max) {
+                        return;
+                    }
+                    get();
+                }
+            });
+        });
+    </script>
+</head>
+<html>
+
+<body>
+
+    <h1>jsonplaceholder</h1>
+    <p><a href="/2022/04/jquery-paginate-results-scroll/">Go back to block post!</a></p>
+    <table id="table">
+        <thead>
+            <tr>
+                <td>id</td>
+                <td>title</td>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</body>
+
+</html>

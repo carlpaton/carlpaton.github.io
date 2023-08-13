@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Integration Tests With WebApplicationFactory and Test Containers | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="My team are pretty good at building integration tests, we use app.settings per environment, powershell and teamcity. Its fairly complicated but works really well. We dont always use WebApplicationFact">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Integration Tests With WebApplicationFactory and Test Containers">
+<meta property="og:url" content="https://carlpaton.github.io/2022/07/integration-tests-with-webapplicationfactory-testcontainers/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="My team are pretty good at building integration tests, we use app.settings per environment, powershell and teamcity. Its fairly complicated but works really well. We dont always use WebApplicationFact">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/integration-tests-with-webapplicationfactory-testcontainers/throw-away-containers-per-test.png">
+<meta property="article:published_time" content="2022-07-28T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-13T09:11:10.853Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="software testing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/integration-tests-with-webapplicationfactory-testcontainers/throw-away-containers-per-test.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-integration-tests-with-webapplicationfactory-testcontainers" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/07/integration-tests-with-webapplicationfactory-testcontainers/" class="article-date">
+  <time datetime="2022-07-28T12:00:00.000Z" itemprop="datePublished">2022-Jul</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Integration Tests With WebApplicationFactory and Test Containers
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>My team are pretty good at building <a href="/2022/01/integration-tests/">integration tests</a>, we use app.settings per environment, powershell and teamcity. Its fairly complicated but works really well. We dont always use <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests">WebApplicationFactory</a> to bring up our API’s in memory as its not always sensible to do so.</p>
+<p>I was inspired by a video from <a target="_blank" rel="noopener" href="https://www.youtube.com/c/Elfocrash">Nick Chapsas</a> titled <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8IRNC7qZBmk">The cleanest way to use Docker for testing in .NET</a> to investigate the nuget package <a target="_blank" rel="noopener" href="https://github.com/testcontainers/testcontainers-dotnet">Test Containers</a> | <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Testcontainers">Testcontainers 2.1.0</a>.</p>
+<p>Checkout Nick’s <a target="_blank" rel="noopener" href="https://nickchapsas.com/p/from-zero-to-hero-integration-testing-in-asp-net-core">From Zero to Hero: Integration testing in ASP.NET Core</a> course - amazing content brother! - Keep coding!</p>
+<h2 id="Problems-faced-with-integration-test"><a href="#Problems-faced-with-integration-test" class="headerlink" title="Problems faced with integration test"></a>Problems faced with integration test</h2><p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Testcontainers">Testcontainers</a> addresses a few problems faced with integration tests</p>
+<ul>
+<li><p><code>Parallelize integration test execution</code> - Race conditions (collisions) where some tests fail because of orphaned data from another test. Example: A <code>SelectAll</code> may expect 5 records in the database however a preceding <code>Insert</code> may have changed this number to <code>6</code> so the <code>SelectAll</code> will fail its validation as <code>6 &gt; 5</code></p>
+</li>
+<li><p><code>Setup and teardown of the database</code> - Its overhead to have to worry about setting up infastructure outside of the code, another powershell or teamcity step which is just a possible point of failure.</p>
+</li>
+<li><p><code>Create a database specific for test execution</code> - this will be in isolation, so for each test we will create a database using the Testcontainers mechanism.</p>
+</li>
+</ul>
+<h2 id="Integration-Tests"><a href="#Integration-Tests" class="headerlink" title="Integration Tests"></a>Integration Tests</h2><p>The samples assume you already have some integration tests setup, this is a simple CRUD API with integration tests over the controllers. My source code is based on <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8IRNC7qZBmk">Nicks video</a> and can be downloaded at <a target="_blank" rel="noopener" href="https://github.com/carlpaton/IntegrationTestsWithTestContainers">https://github.com/carlpaton/IntegrationTestsWithTestContainers</a>.</p>
+<p>My test classes are shown below. The problem with integration tests are they dont really customize the core project. Nick describes this as then calling the real database, the problem with this approach is we have test <strong>data remnants</strong> which we could delete after each test execution but that implies we need to have a database running at all times. </p>
+<p>Other systems might be using this so we will run into problems with everyone running this locally and when we try do continuous integration.</p>
+<p>The current <a target="_blank" rel="noopener" href="https://github.com/carlpaton/IntegrationTestsWithTestContainers/tree/main/src/CustomerApi.IntegrationTests">integration tests</a> are:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CreateCustomerControllerTests</span><br><span class="line"> - Create_CreatesUser_WhenDataIsValid</span><br><span class="line"> - Create_ReturnsValidationError_WhenDataIsInvalid</span><br><span class="line"></span><br><span class="line">DeleteCustomerControllerTests</span><br><span class="line"> - Delete_DeletesUserByCustomerId_WhenCustomerExists</span><br><span class="line"></span><br><span class="line">GetAllCustomerControllerTests</span><br><span class="line"> - GetAll_ReturnsAllCustomers_WhenTheyExist</span><br><span class="line"></span><br><span class="line">GetCustomerControllerTests</span><br><span class="line"> - Read_ReturnsCustomerById_WhenItExists</span><br><span class="line"></span><br><span class="line">PingControllerTests</span><br><span class="line"> - Ping_ReturnsOk</span><br><span class="line"></span><br><span class="line">UpdateCustomerControllerTests</span><br><span class="line"> - Update_UpdatesTheGivenCustomer_WhenParametersAreValid </span><br></pre></td></tr></table></figure>
+
+<h2 id="Example-Code"><a href="#Example-Code" class="headerlink" title="Example Code"></a>Example Code</h2><h3 id="TestBase"><a href="#TestBase" class="headerlink" title="TestBase"></a>TestBase</h3><p>I used <a target="_blank" rel="noopener" href="https://github.com/carlpaton/IntegrationTestsWithTestContainers/blob/main/src/CustomerApi.IntegrationTests/Setup/TestBase.cs">TestBase</a> to expose a <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient">HttpClient</a> which is created using <a target="_blank" rel="noopener" href="https://github.com/carlpaton/IntegrationTestsWithTestContainers/blob/main/src/CustomerApi.IntegrationTests/Setup/CustomerApiFactory.cs">CustomerApiFactory</a> -&gt; <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.testing.webapplicationfactory-1">WebApplicationFactory</a> using the method CreateClient.</p>
+<p>All tests then inherit <code>TestBase</code> and use dependency injection to instanciate the <code>CustomerApiFactory</code> using <code>IClassFixture&lt;CustomerApiFactory&gt;</code> which is used to indicate a <a href="/2022/01/integration-tests/">test has per-test-class fixture data</a>.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CreateCustomerControllerTests</span> : <span class="title">TestBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CreateCustomerControllerTests</span>(<span class="params">CustomerApiFactory factory</span>) : <span class="title">base</span>(<span class="params">factory</span>)</span> &#123; &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="CustomerApiFactory"><a href="#CustomerApiFactory" class="headerlink" title="CustomerApiFactory"></a>CustomerApiFactory</h3><ol>
+<li><p>To get started install the nuget package <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Testcontainers">Testcontainers 2.1.0</a></p>
+</li>
+<li><p>I use <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.testing.webapplicationfactory-1">WebApplicationFactory</a> and the class <code>CustomerApiFactory</code> which would spin up an in-memory version of the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/IntegrationTestsWithTestContainers/tree/main/src/CustomerApi">CustomerApi</a>.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/xunit/xunit/blob/12026778465c166f94521ea634bc923cf05cb3f1/src/xunit.v3.core/IAsyncLifetime.cs#L13">IAsyncLifetime</a> is then used to manage the life time of <a target="_blank" rel="noopener" href="https://github.com/testcontainers/testcontainers-dotnet#examples">PostgreSqlTestcontainer</a>. This starts the container in the beginning of the tests and then stops them at the end of the tests using xUnits <a target="_blank" rel="noopener" href="https://github.com/xunit/xunit/blob/12026778465c166f94521ea634bc923cf05cb3f1/src/xunit.v3.core/IAsyncLifetime.cs#L13">IAsyncLifetime</a> interface which provides the methods <code>InitializeAsync</code> and <code>DisposeAsync</code> which will run per test execution. As we have this in a collection it will run per class that has tests in it. </p>
+</li>
+</ol>
+<p>This is a great compromise between isolation of tests as its only limited to the collection.</p>
+<ol start="4">
+<li>I then use override <code>ConfigureWebHost</code> to remove the DatabaseContext instance and replace it with our test instance, which uses the <code>ConnectionString</code> from <code>PostgreSqlTestcontainer</code>.</li>
+</ol>
+<p>The value of this is the port is always unique, this is what the cool kids call an ephemeral container (a special type of container that runs temporarily in an existing Pod to accomplish user-initiated actions). So each test class gets a brand new and clean instance of a <a target="_blank" rel="noopener" href="https://hub.docker.com/_/postgres/">postgres</a> database.</p>
+<p>Note that we use <code>ConfigureTestServices</code> instead of <code>ConfigureServices</code>.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CustomerApiFactory</span> : <span class="title">WebApplicationFactory</span>&lt;<span class="title">Program</span>&gt;, <span class="title">IAsyncLifetime</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> PostgreSqlTestcontainer _dbContainer;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="built_in">string</span> _appSettingsFile = <span class="string">&quot;appsettings.Test.json&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> IConfiguration _configuration;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CustomerApiFactory</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        _configuration = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">            .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)</span><br><span class="line">            .AddJsonFile(_appSettingsFile)</span><br><span class="line">            .Build();</span><br><span class="line"></span><br><span class="line">        _dbContainer = <span class="keyword">new</span> TestcontainersBuilder&lt;PostgreSqlTestcontainer&gt;()</span><br><span class="line">            .WithDatabase(<span class="keyword">new</span> PostgreSqlTestcontainerConfiguration</span><br><span class="line">            &#123;</span><br><span class="line">                Database = _configuration.GetSection(<span class="string">&quot;PostgreSQL:Database&quot;</span>).Get&lt;<span class="built_in">string</span>&gt;(),</span><br><span class="line">                Username = _configuration.GetSection(<span class="string">&quot;PostgreSQL:Username&quot;</span>).Get&lt;<span class="built_in">string</span>&gt;(),</span><br><span class="line">                Password = _configuration.GetSection(<span class="string">&quot;PostgreSQL:Password&quot;</span>).Get&lt;<span class="built_in">string</span>&gt;(),</span><br><span class="line">            &#125;)</span><br><span class="line">            .Build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Task <span class="title">InitializeAsync</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// start the container per collection</span></span><br><span class="line">        <span class="keyword">return</span> _dbContainer.StartAsync();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// we use the new keyword to avoid conflicts with IAsyncDisposable Interface - https://docs.microsoft.com/en-us/dotnet/api/system.iasyncdisposable</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">new</span> Task <span class="title">DisposeAsync</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// stop the container per collection</span></span><br><span class="line">        <span class="keyword">return</span> _dbContainer.StopAsync();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// we override ConfigureWebHost</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">ConfigureWebHost</span>(<span class="params">IWebHostBuilder builder</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> maxRetryCount = _configuration.GetSection(<span class="string">&quot;PostgreSQL:MaxRetryCount&quot;</span>).Get&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        <span class="keyword">var</span> maxRetryDelay = _configuration.GetSection(<span class="string">&quot;PostgreSQL:MaxRetryDelay&quot;</span>).Get&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line"></span><br><span class="line">        builder</span><br><span class="line">        .UseEnvironment(<span class="string">&quot;Test&quot;</span>)</span><br><span class="line">        .UseContentRoot(Directory.GetCurrentDirectory())</span><br><span class="line">        .ConfigureAppConfiguration(config =&gt; config.AddJsonFile(_appSettingsFile))</span><br><span class="line">        .ConfigureTestServices(services =&gt;</span><br><span class="line">        &#123;</span><br><span class="line">             <span class="comment">// We dont really have to do this step, if you register another `DatabaseContext` ontop of this and through DI only resolve 1 you will get the latest</span></span><br><span class="line">            <span class="comment">// Its safer to remove so you know only one instance exists in the DI container</span></span><br><span class="line">            <span class="keyword">var</span> descriptor = services.SingleOrDefault(d =&gt; d.ServiceType == <span class="keyword">typeof</span>(DbContextOptions&lt;DatabaseContext&gt;));</span><br><span class="line">            services.Remove(descriptor);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Replace with test instance</span></span><br><span class="line">            services.AddDbContext&lt;DatabaseContext&gt;((serviceProvider, optionsBuilder) =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                optionsBuilder.UseNpgsql(</span><br><span class="line">                    _dbContainer.ConnectionString,</span><br><span class="line">                    npgsqlOptionsAction =&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        npgsqlOptionsAction.EnableRetryOnFailure(</span><br><span class="line">                            maxRetryCount,</span><br><span class="line">                            TimeSpan.FromSeconds(maxRetryDelay),</span><br><span class="line">                            <span class="literal">null</span>);</span><br><span class="line">                    &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>Running the tests now will spin up a container for <a target="_blank" rel="noopener" href="https://hub.docker.com/_/postgres/">postgres</a> just for the test collection. This means we can seed any test data we may want during startup and we dont need to worry about clearning it out as the containers are ephemeral.</p>
+</li>
+<li><p>The tests can now run and their container will automagically be spun up &lt;3. Notice each have their own port and cannot be polluted with another tests data. Additionally the containers are deleted by the framework. The is the most hard out nerd thing I’ve seen in a while :D</p>
+</li>
+</ol>
+<p>Under the hood the container orchestration is done by <a target="_blank" rel="noopener" href="https://github.com/testcontainers/moby-ryuk">testcontainers / moby-ryuk</a></p>
+<p><img src="/d/integration-tests-with-webapplicationfactory-testcontainers/throw-away-containers-per-test.png" alt="throw-away-containers-per-test"></p>
+<ol start="7">
+<li>Currently there is support for other databases listed below. For ones that dont exist its possible to use 3rd party packages ontop using the Fluent API described below.</li>
+</ol>
+<p>See <a target="_blank" rel="noopener" href="https://github.com/testcontainers/testcontainers-dotnet#pre-configured-containers">https://github.com/testcontainers/testcontainers-dotnet#pre-configured-containers</a> for the latest list.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CouchbaseTestconnectionConfiguration</span><br><span class="line">OracleTestconnectionConfiguration</span><br><span class="line">RedisTestconnectionConfiguration</span><br><span class="line">CouchDbTestconnectionConfiguration</span><br><span class="line">MongoDbTestconnectionConfiguration</span><br><span class="line">MsSqlTestconnectionConfiguration</span><br><span class="line">MySqlTestconnectionConfiguration</span><br></pre></td></tr></table></figure>
+
+<h2 id="Test-Container-Fluent-API"><a href="#Test-Container-Fluent-API" class="headerlink" title="Test Container Fluent API"></a>Test Container Fluent API</h2><p>The test container framework has a fluent API that allows us to load up any docker image that is not natively supported, this is an example with drawbacks such as static port.</p>
+<p>All of the commands are listed here - <a target="_blank" rel="noopener" href="https://github.com/testcontainers/testcontainers-dotnet#supported-commands">https://github.com/testcontainers/testcontainers-dotnet#supported-commands</a></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// private member for test containers using fluent api to construct the builder</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">readonly</span> TestcontainersContainer _dbContainer = </span><br><span class="line">    <span class="keyword">new</span> TestcontainersBuilder&lt;TestcontainersContainer&gt;()</span><br><span class="line">        .WithImage(<span class="string">&quot;postgres:14.4&quot;</span>) <span class="comment">// https://hub.docker.com/_/postgres/</span></span><br><span class="line">        .WithEnvironment(<span class="string">&quot;POSTGRE_USER&quot;</span>, <span class="string">&quot;postgres&quot;</span>)</span><br><span class="line">        .WithEnvironment(<span class="string">&quot;POSTGRE_PASSWORD&quot;</span>, <span class="string">&quot;password&quot;</span>)</span><br><span class="line">        .WithEnvironment(<span class="string">&quot;POSTGRE_DB&quot;</span>, <span class="string">&quot;mydb&quot;</span>)</span><br><span class="line">        .WithPortBiding(<span class="number">5555</span>, <span class="number">5432</span>) <span class="comment">// 5555 external -&gt; 5432 internal</span></span><br><span class="line">        .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(<span class="number">5432</span>)) <span class="comment">// tells the code to not proceed with anything without having this OK. Example the container is up and running</span></span><br><span class="line">        .Build();</span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/testcontainers/testcontainers-dotnet#examples">https://github.com/testcontainers/testcontainers-dotnet#examples</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8IRNC7qZBmk">Nick Chapsas : The cleanest way to use Docker for testing in .NET</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests">Integration tests in ASP.NET Core</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2022/07/integration-tests-with-webapplicationfactory-testcontainers/" data-id="cll98m8zv00bgqouhe2jmd4f0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/" rel="tag">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/08/potjiekos/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Potjiekos
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/07/action-filter/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Action Filter</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/">Implementation - AWS Console - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/ld-restapi/">Launch Darkly Restful API</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

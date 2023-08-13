@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Microcontrollers and Assembly Code | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="These are notes I made while watching the amazing tutorials from Circuit Bread and circuitbread.com Assembly Code In computer programming, assembly language (or assembler language), is any low-level">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Microcontrollers and Assembly Code">
+<meta property="og:url" content="https://carlpaton.github.io/2022/03/microcontroller-assembly-code/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="These are notes I made while watching the amazing tutorials from Circuit Bread and circuitbread.com Assembly Code In computer programming, assembly language (or assembler language), is any low-level">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/microcontrollers-assembly-code/binary-assembly-highlevel.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/microcontrollers-assembly-code/pic10f200.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/microcontrollers-assembly-code/picket3.png">
+<meta property="article:published_time" content="2022-03-19T11:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-13T09:11:10.869Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="iot">
+<meta property="article:tag" content="assembly">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/microcontrollers-assembly-code/binary-assembly-highlevel.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-microcontroller-assembly-code" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/03/microcontroller-assembly-code/" class="article-date">
+  <time datetime="2022-03-19T11:00:00.000Z" itemprop="datePublished">2022-Mar</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Microcontrollers and Assembly Code
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/microcontrollers-assembly-code/binary-assembly-highlevel.png" alt="binary-assembly-highlevel"></p>
+<p>These are notes I made while watching the amazing tutorials from <a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UClKevSwDIU8NTyF2DAK0G0Q">Circuit Bread</a> and <a target="_blank" rel="noopener" href="https://www.circuitbread.com/">circuitbread.com</a></p>
+<h2 id="Assembly-Code"><a href="#Assembly-Code" class="headerlink" title="Assembly Code"></a>Assembly Code</h2><blockquote>
+<p>In computer programming, assembly language (or assembler language), is any low-level programming language in which there is a very strong correspondence between the instructions in the language and the architecture’s machine code instructions. - <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Assembly_language">wikipedia.org</a></p>
+</blockquote>
+<h3 id="Four-main-parts-of-Assembly"><a href="#Four-main-parts-of-Assembly" class="headerlink" title="Four main parts of Assembly"></a>Four main parts of Assembly</h3><ul>
+<li><code>labels</code> - is a section of the code, partially for the human to understand what is going on. Can also be used as a reference within the code</li>
+<li><code>instructions</code> - its a way of taking a word and shortening it up using a subset of letters (often the first letters of the word). This then reperesents something so you dont have to type out the whole word/sentence each time. These are also known as <code>numonics</code> / <code>operational code</code></li>
+<li><code>operands</code> - these are the parameters that you give your <code>instructions</code></li>
+<li><code>comments</code> - human readable words to understand what the program is doing</li>
+</ul>
+<h4 id="Instruction-examples"><a href="#Instruction-examples" class="headerlink" title="Instruction examples"></a>Instruction examples</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BSF           - Bit Set F. A set bit makes a pin high and clear bit makes a pin low</span><br><span class="line">DECFSZ        - Decrement if not zero</span><br><span class="line">MOVLW         - MOVe Literal to W. `W` is the working register. You have to put things in the working register to do any logic to/with it (ie: muiltip[ly the value by another value. Both values need to be in the working register)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hardware-amp-Software"><a href="#Hardware-amp-Software" class="headerlink" title="Hardware &amp; Software"></a>Hardware &amp; Software</h2><p>Some key terms and notes</p>
+<ul>
+<li><code>IC</code> is integrated circuit (its the microcontroller)</li>
+<li><code>PC</code> is the Program Counter which is where you are in the program (feels like the stack in .net)</li>
+<li><code>stack</code> this small PIC10F200 has two levels of stack used to store the memory addresses when calling sub routines like a <code>GOTO</code></li>
+</ul>
+<p>There are many microcontrollers on the market and each vendor has proprietary and often trade marked technologies. Most of my notes are on <a target="_blank" rel="noopener" href="https://www.microchip.com/">PIC10F200 microcontroller by microchip</a>. Others I found online are</p>
+<ul>
+<li>Atmel<ul>
+<li><a href="/d/microcontrollers-assembly-code/ATTiny85.pdf">ATTiny85 IC 8 pin DIP8</a></li>
+</ul>
+</li>
+<li>PIC12F675 (microchip)<ul>
+<li><a target="_blank" rel="noopener" href="https://www.jaycar.co.nz/flash-based-8-bit-cmos-microcontroller-pic-12f675/p/ZZ8603?pos=10&queryId=c030df1ee0206120d04ec6761fee9de0&sort=relevance">Flash Based 8-Bit CMOS Microcontroller PIC 12F675 - jaycar.co.nz</a></li>
+<li><a href="/d/microcontrollers-assembly-code/PIC12F6XX.pdf">PIC12F6XX.pdf</a> </li>
+</ul>
+</li>
+<li>PIC16F88 (microchip)<ul>
+<li><a target="_blank" rel="noopener" href="https://www.jaycar.co.nz/pic16f88-i-p-enhanced-flash-microcontroller-with-nanowatt-technology/p/ZZ8530?pos=1&queryId=96cc6c10e46ab1094abf0722b468facb">PIC16F88-I/P Enhanced FLASH Microcontroller with nanoWatt Technology</a></li>
+<li><a href="/d/microcontrollers-assembly-code/PIC16F8X.pdf">PIC16F8X.pdf</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="PIC10F200"><a href="#PIC10F200" class="headerlink" title="PIC10F200"></a>PIC10F200</h3><ul>
+<li><a href="/d/microcontrollers-assembly-code/PIC10F2XX.pdf">PIC10F2XX.pdf</a></li>
+</ul>
+<p><img src="/d/microcontrollers-assembly-code/pic10f200.png" alt="pic10f200"></p>
+<ul>
+<li>Voltage range is 2.0V to 5.5v</li>
+<li>16 bytes RAM (10 -&gt; 1F)</li>
+<li>4 mHz / 4 ticks</li>
+<li>256 words (instructions) as 12 bits = 1 word</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">256 * 12 / 8 (bytes)</span><br><span class="line">= 384 bytes</span><br></pre></td></tr></table></figure>
+
+<p>Logical pins:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">                ------</span><br><span class="line">          N/C -| 1  8 |- GP3 / MCLR (bar) / VPP</span><br><span class="line">          VDD -| 2  7 |- VSS</span><br><span class="line">  GP2 / T0CKI -| 3  6 |- N/C</span><br><span class="line">GP1 / ICSPCLK -| 4  5 |- GP0 / ICSPDAT</span><br><span class="line">                ------</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>N/C</code> no connect, so nothing is connected to these pins</li>
+<li><code>VDD</code> power <code>+</code></li>
+<li><code>GP0</code>, <code>GP1</code>, <code>GP2</code> general-purpose input/output</li>
+<li><code>T0CKI</code></li>
+<li><code>GP3</code> input only</li>
+<li><code>MCLR (bar)</code> the bar is the line above MCLR, it means high its inversed so set to low to clear</li>
+<li><code>VSS</code> ground <code>-</code></li>
+<li><code>ICSPDAT</code> in-circuit serial programming Data (PICKit connection)</li>
+<li><code>ICSPCLK</code> in-circuit serial programming Clock (PICKit connection)</li>
+</ul>
+<h3 id="PICKit-3-PICKit-4"><a href="#PICKit-3-PICKit-4" class="headerlink" title="PICKit 3 / PICKit 4"></a>PICKit 3 / PICKit 4</h3><p>This is the programmer / debugger (The ICD series are the more expensive none hobby ones). This <a target="_blank" rel="noopener" href="https://www.vlrobotech.com/2020/11/01-pickit3-with-pic-controller.html">this post</a> at vlrobotech.com has details about the PICKit 3 and a cool 35 light control project!</p>
+<p>You can also use an arduino as the programmer but I found a cheap PICKit 3 locally so rolled with it.</p>
+<p><img src="/d/microcontrollers-assembly-code/picket3.png" alt="PICKit 3"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1 VPP/MCLR          clear</span><br><span class="line">2 VDD               power `+` </span><br><span class="line">3 VSS               ground `-`</span><br><span class="line">4 ICSPDAT/PGD       in-circuit serial programming Data (some controllers mark this as PGD)</span><br><span class="line">5 ICSPCLK/PGC       in-circuit serial programming Clock (some controllers mark this as PGC)</span><br></pre></td></tr></table></figure>
+
+<h3 id="MPLAB-X-8-7x"><a href="#MPLAB-X-8-7x" class="headerlink" title="MPLAB X / 8.7x"></a>MPLAB X / 8.7x</h3><p>This is the the Integrated Development Environment (IDE)</p>
+<p>I could get the sample code to work with v8.7</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://ww1.microchip.com/downloads/en/DeviceDoc/MPLAB_IDE_8_76.zip">MPLAB_IDE_8_76</a></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Project -&gt; New </span><br><span class="line">Project Name = `Blink LED`</span><br><span class="line">Project Directory = `C:\Dev\p10f200\BlinkLED\` / `C:\Dev\p10f200\TurnOnLED\`</span><br><span class="line"></span><br><span class="line">Programmer -&gt; Select Programmer -&gt; Picket 3</span><br><span class="line">Programmer -&gt; Settings -&gt; Power -&gt; Enable 5V</span><br><span class="line">Programmer -&gt; Reconnect</span><br><span class="line">Programmer -&gt; Erase Flash Device</span><br><span class="line"></span><br><span class="line">View -&gt; Project (if not shown)</span><br><span class="line">File -&gt; Add New File To Project -&gt; main.asm -&gt; Save</span><br><span class="line">Pop in source code</span><br><span class="line">File -&gt; Save</span><br><span class="line"></span><br><span class="line">Project -&gt; Build All (Relocatable code if it asks)</span><br><span class="line">Programmer -&gt; Program</span><br></pre></td></tr></table></figure>
+
+<p>I had no luck with MPLAB X</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide">MPLAB X</a></li>
+</ul>
+<h2 id="Projects"><a href="#Projects" class="headerlink" title="Projects"></a>Projects</h2><p>These are the simple projects involving LEDs that noobs like me can understand! (kind of)</p>
+<ul>
+<li><a href="/2022/03/p10f200-turn-on-led/">p10f200 Turn On LED</a></li>
+<li><a href="/2022/03/p10f200-blink-led/">p10f200 Blink LED</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2022/03/microcontroller-assembly-code/" data-id="cll98m90n00dqqouhexwk12hc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/assembly/" rel="tag">assembly</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iot/" rel="tag">iot</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/03/scientist-pattern/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Scientist Pattern
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/charlieplexing-leds/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Charlieplexing LEDs</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/">Implementation - AWS Console - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/ld-restapi/">Launch Darkly Restful API</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

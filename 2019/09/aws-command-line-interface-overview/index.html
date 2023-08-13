@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Command Line Interface Overview | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Firstly install and configure both the AWSCLI and ECSCLI. For the examples below ecs is the [options] argument after the aws command. It instructs aws to run the command for Elastic Container Services">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Command Line Interface Overview">
+<meta property="og:url" content="https://carlpaton.github.io/2019/09/aws-command-line-interface-overview/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Firstly install and configure both the AWSCLI and ECSCLI. For the examples below ecs is the [options] argument after the aws command. It instructs aws to run the command for Elastic Container Services">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-09-04T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-13T09:11:10.786Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="aws">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-aws-command-line-interface-overview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/aws-command-line-interface-overview/" class="article-date">
+  <time datetime="2019-09-04T12:00:00.000Z" itemprop="datePublished">2019-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Command Line Interface Overview
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="/2019/09/aws-install-and-configure-cli/">Firstly install and configure both the AWSCLI and ECSCLI</a>.</p>
+<p>For the examples below <code>ecs</code> is the <code>[options]</code> argument after the <code>aws</code> command. It instructs <code>aws</code> to run the command for <code>Elastic Container Services</code>. Any commands that point to a <code>.json</code> configuration file are <a target="_blank" rel="noopener" href="https://github.com/carlpaton/AWS">available on github</a>.</p>
+<p>Detailed help for both EC2 (Elastic Compute Cloud) and ECS (Elastic Container Service) can be found at the links below:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/ec2/index.html">https://docs.aws.amazon.com/cli/latest/reference/ec2/index.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/ecs/index.html">https://docs.aws.amazon.com/cli/latest/reference/ecs/index.html</a></li>
+</ul>
+<p>You can dump the result if any command to a text file which is useful with the <code>describe</code> commands. Single <code>&gt;</code> will overwrite the file and <code>&gt;&gt;</code> will append. Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt; aws ecr list-images --repository-name lexicon-webmvc &gt; output.txt</span><br><span class="line">C:\&gt; aws ecr list-images --repository-name lexicon-webmvc &gt;&gt; output.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="ECR-Elastic-Container-Registry"><a href="#ECR-Elastic-Container-Registry" class="headerlink" title="ECR - Elastic Container Registry"></a>ECR - Elastic Container Registry</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ecr list-images --repository-name lexicon-webmvc</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/ecr/list-images.html">https://docs.aws.amazon.com/cli/latest/reference/ecr/list-images.html</a></li>
+<li><a href="/2019/09/aws-elastic-container-registry/">ECR CLI commands</a> are listed here in context of the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/lexicon">lexicon</a> project.</li>
+</ul>
+<h3 id="Task-Definitions"><a href="#Task-Definitions" class="headerlink" title="Task Definitions"></a>Task Definitions</h3><p>Example task definition ARN : <code>arn:aws:ecs:ap-southeast-2:000000000000:task-definition/lexicon-task-definition:3</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">aws ecs list-task-definitions --region ap-southeast-2 --status INACTIVE</span><br><span class="line"></span><br><span class="line">aws ecs describe-task-definition --task-definition TASK-NAME</span><br></pre></td></tr></table></figure>
+
+<p>You CANNOT DELETE task definitions they have to be only deregistered if you no longer want them.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ecs deregister-task-definition --task-definition TASK-NAME </span><br></pre></td></tr></table></figure>
+
+<p>Register new from local <code>.json</code> file. If you use an existing name it will create a new revision of the task definition. The name is defined in the <code>.json</code> in the <code>family</code> parameter.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ecs register-task-definition --cli-input-json file://lexicon-task-definition.json --region ap-southeast-2</span><br></pre></td></tr></table></figure>
+
+<h3 id="VPC-Virtual-Private-Cloud"><a href="#VPC-Virtual-Private-Cloud" class="headerlink" title="VPC - Virtual Private Cloud"></a>VPC - Virtual Private Cloud</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 describe-vpcs</span><br><span class="line"></span><br><span class="line">aws ec2 create-vpc --cidr-block 10.0.0.0/16</span><br></pre></td></tr></table></figure>
+
+<p>The above will create your VPC along with a <code>Route Table</code>, <code>DHCP options set</code>, <code>Network ACLs</code> and <code>Security Groups</code></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc.html">https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc.html</a></li>
+</ul>
+<h3 id="EC2-Instance"><a href="#EC2-Instance" class="headerlink" title="EC2 Instance"></a>EC2 Instance</h3><p>EC2 (Amazon Elastic Compute Cloud) is the virtual machine running in the cloud, this is a Linux variant running the <code>Amazon Linux AMI 2.0.20190913 x86_64 ECS HVM</code> - where AMI stands for <code>Amazon Machine Images</code></p>
+<p>Terminated instances remain visible after termination (for approximately one hour).</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">~ Descibes the virtual machine instance</span><br><span class="line">aws ec2 describe-instances &gt; output.txt</span><br><span class="line"></span><br><span class="line">~ Describes an attribute, example `kernel` which would be `KernelId` in the response</span><br><span class="line">aws ec2 describe-instance-attribute --instance-id i-00000000000000000 --attribute kernel --region ap-southeast-2</span><br><span class="line"></span><br><span class="line">~ Kill it with fire</span><br><span class="line">aws ec2 terminate-instances --instance-ids i-00000000000000000</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html">https://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html</a></li>
+</ul>
+<p>To create a launch template</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">~ display existing launch templates</span><br><span class="line">aws ec2 describe-launch-templates</span><br><span class="line"></span><br><span class="line">~ create new</span><br><span class="line">aws ec2 create-launch-template --launch-template-name TemplateForWebServer --launch-template-data file://create-launch-template.json</span><br><span class="line"></span><br><span class="line">~ delete</span><br><span class="line">aws ec2 delete-launch-template --launch-template-id lt-0bcc8aca918ba6ae8</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html">https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html?icmpid=docs_ec2_console">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html?icmpid=docs_ec2_console</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestLaunchTemplateData.html">https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestLaunchTemplateData.html</a></li>
+</ul>
+<p>To run instances</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 run-instances --launch-template LaunchTemplateId=lt-0daef39547692deac</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html">https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-instances.html#launching-instances">https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-instances.html#launching-instances</a></li>
+</ul>
+<h3 id="Security-Groups"><a href="#Security-Groups" class="headerlink" title="Security Groups"></a>Security Groups</h3><p>This is used to open up ports, example allowing you to connect to SQL from SQL Server Management Studio on port 1433. The example below opens port 80.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 describe-security-groups --filters Name=vpc-id,Values=VPC_ID --region ap-southeast-2</span><br><span class="line"></span><br><span class="line">aws ec2 authorize-security-group-ingress --group-id SECURIYY_GROUP_ID --protocol tcp --port 80 --cidr 0.0.0.0/0 --region ap-southeast-2</span><br></pre></td></tr></table></figure>
+
+<h3 id="Subnets"><a href="#Subnets" class="headerlink" title="Subnets"></a>Subnets</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 create-subnet --generate-cli-skeleton</span><br><span class="line"></span><br><span class="line">aws ec2 create-subnet --vpc-id vpc-VPC_ID --cidr-block 10.0.1.0/24</span><br><span class="line"></span><br><span class="line">aws ec2 create-subnet --cli-input-json file://create-subnet-1.json</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/ec2/create-subnet.html">https://docs.aws.amazon.com/cli/latest/reference/ec2/create-subnet.html</a></li>
+</ul>
+<h3 id="Clusters"><a href="#Clusters" class="headerlink" title="Clusters"></a>Clusters</h3><p>Example cluster ARN: <code>arn:aws:ecs:ap-southeast-2:000000000000:cluster/lexicon-cluster</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">aws ecs list-clusters</span><br><span class="line"></span><br><span class="line">aws ecs delete-cluster --cluster CLUSTER_ID</span><br><span class="line"></span><br><span class="line">aws ecs describe-clusters --clusters CLUSTER_ID</span><br><span class="line"></span><br><span class="line">aws ecs create-cluster --cluster-name lexicon-cluster --tags key=Description,value=lexicon</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/ecs/create-cluster.html">https://docs.aws.amazon.com/cli/latest/reference/ecs/create-cluster.html</a></li>
+</ul>
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>Start from task definition and keep it running.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">aws ecs list-services --cluster lexicon-cluster</span><br><span class="line">aws ecs delete-service --service lexicon-service --cluster lexicon-cluster</span><br><span class="line"></span><br><span class="line">~ servicediscovery</span><br><span class="line">aws servicediscovery list-services --filters lexicon </span><br><span class="line">aws servicediscovery delete-service --id srv-cftwloewpccqww3k</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/servicediscovery/delete-service.html">https://docs.aws.amazon.com/cli/latest/reference/servicediscovery/delete-service.html</a></li>
+</ul>
+<h3 id="Tasks"><a href="#Tasks" class="headerlink" title="Tasks"></a>Tasks</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ecs run-task --task-definition lexicon-task-definition:6 --cluster lexicon-cluster</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/reference/ecs/run-task.html">https://docs.aws.amazon.com/cli/latest/reference/ecs/run-task.html</a></li>
+</ul>
+<h3 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h3><p>Assign metadata to AWS resources, this is a array of <code>key|value</code> so you can allocate infrastructure resources.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ecs list-tags-for-resource --resource-arn </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/answers/account-management/aws-tagging-strategies/">https://aws.amazon.com/answers/account-management/aws-tagging-strategies/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2019/09/aws-command-line-interface-overview/" data-id="cll98m8wd001oqouhedafads9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/" rel="tag">aws</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/09/wood-working-projects/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Wood Working Projects
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/09/aws-elastic-container-registry/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Elastic Container Registry</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/">Implementation - AWS Console - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/ld-restapi/">Launch Darkly Restful API</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

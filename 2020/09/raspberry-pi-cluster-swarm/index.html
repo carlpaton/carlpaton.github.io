@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Raspberry Pi Cluster - Docker Swarm | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Following on from the post Raspberry Pi Cluster which created a cluster of PI’s and used parallel computing to execute and share the workload using Python … I figured it was time to do the same thing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Raspberry Pi Cluster - Docker Swarm">
+<meta property="og:url" content="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-swarm/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Following on from the post Raspberry Pi Cluster which created a cluster of PI’s and used parallel computing to execute and share the workload using Python … I figured it was time to do the same thing">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/docker-swarm-lol.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/overview-of-docker-swarm.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/alexellis2-visualizer.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/nginx-pi-demo.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer-load-balancing.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer-swarm-leave.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/visualizer-after-adding-nginx-foo.jpg">
+<meta property="article:published_time" content="2020-09-23T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-13T09:11:10.905Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="raspberry pi">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/raspberry-pi-cluster-swarm/docker-swarm-lol.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-raspberry-pi-cluster-swarm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/raspberry-pi-cluster-swarm/" class="article-date">
+  <time datetime="2020-09-23T12:00:00.000Z" itemprop="datePublished">2020-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Raspberry Pi Cluster - Docker Swarm
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/raspberry-pi-cluster-swarm/docker-swarm-lol.jpg" alt="Docker Swarm LOL"></p>
+<p>Following on from the post <a href="/2019/10/raspberry-pi-cluster/">Raspberry Pi Cluster</a> which created a cluster of PI’s and used parallel computing to execute and share the workload using Python … I figured it was time to do the same thing using Docker Swarm.</p>
+<p>Docker Swarm is not dead although its long term future is unknown. I’d take <a target="_blank" rel="noopener" href="https://nigelpoulton.com/blog/f/swarm-vs-kubernetes-2020-update">Nigel Poulton’s</a> word on this as as he is a domain expert. I figured knowing some Swarm will probably help at some point but DevOps are probably better off focusing more attention on kubernetes as its future is super bright!</p>
+<p>On that note… Swarm is simple to setup and has a shallow learning curve. Not all companys need <a href="/2020/09/raspberry-pi-cluster-kubernetes/">complex container orchestration tools like kubernetes</a> that can automatically replicate to nodes in the cluster under load. With Swarm the replication is done manually with commands like <code>docker service scale</code>.</p>
+<p>The cluster is made up of 2 or more physical Raspberry Pi 4’s and Docker Swarm has the following common terms:</p>
+<ul>
+<li><strong>Node</strong></li>
+<li><ul>
+<li>This is the machine that runs and instance of the <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/">Docker Engine</a>, this can be a Virtual Machine, PC, Laptop or in my case a Raspberry Pi.</li>
+</ul>
+</li>
+<li><strong>Swarm</strong> </li>
+<li><ul>
+<li>A cluster of nodes running the <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/">Docker Engine</a>.</li>
+</ul>
+</li>
+<li><strong>Manager Node</strong> </li>
+<li><ul>
+<li>Manages the worker nodes schedules tasks for them to run. </li>
+</ul>
+</li>
+<li><ul>
+<li>Its also responsable for the cluster state. </li>
+</ul>
+</li>
+<li><ul>
+<li>Note that <code>Manager Nodes</code> can also run services.</li>
+</ul>
+</li>
+<li><ul>
+<li>A cluster can have several <code>Manager Nodes</code>. </li>
+</ul>
+</li>
+<li><strong>Worker Node</strong> </li>
+<li><ul>
+<li>Instances of the <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/">Docker Engine</a> with the responsability of running your application in containers.</li>
+</ul>
+</li>
+<li><strong>Services</strong> </li>
+<li><ul>
+<li>This is the running container that was created from a Docker Image. </li>
+</ul>
+</li>
+<li><ul>
+<li>It can be anything like <a target="_blank" rel="noopener" href="https://hub.docker.com/_/nginx">Nginx</a> (for web) or <a target="_blank" rel="noopener" href="https://hub.docker.com/_/mysql">MySQL</a> (for the persistant storage)</li>
+</ul>
+</li>
+<li><strong>Task</strong> </li>
+<li><ul>
+<li>A service thats scheduled to run on a node.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/d/raspberry-pi-cluster-swarm/overview-of-docker-swarm.jpg" alt="Overview of Docker Swarm"></p>
+<blockquote>
+<p>“Docker Swarm is an alternative, Docker-native Container Orchestration Engine that coordinates container placement and management among multiple Docker Engine hosts. Docker Swarm allows you to communicate directly with swarm instead of communicating with each Docker Engine individually. Docker Swarm architecturally is comprised of two types of nodes called Managers and Workers. -rancher.com”</p>
+</blockquote>
+<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><ol>
+<li>Follow the <a href="/2019/10/raspberry-pi-cluster-setup-os/">OS Steps (For Cluster)</a>, for <code>Docker Swarm</code> the nodes were:</li>
+</ol>
+<ul>
+<li><code>node1</code> (manager node)</li>
+<li><code>node3</code> (worker node)</li>
+</ul>
+<ol start="2">
+<li>Install <a target="_blank" rel="noopener" href="https://docs.docker.com/get-docker/">Docker CE</a> on all nodes using the <code>pi</code> user. I used <a href="/2018/04/putty/">Putty to SSH</a> to the nodes as I did it from a Windows Machine.</li>
+</ol>
+<p><strong>node1</strong> and <strong>node3</strong></p>
+<p>If you are not on a Windows machine cannot connect to <code>node1</code> then run <code>sudo nmap -sn 192.168.1.0/24</code> to inspect your network, the subnet mask <code>0/24</code> and actual range <code>192.168.1.x</code> will differ depending on your defined <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/networking/technologies/dhcp/dhcp-top">DHCP scope</a>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssh node1</span><br><span class="line">curl -sSL https://get.docker.com | sh                   ~ execute convenience script from Docker (Raspbian is not yet officially supported)</span><br><span class="line">sudo usermod -aG docker pi                              ~ permissions</span><br><span class="line">groups pi                                               ~ check `docker` has been added for the `pi` user</span><br><span class="line">                                                        ~ you will need to exit and login again for the above to take affect</span><br><span class="line">docker run hello-world                                  ~ just make sure it works :D</span><br></pre></td></tr></table></figure>
+
+<p>If you want to see what the <code>convenience script</code> from Docker is doing you can grab it and then edit it with nano, I dont particularly care and trust the shell script as its from Docker themselves. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL get.docker.com -o get-docker.sh</span><br><span class="line">nano get-docker.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="Setup-Manager"><a href="#Setup-Manager" class="headerlink" title="Setup Manager"></a>Setup Manager</h3><p><strong>node1</strong></p>
+<p>Get the IP address and run <code>swarm init</code> to create a <code>manager</code> node</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ifconfig                                               ~ 192.168.1.79 from `wlan0`</span><br><span class="line">sudo docker swarm init --advertise-addr 192.168.1.79   ~ this will output the command needed for workers to join</span><br></pre></td></tr></table></figure>
+
+<h3 id="Setup-Worker"><a href="#Setup-Worker" class="headerlink" title="Setup Worker"></a>Setup Worker</h3><p>The token below comes from the <code>swarm init</code> command above.</p>
+<p><strong>node3</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh node3</span><br><span class="line">docker swarm join --token SWMTKN-1-0qg11jc0dpjdrf9tv7f504r2jhyet95trcbh1o5yz889fow8k6-exwpzo10leqiyr6k65z0iyelq 192.168.1.79:2377</span><br><span class="line">exit                                                  ~ falls back to `node1`</span><br></pre></td></tr></table></figure>
+
+<p><strong>node1</strong></p>
+<p>Now running <code>sudo docker node ls</code> shows us our swarm :D</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pi@node1:~ $ sudo docker node ls</span><br><span class="line">ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION</span><br><span class="line">k86pcxsvs4qvr2qt3ovn90x5w *   node1               Ready               Active              Leader              19.03.13</span><br><span class="line">8i5q2rtb555tpqquc8a0ujdan     node3               Ready               Active                                  19.03.13</span><br></pre></td></tr></table></figure>
+
+<h3 id="First-Service"><a href="#First-Service" class="headerlink" title="First Service"></a>First Service</h3><p>This will install <a target="_blank" rel="noopener" href="https://github.com/dockersamples/docker-swarm-visualizer">docker-swarm-visualizer</a> a tool to visually see the cluster! <a target="_blank" rel="noopener" href="https://twitter.com/alexellisuk">Alex Ellis</a> has pushed an image to the Docker Hub as <code>alexellis2/visualizer-arm:latest</code> that works on <a target="_blank" rel="noopener" href="https://github.com/dockersamples/docker-swarm-visualizer#running-on-arm">ARM (Raspberry Pi)</a>.</p>
+<p><strong>node1</strong></p>
+<p>This will take a bit of time to complete as it needs to download the depednancy layers.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker service create --name viz --publish 8080:8080/tcp --constraint node.role==manager --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock alexellis2/visualizer-arm:latest</span><br></pre></td></tr></table></figure>
+
+<p>You can then check the service is running with <code>sudo docker service ls</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pi@node1:~ $ sudo docker service ls</span><br><span class="line">ID                  NAME                MODE                REPLICAS            IMAGE                              PORTS</span><br><span class="line">nswh5q71ho6f        viz                 replicated          1/1                 alexellis2/visualizer-arm:latest   *:8080-&gt;8080/tcp</span><br></pre></td></tr></table></figure>
+
+<p>The UI is then avaible at - <a target="_blank" rel="noopener" href="http://node1:8080/">http://node1:8080/</a></p>
+<p><img src="/d/raspberry-pi-cluster-swarm/alexellis2-visualizer.jpg" alt="alexellis2/visualizer-arm:latest"></p>
+<h3 id="Nginx-Services"><a href="#Nginx-Services" class="headerlink" title="Nginx Services"></a>Nginx Services</h3><p>The examples below use the image <a target="_blank" rel="noopener" href="https://hub.docker.com/r/carlpaton/nginx-pi-demo">carlpaton/nginx-pi-demo</a> to display some information about the host node, this is useful as we can then see the <code>Server name</code> and <code>Server address</code> changes. Details about this image and how I created it can be found at <a href="/2020/09/nginx-pi-demo/">nginx-pi-demo</a>.</p>
+<p>When you create a service you can initialze it with <code>--replicas n</code> where n is the amount of running instance you want. The below will create 2 instance of <code>nginx-2</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker service create --replicas 2 --name nginx-2 -p 8081:80 carlpaton/nginx-pi-demo</span><br><span class="line">docker service inspect --pretty nginx-2                                  ~ inspect the service, --pretty formats the output, default is json</span><br></pre></td></tr></table></figure>
+
+<p><code>nginx-2</code> is then avaible at - <a target="_blank" rel="noopener" href="http://node1:8081/">http://node1:8081/</a>. If you open one instance and a second in incognio you will see for the same DNS <code>node1:8081</code> the <code>Server name</code> and <code>Server address</code> changes, this means the two requests were processed by different containers (not necessarily nodes but if you use this information along with what you see in visualiser you can prove they are on different nodes). </p>
+<p><img src="/d/raspberry-pi-cluster-swarm/nginx-pi-demo.jpg" alt="nginx-pi-demo"></p>
+<p>To manually scale create the server <code>nginx-manual</code> below.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker service create --name nginx-manual -p 8082:80 carlpaton/nginx-pi-demo    ~ create 1 instance   </span><br><span class="line">docker service ps nginx-manual                                                  ~ check where the processes `nginx-manual` are running</span><br></pre></td></tr></table></figure>
+
+<p><code>nginx-manual</code> is then avaible at - <a target="_blank" rel="noopener" href="http://node1:8082/">http://node1:8082/</a>. Once its up, scale it out by <code>5</code>. Note that this <code>5</code> will be the new total service count.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service scale nginx-manual=5</span><br></pre></td></tr></table></figure>
+
+<p>If you want to scale down just run the same command but with a lower value like 2, the new service count for <code>nginx-manual</code> will then be 2.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service scale nginx-manual=2</span><br></pre></td></tr></table></figure>
+
+<p>If you now look at the <a target="_blank" rel="noopener" href="http://node1:8080/">visualizer tool</a> you can see Docker Swarm is auto load balancing between the nodes :D</p>
+<p><img src="/d/raspberry-pi-cluster-swarm/visualizer-load-balancing.jpg" alt="Load Balancing"></p>
+<h3 id="Delete-a-service"><a href="#Delete-a-service" class="headerlink" title="Delete a service"></a>Delete a service</h3><p>To delete a service run <code>rm</code>, the below will create a dummy server <code>nginx-delete</code> and then delete it. <strong>WARNING!</strong> <code>rm</code> will trash the service without confirming. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker service create --name nginx-delete -p 8083:80 carlpaton/nginx-pi-demo</span><br><span class="line">docker service rm nginx-delete</span><br></pre></td></tr></table></figure>
+
+<h3 id="Leave-the-swarm-and-join-again"><a href="#Leave-the-swarm-and-join-again" class="headerlink" title="Leave the swarm and join again"></a>Leave the swarm and join again</h3><p>From a worker run the <code>swarm leave</code> to leave the swarm.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh node3</span><br><span class="line">docker swarm leave</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+
+<p>After leaving the swarm the manager <code>node1</code> moves the load for you.</p>
+<p><img src="/d/raspberry-pi-cluster-swarm/visualizer-swarm-leave.jpg" alt="After Delete"></p>
+<p>If you want to add the node back you need to first delete node completely from the manager.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh node1</span><br><span class="line">docker node rm node3                        ~ run from manager</span><br><span class="line">docker node rm 8i5q2rtb555tpqquc8a0ujdan    ~ if node3 name is ambiguous use the id from `sudo docker node ls`</span><br></pre></td></tr></table></figure>
+
+<p>Add the node back as a worker using the <code>swarm join</code> command (see the start of this post).</p>
+<p>Even if you restart the service the nodes will not auto load balance (this is by design to avoid disruption). Swarm will add new services to nodes doing the least amount of work, so the idea is they will eventually balance out.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker service update nginx-manual                                                        ~ this restarts the service but will not load balance</span><br><span class="line">docker service create --replicas 2 --name nginx-foo -p 8084:80 carlpaton/nginx-pi-demo    ~ add `nginx-foo`</span><br></pre></td></tr></table></figure>
+
+<p><img src="/d/raspberry-pi-cluster-swarm/visualizer-after-adding-nginx-foo.jpg" alt="After adding nginx-foo"></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/swarm/manage-nodes/">https://docs.docker.com/engine/swarm/manage-nodes/</a></li>
+</ul>
+<h3 id="Rolling-Update"><a href="#Rolling-Update" class="headerlink" title="Rolling Update"></a>Rolling Update</h3><p>You can upgrade versions of the running image by including <code>--update-delay 10s</code> when creating it. Then run <code>docker service update [SERVICE NAME]</code></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/swarm/swarm-tutorial/rolling-update/">https://docs.docker.com/engine/swarm/swarm-tutorial/rolling-update/</a></li>
+</ul>
+<h3 id="Shut-Things-Down"><a href="#Shut-Things-Down" class="headerlink" title="Shut Things Down"></a>Shut Things Down</h3><p>To shut down the nodes ssh to each and such them down, you need to do the workers first and then the managers.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo shutdown -h now</span><br></pre></td></tr></table></figure>
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://nigelpoulton.com/blog/f/swarm-vs-kubernetes-2020-update">https://nigelpoulton.com/blog/f/swarm-vs-kubernetes-2020-update</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/swarm/key-concepts/">https://docs.docker.com/engine/swarm/key-concepts/</a></li>
+<li><a target="_blank" rel="noopener" href="https://rancher.com/learning-paths/docker-swarm-vs-kubernetes/">https://rancher.com/learning-paths/docker-swarm-vs-kubernetes/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/debian/#install-using-the-convenience-script">https://docs.docker.com/engine/install/debian/#install-using-the-convenience-script</a></li>
+<li><a target="_blank" rel="noopener" href="https://howchoo.com/g/nmrlzmq1ymn/how-to-install-docker-on-your-raspberry-pi">https://howchoo.com/g/nmrlzmq1ymn/how-to-install-docker-on-your-raspberry-pi</a></li>
+<li><a target="_blank" rel="noopener" href="https://howchoo.com/g/njy4zdm3mwy/how-to-run-a-raspberry-pi-cluster-with-docker-swarm">https://howchoo.com/g/njy4zdm3mwy/how-to-run-a-raspberry-pi-cluster-with-docker-swarm</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dockersamples/docker-swarm-visualizer">https://github.com/dockersamples/docker-swarm-visualizer</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2020/09/raspberry-pi-cluster-swarm/" data-id="cll98m92p00j6qouh5rxp147q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry pi</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/09/nginx-pi-demo/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Nginx Pi Demo
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/percentage-for-data-set/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Percentage For Data Set</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/">Implementation - AWS Console - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/ld-restapi/">Launch Darkly Restful API</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

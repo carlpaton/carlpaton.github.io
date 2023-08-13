@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Redis Types | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="WIP  Redis can be used as a database, cache store, message broker, streaming engine and probably more! I was interested in the types so had a hoon, hopefully what I learn here I can apply to Redis Ad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis Types">
+<meta property="og:url" content="https://carlpaton.github.io/2022/02/redis-types/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="WIP  Redis can be used as a database, cache store, message broker, streaming engine and probably more! I was interested in the types so had a hoon, hopefully what I learn here I can apply to Redis Ad">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/redis-types/string.png">
+<meta property="article:published_time" content="2022-02-18T11:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-13T09:11:10.916Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="wip">
+<meta property="article:tag" content="redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/redis-types/string.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-redis-types" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/02/redis-types/" class="article-date">
+  <time datetime="2022-02-18T11:00:00.000Z" itemprop="datePublished">2022-Feb</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redis Types
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
+<p>Redis can be used as a <code>database</code>, <code>cache store</code>, <code>message broker</code>, <code>streaming engine</code> and probably more! I was interested in the types so had a hoon, hopefully what I learn here I can apply to <a href="/2019/05/redis-administrator/">Redis Administrator</a>.</p>
+<h2 id="Playground-Docker"><a href="#Playground-Docker" class="headerlink" title="Playground - Docker"></a>Playground - Docker</h2><p>I did not want to install Redis locally and containers are cool so brought up a bride so the containers were on the same <a target="_blank" rel="noopener" href="https://docs.docker.com/network/">network</a>, <a target="_blank" rel="noopener" href="https://hub.docker.com/_/redis">redis server</a> and <a target="_blank" rel="noopener" href="https://redis.io/docs/stack/get-started/install/docker/">redis cli</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker network create --driver bridge redis-bridge-network</span><br><span class="line"></span><br><span class="line">docker run --name red-srv -d -p 6379:6379 --network redis-bridge-network redis redis-server --appendonly yes</span><br><span class="line"></span><br><span class="line"># -it mean interactive, --rm means clean up when it exits</span><br><span class="line">docker run -it --network redis-bridge-network --rm redis redis-cli -h red-srv</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/redis">https://hub.docker.com/_/redis</a></li>
+</ul>
+<h2 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a>Keys</h2><p>The suggested redis keys are <code>object-type:id</code>, for <a href="/2019/05/redis-administrator/">Redis Administrator</a> (which is the other way around) I used <code>1:2:seed_string</code>. 1 and 2 could be something sensible to the business (like a user and department id) and seed_string could be the human readable explanation of that data for example the department name.</p>
+<p>Searching on a partial key could then be something like <code>1:*</code> which would match anything starting with <code>1:</code>. In general redis will create a key/value if it doesnt exist should you try write to it.</p>
+<h2 id="Types"><a href="#Types" class="headerlink" title="Types"></a>Types</h2><p>Love a good type, I thrive on structure!</p>
+<h3 id="Types-String"><a href="#Types-String" class="headerlink" title="Types: String"></a>Types: String</h3><p><strong>Usage:</strong> Any kind of data as they are binary safe.</p>
+<ul>
+<li>Example store could be: integers, binary, csv, serialized json, xml, images, video, documents, sound</li>
+<li>Practice usage: caching responses that dont change often and you would then include the ttl. Could be api reponse, session storage, html pages<ul>
+<li>Can also be used for a counter as it has built in increment/decrement support (incr, incrby)</li>
+</ul>
+</li>
+</ul>
+<p>Implemented as key value pair, this is the fundamental redis data type. If the key exists it is replaced regardless of its type.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set mykey somevalue</span><br><span class="line">set mykey somevalue EX 5        ~ sets key/value with the ttl of 5 seconds</span><br><span class="line">get mykey</span><br><span class="line">exists mykey</span><br><span class="line">del mykey</span><br><span class="line">type mykey</span><br><span class="line">expire mykey 5    ~ 5 seconds</span><br><span class="line">ttl mykey</span><br></pre></td></tr></table></figure>
+
+<p>CLI examples with a complex key and JSON serialized value. Although this is fine, a type of <code>Hash</code> may be better suited, see futher below.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; set 1:2:seed_string &#123;&quot;Id&quot;:6338,&quot;SomeGuid&quot;:&quot;cfb9aace-08e7-4b7a-9e3a-8775d366240a&quot;,&quot;DateTime&quot;:&quot;2022-02-19T04:00:57.072271+00:00&quot;&#125;</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">&gt; get 1:2:seed_string</span><br><span class="line">&#123;&quot;Id&quot;:6338,&quot;SomeGuid&quot;:&quot;cfb9aace-08e7-4b7a-9e3a-8775d366240a&quot;,&quot;DateTime&quot;:&quot;2022-02-19T04:00:57.072271+00:00&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example data from <a target="_blank" rel="noopener" href="https://hub.docker.com/r/carlpaton/redis-administrator">Redis Administrator</a>‘s seed function could look as follows where <code>VALUE</code> is a json serialized object.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">KEY               VALUE</span><br><span class="line">1:2:seed_string   &#123;&quot;Id&quot;:6338,&quot;SomeGuid&quot;:&quot;cfb9aace-08e7-4b7a-9e3a-8775d366240a&quot;,&quot;DateTime&quot;:&quot;2022-02-19T04:00:57.072271+00:00&quot;&#125;</span><br><span class="line">2:3:seed_string   &#123;&quot;Id&quot;:2004,&quot;SomeGuid&quot;:&quot;e7e80043-bf6c-47bf-87b6-e7e801994d83&quot;,&quot;DateTime&quot;:&quot;2022-02-19T04:00:57.2217754+00:00&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/d/redis-types/string.png" alt="String Type : Redis Administrator"></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/commands/set">https://redis.io/commands/set</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/data-types/data-types-tutorial/#strings">https://redis.io/docs/manual/data-types/data-types-tutorial/#strings</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=7CUt4yWeRQE">Redis Strings Explained - Redis</a></li>
+</ul>
+<h3 id="Type-Lists"><a href="#Type-Lists" class="headerlink" title="Type: Lists"></a>Type: Lists</h3><p><strong>Usage:</strong> ?.</p>
+<p>Implemented as linked list.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">rpush mylist A                     ~ rpush adds a new element into a list on the left (at the head)</span><br><span class="line">rpush mylist B</span><br><span class="line">rpush mylist 1 2 3 4 5 &quot;foo bar&quot;</span><br><span class="line">lpush mylist first                 ~ lpush adds a new element into a list on the right (at the tail)</span><br><span class="line">lrange mylist 0 -1                 ~ lrange extracts ranges of elements</span><br><span class="line">                                   ~ takes two indexes, the first and the last element of the range to return.</span><br><span class="line">rpop mylist                        ~ retrieving the element from the list, and eliminating it from the list, at the same time.</span><br><span class="line">                                   ~ pop elements from left and right</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/data-types/data-types-tutorial/#lists">https://redis.io/docs/manual/data-types/data-types-tutorial/#lists</a></li>
+</ul>
+<h3 id="Type-Sorted-Set"><a href="#Type-Sorted-Set" class="headerlink" title="Type: Sorted Set"></a>Type: Sorted Set</h3><p><strong>Usage:</strong> ?.</p>
+<p>A collection of unique strings, sorted by score</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">zadd hackers 1940 &quot;Alan Kay&quot;              ~ adds &quot;Alan Kay&quot; to the collection with score 1940</span><br><span class="line">zadd hackers 1957 &quot;Sophie Wilson&quot;</span><br><span class="line">zadd hackers 1953 &quot;Richard Stallman&quot;</span><br><span class="line">zadd hackers 1 &quot;carl&quot; 2 &quot;paton&quot;           ~ adding a collection by score/value</span><br><span class="line">zrange hackers 0 -1                       ~ extracts ranges of elements</span><br><span class="line">zrevrange hackers 0 -1                    ~ extracts ranges of elements ordering the score desc</span><br><span class="line">zrange hackers 0 -1 withscores            ~ extract with scores</span><br><span class="line">zrangebyscore hackers -inf 1950           ~ return by range with a score between negative infinity and 1950</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=MUKlxdBQZ7g">Redis Sorted Sets Explained - Redis</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/data-types/data-types-tutorial/#sorted-sets">https://redis.io/docs/manual/data-types/data-types-tutorial/#sorted-sets</a></li>
+</ul>
+<h3 id="Type-Set"><a href="#Type-Set" class="headerlink" title="Type: Set"></a>Type: Set</h3><p><strong>Usage:</strong> ?.</p>
+<p>Redis Sets are an unordered collection of strings. In Redis, you can add, remove, and test for the existence of members in O(1) time complexity.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sadd myset 1 2 3             ~ adds new elements to a set</span><br><span class="line">sadd myset 42</span><br><span class="line">smembers myset               ~ returns all the members of the set value stored at key.</span><br><span class="line">spop myset                   ~ removes and returns one or more random members from the set value store at key.</span><br><span class="line">                             ~ not sure about the random, when I tested it kept removing at the end</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/data-types/data-types-tutorial/#sets">https://redis.io/docs/manual/data-types/data-types-tutorial/#sets</a></li>
+</ul>
+<h3 id="Type-Hash"><a href="#Type-Hash" class="headerlink" title="Type: Hash"></a>Type: Hash</h3><p><strong>Usage:</strong> ?.</p>
+<p>Collection of key value pairs. These are maps between string fields and string values used to represent objects.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hmset user:1000 username antirez birthyear 1977 verified 1     ~ sets multiple fields of the hash</span><br><span class="line">hget user:1000 username                                        ~ gets a single field</span><br><span class="line">hmget user:1000 username birthyear no-such-field               ~ gets an array of values</span><br><span class="line">hincrby user:1000 birthyear 10                                 ~ increments the number stored at field in the hash stored at key by increment.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/data-types/data-types-tutorial/#hashes">https://redis.io/docs/manual/data-types/data-types-tutorial/#hashes</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/commands/?group=hash">https://redis.io/commands/?group=hash</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/commands/hincrby/">https://redis.io/commands/hincrby/</a></li>
+</ul>
+<h3 id="Type-Stream"><a href="#Type-Stream" class="headerlink" title="Type: Stream"></a>Type: Stream</h3><p><strong>Usage:</strong> ?.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/topics/streams-intro">https://redis.io/topics/streams-intro</a></li>
+</ul>
+<p>Models a log data structure in a more abstract way.</p>
+<h3 id="Type-Geospatial"><a href="#Type-Geospatial" class="headerlink" title="Type: Geospatial"></a>Type: Geospatial</h3><p><strong>Usage:</strong> ?.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.com/redis-best-practices/indexing-patterns/geospatial/">https://redis.com/redis-best-practices/indexing-patterns/geospatial/</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/commands/geopos/">https://redis.io/commands/geopos/</a></li>
+</ul>
+<h3 id="Type-Bitmaps"><a href="#Type-Bitmaps" class="headerlink" title="Type: Bitmaps"></a>Type: Bitmaps</h3><p><strong>Usage:</strong> ?.</p>
+<h3 id="Type-Hyperloglogs"><a href="#Type-Hyperloglogs" class="headerlink" title="Type: Hyperloglogs"></a>Type: Hyperloglogs</h3><p><strong>Usage:</strong> ?.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/topics/data-types">https://redis.io/topics/data-types</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/about/">https://redis.io/docs/about/</a></li>
+<li><a target="_blank" rel="noopener" href="https://university.redis.com/courses/ru101/">https://university.redis.com/courses/ru101/</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.com/redis-enterprise/data-structures/">https://redis.com/redis-enterprise/data-structures/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2022/02/redis-types/" data-id="cll98m93b00kwqouh2fja18dp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/02/libman/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Libman
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/02/json-server/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JSON Server</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/">Implementation - AWS Console - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/ld-restapi/">Launch Darkly Restful API</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

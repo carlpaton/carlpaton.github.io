@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Fusion 360 2D Sketching | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Fundamentals at 2D level in Fusion 360 using basic shaped., we would use the X (red) and Y (green) plains and the 3D printer will extrude into Z (blue). Create - &gt; Create Scetch and the select the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fusion 360 2D Sketching">
+<meta property="og:url" content="https://carlpaton.github.io/2023/05/fusion-360-2d-sketching/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Fundamentals at 2D level in Fusion 360 using basic shaped., we would use the X (red) and Y (green) plains and the 3D printer will extrude into Z (blue). Create - &gt; Create Scetch and the select the">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/circle.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/circle-construction-line.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/rectangle.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/arc.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/polygon.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/ellipse.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/slot.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/conic-curve.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/mirror.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/circular-pattern.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/circular-pattern-suppress.png">
+<meta property="article:published_time" content="2023-05-06T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-13T09:11:10.840Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="cad">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/fusion-360-2d-sketching/circle.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-fusion-360-2d-sketching" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/05/fusion-360-2d-sketching/" class="article-date">
+  <time datetime="2023-05-06T12:00:00.000Z" itemprop="datePublished">2023-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Fusion 360 2D Sketching
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Fundamentals at 2D level in Fusion 360 using basic shaped., we would use the <code>X</code> (red) and <code>Y</code> (green) plains and the 3D printer will extrude into <code>Z</code> (blue). <code>Create</code> - &gt; <code>Create Scetch</code> and the select the plain between red and green.</p>
+<p>We need to be deliberate about <strong>position</strong> and <strong>dimension</strong> so that the sketch always has the little red lock indicating its <code>fully constrained</code> and the object we added goes black (and not blue).</p>
+<h2 id="Circle-at-origin"><a href="#Circle-at-origin" class="headerlink" title="Circle (at origin)"></a>Circle (at origin)</h2><p><code>CREATE</code> - &gt; <code>Circle</code> -&gt; <code>Center Diameter Circle</code> -&gt; select position (origin) -&gt; provide dimension.</p>
+<p><img src="/d/fusion-360-2d-sketching/circle.png" alt="circle"></p>
+<h2 id="Circle-on-construction-lines"><a href="#Circle-on-construction-lines" class="headerlink" title="Circle (on construction lines)"></a>Circle (on construction lines)</h2><p><code>CREATE</code> - &gt; <code>Line</code> -&gt; set line type <code>construction</code> -&gt; select position (origin) -&gt; align to plain (red or green) -&gt; provide dimension.</p>
+<p><code>CREATE</code> - &gt; <code>Circle</code> -&gt; select construction line position  -&gt; provide dimension.</p>
+<p><img src="/d/fusion-360-2d-sketching/circle-construction-line.png" alt="circle construction line"></p>
+<h2 id="Rectangle"><a href="#Rectangle" class="headerlink" title="Rectangle"></a>Rectangle</h2><p><code>CREATE</code> - &gt; <code>Line</code> -&gt; set line type <code>construction</code> -&gt; select position (origin) -&gt; align to plain (red or green) -&gt; provide dimension.</p>
+<p><code>CREATE</code> - &gt; <code>Rectangle</code> -&gt; <code>2 Point Rectangle</code> -&gt; select construction line position  -&gt; provide dimension -&gt; tab -&gt; provide 2nd dimension</p>
+<p><img src="/d/fusion-360-2d-sketching/rectangle.png" alt="rectangle construction line"></p>
+<h2 id="Arc-from-origin-along-construction-line"><a href="#Arc-from-origin-along-construction-line" class="headerlink" title="Arc (from origin along construction line)"></a>Arc (from origin along construction line)</h2><p>Create 2 constructions lines along red, 100mm and 50mm</p>
+<p><code>CREATE</code> - &gt; <code>Arc</code> -&gt; <code>3 Point Arc</code> -&gt; select origin -&gt; select the end of the 100mm construction line</p>
+<p>Create constraint of type <code>coincident</code></p>
+<p><code>CONSTRAINT</code> -&gt; <code>Coincident</code> -&gt; select the end of the 50mm construction line -&gt; select the center point of the arc</p>
+<p><img src="/d/fusion-360-2d-sketching/arc.png" alt="arc"></p>
+<h2 id="Polygon"><a href="#Polygon" class="headerlink" title="Polygon"></a>Polygon</h2><p>Create construction lines simliar to the above</p>
+<p><code>CREATE</code> - &gt; <code>Polygon</code> -&gt; <code>Circumscribed Polygon</code> -&gt; select the construction line point -&gt; drag and set the radius -&gt; tab and set the amount of sides. Repeat and create another 2 polygons to the right and below</p>
+<p>Create constraint of type <code>Horizontal/Vertial</code> (for the first polygon)</p>
+<p>Select the polygons top line -&gt; select <code>CONSTRAINT</code> -&gt; <code>Horizontal/Vertial</code></p>
+<p>Create constraint of type <code>Colinear</code></p>
+<p><code>CONSTRAINT</code> -&gt; <code>Colinear</code> -&gt; select point in the middle of the polygon -&gt; select a corner of the polygon -&gt; select point of construction line outside of the polygon</p>
+<p>Create constraint of type <code>Parallel</code></p>
+<p><code>CONSTRAINT</code> -&gt; <code>Parallel</code> -&gt; select a line from the polygon -&gt; select a construction line</p>
+<p><img src="/d/fusion-360-2d-sketching/polygon.png" alt="polygon"></p>
+<p><em>Circumscribed (outside the circle) | Inscribed (inside the circle)</em></p>
+<h2 id="Ellipse"><a href="#Ellipse" class="headerlink" title="Ellipse"></a>Ellipse</h2><p><code>CREATE</code> - &gt; <code>Ellipse</code> -&gt; select the construction line point <code>[1]</code> -&gt; release and select the tip of the at the next construction line <code>[2]</code> -&gt; set the dimension <code>[3]</code></p>
+<p><img src="/d/fusion-360-2d-sketching/ellipse.png" alt="ellipse"></p>
+<h2 id="Slot"><a href="#Slot" class="headerlink" title="Slot"></a>Slot</h2><p>Requires a square with 2 construction lines deviding it into 4 equal parts, then from the center 2 additional construction lines (these are the <code>25mm</code> ones)</p>
+<p><code>CREATE</code> - &gt; <code>Slot</code> -&gt; <code>Center to Center Slot</code> -&gt; select construction line point <code>[1]</code> -&gt; release and select construction line point <code>[2]</code> -&gt; then set the dimension (this is the <code>25mm</code> radius)</p>
+<p><img src="/d/fusion-360-2d-sketching/slot.png" alt="slot"></p>
+<h2 id="Conic-Curve"><a href="#Conic-Curve" class="headerlink" title="Conic Curve"></a>Conic Curve</h2><p>Requires the 3 construction lines shown as <code>100.00</code>, <code>100.00</code> and <code>50.00</code></p>
+<p><code>CREATE</code> - &gt; <code>Conic Curve</code> -&gt; select construction line at point <code>[1]</code> -&gt; construction line at point <code>[2]</code> -&gt; then construction line at point <code>[3]</code> -&gt; then set the dimension</p>
+<p><img src="/d/fusion-360-2d-sketching/conic-curve.png" alt="conic curve"></p>
+<h2 id="Mirror"><a href="#Mirror" class="headerlink" title="Mirror"></a>Mirror</h2><p>This mirrors the selection and applys any new changes automagically. Here I mirrored the conic curve above. </p>
+<p><code>CREATE</code> - &gt; <code>Mirrow</code> -&gt; select the object (can be any object) at <code>[1]</code> -&gt; select the line at <code>[2]</code> -&gt; the mirror then appears on the right</p>
+<p><img src="/d/fusion-360-2d-sketching/mirror.png" alt="mirror"></p>
+<h2 id="Circular-Pattern"><a href="#Circular-Pattern" class="headerlink" title="Circular Pattern"></a>Circular Pattern</h2><p>This requires 1 construction line and then the object to create in a circular pattern.</p>
+<p><code>CREATE</code> - &gt; <code>Circular Pattern</code> -&gt; select the object at <code>[1]</code> -&gt; select the center point at <code>[2]</code> -&gt; set the quantity and click ok</p>
+<p><img src="/d/fusion-360-2d-sketching/circular-pattern.png" alt="circular pattern"></p>
+<p>Can also create pattern with missing elements by selecting suppress and then unchecking elements</p>
+<p><img src="/d/fusion-360-2d-sketching/circular-pattern-suppress.png" alt="circular pattern suppress"></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=imo6HKOpdPI">Paul McWhorter - Fusion 360 for 3D Printing LESSON 5: Introduction to 2D Sketching in Fusion 360</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2023/05/fusion-360-2d-sketching/" data-id="cll98m8z2009eqouhhsex0wvc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cad/" rel="tag">cad</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/05/fusion-360-constraints-in-2d-sketches/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Fusion 360 Constraints In 2D Sketches
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/05/pi-pico-debug/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Pi Pico Debug</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/">Implementation - AWS Console - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/ld-restapi/">Launch Darkly Restful API</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

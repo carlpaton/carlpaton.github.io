@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Launch Darkly Restful API | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Caveat: More of an opinion, I feel using Launch Darkly REST API as part of application logic is trashington but the API exists and I wanted to know how to use it. Potentially in the future I’ll have a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Launch Darkly Restful API">
+<meta property="og:url" content="https://carlpaton.github.io/2023/06/ld-restapi/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Caveat: More of an opinion, I feel using Launch Darkly REST API as part of application logic is trashington but the API exists and I wanted to know how to use it. Potentially in the future I’ll have a">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/ld-restapi/create-segment.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/ld-restapi/add-segment-to-rule.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/ld-restapi/confirm-removed-id.png">
+<meta property="article:published_time" content="2023-06-20T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-13T09:11:10.863Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="feature management">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/ld-restapi/create-segment.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-ld-restapi" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/06/ld-restapi/" class="article-date">
+  <time datetime="2023-06-20T12:00:00.000Z" itemprop="datePublished">2023-Jun</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Launch Darkly Restful API
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Caveat:</strong> <em>More of an opinion, I feel using Launch Darkly REST API as part of application logic is trashington but the API exists and I wanted to know how to use it. Potentially in the future I’ll have a valid use case.</em></p>
+<p>My team needed to programatically remove keys from a Launch Darkly segment and it tickled my interest as this cannot be done with the SDK however Launch Darkly does provide a REST API (which is what I suspect SDK Client is probabaly using under the hood). I had a play in the past with <a href="/2021/08/feature-management-launchdarkly/">Launch Darkly SDK Clients</a>.</p>
+<p>Complete code for this post is at <a target="_blank" rel="noopener" href="https://github.com/carlpaton/LaunchDarklyDemo/tree/main/FeatureClient2">https://github.com/carlpaton/LaunchDarklyDemo/tree/main/FeatureClient2</a></p>
+<h2 id="Test-Data-And-SDK-Tests"><a href="#Test-Data-And-SDK-Tests" class="headerlink" title="Test Data And SDK Tests"></a>Test Data And SDK Tests</h2><p>Launch Darkly segments are groups of values that can be applied to more than one rule, so you can have <code>sweet segment 3</code> with the guids listed below applied to <code>n</code> feature flags. For my tests I just added the guids below to the feature <code>sweet-feature-name-3</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">3f43cd8d-c2f1-4a5a-b07b-a6fc2495dabf</span><br><span class="line">e3dbd64b-f51d-4aff-a4e5-f334960b9045</span><br><span class="line">85d223cc-7dc6-4b89-ad99-a17a612856ea</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>Create the segment using the GUI and add the values</li>
+</ol>
+<p><img src="/d/ld-restapi/create-segment.png" alt="Create Segment"></p>
+<ol start="2">
+<li>Create the flag and apply the segment</li>
+</ol>
+<p><img src="/d/ld-restapi/add-segment-to-rule.png" alt="Create Flag"></p>
+<ol start="3">
+<li>Using the code described in this SDK post and pushed here, query Launch Darkly. The expected output is as follows</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CheckByUserKey: featureName=sweet-feature-name-3 userId=e3dbd64b-f51d-4aff-a4e5-f334960b9045 returned allowed=True</span><br></pre></td></tr></table></figure>
+
+<h2 id="Restful-API-Change-Segment-From-Code"><a href="#Restful-API-Change-Segment-From-Code" class="headerlink" title="Restful API - Change Segment From Code"></a>Restful API - Change Segment From Code</h2><p>The REST API uses an <code>access token</code> (Generate from the GUI -&gt; <code>Account settings</code> -&gt; <code>Authorization</code> -&gt; <code>Access tokens</code>). This is not the same as an <code>SDK Key</code> which is associated with the project when you set it up.</p>
+<p>These are the steps I followed to make use of the Restful API and change the segment described above from code.</p>
+<ol>
+<li>Create the HTTP client and set its headers, in a real world application this will be injected into the pipeline with <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.httpclientfactoryservicecollectionextensions.addhttpclient">Microsoft.Extensions.DependencyInjection.AddHttpClient</a> instead of being <code>new HttpClient();</code> - remember new is glue :D</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> httpClient = <span class="keyword">new</span> HttpClient();</span><br><span class="line">httpClient.DefaultRequestHeaders.Add(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;api-00000000-0000-0000-0000-000000000000&quot;</span>);</span><br><span class="line">httpClient.DefaultRequestHeaders.Add(<span class="string">&quot;Accept&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Additionally I setup some serializer options - I really dont understand why this is not the default</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jsonOptions = <span class="keyword">new</span> JsonSerializerOptions()</span><br><span class="line">&#123;</span><br><span class="line">	PropertyNamingPolicy = JsonNamingPolicy.CamelCase</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>Lastly I created a user variable - this can be any string that represents your entity. Guids are the most common so thats what I used to represent a <code>user</code>.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> userId = <span class="string">&quot;e3dbd64b-f51d-4aff-a4e5-f334960b9045&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>We need to generate the segment URL which has a predefined format as seen at <a target="_blank" rel="noopener" href="https://apidocs.launchdarkly.com/tag/Segments#operation/getSegment">https://apidocs.launchdarkly.com/tag/Segments#operation/getSegment</a></li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">GetSegmentUri</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">var</span> projectKey = <span class="string">&quot;default&quot;</span>;</span><br><span class="line">	<span class="keyword">var</span> environmentKey = <span class="string">&quot;production&quot;</span>;</span><br><span class="line">	<span class="keyword">var</span> segmentKey = <span class="string">&quot;sweet-segment-3&quot;</span>;</span><br><span class="line">	<span class="keyword">var</span> baseUrl = <span class="string">&quot;https://app.launchdarkly.com/api/v2&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="string">$&quot;<span class="subst">&#123;baseUrl&#125;</span>/segments/<span class="subst">&#123;projectKey&#125;</span>/<span class="subst">&#123;environmentKey&#125;</span>/<span class="subst">&#123;segmentKey&#125;</span>&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Get the segment, this will be the JSON representation of the segment created above. It was called <code>sweet-segment-3</code>. This code would need some defensive checks for null on <code>responseBody</code> but you knew that already 😊</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;Segment&gt; <span class="title">GetSegment</span>(<span class="params">HttpClient httpClient, JsonSerializerOptions options</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">var</span> response = <span class="keyword">await</span> httpClient.GetAsync(GetSegmentUri());</span><br><span class="line">	response.EnsureSuccessStatusCode();</span><br><span class="line">	<span class="keyword">var</span> responseBody = <span class="keyword">await</span> response.Content.ReadAsStringAsync();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> JsonSerializer.Deserialize&lt;Segment&gt;(responseBody, options);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This is what the JSON response from the server looked like when I tested</p>
+<details>
+  <summary>Complete JSON response</summary>
+  <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sweet segment 3&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;creationDate&quot;</span><span class="punctuation">:</span> <span class="number">1687318631256</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;lastModifiedDate&quot;</span><span class="punctuation">:</span> <span class="number">1687318969195</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sweet-segment-3&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;included&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;excluded&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;includedContexts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;excludedContexts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;_links&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;parent&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;href&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/v2/segments/default/production&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;application/json&quot;</span></span><br><span class="line">		<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;self&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;href&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/v2/segments/default/production/sweet-segment-3&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;application/json&quot;</span></span><br><span class="line">		<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;site&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;href&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/default/production/segments/sweet-segment-3&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;text/html&quot;</span></span><br><span class="line">		<span class="punctuation">&#125;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;rules&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;da4d32e6-de8c-4533-870c-1423dcd466fd&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;clauses&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;771ee791-6820-48d5-902a-0d997b11582c&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;attribute&quot;</span><span class="punctuation">:</span> <span class="string">&quot;key&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;op&quot;</span><span class="punctuation">:</span> <span class="string">&quot;in&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;values&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;85d223cc-7dc6-4b89-ad99-a17a612856ea&quot;</span><span class="punctuation">,</span> <span class="string">&quot;e3dbd64b-f51d-4aff-a4e5-f334960b9045&quot;</span><span class="punctuation">,</span> <span class="string">&quot;3f43cd8d-c2f1-4a5a-b07b-a6fc2495dabf&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;contextKind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;user&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;negate&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">		<span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;rolloutContextKind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;user&quot;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;deleted&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;_flags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sweet feature name 3&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sweet-feature-name-3&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_links&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;parent&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">				<span class="attr">&quot;href&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/v2/flags/default&quot;</span><span class="punctuation">,</span></span><br><span class="line">				<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;application/json&quot;</span></span><br><span class="line">			<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;self&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">				<span class="attr">&quot;href&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/v2/flags/default/sweet-feature-name-3&quot;</span><span class="punctuation">,</span></span><br><span class="line">				<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;application/json&quot;</span></span><br><span class="line">			<span class="punctuation">&#125;</span></span><br><span class="line">		<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_site&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;href&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/default/production/features/sweet-feature-name-3&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;text/html&quot;</span></span><br><span class="line">		<span class="punctuation">&#125;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;generation&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</details>
+
+<ol start="4">
+<li>Get the patch operations, here the assumption is there is only one <code>rule</code> we care about. From the above its</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;rules&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;da4d32e6-de8c-4533-870c-1423dcd466fd&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;clauses&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;771ee791-6820-48d5-902a-0d997b11582c&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;attribute&quot;</span><span class="punctuation">:</span> <span class="string">&quot;key&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;op&quot;</span><span class="punctuation">:</span> <span class="string">&quot;in&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;values&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;85d223cc-7dc6-4b89-ad99-a17a612856ea&quot;</span><span class="punctuation">,</span> <span class="string">&quot;e3dbd64b-f51d-4aff-a4e5-f334960b9045&quot;</span><span class="punctuation">,</span> <span class="string">&quot;3f43cd8d-c2f1-4a5a-b07b-a6fc2495dabf&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;contextKind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;user&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;negate&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;rolloutContextKind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;user&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<p>From there we itterate over the <code>clauses</code> and interrogate the <code>values</code> using <code>ToHashSet</code>. Should the <code>userId</code> exist in that hash we create a <code>LdPatchOperation</code>. From code this look like the below. The <code>Op</code> is an operation type requested. Example <code>remove</code>. This can be neatly wrapped up on a <a target="_blank" rel="noopener" href="https://github.com/carlpaton/LaunchDarklyDemo/blob/main/FeatureClient2/LaunchDarklyDto.cs">LaunchDarklyDto</a> class.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;LdPatchOperation&gt; <span class="title">GetPatchOperation</span>(<span class="params"><span class="built_in">string</span> userId, Segment segment</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">var</span> firstRule = segment.Rules.First();</span><br><span class="line">	<span class="keyword">var</span> patchOperations = <span class="keyword">new</span> List&lt;LdPatchOperation&gt;();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">int</span> clauseIndex = <span class="number">0</span>; clauseIndex &lt; firstRule.Clauses.Count; clauseIndex++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">var</span> currentClause = firstRule.Clauses[clauseIndex];</span><br><span class="line">		<span class="keyword">var</span> guidsInClause = currentClause.Values.ToHashSet();</span><br><span class="line">		<span class="keyword">var</span> exists = guidsInClause.Contains(userId);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (exists)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">var</span> idIndex = currentClause.Values.IndexOf(userId);</span><br><span class="line">			patchOperations.Add(<span class="keyword">new</span> LdPatchOperation()</span><br><span class="line">			&#123;</span><br><span class="line">				Op = <span class="string">&quot;remove&quot;</span>,</span><br><span class="line">				Path = <span class="string">$&quot;/rules/0/clauses/<span class="subst">&#123;clauseIndex&#125;</span>/values/<span class="subst">&#123;idIndex&#125;</span>&quot;</span>,</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> patchOperations;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>Update the segment by passing the <code>operations</code> as a <code>Patch</code> property. Here we must use the HTTP verb <code>PATCH</code> which we get implicitly by calling <code>PatchAsync</code>.</li>
+</ol>
+<p>Its very important here that we check <code>EnsureSuccessStatusCode</code> as if we get something like 429 (Rate Limit) then the update was unsuccessful - potentially this is possible if you are using a script thats iterating over a large set of userIds.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">async</span> Task <span class="title">UpdateSegment</span>(<span class="params">List&lt;LdPatchOperation&gt; operations, <span class="built_in">string</span> userId, HttpClient httpClient, JsonSerializerOptions options</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!operations.Any())</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> body = <span class="keyword">new</span> LdPatchSegmentPayload()</span><br><span class="line">	&#123;</span><br><span class="line">		Patch = operations,</span><br><span class="line">		Comment = <span class="string">$&quot;Removing userId : <span class="subst">&#123;userId&#125;</span>&quot;</span></span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">var</span> content = JsonSerializer.Serialize(body, options);</span><br><span class="line">	<span class="keyword">var</span> stringContent = <span class="keyword">new</span> StringContent(content, Encoding.UTF8, <span class="string">&quot;application/json&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> response = <span class="keyword">await</span> httpClient.PatchAsync(GetSegmentUri(), stringContent);</span><br><span class="line">	response.EnsureSuccessStatusCode();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>Now using the same checks from <code>Test Data And SDK Tests</code> above, if we look for <code>e3dbd64b-f51d-4aff-a4e5-f334960b9045</code> it would have been removed</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CheckByUserKey: featureName=sweet-feature-name-3 userId=e3dbd64b-f51d-4aff-a4e5-f334960b9045 returned allowed=False</span><br></pre></td></tr></table></figure>
+
+<p>This can be confirmed from the GUI</p>
+<p><img src="/d/ld-restapi/confirm-removed-id.png" alt="This can be confirmed from the GUI"></p>
+<ol start="7">
+<li>The complete code call stack could look as follows</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> userId = <span class="string">&quot;e3dbd64b-f51d-4aff-a4e5-f334960b9045&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> segment = <span class="keyword">await</span> GetSegment(httpClient, jsonOptions);</span><br><span class="line"><span class="keyword">var</span> operations = GetPatchOperation(userId, segment);</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> UpdateSegment(operations, userId, httpClient, jsonOptions);</span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://apidocs.launchdarkly.com/tag/Segments/#operation/patchSegment">https://apidocs.launchdarkly.com/tag/Segments/#operation/patchSegment</a></li>
+<li><a target="_blank" rel="noopener" href="https://apidocs.launchdarkly.com/tag/Segments/#operation/getSegment">https://apidocs.launchdarkly.com/tag/Segments/#operation/getSegment</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.launchdarkly.com/guides/api/rest-api">https://docs.launchdarkly.com/guides/api/rest-api</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2023/06/ld-restapi/" data-id="cll98m90d00cuqouh7nzgdukd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/feature-management/" rel="tag">feature management</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Implementation - AWS Console - Deploy A WordPress Website On AWS
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/06/structured-proposal-deploy-wordpress-website-aws/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Structured Proposal To Deploy A WordPress Website On AWS</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/">Implementation - AWS Console - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/ld-restapi/">Launch Darkly Restful API</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

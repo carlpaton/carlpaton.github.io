@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Entity Framework Core | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Many years back I looked at Entity Framework, this was still when I wanted to learn about the Microsoft .Net framework which was before .Net Core came along. At the time most of my day was consumed by">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Entity Framework Core">
+<meta property="og:url" content="https://carlpaton.github.io/2021/02/entity-framework-core/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Many years back I looked at Entity Framework, this was still when I wanted to learn about the Microsoft .Net framework which was before .Net Core came along. At the time most of my day was consumed by">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/entity-framework-core/connect-to-sql.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/entity-framework-core/migration-run.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/entity-framework-core/console-output.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/entity-framework-core/persisted-data.png">
+<meta property="article:published_time" content="2021-02-22T11:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-13T09:11:10.832Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="orm">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="sqlite">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/entity-framework-core/connect-to-sql.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-entity-framework-core" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/02/entity-framework-core/" class="article-date">
+  <time datetime="2021-02-22T11:00:00.000Z" itemprop="datePublished">2021-Feb</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Entity Framework Core
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Many years back I looked at <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/ef/">Entity Framework</a>, this was still when I wanted to learn about the <a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/download/dotnet-framework">Microsoft .Net framework</a> which was before <a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/download">.Net Core</a> came along. At the time most of my day was consumed by <a target="_blank" rel="noopener" href="https://www.guru99.com/introduction-to-vbscript.html">VB Script</a> and <a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/sql-server">Microsoft SQL</a>. Typically connecting to the database in VB Script meant hand rolling the connection and working with a data reader and record set. It was, to say the least painful!</p>
+<p>Example of my pain:</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> dbCon = CreateObject(<span class="string">&quot;ADODB.Connection&quot;</span>)	</span><br><span class="line">dbCon.Open <span class="string">&quot;Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;MultipleActiveResultSets=true;&quot;</span></span><br><span class="line"></span><br><span class="line">    sql = <span class="string">&quot;SELECT id, desc FROM foo WHERE bar = &#x27;bat&#x27; ORDER BY id DESC&quot;</span></span><br><span class="line">    <span class="keyword">set</span> rs = dbCon.execute(sql)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">not</span> rs.eof <span class="keyword">then</span></span><br><span class="line">            <span class="keyword">do</span> <span class="keyword">until</span> rs.eof</span><br><span class="line"></span><br><span class="line">                response.Write rs(<span class="string">&quot;id&quot;</span>) &amp; <span class="string">&quot; &quot;</span> &amp; rs(<span class="string">&quot;desc&quot;</span>) &amp; <span class="string">&quot;&lt;br /&gt;&quot;</span></span><br><span class="line">            </span><br><span class="line">            rs.movenext</span><br><span class="line">            <span class="keyword">loop</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">if</span></span><br><span class="line"></span><br><span class="line">    rs.Close</span><br><span class="line">    <span class="keyword">set</span> rs = <span class="literal">nothing</span></span><br><span class="line"></span><br><span class="line">dbCon.Close</span><br><span class="line"><span class="keyword">set</span> dbCon = <span class="literal">nothing</span></span><br></pre></td></tr></table></figure>
+
+<p>So when I finally started looking at <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/csharp/">C#</a> and .Net I found something called a <a href="/2017/10/sqllite-with-repository-pattern/">Repository Pattern</a>. This was awesome as it promoted <a href="/2018/04/dependency-inversion-principle-dip/">dependency inversion</a> and I could create my own repository using an ORM (Object Relational Mapper) called <a target="_blank" rel="noopener" href="https://github.com/StackExchange/Dapper">Dapper</a> which provided extension methods like: </p>
+<ul>
+<li>Select: <code>connection.Query&lt;T&gt;(sql, parameters).FirstOrDefault();</code></li>
+<li>SelectList: <code>connection.Query&lt;T&gt;(sql, parameters).ToList();</code></li>
+<li>Insert: <code>connection.ExecuteScalar&lt;int&gt;(sql, (T)poco);</code></li>
+<li>Update: <code>connection.Execute(sql, (T)poco);</code></li>
+<li>Delete: <code>connection.Execute(sql, parameters);</code></li>
+</ul>
+<p>Entity Framework felt like it abstracted away so much of the <code>magic</code> that I didnt actually know what it was doing, this worried me as what would I do when it breaks? I also <a href="/2020/09/mysql-performance/">profiled</a> the SQL Database when trying out Entity Framework boilerplate code and I was amazed to see how many SQL Queries were running! I figured yeah na this is too complex for my brain.</p>
+<p>For this reason I happily plodded along with my new friend the <a target="_blank" rel="noopener" href="https://github.com/StackExchange/Dapper">Dapper</a> and the <a href="/2017/10/sqllite-with-repository-pattern/">Repository Pattern</a>. However last year I changed jobs and my new team wanted to use Entity Framework Core. I was pretty excited about this as .Net Core is amazing and it was a chance to learn by doing!</p>
+<h3 id="Database-Setup"><a href="#Database-Setup" class="headerlink" title="Database Setup"></a>Database Setup</h3><p>The database is configured in the applications db context <a target="_blank" rel="noopener" href="https://github.com/carlpaton/EntityFrameworkCoreDemo/blob/main/src/SweetApp/Infrastructure/DatabaseContext.cs">DatabaseContext.cs</a> with extension methods. The examples below are for <a target="_blank" rel="noopener" href="https://www.sqlite.org/index.html">SQLite</a> and <a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads">SQL Server</a> although EF works with many more.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">options.UseSqlite(&quot;Data Source=sweetapp.db&quot;);</span><br><span class="line"></span><br><span class="line">options.UseSqlServer(&quot;Data Source=localhost,1401;Initial Catalog=SweetApp;Integrated Security=False;User Id=sa;Password=2dd73426-d37a-4fd2-89e9-92f2a8f1a526;Pooling=False&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>Although SQLite is self contained and free tools like <a href="/2018/05/ide-editor-and-database-tools/">DBeaver</a> can manage the <code>sweetapp.db</code> file I wanted to use SQL Server. The fastest way to get an instance running is with docker and the <a target="_blank" rel="noopener" href="https://hub.docker.com/_/microsoft-mssql-server">mssql-server-linux</a> image.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull microsoft/mssql-server-linux:2017-latest</span><br><span class="line">docker run --name=ef-core -e &#x27;ACCEPT_EULA=Y&#x27; -e &#x27;MSSQL_SA_PASSWORD=2dd73426-d37a-4fd2-89e9-92f2a8f1a526&#x27; -p 1401:1433 -d microsoft/mssql-server-linux:2017-latest</span><br></pre></td></tr></table></figure>
+
+<p>Once up check you can connect with <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms">SQL Server Management Studio (SSMS)</a>. If you can it means your containerized database is ready for action.</p>
+<p><img src="/d/entity-framework-core/connect-to-sql.png" alt="SQL Server Management Studio (SSMS)"></p>
+<p>Install the command-line interface (CLI) tools for <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/ef/core/cli/dotnet">Entity Framework Core</a> to perform design-time development tasks. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet tool install --global dotnet-ef</span><br></pre></td></tr></table></figure>
+
+<p>Create the application and install the relavant packages. The folder structure I used was <code>/EntityFrameworkCoreDemo/src/SweetApp/</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dotnet new console -o SweetApp</span><br><span class="line"></span><br><span class="line">dotnet add package Microsoft.EntityFrameworkCore.Sqlite</span><br><span class="line">dotnet add package Microsoft.EntityFrameworkCore.SqlServer</span><br><span class="line">dotnet add package Microsoft.EntityFrameworkCore.Design</span><br></pre></td></tr></table></figure>
+
+<h3 id="Domain-Models"><a href="#Domain-Models" class="headerlink" title="Domain Models"></a>Domain Models</h3><p>Create the domain models, these would be for internal application use and then create the infastructure database context for <code>DbSet</code> commands.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/EntityFrameworkCoreDemo/blob/main/src/SweetApp/Domain/Models/Blog.cs">Domain/Models/Blog.cs</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/EntityFrameworkCoreDemo/blob/main/src/SweetApp/Domain/Models/Post.cs">Domain/Models/Post.cs</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/EntityFrameworkCoreDemo/blob/main/src/SweetApp/Infrastructure/DatabaseContext.cs">Infrastructure/DatabaseContext.cs</a></li>
+</ul>
+<p>Entities in the models with <code>xId</code> in them are assumed as primary keys, example <code>BlogId</code>. We could also use <code>ID</code>. We can also then control mapping, cascase deletes, relations ect with entity propertys or builder configuration with EntityTypeBuilder.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/ef/core/modeling/entity-properties">Entity Properties</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder-1">Builder configuration with EntityTypeBuilder</a></li>
+</ul>
+<p>The update/delete in <a target="_blank" rel="noopener" href="https://github.com/carlpaton/EntityFrameworkCoreDemo/blob/main/src/SweetApp/Program.cs">Program.cs</a> affects both tables <code>dbo.Blog</code> and <code>dbo.Post</code> because of the domain model relationship <code>blog.Posts.Add( ...</code></p>
+<h3 id="Migrations"><a href="#Migrations" class="headerlink" title="Migrations"></a>Migrations</h3><p>Create the migration and run it, this is a code first approach. Any changes to the domain models will be applied to the database each time you run <code>migrations add</code> and then <code>database update</code>. The <code>MeaningfulMigrationName</code> needs to be unique for each migration.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dotnet ef migrations add MeaningfulMigrationName</span><br><span class="line">dotnet ef database update</span><br></pre></td></tr></table></figure>
+
+<p>This will be reflected in the <code>__EFMigrationsHistory</code> table.</p>
+<p><img src="/d/entity-framework-core/migration-run.png" alt="Migration Run"></p>
+<p>To make additional changes to the database update the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/EntityFrameworkCoreDemo/tree/main/src/SweetApp/Domain/Models">domain models</a> and repeat the steps above with <code>MeaningfulMigrationName2</code>. If things go sideways you can revert with:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet ef migrations remove</span><br></pre></td></tr></table></figure>
+
+<h3 id="CRUD-commands"><a href="#CRUD-commands" class="headerlink" title="CRUD commands"></a>CRUD commands</h3><p>Run the application. This will execute the commands in <a target="_blank" rel="noopener" href="https://github.com/carlpaton/EntityFrameworkCoreDemo/blob/main/src/SweetApp/Program.cs">Program.cs</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet run</span><br></pre></td></tr></table></figure>
+
+<p><img src="/d/entity-framework-core/console-output.png" alt="SQL Server Management Studio (SSMS)"></p>
+<p>These are simple CRUD (Create, read, update and delete) commands copied from <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/ef/core/get-started/overview/first-app">Getting Started with EF Core</a>.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">var</span> db = <span class="keyword">new</span> DatabaseContext();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create</span></span><br><span class="line">Console.WriteLine(<span class="string">&quot;Inserting a new blog&quot;</span>);</span><br><span class="line">db.Add(<span class="keyword">new</span> Blog &#123; Url = <span class="string">&quot;http://blogs.msdn.com/adonet&quot;</span> &#125;);</span><br><span class="line">db.SaveChanges();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Read</span></span><br><span class="line">Console.WriteLine(<span class="string">&quot;Querying for a blog&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> blog = db.Blogs</span><br><span class="line">    .OrderBy(b =&gt; b.BlogId)</span><br><span class="line">    .First();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Update</span></span><br><span class="line">Console.WriteLine(<span class="string">&quot;Updating the blog and adding a post&quot;</span>);</span><br><span class="line">blog.Url = <span class="string">&quot;https://devblogs.microsoft.com/dotnet&quot;</span>;</span><br><span class="line">blog.Posts.Add(</span><br><span class="line">    <span class="keyword">new</span> Post &#123; Title = <span class="string">&quot;Hello World&quot;</span>, Content = <span class="string">&quot;I wrote an app using EF Core!&quot;</span> &#125;);</span><br><span class="line">db.SaveChanges();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Delete</span></span><br><span class="line">Console.WriteLine(<span class="string">&quot;Delete the blog&quot;</span>);</span><br><span class="line">db.Remove(blog);</span><br><span class="line">db.SaveChanges();</span><br></pre></td></tr></table></figure>
+
+<p>If you look at the data before the delete command is run, it will be persisted to SQL.</p>
+<p><img src="/d/entity-framework-core/persisted-data.png" alt="Persisted data"></p>
+<h3 id="Refrences"><a href="#Refrences" class="headerlink" title="Refrences"></a>Refrences</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/ef/core/">https://docs.microsoft.com/en-us/ef/core/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/ef/core/get-started/overview/first-app">https://docs.microsoft.com/en-us/ef/core/get-started/overview/first-app</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/intro">https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/intro</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/ef/core/cli/dotnet">https://docs.microsoft.com/en-us/ef/core/cli/dotnet</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2021/02/entity-framework-core/" data-id="cll98m8yq0089qouha9s4fz5a" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/orm/" rel="tag">orm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/" rel="tag">sql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlite/" rel="tag">sqlite</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/02/options-pattern-asp-net-core/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Options pattern in ASP.NET Core
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/02/fluent-validation/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Fluent Validation</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/">Implementation - AWS Console - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/ld-restapi/">Launch Darkly Restful API</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

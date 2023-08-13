@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>SoapUI and ASP.NET Web API | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="In today’s software driven world life literately runs on code, from our smart phone alarm in the morning, coffee machine set to brew at 6am, to the drive to work where your Korean car intelligently r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SoapUI and ASP.NET Web API">
+<meta property="og:url" content="https://carlpaton.github.io/2018/02/soapui-aspnet-web-api/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="In today’s software driven world life literately runs on code, from our smart phone alarm in the morning, coffee machine set to brew at 6am, to the drive to work where your Korean car intelligently r">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/soapui-aspnet-web-api-header.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/dummy-rest-request.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/live-to-be-details.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/generate-rest-mock-service.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/mock-service-running.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/update-response-propertys.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/consume-with-soapui.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/consume-with-code.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/code-port-update.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/console-app-reads-api.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/integration-tests.jpg">
+<meta property="article:published_time" content="2018-02-14T11:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-13T09:11:10.931Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="utilities">
+<meta property="article:tag" content="web api">
+<meta property="article:tag" content="software testing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/soapui-aspnet-web-api/soapui-aspnet-web-api-header.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-soapui-aspnet-web-api" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/soapui-aspnet-web-api/" class="article-date">
+  <time datetime="2018-02-14T11:00:00.000Z" itemprop="datePublished">2018-Feb</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SoapUI and ASP.NET Web API
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/soapui-aspnet-web-api/soapui-aspnet-web-api-header.jpg" alt="SoapUI Rocks!"></p>
+<p>In today’s software driven world life literately runs on code, from our smart phone alarm in the morning, coffee machine set to brew at 6am, to the drive to work where your Korean car intelligently reminds you its due for a service. Software is all around us and its here to stay.</p>
+<p>While the above examples don’t need to communicate to the outside world, the manufacturers certainly did and there are many instances where cross platform communication is needed. It is possible for your smart phone to talk to your coffee machine or in-fact your car.</p>
+<p>This compatibility can be achieved is numerous ways with the most common being an Application Programming Interface (API). Today every provider and his dog has an API exposing their services to be consumed by vendors and customers.</p>
+<blockquote>
+<p><em>In computer programming, an application programming interface is a set of subroutine definitions, protocols, and tools for building application software.</em> - <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Application_programming_interface">Wikipedia</a></p>
+</blockquote>
+<p>In software development it is common to develop microservices that run independently of other services. Instead of exposing functionality in code though a well defined class constructor the functionality is shared with an API.</p>
+<p>I’m fond of RESTful services that accept and respond to JSON requests as this means a scripting language like PHP can consume and use a .NET Web API service. As long as the JSON request is documented and the authentication challenge is passed they can talk nicely.</p>
+<p>The problem with the above scenario is software is not always segregated into LIVE, UAT, QA or stand box environments. A vendor could either only have a LIVE environment or in some cases the API is still being built. In this case the developer building the software to consume the API will only need to know a few things:</p>
+<ol>
+<li>The method signature to call, with Web API this can be as simple as</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">domain.com/api/saveorder</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>The class structure to be represented as JSON notation:</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">	<span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;Id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;ProductId&quot;</span><span class="punctuation">:</span> <span class="number">91</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;ClientId&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;OrderCount&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;Id&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;ProductId&quot;</span><span class="punctuation">:</span> <span class="number">103</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;ClientId&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;OrderCount&quot;</span><span class="punctuation">:</span> <span class="number">2</span></span><br><span class="line">	<span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>This is simply a list of orders:</p>
+<p>clientId 1 is placing an order for productId 91 (1 of) and productId 103 (2 of)</p>
+<p>I created the above JSON online with <a target="_blank" rel="noopener" href="https://codebeautify.org/jsonviewer">codebeautify.org</a></p>
+<p>This service is awesome as it allowed me to generate a sample JSON request, update it based on my order parameters and verify the JSON is valid.</p>
+<ol start="3">
+<li>The expected response:</li>
+</ol>
+<p>This can be the same list above with the id parameter now populated or simply a order list of id’s.</p>
+<p>As long as the expected response is known (JSON in the body) and the response code is standard (200 ok, 404 not found, 500 error ect) the developer is good to go.</p>
+<h3 id="Mock-API-with-SoapUI"><a href="#Mock-API-with-SoapUI" class="headerlink" title="Mock API with SoapUI"></a>Mock API with SoapUI</h3><p>If the API is not ready for testing or is not available due to other constraints the developer can create a mock API using software such as SoapUI. This is a great tool that can be used to test existing APIs or to simply Mock the API response on the developers local machine. There is a tutorial online at <a target="_blank" rel="noopener" href="https://www.soapui.org/soap-mocking/getting-started.html#2-Creating-a-MockService">www.soapui.org</a></p>
+<p>The steps using my ‘save order’ example are:</p>
+<ol>
+<li>Create a new dummy REST request to ‘domain.com/api/saveorder’</li>
+</ol>
+<p><img src="/d/soapui-aspnet-web-api/dummy-rest-request.jpg" alt="dummy REST request"></p>
+<ol start="2">
+<li>If you run this request you will get 404 as ‘api/saveorder’ doesn’t exist but I see some clown is squatting on ‘domain.com’</li>
+</ol>
+<p>If it was a valid API the response would be shown. If you know the ‘LIVE to be’ details of your API you should rather use them as you can then use this test profile later.</p>
+<p><img src="/d/soapui-aspnet-web-api/live-to-be-details.jpg" alt="&#39;LIVE to be&#39; details of your API"></p>
+<ol start="3">
+<li>Now to mock the service to response with the JSON example simply right click and select ‘Generate REST Mock Service’ and give it a useful name such as </li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;api/saveorder&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/d/soapui-aspnet-web-api/generate-rest-mock-service.jpg" alt="Generate REST Mock Service"></p>
+<ol start="4">
+<li>The mock service will start right away on an available port - my test used 8089</li>
+</ol>
+<p><img src="/d/soapui-aspnet-web-api/mock-service-running.jpg" alt="The mock service"></p>
+<ol start="5">
+<li>You can then stop the service and update several of the response property’s such as the HTTP status code, add header values and the body content type and values.</li>
+</ol>
+<p><img src="/d/soapui-aspnet-web-api/update-response-propertys.jpg" alt="update response property&#39;s"></p>
+<ol start="6">
+<li>You can now consume this service at <em><a target="_blank" rel="noopener" href="http://localhost/api/saveorder">http://localhost/api/saveorder</a></em> using SoapUI</li>
+</ol>
+<p><img src="/d/soapui-aspnet-web-api/consume-with-soapui.jpg" alt="Consume with SoapUI"></p>
+<ol start="7">
+<li>You can also consume this from code, for simplicity all my applications are grouped under the solution ‘WebApiDemo’</li>
+</ol>
+<p><img src="/d/soapui-aspnet-web-api/consume-with-code.jpg" alt="Consume with Code"></p>
+<p>a. Simply run ‘WebAPI’ from the IDE, note the port ~ example <a target="_blank" rel="noopener" href="http://localhost:53610/">http://localhost:53610/</a></p>
+<p>b. Stop the application and update ConsoleApplication.Program API value with the port (remember to re-build)</p>
+<p><img src="/d/soapui-aspnet-web-api/code-port-update.jpg" alt="Code port update"></p>
+<p>c. Run ‘WebAPI’ again from the IDE</p>
+<p>d. Run manually run ‘<em>\WebApiDemo\ConsoleApplication\bin\Debug\ConsoleApplication.exe</em>‘</p>
+<p><img src="/d/soapui-aspnet-web-api/console-app-reads-api.jpg" alt="Console App Reads API"></p>
+<h3 id="Web-API-Solution"><a href="#Web-API-Solution" class="headerlink" title="Web API Solution"></a><strong>Web API Solution</strong></h3><p>The above solution is made up of the following projects and the source code is <a target="_blank" rel="noopener" href="https://github.com/charleyza/WebApiDemo">available from GitHub</a></p>
+<h4 id="ConsoleApplication"><a href="#ConsoleApplication" class="headerlink" title="ConsoleApplication"></a>ConsoleApplication</h4><p>This is simply to demonstrate how to call the API from code. Changing the value of ‘var api’ switches between SoapUI and the WebAPI project.</p>
+<h4 id="SharedModels"><a href="#SharedModels" class="headerlink" title="SharedModels"></a>SharedModels</h4><p>Still on the fence with shared data models! The data model is ‘OrderModel’ which has some dummy propertys Id, ProductId, ClientId and OrderCount.</p>
+<h4 id="WebAPI"><a href="#WebAPI" class="headerlink" title="WebAPI"></a>WebAPI</h4><p>This is a .NET Web API project that has a ‘SaveOrderController’ which maps to ‘/api/saveorder/‘</p>
+<p>The demo simply takes the posted ‘List<OrderModel> obj’ and updates the Id value to simulate a database persist.</p>
+<p>It has the ‘ApiKeyValidationAttribute’ which validates against apiPassKey which was passed in the header of the request.</p>
+<p>If the validation/challange failes the API will respond with HttpStatusCode.BadRequest</p>
+<h4 id="WebAPI-Tests"><a href="#WebAPI-Tests" class="headerlink" title="WebAPI.Tests"></a>WebAPI.Tests</h4><p>Simple unit test project to test the public ‘Post’ method on the WebAPI controller</p>
+<p><img src="/d/soapui-aspnet-web-api/integration-tests.jpg" alt="Integration tests"></p>
+<h3 id="Other-API-Testing-tools"><a href="#Other-API-Testing-tools" class="headerlink" title="Other API Testing tools"></a>Other API Testing tools</h3><p>Another API development environment tool that works really well and has mocking abilities is POSTMAN - <a target="_blank" rel="noopener" href="https://www.getpostman.com/postman">www.getpostman.com/postman</a></p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/WebApiDemo">https://github.com/carlpaton/WebApiDemo</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Application_programming_interface">https://en.wikipedia.org/wiki/Application_programming_interface</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.soapui.org/soap-mocking/getting-started.html#2-Creating-a-MockService">https://www.soapui.org/soap-mocking/getting-started.html#2-Creating-a-MockService</a></li>
+<li><a target="_blank" rel="noopener" href="https://codebeautify.org/jsonviewer">https://codebeautify.org/jsonviewer</a></li>
+<li><a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/hh833994(v=vs.108).aspx">https://msdn.microsoft.com/en-us/library/hh833994(v=vs.108).aspx</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2018/02/soapui-aspnet-web-api/" data-id="cll98m94200n1qouhflylbjk0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/" rel="tag">software testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/utilities/" rel="tag">utilities</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web-api/" rel="tag">web api</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/netstat/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Netstat
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/reading-excel-with-epplus-dot-net-library/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Reading Excel with EPPlus (.NET library)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/">Implementation - AWS Console - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/ld-restapi/">Launch Darkly Restful API</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>New Relic | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I needed to understand how to functionally use New Relic, the below are my notes I made in sequence while having a play. The accounts I created are free and I tried to use free tier AWS infastructure">
+<meta property="og:type" content="article">
+<meta property="og:title" content="New Relic">
+<meta property="og:url" content="https://carlpaton.github.io/2023/01/newrelic/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="I needed to understand how to functionally use New Relic, the below are my notes I made in sequence while having a play. The accounts I created are free and I tried to use free tier AWS infastructure">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic/new-relic-hoon.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic/synthetic-monitoring-type.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic/synthetic-monitoring.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic/log-event-type.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic/span-event-type.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic/syntheticcheck-event-type.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic/syntheticrequest-event-type.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic/transation-event-type.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic/transationerror-event-type.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic/test-dashboard.png">
+<meta property="article:published_time" content="2023-01-26T11:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-13T09:11:10.881Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="wip">
+<meta property="article:tag" content="infrastructure as code">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/newrelic/new-relic-hoon.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-newrelic" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/01/newrelic/" class="article-date">
+  <time datetime="2023-01-26T11:00:00.000Z" itemprop="datePublished">2023-Jan</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      New Relic
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/d/newrelic/new-relic-hoon.png" alt="New Relic Hoon"></p>
+<p>I needed to understand how to functionally use <a target="_blank" rel="noopener" href="https://one.newrelic.com/">New Relic</a>, the below are my notes I made in sequence while having a play. The accounts I created are free and I tried to use <a target="_blank" rel="noopener" href="https://aws.amazon.com/free/">free tier AWS infastructure</a>.</p>
+<p>I found the new relic docs linked below really useful</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs-preview.newrelic.com/docs/quick-launch-guide">New Relic quick launch guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/new-relic-explorer-view-performance-across-apps-services-hosts/">New Relic Explorer: View performance across apps, services, hosts</a></li>
+</ul>
+<h2 id="Create-Account"><a href="#Create-Account" class="headerlink" title="Create Account"></a>Create Account</h2><p>This gives reporting, alerts and somewhere for your agent to push its logs to. You will need to get your licence key for the agent.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://newrelic.com/signup">https://newrelic.com/signup</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/">https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/</a></li>
+</ul>
+<h2 id="Agent-configuration-Dockerfile"><a href="#Agent-configuration-Dockerfile" class="headerlink" title="Agent configuration (Dockerfile)"></a>Agent configuration (Dockerfile)</h2><p>You need to install an New Relic agent (this feeds data to your account). Using a base image like <a target="_blank" rel="noopener" href="https://hub.docker.com/_/microsoft-dotnet-sdk">mcr.microsoft.com/dotnet/sdk:6.0</a> you can create your Dockerfile and install the <a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/infrastructure/install-infrastructure-agent/linux-installation/install-infrastructure-monitoring-agent-linux/">agent manually</a></p>
+<p>I built a working example and published the source to <a target="_blank" rel="noopener" href="https://github.com/carlpaton/NewRelicHoon/blob/main/src/api/Dockerfile#L21">github.com/carlpaton/NewRelicHoon</a></p>
+<p>This examples below are based on <a target="_blank" rel="noopener" href="https://docs.newrelic.com/install/dotnet/?deployment=linux&docker=yesDocker">docs.newrelic.com</a> and I have no idea what <code>548C16BF</code> is or means… but it works :D/</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Install the agent</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y wget ca-certificates gnupg \</span><br><span class="line">&amp;&amp; echo &#x27;deb http://apt.newrelic.com/debian/ newrelic non-free&#x27; | tee /etc/apt/sources.list.d/newrelic.list \</span><br><span class="line">&amp;&amp; wget https://download.newrelic.com/548C16BF.gpg \</span><br><span class="line">&amp;&amp; apt-key add 548C16BF.gpg \</span><br><span class="line">&amp;&amp; apt-get update \</span><br><span class="line">&amp;&amp; apt-get install -y newrelic-dotnet-agent</span><br></pre></td></tr></table></figure>
+
+<p>Notes: </p>
+<ul>
+<li><code>CORECLR_PROFILER</code> is not a secret, this is fom the <a target="_blank" rel="noopener" href="https://docs.newrelic.com/install/dotnet/?deployment=linux&docker=yesDocker">New Relic .Net docs</a>.</li>
+<li>The key shown below as <code>INSERT_NEW_RELIC_LICENSE_KEY</code> will look something like <code>e0a8dd84aa0a8ddd444sdd24wdasdad3fsasd65edeNRAL</code> and you can get it from your account.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Enable the agent</span><br><span class="line">ENV CORECLR_ENABLE_PROFILING=1 \</span><br><span class="line">CORECLR_PROFILER=&#123;36032161-FFC0-4B61-B559-F6C5D41BAE5A&#125; \</span><br><span class="line">CORECLR_NEWRELIC_HOME=/usr/local/newrelic-dotnet-agent \</span><br><span class="line">CORECLR_PROFILER_PATH=/usr/local/newrelic-dotnet-agent/libNewRelicProfiler.so \</span><br><span class="line">NEW_RELIC_LICENSE_KEY=INSERT_NEW_RELIC_LICENSE_KEY \</span><br><span class="line">NEW_RELIC_APP_NAME=INSERT_YOUR_APP_NAME</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.newrelic.com/install/dotnet/">https://docs.newrelic.com/install/dotnet/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/infrastructure/install-infrastructure-agent/linux-installation/install-infrastructure-monitoring-agent-linux/">https://docs.newrelic.com/docs/infrastructure/install-infrastructure-agent/linux-installation/install-infrastructure-monitoring-agent-linux/</a></li>
+</ul>
+<details>
+  <summary>These were some of the logs from the containers console</summary>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br></pre></td><td class="code"><pre><span class="line">[1/Feb/2023:03:26:45] [41m[30mfail[39m[22m[49m: Microsoft.AspNetCore.Server.Kestrel[13]</span><br><span class="line">[1/Feb/2023:03:26:45] Connection id &quot;0HMO0P632DR5U&quot;, Request id &quot;0HMO0P632DR5U:00000003&quot;: An unhandled exception was thrown by the application.</span><br><span class="line">[1/Feb/2023:03:26:45] System.Exception: some sadness happend because your code is trash. Do better before ChatGPT replaces your ass.</span><br><span class="line">[1/Feb/2023:03:26:45] at NewRelicHoon.Controllers.PingController.Get() in /src/Controllers/PingController.cs:line 16</span><br><span class="line">[1/Feb/2023:03:26:45] at lambda_method467(Closure , Object , Object[] )</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()</span><br><span class="line">[1/Feb/2023:03:26:45] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()</span><br><span class="line">[1/Feb/2023:03:26:45] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeFilterPipelineAsync&gt;g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Routing.EndpointMiddleware.&lt;Invoke&gt;g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:03:26:45] at NewRelic.Providers.Wrapper.AspNetCore.WrapPipelineMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:03:26:45] at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)</span><br><span class="line">[1/Feb/2023:03:31:39] [41m[30mfail[39m[22m[49m: Microsoft.AspNetCore.Server.Kestrel[13]</span><br><span class="line">[1/Feb/2023:03:31:39] Connection id &quot;0HMO0P632DRBI&quot;, Request id &quot;0HMO0P632DRBI:00000003&quot;: An unhandled exception was thrown by the application.</span><br><span class="line">[1/Feb/2023:03:31:39] System.Exception: some sadness happend because your code is trash. Do better before ChatGPT replaces your ass.</span><br><span class="line">[1/Feb/2023:03:31:39] at NewRelicHoon.Controllers.PingController.Get() in /src/Controllers/PingController.cs:line 16</span><br><span class="line">[1/Feb/2023:03:31:39] at lambda_method467(Closure , Object , Object[] )</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()</span><br><span class="line">[1/Feb/2023:03:31:39] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()</span><br><span class="line">[1/Feb/2023:03:31:39] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeFilterPipelineAsync&gt;g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Routing.EndpointMiddleware.&lt;Invoke&gt;g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:03:31:39] at NewRelic.Providers.Wrapper.AspNetCore.WrapPipelineMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:03:31:39] at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)</span><br><span class="line">[1/Feb/2023:03:31:41] [41m[30mfail[39m[22m[49m: Microsoft.AspNetCore.Server.Kestrel[13]</span><br><span class="line">[1/Feb/2023:03:31:41] Connection id &quot;0HMO0P632DRBI&quot;, Request id &quot;0HMO0P632DRBI:00000005&quot;: An unhandled exception was thrown by the application.</span><br><span class="line">[1/Feb/2023:03:31:41] System.Exception: some sadness happend because your code is trash. Do better before ChatGPT replaces your ass.</span><br><span class="line">[1/Feb/2023:03:31:41] at NewRelicHoon.Controllers.PingController.Get() in /src/Controllers/PingController.cs:line 16</span><br><span class="line">[1/Feb/2023:03:31:41] at lambda_method467(Closure , Object , Object[] )</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()</span><br><span class="line">[1/Feb/2023:03:31:41] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()</span><br><span class="line">[1/Feb/2023:03:31:41] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeFilterPipelineAsync&gt;g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Routing.EndpointMiddleware.&lt;Invoke&gt;g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:03:31:41] at NewRelic.Providers.Wrapper.AspNetCore.WrapPipelineMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:03:31:41] at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)</span><br><span class="line">[1/Feb/2023:03:56:47] [41m[30mfail[39m[22m[49m: Microsoft.AspNetCore.Server.Kestrel[13]</span><br><span class="line">[1/Feb/2023:03:56:47] Connection id &quot;0HMO0P632DS89&quot;, Request id &quot;0HMO0P632DS89:00000003&quot;: An unhandled exception was thrown by the application.</span><br><span class="line">[1/Feb/2023:03:56:47] System.Exception: some sadness happend because your code is trash. Do better before ChatGPT replaces your ass.</span><br><span class="line">[1/Feb/2023:03:56:47] at NewRelicHoon.Controllers.PingController.Get() in /src/Controllers/PingController.cs:line 16</span><br><span class="line">[1/Feb/2023:03:56:47] at lambda_method467(Closure , Object , Object[] )</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()</span><br><span class="line">[1/Feb/2023:03:56:47] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()</span><br><span class="line">[1/Feb/2023:03:56:47] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeFilterPipelineAsync&gt;g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Routing.EndpointMiddleware.&lt;Invoke&gt;g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:03:56:47] at NewRelic.Providers.Wrapper.AspNetCore.WrapPipelineMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:03:56:47] at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)</span><br><span class="line">[1/Feb/2023:03:56:49] [41m[30mfail[39m[22m[49m: Microsoft.AspNetCore.Server.Kestrel[13]</span><br><span class="line">[1/Feb/2023:03:56:49] Connection id &quot;0HMO0P632DS8B&quot;, Request id &quot;0HMO0P632DS8B:00000003&quot;: An unhandled exception was thrown by the application.</span><br><span class="line">[1/Feb/2023:03:56:49] System.Exception: some sadness happend because your code is trash. Do better before ChatGPT replaces your ass.</span><br><span class="line">[1/Feb/2023:03:56:49] at NewRelicHoon.Controllers.PingController.Get() in /src/Controllers/PingController.cs:line 16</span><br><span class="line">[1/Feb/2023:03:56:49] at lambda_method467(Closure , Object , Object[] )</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()</span><br><span class="line">[1/Feb/2023:03:56:49] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()</span><br><span class="line">[1/Feb/2023:03:56:49] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeFilterPipelineAsync&gt;g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Routing.EndpointMiddleware.&lt;Invoke&gt;g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:03:56:49] at NewRelic.Providers.Wrapper.AspNetCore.WrapPipelineMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:03:56:49] at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)</span><br><span class="line">[1/Feb/2023:04:01:39] [41m[30mfail[39m[22m[49m: Microsoft.AspNetCore.Server.Kestrel[13]</span><br><span class="line">[1/Feb/2023:04:01:39] Connection id &quot;0HMO0P632DSDR&quot;, Request id &quot;0HMO0P632DSDR:00000003&quot;: An unhandled exception was thrown by the application.</span><br><span class="line">[1/Feb/2023:04:01:39] System.Exception: some sadness happend because your code is trash. Do better before ChatGPT replaces your ass.</span><br><span class="line">[1/Feb/2023:04:01:39] at NewRelicHoon.Controllers.PingController.Get() in /src/Controllers/PingController.cs:line 16</span><br><span class="line">[1/Feb/2023:04:01:39] at lambda_method467(Closure , Object , Object[] )</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()</span><br><span class="line">[1/Feb/2023:04:01:39] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()</span><br><span class="line">[1/Feb/2023:04:01:39] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeFilterPipelineAsync&gt;g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Routing.EndpointMiddleware.&lt;Invoke&gt;g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:04:01:39] at NewRelic.Providers.Wrapper.AspNetCore.WrapPipelineMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:04:01:39] at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)</span><br><span class="line">[1/Feb/2023:04:06:47] [41m[30mfail[39m[22m[49m: Microsoft.AspNetCore.Server.Kestrel[13]</span><br><span class="line">[1/Feb/2023:04:06:47] Connection id &quot;0HMO0P632DSJM&quot;, Request id &quot;0HMO0P632DSJM:00000003&quot;: An unhandled exception was thrown by the application.</span><br><span class="line">[1/Feb/2023:04:06:47] System.Exception: some sadness happend because your code is trash. Do better before ChatGPT replaces your ass.</span><br><span class="line">[1/Feb/2023:04:06:47] at NewRelicHoon.Controllers.PingController.Get() in /src/Controllers/PingController.cs:line 16</span><br><span class="line">[1/Feb/2023:04:06:47] at lambda_method467(Closure , Object , Object[] )</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()</span><br><span class="line">[1/Feb/2023:04:06:47] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()</span><br><span class="line">[1/Feb/2023:04:06:47] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeFilterPipelineAsync&gt;g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Routing.EndpointMiddleware.&lt;Invoke&gt;g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:04:06:47] at NewRelic.Providers.Wrapper.AspNetCore.WrapPipelineMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:04:06:47] at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)</span><br><span class="line">[1/Feb/2023:04:21:39] [41m[30mfail[39m[22m[49m: Microsoft.AspNetCore.Server.Kestrel[13]</span><br><span class="line">[1/Feb/2023:04:21:39] Connection id &quot;0HMO0P632DT4L&quot;, Request id &quot;0HMO0P632DT4L:00000003&quot;: An unhandled exception was thrown by the application.</span><br><span class="line">[1/Feb/2023:04:21:39] System.Exception: some sadness happend because your code is trash. Do better before ChatGPT replaces your ass.</span><br><span class="line">[1/Feb/2023:04:21:39] at NewRelicHoon.Controllers.PingController.Get() in /src/Controllers/PingController.cs:line 16</span><br><span class="line">[1/Feb/2023:04:21:39] at lambda_method467(Closure , Object , Object[] )</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()</span><br><span class="line">[1/Feb/2023:04:21:39] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()</span><br><span class="line">[1/Feb/2023:04:21:39] --- End of stack trace from previous location ---</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeFilterPipelineAsync&gt;g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Routing.EndpointMiddleware.&lt;Invoke&gt;g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:04:21:39] at NewRelic.Providers.Wrapper.AspNetCore.WrapPipelineMiddleware.Invoke(HttpContext context)</span><br><span class="line">[1/Feb/2023:04:21:39] at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)</span><br></pre></td></tr></table></figure>
+</details>
+
+<h2 id="Synthetic-Monitor"><a href="#Synthetic-Monitor" class="headerlink" title="Synthetic Monitor"></a>Synthetic Monitor</h2><p>To get some data into the account (instead of running the URLs myself) I added some simple synthetic monitors. Pretty sure each have their usage but these would be the ones I would focuse on first if I needed some components monitored.</p>
+<p>However the UI had several others:</p>
+<p><img src="/d/newrelic/synthetic-monitoring-type.png" alt="Synthetic Monitoring Type"></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/new-relic-solutions/best-practices-guides/full-stack-observability/synthetic-monitoring-best-practices-guide/">Synthetic monitoring best practices guide</a></li>
+</ul>
+<h3 id="Avalibility"><a href="#Avalibility" class="headerlink" title="Avalibility"></a>Avalibility</h3><p><strong>Ping</strong> - Simple ping using cURL (avalibility ping endpoint)</p>
+<p>For my tests I just used a ping monitor for both <a target="_blank" rel="noopener" href="https://github.com/carlpaton/NewRelicHoon/blob/main/src/api/Controllers/PingController.cs#L10">/ping</a> and <a target="_blank" rel="noopener" href="https://github.com/carlpaton/NewRelicHoon/blob/main/src/api/Controllers/PingController.cs#L21">/health</a>. I suspected them to fail 50% of the time as my code throws an error based on <a target="_blank" rel="noopener" href="https://github.com/carlpaton/NewRelicHoon/blob/main/src/api/Controllers/PingController.cs#L14">DateTime.Now.Second % 2 == 0</a> and my brain said there are 29 even numbers and 30 even numbers so surely it would be 50% :D</p>
+<p>I was wrong and saw a higher success rate. I guess this is because I set the periods to 5 minutes and we cannot guarantee the second it will call. Meh too much math/statistics for this old brain.</p>
+<p><img src="/d/newrelic/synthetic-monitoring.png" alt="Synthetic Monitoring"></p>
+<h3 id="User-flow-functionality"><a href="#User-flow-functionality" class="headerlink" title="User flow / functionality"></a>User flow / functionality</h3><p><strong>Scripted browser</strong> - Full scripted browser test of user flow / functionality (page loads with user interactions)</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/synthetics/synthetic-monitoring/scripting-monitors/introduction-scripted-browser-monitors/">Introduction to scripted browser monitors</a></li>
+</ul>
+<h3 id="Endpoint-availability"><a href="#Endpoint-availability" class="headerlink" title="Endpoint availability"></a>Endpoint availability</h3><p><strong>Scripted API</strong> - Uses an HTTP client to monitor remote API endpoints (REST, healthcheck endpoint, allows credentials etc).</p>
+<p>You can add secrets using the <code>Insert secure credential</code> option in the UI, you then access them as <code>$secure.CLIENT_SECRET</code>. The authorisation service call is using <a href="/2020/12/oauth2-client-credentials-flow/">OAuth2 Client Credentials Flow</a>. Then see <a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/synthetics/synthetic-monitoring/scripting-monitors/import-nodejs-modules/">Import Node.js modules</a> for help importing.</p>
+<details>
+  <summary>Example node 10 Runtime script</summary>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> request = <span class="built_in">require</span>(<span class="string">&#x27;request&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> assert = <span class="built_in">require</span>(<span class="string">&#x27;assert&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> authorisationService = &#123;</span><br><span class="line">    <span class="attr">uri</span>: <span class="string">&#x27;https://authorisation-service.local/token&#x27;</span>,</span><br><span class="line">    <span class="attr">auth</span>: &#123;</span><br><span class="line">        <span class="attr">user</span>: $secure.<span class="property">CLIENT_NAME</span>,</span><br><span class="line">        <span class="attr">pass</span>: $secure.<span class="property">CLIENT_SECRET</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">formData</span>: &#123;</span><br><span class="line">        <span class="attr">grant_type</span>: <span class="string">&#x27;client_credentials&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> healthCheck = <span class="keyword">function</span>(<span class="params">err, response, token</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> tokenBody = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(token);</span><br><span class="line">    <span class="keyword">let</span> options = &#123;</span><br><span class="line">        <span class="attr">uri</span>: <span class="string">&#x27;https://newrelichoon.c4gqqjqcosehs.ap-southeast-2.cs.amazonlightsail.com/health&#x27;</span>,</span><br><span class="line">        <span class="attr">auth</span>: &#123;</span><br><span class="line">            <span class="attr">bearer</span>: tokenBody.<span class="property">access_token</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    request.<span class="title function_">get</span>(options, <span class="keyword">function</span> (<span class="params">err, response</span>) &#123;</span><br><span class="line">      assert.<span class="title function_">equal</span>(response.<span class="property">statusCode</span>, <span class="number">200</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">request.<span class="title function_">post</span>(</span><br><span class="line">    authorisationService,</span><br><span class="line">    healthCheck</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</details>
+
+<h2 id="Query-your-data"><a href="#Query-your-data" class="headerlink" title="Query your data"></a>Query your data</h2><p>I let the <code>Synthetic Monitor</code> above run for a weekend to get some data into events. There are <strong>event types</strong> (think of these as a table) and their <strong>dimensions</strong> of interest (think of these as columns in a table). Note that there are different <a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/data-apis/manage-data/manage-data-retention/">data retention models</a> for events based on your payment model, looks like for free accounts like mine its 8 days before my events will be deleted.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/">Introduction to NRQL: the language of data</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/query-your-data/explore-query-data/browse-data/introduction-data-explorer/">Introduction to the metrics and events data explorer</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/query-your-data/explore-query-data/query-builder/introduction-query-builder/">Introduction to the query builder</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/data-apis/understand-data/new-relic-data-types/">New Relic data types: metrics, events, logs, and traces (MELT)</a></li>
+</ul>
+<h3 id="Log-event-type"><a href="#Log-event-type" class="headerlink" title="Log (event type)"></a>Log (event type)</h3><blockquote>
+<p>“In New Relic, a log event refers to the information that is captured and stored in log statements generated by an application or system. Log events can contain a variety of information, such as messages, performance metrics, error messages, and debug information. In New Relic, log events can be captured from various sources, including log files, APIs, and agent-based integrations. These events are then stored in New Relic’s log management platform, where they can be searched, analyzed, and visualized for troubleshooting and performance monitoring purposes. The specific format and structure of log events in New Relic may vary depending on the logging framework or tool being used and the type of application or system being monitored.”</p>
+</blockquote>
+<p>This didnt show me endpoints so I would guess its for application logs as a whole. The following are columns and their example data results I could see.</p>
+<p>Example potentially useful query for dashboard / alert base on the below columns and their values.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT count(*) FROM Log FACET `entity.name` WHERE level = &#x27;ERROR&#x27; SINCE 30 MINUTES AGO TIMESERIES</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>entity.name</code><ul>
+<li>This is the docker config name <a target="_blank" rel="noopener" href="https://github.com/carlpaton/NewRelicHoon/blob/main/src/api/Dockerfile#L35">NEW_RELIC_APP_NAME=NewRelicHoon
+</a></li>
+</ul>
+</li>
+<li><code>level</code><ul>
+<li><code>ERROR</code></li>
+</ul>
+</li>
+<li><code>error.class</code><ul>
+<li><code>System.Exception</code> (<a target="_blank" rel="noopener" href="https://github.com/carlpaton/NewRelicHoon/blob/main/src/api/Controllers/PingController.cs#L18">code</a>)</li>
+</ul>
+</li>
+<li><code>error.message</code><ul>
+<li><code>some sadness happend because your code is trash. Do better before ChatGPT replaces your ass.</code> (<a target="_blank" rel="noopener" href="https://github.com/carlpaton/NewRelicHoon/blob/main/src/api/Controllers/PingController.cs#L18">code</a>)</li>
+</ul>
+</li>
+</ul>
+<p><img src="/d/newrelic/log-event-type.png" alt="Log Event type"></p>
+<h3 id="Span-event-type"><a href="#Span-event-type" class="headerlink" title="Span (event type)"></a>Span (event type)</h3><blockquote>
+<p>“A “Span” event in New Relic is part of the Distributed Tracing feature offered by New Relic. Distributed tracing is a method of tracking the behavior of a complex, distributed system by recording information about the individual steps or segments of a transaction as it travels across different components of the system. A “Span” in this context represents a single, distinct segment of a transaction and the information recorded about it, such as its start and end times, its duration, and any associated metadata. Spans are usually generated by instrumenting the code of an application or by using a supported tracing library. The collected span events can be analyzed in New Relic to provide insights into the performance and behavior of a distributed system.” - <a target="_blank" rel="noopener" href="https://docs.newrelic.com/attribute-dictionary/?event=Span">Span events</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT count(*) FROM Span FACET `request.uri` SINCE 30 MINUTES AGO TIMESERIES</span><br><span class="line">SELECT count(*) FROM Span FACET `response.status` SINCE 30 MINUTES AGO TIMESERIES</span><br></pre></td></tr></table></figure>
+
+<p>Summary of some dimensions (columns)</p>
+<ul>
+<li><code>request.method</code><ul>
+<li><code>GET</code></li>
+</ul>
+</li>
+<li><code>request.uri</code><ul>
+<li><code>/</code>, <code>/health</code>, <code>/ping</code></li>
+</ul>
+</li>
+<li><code>response.status</code><ul>
+<li><code>404</code>, <code>405</code>, <code>500</code></li>
+</ul>
+</li>
+<li><code>service.name</code><ul>
+<li><code>NewRelicHoon</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="/d/newrelic/span-event-type.png" alt="Span Event type"></p>
+<h3 id="SyntheticCheck-event-type"><a href="#SyntheticCheck-event-type" class="headerlink" title="SyntheticCheck (event type)"></a>SyntheticCheck (event type)</h3><blockquote>
+<p>“SyntheticCheck returns metrics from one run of a specific monitor. These metrics include duration information for the monitor, location of the monitor check, size of the request and response headers, the type of monitor, and a timestamp..” - <a target="_blank" rel="noopener" href="https://docs.newrelic.com/attribute-dictionary/?event=SyntheticCheck">SyntheticCheck events</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT count(*) FROM SyntheticCheck SINCE 30 MINUTES AGO TIMESERIES</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>typeLabel</code><ul>
+<li><code>Ping</code></li>
+</ul>
+</li>
+<li><code>error</code><ul>
+<li><code>HTTPError: Server replied with a HTTP 500 response code</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="/d/newrelic/syntheticcheck-event-type.png" alt="Synthetic Check Event type"></p>
+<h3 id="SyntheticRequest-event-type"><a href="#SyntheticRequest-event-type" class="headerlink" title="SyntheticRequest (event type)"></a>SyntheticRequest (event type)</h3><blockquote>
+<p>“SyntheticRequest returns results from individual HTTP requests made during a check. The data gathered includes job information, location, type of content for request, duration information, request size, and page load information.” - <a target="_blank" rel="noopener" href="https://docs.newrelic.com/attribute-dictionary/?event=SyntheticRequest">SyntheticRequest events</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT count(*) FROM SyntheticRequest FACET path SINCE 30 MINUTES AGO TIMESERIES</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>path</code><ul>
+<li><code>/health</code>, <code>/ping</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="/d/newrelic/syntheticrequest-event-type.png" alt="Synthetic Request Event type"></p>
+<h3 id="Transation-event-type"><a href="#Transation-event-type" class="headerlink" title="Transation (event type)"></a>Transation (event type)</h3><blockquote>
+<p>“A “Transaction” event in New Relic is a high-level representation of a user request or a sequence of requests that are executed to complete a specific task. A transaction event in New Relic contains information about the start and end times of the transaction, the duration, and any associated metadata, such as the name of the transaction, the status code, and the URL.</p>
+</blockquote>
+<p>In New Relic, transactions are generated by instrumenting the code of an application or by using a supported agent. The collected transaction events can be analyzed in New Relic to provide insights into the performance and behavior of an application, including the response time, error rate, and throughput.</p>
+<p>By analyzing transaction events, developers and operations teams can identify bottlenecks, slowdowns, and other performance issues in their applications and infrastructure, and use the information to make informed decisions about how to optimize and improve their systems.”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT count(*) FROM Transaction FACET `request.method` SINCE 30 MINUTES AGO TIMESERIES</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>request.method</code><ul>
+<li><code>GET</code>, <code>HEAD</code></li>
+</ul>
+</li>
+<li><code>request.uri</code><ul>
+<li><code>/</code>, <code>/ping</code>, <code>/health</code></li>
+</ul>
+</li>
+<li><code>response.status</code><ul>
+<li><code>404</code>, <code>405</code>, <code>500</code>, <code>200</code></li>
+</ul>
+</li>
+<li><code>error</code><ul>
+<li><code>true</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="/d/newrelic/transation-event-type.png" alt="Transation Event type"></p>
+<h3 id="TransationError-event-type"><a href="#TransationError-event-type" class="headerlink" title="TransationError (event type)"></a>TransationError (event type)</h3><blockquote>
+<p>“A “TransactionError” event in New Relic is a type of transaction event that represents an error or exception that occurred during the execution of a transaction. A transaction error event contains information about the transaction that caused the error, such as the transaction name, the error message, the stack trace, and any associated metadata.</p>
+</blockquote>
+<p>In New Relic, transaction error events are generated by instrumenting the code of an application or by using a supported agent. The collected transaction error events can be analyzed in New Relic to provide insights into the sources and causes of errors in an application.</p>
+<p>By analyzing transaction error events, developers and operations teams can identify and troubleshoot errors in their applications, and use the information to make informed decisions about how to improve the reliability and stability of their systems.”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT count(*) FROM TransactionError FACET `error.message` SINCE 30 MINUTES AGO TIMESERIES</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>error.message</code><ul>
+<li><code>405</code>, <code>500</code>, <code>some sadness happend because your code is trash. Do better before ChatGPT replaces your ass.</code></li>
+</ul>
+</li>
+<li><code>request.method</code><ul>
+<li><code>HEAD</code>, <code>GET</code></li>
+</ul>
+</li>
+<li><code>request.uri</code><ul>
+<li><code>/ping</code>, <code>/health</code></li>
+</ul>
+</li>
+<li><code>response.status</code><ul>
+<li><code>405</code>, <code>500</code></li>
+</ul>
+</li>
+<li><code>transactionName</code><ul>
+<li><code>WebTransaction/StatusCode/405</code>, <code>WebTransaction/MVC/Ping/Get</code>, <code>WebTransaction/MVC/Ping/GetHealth</code></li>
+</ul>
+</li>
+<li><code>transactionUiName</code><ul>
+<li><code>/405</code>, <code>/Ping/Get</code>, <code>/Ping/GetHealth</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="/d/newrelic/transationerror-event-type.png" alt="Transation Error Event type"></p>
+<h2 id="Alerts-amp-AI"><a href="#Alerts-amp-AI" class="headerlink" title="Alerts &amp; AI"></a>Alerts &amp; AI</h2><p>Application Performance Monitoring or APM (this allows for nrql queries to be run and reported on). This is useful for things like <code>did the endpoint throw errors three times in last two hours</code> - then alert! </p>
+<ol>
+<li>Create <code>Alert conditions (Policies)</code>. This can be used to split int groups like: </li>
+</ol>
+<ul>
+<li><code>Production</code></li>
+<li><code>UAT</code> </li>
+<li>and other groups like <code>PageDuty Alerts</code></li>
+</ul>
+<ol start="2">
+<li>Create subset of alerts that belong to the policy</li>
+</ol>
+<ul>
+<li>Here you would use the event queries (nrql) figured out in <code>Query your data</code> above to count events and ultimately alert on them.</li>
+</ul>
+<h2 id="Dashboards"><a href="#Dashboards" class="headerlink" title="Dashboards"></a>Dashboards</h2><p>The dashboard would be useful to see common sadness at a glance (potentially post a deployment). I simply added a test dashbord using the <code>TransationError (event type)</code> NRQL statment above to peek at 405 and 500 errors over a period of time.</p>
+<p><img src="/d/newrelic/test-dashboard.png" alt="Test Dashboard"></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/query-your-data/explore-query-data/dashboards/introduction-dashboards/">Introduction to dashboards</a></li>
+</ul>
+<h2 id="Terraform"><a href="#Terraform" class="headerlink" title="Terraform"></a>Terraform</h2><p>Terraform would be the preferred way to create New Relic infastructure for <code>Synthetic Monitoring</code> and <code>Alerts &amp; AI</code> - you always want to be able to commit a change, get review and publish a repeatable step to your environments.</p>
+<p>I didnt see the point in copying the doc examples so instead link to them below and noted the suggested resource name from docs.</p>
+<h3 id="Alerts-amp-AI-1"><a href="#Alerts-amp-AI-1" class="headerlink" title="Alerts &amp; AI"></a>Alerts &amp; AI</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newrelic_nrql_alert_condition</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/nrql_alert_condition">https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/nrql_alert_condition</a></li>
+<li><a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/infra_alert_condition">https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/infra_alert_condition</a></li>
+</ul>
+<h3 id="Synthetic-Monitor-1"><a href="#Synthetic-Monitor-1" class="headerlink" title="Synthetic Monitor"></a>Synthetic Monitor</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">newrelic_alert_condition</span><br><span class="line">newrelic_synthetics_alert_condition</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/synthetics_alert_condition">https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/synthetics_alert_condition</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2023/01/newrelic/" data-id="cll98m91e00fnqouh0nega600" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/infrastructure-as-code/" rel="tag">infrastructure as code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/02/cnc-machine-my-indymill-shoppinglist/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Building The IndyMill (Shopping List)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/honda-crf230f/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2017 Honda CRF230F</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/implementation-aws-console-deploy-wordPress-website-aws/">Implementation - AWS Console - Deploy A WordPress Website On AWS</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/ld-restapi/">Launch Darkly Restful API</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.36px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.09px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
