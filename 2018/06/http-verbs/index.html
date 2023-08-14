@@ -20,15 +20,15 @@ ga('send', 'pageview');
   
   <title>HTTP verbs | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Verb REST Example Usage    GET https:&#x2F;&#x2F;api.com&#x2F;users Read all users as a collection   POST https:&#x2F;&#x2F;api.com&#x2F;users Create new user   GET https:&#x2F;&#x2F;api.com&#x2F;users&#x2F;{id} Read single user by id   PUT https:">
+  <meta name="description" content="Verb REST Example Usage    GET https:&#x2F;&#x2F;api.com&#x2F;users Read all users as a collection. Should return 200 OK or 404 Not Found.   GET https:&#x2F;&#x2F;api.com&#x2F;users&#x2F;{id} Read single user by id. Should return 20">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP verbs">
 <meta property="og:url" content="https://carlpaton.github.io/2018/06/http-verbs/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="Verb REST Example Usage    GET https:&#x2F;&#x2F;api.com&#x2F;users Read all users as a collection   POST https:&#x2F;&#x2F;api.com&#x2F;users Create new user   GET https:&#x2F;&#x2F;api.com&#x2F;users&#x2F;{id} Read single user by id   PUT https:">
+<meta property="og:description" content="Verb REST Example Usage    GET https:&#x2F;&#x2F;api.com&#x2F;users Read all users as a collection. Should return 200 OK or 404 Not Found.   GET https:&#x2F;&#x2F;api.com&#x2F;users&#x2F;{id} Read single user by id. Should return 20">
 <meta property="og:locale">
 <meta property="article:published_time" content="2018-06-11T00:08:24.000Z">
-<meta property="article:modified_time" content="2023-08-13T09:11:10.848Z">
+<meta property="article:modified_time" content="2023-08-14T01:51:44.617Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="web api">
 <meta name="twitter:card" content="summary">
@@ -146,37 +146,36 @@ ga('send', 'pageview');
 <tbody><tr>
 <td><code>GET</code></td>
 <td><a target="_blank" rel="noopener" href="https://api.com/users">https://api.com/users</a></td>
-<td>Read all users as a collection</td>
-</tr>
-<tr>
-<td><code>POST</code></td>
-<td><a target="_blank" rel="noopener" href="https://api.com/users">https://api.com/users</a></td>
-<td>Create new user</td>
+<td>Read all users as a collection. Should return 200 OK or 404 Not Found.</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
 <td><a target="_blank" rel="noopener" href="https://api.com/users/%7Bid%7D">https://api.com/users/{id}</a></td>
-<td>Read single user by id</td>
+<td>Read single user by id. Should return 200 OK or 404 Not Found. If your read needs to use a complex object ie: you are sending back JSON then rather use a <code>POST</code> to read (or send JUST the <code>&#123;id&#125;</code> in the route to keep using a <code>GET</code>)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a target="_blank" rel="noopener" href="https://api.com/users">https://api.com/users</a></td>
+<td>Create new user. Should return 200 OK when the resource was updated, 201 if it was created, 202 is its still busy async, 204 if the actual resource was not returned.</td>
 </tr>
 <tr>
 <td><code>PUT</code></td>
 <td><a target="_blank" rel="noopener" href="https://api.com/users/%7Bid%7D">https://api.com/users/{id}</a></td>
-<td>Update user by id with complete representation</td>
-</tr>
-<tr>
-<td><code>DELETE</code></td>
-<td><a target="_blank" rel="noopener" href="https://api.com/users/%7Bid%7D">https://api.com/users/{id}</a></td>
-<td>Delete user by id</td>
+<td>Update user by id with complete representation. In rare cases you can also create like a <code>POST</code>. Should return 200 OK, 201 Created or 204 No Content</td>
 </tr>
 <tr>
 <td><code>PATCH</code></td>
 <td><a target="_blank" rel="noopener" href="https://api.com/users/%7Bid%7D">https://api.com/users/{id}</a></td>
 <td>Partial update</td>
 </tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a target="_blank" rel="noopener" href="https://api.com/users/%7Bid%7D">https://api.com/users/{id}</a></td>
+<td>Delete user by id. Return 200 OK, 204 or 404</td>
+</tr>
 </tbody></table>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
-<li><a target="_blank" rel="noopener" href="http://www.restapitutorial.com/lessons/httpmethods.html">http://www.restapitutorial.com/lessons/httpmethods.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/RedisAdministrator/tree/master/WebApp/Controllers">https://github.com/carlpaton/RedisAdministrator/tree/master/WebApp/Controllers</a></li>
+<li><a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc7231#section-4">RFC 7231 - Request method standards</a></li>
 </ul>
 
       

@@ -20,15 +20,15 @@ ga('send', 'pageview');
   
   <title>Unit testing with xUnit.net | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Install xunit from Nuget as version 2.4.1. U_I_E signatures are Unit of work, inital condition and expecte">
+  <meta name="description" content="xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Install xunit from Nuget as version 2.4.1. Fact1234567891011[Fact]public void U_I_E()&amp;#123;    &#x2F;&#x2F; Arrange">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unit testing with xUnit.net">
 <meta property="og:url" content="https://carlpaton.github.io/2019/06/unit-testing-with-xunit/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Install xunit from Nuget as version 2.4.1. U_I_E signatures are Unit of work, inital condition and expecte">
+<meta property="og:description" content="xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Install xunit from Nuget as version 2.4.1. Fact1234567891011[Fact]public void U_I_E()&amp;#123;    &#x2F;&#x2F; Arrange">
 <meta property="og:locale">
 <meta property="article:published_time" content="2019-05-31T12:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-13T09:11:10.955Z">
+<meta property="article:modified_time" content="2023-08-14T01:17:07.465Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="software testing">
 <meta name="twitter:card" content="summary">
@@ -136,7 +136,6 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Install <code>xunit</code> from Nuget as version <code>2.4.1</code>.</p>
-<p>U_I_E signatures are <code>Unit of work</code>, <code>inital condition</code> and <code>expected result</code>.</p>
 <h3 id="Fact"><a href="#Fact" class="headerlink" title="Fact"></a>Fact</h3><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Fact</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">U_I_E</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Arrange</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Act</span></span><br><span class="line">    <span class="keyword">var</span> someBool = ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Assert</span></span><br><span class="line">    Assert.Equal(shouldPass, someBool&gt;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Other asserts</p>
