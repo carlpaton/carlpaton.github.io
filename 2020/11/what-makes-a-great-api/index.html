@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="I recently did some work on a new ASP.NET Web API project using .Net Core. While  doing research and development I could see some themes and patterns on What makes a great API and decided to collate t">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-11-29T11:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-14T01:48:13.076Z">
+<meta property="article:modified_time" content="2023-08-14T03:17:22.080Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="web api">
@@ -172,6 +172,19 @@ ga('send', 'pageview');
 <li>Resource endpoints must use plural resource forms, example <code>/foos</code></li>
 <li>Resources and sub-resources must be hierarchically identified, examples <ul>
 <li><code>/&#123;resources&#125;/[resource-id]/&#123;sub-resources&#125;/[sub-resource-id]</code></li>
+</ul>
+</li>
+<li>Use hyphens to to improve readability<ul>
+<li>GOOD: <code>/&#123;resources&#125;/[resource-id]</code></li>
+<li>BAD: <code>/&#123;resources&#125;/[resourceId]</code></li>
+</ul>
+</li>
+<li>Always use lower case in URI paths</li>
+<li>Resources naming<ul>
+<li><strong>document</strong>, this is a single resource inside the collection. eg: <code>/&#123;resources&#125;/</code> document would be <code>resource</code></li>
+<li><strong>collection</strong>, this is a collection of documents. eg: <code>/&#123;resources&#125;/</code></li>
+<li><strong>store</strong>, WAT</li>
+<li><strong>controller</strong>, this is a procedural concept / executable function with parameters. eg: <code>/&#123;resources&#125;/&#123;id&#125;/some-thing-related-to-resource/archive</code> (archive is the controller)</li>
 </ul>
 </li>
 </ul>
