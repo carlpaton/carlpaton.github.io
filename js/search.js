@@ -67,7 +67,7 @@ var searchFunc = function (path, search_id, content_id) {
           // show search results
           if (isMatch) {
             str +=
-              "<li><a href='https://carlpaton.github.io" +
+              "<li><a href='" +
               data_url +
               "' class='search-result-title'>" +
               data_title +
