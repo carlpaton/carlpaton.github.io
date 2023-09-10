@@ -34,7 +34,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/solution-design-ordering-system/third-draft-worker2.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/solution-design-ordering-system/third-draft-notification.jpg">
 <meta property="article:published_time" content="2023-10-08T11:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-09T17:55:09.742Z">
+<meta property="article:modified_time" content="2023-09-10T22:01:16.673Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="rosetta code">
 <meta name="twitter:card" content="summary">
@@ -149,18 +149,18 @@ ga('send', 'pageview');
 <li>Following KISS (Keep It Super Simple) solve the problem in the simplest manner, itterate later to allow for fault tolerance.</li>
 <li>Draft a few solutions and itterate on them<ul>
 <li>As such use an unconventional <code>Sticky Note</code> representation first to show the flow</li>
-<li>As a last draft represent as a <a target="_blank" rel="noopener" href="https://www.lucidchart.com/pages/uml-sequence-diagram">technical sequence diagram</a></li>
+<li>As a last draft represent as a <a target="_blank" rel="noopener" href="https://www.lucidchart.com/pages/uml-sequence-diagram">technical sequence diagram</a> (<a target="_blank" rel="noopener" href="https://miro.com/diagramming/uml-sequence-diagram/">Miro Template</a>)</li>
 </ul>
 </li>
 <li>The solution is Cloud Based (Focus on AWS), consider technologies for the pending decision register item<ul>
-<li>Security (Authentication and Authorisation), consider using <a href="/2020/12/oauth2/">OAuth2 flows</a>.</li>
-<li>Serverless Lamda Functions to expose data / house logic</li>
-<li>State Machine if we want to group logic and Lamdas</li>
+<li>Security (Authentication and Authorisation), consider using <a href="/2020/12/oauth2/">OAuth2 flows</a></li>
+<li><a href="/2021/11/aws-sqs-step-function-and-lamdas/">Serverless Lamda Functions</a> to expose data / house logic</li>
+<li><a href="/2021/11/aws-sqs-step-function-and-lamdas/">State Machine if we want to group logic and Lamdas</a></li>
 <li>Kubernetes (EKS) for Workers</li>
-<li>RESTful APIs to expose data / house logic</li>
-<li>Persistant storage options like Relational (RDS) or Key/Value Document DB (Dynamo)</li>
-<li>Frontend Application. React, Angular or Vue Single Page Application (SPA)</li>
-<li>Messaging System (SQS) and <a href="/2022/02/cloudevents/">Cloud Events</a></li>
+<li><a href="/2020/11/what-makes-a-great-api/">RESTful APIs</a> to expose data / house logic</li>
+<li>Persistant storage options like Relational (RDS) or Key/Value <a href="/2020/11/aws-dynamodb/">Document DB (Dynamo)</a></li>
+<li>Frontend Application. <a href="/tags/reactjs/">React</a>, <a href="/tags/angular/">Angular</a> or Vue Single Page Application (SPA) <a href="/2020/11/aws-s3/">hosted in S3</a></li>
+<li><a href="/2021/11/aws-sqs/">Messaging System (SQS)</a> and <a href="/2022/02/cloudevents/">Cloud Events</a></li>
 </ul>
 </li>
 <li>Cloud Design Patterns<ul>
@@ -179,23 +179,23 @@ ga('send', 'pageview');
 </li>
 </ul>
 <h4 id="First-Draft"><a href="#First-Draft" class="headerlink" title="First Draft"></a>First Draft</h4><p>First lets understand the problem and use an unconventional <code>Sticky Note</code> representation.</p>
-<p><img src="/d/solution-design-ordering-system/first-draft.jpg" alt="First Draft"></p>
+<p><img src="/d/solution-design-ordering-system/first-draft.jpg" alt="First draft to understand a simple flow"></p>
 <h4 id="Second-Draft"><a href="#Second-Draft" class="headerlink" title="Second Draft"></a>Second Draft</h4><p>Remember <code>Bobs Post</code> has an unstable API, we can unload responsability from the BFF and introduce some retry logic using the Asynchronous Request-Reply pattern and Queues. Additionally <a href="/2021/12/http-retry-polly/">Polly</a> can be used to retry HTTP requests.</p>
-<p><img src="/d/solution-design-ordering-system/second-draft-add-queue.jpg" alt="Second Draft - Add Queue"></p>
+<p><img src="/d/solution-design-ordering-system/second-draft-add-queue.jpg" alt="Second Draft, move workload Async"></p>
 <p>Now add a Worker process that will process the order request. If a message is not deleted and it has been received the maximum receive count times its pushed to the configured Dead Letter Queue (DLQ)</p>
-<p><img src="/d/solution-design-ordering-system/second-draft-add-worker.jpg" alt="Second Draft - Add Worker"></p>
+<p><img src="/d/solution-design-ordering-system/second-draft-add-worker.jpg" alt="Second Draft, understand the Async workload. Its doing too much!"></p>
 <h4 id="Third-Draft"><a href="#Third-Draft" class="headerlink" title="Third Draft"></a>Third Draft</h4><p>There is still a problem with the design as <code>Bobs Post</code> is unstable, so if any of the requests fail and the retry count for Polly is exhausted the process will fall over and cause possible duplication.</p>
 <p>We can try address this by adding a key/value database like Dynamo to keep track of the process. Additionally the responsability of the process can be delegated to several workers and queues. <span style="color:red;">The caveat being this brings complexity, so only introduce this when needed.</span></p>
 <p>Conditional logic would be added so that should the data exist in Dynamo then dont do that step. IE: We have the user data, dont call the <code>User API</code> ect.</p>
 <ul>
 <li>Third Draft: The main focus here is to place the order with <code>Bobs Post</code> (status=Scheduled)</li>
 </ul>
-<p><img src="/d/solution-design-ordering-system/third-draft-worker1.jpg" alt="Third Draft - Scheduled Worker"></p>
+<p><img src="/d/solution-design-ordering-system/third-draft-worker1.jpg" alt="Third Draft. Break it down, check and update `Scheduled` status"></p>
 <ul>
 <li>Third Draft: The main focus here is to check for updates at <code>Bobs Post</code> (status=Shipped)</li>
 <li>If no update is avalible, just Queue another message to check for shipped (<span style="color:red;">WARNING: Can cause infinite loop.</span>) So potentially just dont delete and rely on the DQL.</li>
 </ul>
-<p><img src="/d/solution-design-ordering-system/third-draft-worker2.jpg" alt="Third Draft - Shipped Worker"></p>
+<p><img src="/d/solution-design-ordering-system/third-draft-worker2.jpg" alt="Third Draft. Break it down, check and update `Shipped` status"></p>
 <ul>
 <li>Third Draft: The main focus here is to notify the User that their item(s) have shipped</li>
 <li>Emails are a common thing to send, potentially a flow exists (Event Queue) where the request can be sent</li>
@@ -206,7 +206,7 @@ ga('send', 'pageview');
 <li>Another worker can poll each DLQ and re-drive</li>
 <li>The process could be manual</li>
 </ul>
-<p>Finally once you agree with your team(s) draw as a technical sequence diagram.</p>
+<p>Finally once you agree with your team(s) draw as a technical sequence diagram. Also see the <a target="_blank" rel="noopener" href="https://miro.com/diagramming/uml-sequence-diagram/">Miro Template</a>.</p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/architecture/patterns/">https://learn.microsoft.com/en-us/azure/architecture/patterns/</a></li>
 </ul>
