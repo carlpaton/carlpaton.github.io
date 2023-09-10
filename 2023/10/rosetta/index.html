@@ -34,7 +34,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/solution-design-ordering-system/third-draft-worker2.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/solution-design-ordering-system/third-draft-notification.jpg">
 <meta property="article:published_time" content="2023-10-08T11:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-10T22:01:16.673Z">
+<meta property="article:modified_time" content="2023-09-10T22:33:35.869Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="rosetta code">
 <meta name="twitter:card" content="summary">
@@ -156,7 +156,7 @@ ga('send', 'pageview');
 <li>Security (Authentication and Authorisation), consider using <a href="/2020/12/oauth2/">OAuth2 flows</a></li>
 <li><a href="/2021/11/aws-sqs-step-function-and-lamdas/">Serverless Lamda Functions</a> to expose data / house logic</li>
 <li><a href="/2021/11/aws-sqs-step-function-and-lamdas/">State Machine if we want to group logic and Lamdas</a></li>
-<li>Kubernetes (EKS) for Workers</li>
+<li>Kubernetes (EKS) <a href="/2021/07/c-sharp-timed-hosted-service/">for Workers</a></li>
 <li><a href="/2020/11/what-makes-a-great-api/">RESTful APIs</a> to expose data / house logic</li>
 <li>Persistant storage options like Relational (RDS) or Key/Value <a href="/2020/11/aws-dynamodb/">Document DB (Dynamo)</a></li>
 <li>Frontend Application. <a href="/tags/reactjs/">React</a>, <a href="/tags/angular/">Angular</a> or Vue Single Page Application (SPA) <a href="/2020/11/aws-s3/">hosted in S3</a></li>
@@ -182,7 +182,7 @@ ga('send', 'pageview');
 <p><img src="/d/solution-design-ordering-system/first-draft.jpg" alt="First draft to understand a simple flow"></p>
 <h4 id="Second-Draft"><a href="#Second-Draft" class="headerlink" title="Second Draft"></a>Second Draft</h4><p>Remember <code>Bobs Post</code> has an unstable API, we can unload responsability from the BFF and introduce some retry logic using the Asynchronous Request-Reply pattern and Queues. Additionally <a href="/2021/12/http-retry-polly/">Polly</a> can be used to retry HTTP requests.</p>
 <p><img src="/d/solution-design-ordering-system/second-draft-add-queue.jpg" alt="Second Draft, move workload Async"></p>
-<p>Now add a Worker process that will process the order request. If a message is not deleted and it has been received the maximum receive count times its pushed to the configured Dead Letter Queue (DLQ)</p>
+<p>Now add a <a href="/2021/07/c-sharp-timed-hosted-service/">Worker process</a> that will process the order request. If a message is not deleted and it has been received the maximum receive count times its pushed to the configured Dead Letter Queue (DLQ)</p>
 <p><img src="/d/solution-design-ordering-system/second-draft-add-worker.jpg" alt="Second Draft, understand the Async workload. Its doing too much!"></p>
 <h4 id="Third-Draft"><a href="#Third-Draft" class="headerlink" title="Third Draft"></a>Third Draft</h4><p>There is still a problem with the design as <code>Bobs Post</code> is unstable, so if any of the requests fail and the retry count for Polly is exhausted the process will fall over and cause possible duplication.</p>
 <p>We can try address this by adding a key/value database like Dynamo to keep track of the process. Additionally the responsability of the process can be delegated to several workers and queues. <span style="color:red;">The caveat being this brings complexity, so only introduce this when needed.</span></p>
@@ -207,6 +207,8 @@ ga('send', 'pageview');
 <li>The process could be manual</li>
 </ul>
 <p>Finally once you agree with your team(s) draw as a technical sequence diagram. Also see the <a target="_blank" rel="noopener" href="https://miro.com/diagramming/uml-sequence-diagram/">Miro Template</a>.</p>
+<h4 id="Final-Thoughts"><a href="#Final-Thoughts" class="headerlink" title="Final Thoughts"></a>Final Thoughts</h4><p>The process above is not without fault. The SQS messages <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-basic-architecture.html">default retention period is 4 days</a> so if <code>Bobs Post</code> is down for longer than this and the maxium retry period is exhausted the system will fall over. Potentially the flow could be <code>SPA -&gt; BFF -&gt; SQS -&gt; DYNAMO</code> with workers that progress the status and call the APIs based on the state of the <code>DYNAMO</code> database record.</p>
+<p>My suggestion is to be pragmatic and solve problems when they are problems, if you add complexity early you could solve a problem that doesnt exist and the potential gains are lost in the complexity. </p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/architecture/patterns/">https://learn.microsoft.com/en-us/azure/architecture/patterns/</a></li>
 </ul>
