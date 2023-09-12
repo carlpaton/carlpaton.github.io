@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="Structure123456789101112131415using Microsoft.VisualStudio.TestTools.UnitTesting;[TestClass]public class MyClassTests&amp;#123;   [TestMethod]   public void UnitOfWork_InitialCondition_ExpectedResult()">
 <meta property="og:locale">
 <meta property="article:published_time" content="2018-11-30T12:01:01.000Z">
-<meta property="article:modified_time" content="2023-08-13T09:11:10.954Z">
+<meta property="article:modified_time" content="2023-09-12T07:23:56.377Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="software testing">
 <meta name="twitter:card" content="summary">
@@ -139,7 +139,11 @@ ga('send', 'pageview');
 
 <h3 id="Other-Asserts"><a href="#Other-Asserts" class="headerlink" title="Other Asserts"></a>Other Asserts</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Assert.IsTrue</span><br></pre></td></tr></table></figure>
 
-<h3 id="ExpectedException"><a href="#ExpectedException" class="headerlink" title="ExpectedException"></a>ExpectedException</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ExpectedException(typeof(MyException))]</span><br><span class="line">[TestMethod]</span><br><span class="line">public void UnitOfWork_InitialCondition_ExpectedResult()</span><br><span class="line">&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Exception"><a href="#Exception" class="headerlink" title="Exception"></a>Exception</h3><p>ThrowsException</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Act</span><br><span class="line">var exception = Assert.ThrowsException&lt;ArgumentException&gt;(() =&gt; classUnderTest.UnitOfWork(&quot;foo&quot;, &quot;bar&quot;));</span><br><span class="line"></span><br><span class="line">// Assert</span><br><span class="line">Assert.AreEqual(expected, exception.Message);</span><br></pre></td></tr></table></figure>
+
+<p>ExpectedException</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ExpectedException(typeof(MyException))]</span><br><span class="line">[TestMethod]</span><br><span class="line">public void UnitOfWork_InitialCondition_ExpectedResult()</span><br><span class="line">&#123; ... &#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/visualstudio/test/getting-started-with-unit-testing">https://docs.microsoft.com/en-us/visualstudio/test/getting-started-with-unit-testing</a></li>
@@ -207,7 +211,7 @@ ga('send', 'pageview');
       <ul>
         
           <li>
-            <a href="/2023/10/rosetta/">Solution Design - Ordering System</a>
+            <a href="/2023/10/rosetta-solution-design-ordering-system/">Solution Design - Ordering System</a>
           </li>
         
           <li>
