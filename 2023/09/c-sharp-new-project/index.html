@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>C# New Project | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="WIP  Everytime I setup a new project, besides consideration on if I need microservice architecture or a good old monolithic application there are always simliar steps needed to get the project in a m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C# New Project">
+<meta property="og:url" content="https://carlpaton.github.io/2023/09/c-sharp-new-project/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="WIP  Everytime I setup a new project, besides consideration on if I need microservice architecture or a good old monolithic application there are always simliar steps needed to get the project in a m">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-09-14T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-18T08:57:13.517Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="c#">
+<meta property="article:tag" content="wip">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-c-sharp-new-project" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/09/c-sharp-new-project/" class="article-date">
+  <time datetime="2023-09-14T12:00:00.000Z" itemprop="datePublished">2023-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C# New Project
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a href="/2017/06/work-in-progress/">WIP</a></p>
+</blockquote>
+<p>Everytime I setup a new project, besides consideration on if I need <a href="/2020/07/microservice-architecture/">microservice architecture</a> or a good old <a href="/2019/12/web-application-architecture/">monolithic application</a> there are always simliar steps needed to get the project in a maintainable state.</p>
+<h2 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h2><p>Regardless of the architecture, anything new needs to run in a container. This is just defacto now days. I built a <a href="/2018/08/docker-compose-demo/">simple demo</a> a few years back which is still relavant.</p>
+<p>Today I’d add that compose locally should bring up a containerised local environment for everything your application needs to run.</p>
+<ul>
+<li>containerised database</li>
+<li>stubs of downstream internal dependencies, you can use tooling like <a href="/2021/05/wiremocks/">wiremocks (.Net)</a>, <a href="/2023/06/express-nodejs-mocking/">Express (Node)</a> or a simple <a href="/2022/02/json-server/">JSON Server</a></li>
+<li>stubs of external dependencies, example <a href="/2021/12/aws-localstack/">AWS Localstack</a></li>
+<li>stubs of your <a href="/2020/12/oauth2/">authorisation</a> service</li>
+</ul>
+<p>This should be run from one file like <code>Run_Local.ps1</code>, below is an example.</p>
+<details>
+  <summary>Example Run_Local.ps1</summary>
+
+<figure class="highlight ps1"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;#</span></span><br><span class="line"><span class="comment"><span class="doctag">.SYNOPSIS</span></span></span><br><span class="line"><span class="comment">Run all the stubs locally</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"><span class="doctag">.DESCRIPTION</span></span></span><br><span class="line"><span class="comment">This script does the following:</span></span><br><span class="line"><span class="comment">1. Run Localstack (dynamodb)</span></span><br><span class="line"><span class="comment">#&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">param</span> (</span><br><span class="line">    [<span class="type">Parameter</span>()]</span><br><span class="line">    [<span class="type">switch</span>]</span><br><span class="line">    <span class="variable">$RebuildStubs</span>,</span><br><span class="line"></span><br><span class="line">    [<span class="type">Parameter</span>()]</span><br><span class="line">    [<span class="type">switch</span>]</span><br><span class="line">    <span class="variable">$NoBff</span>,</span><br><span class="line"></span><br><span class="line">    [<span class="type">Parameter</span>()]</span><br><span class="line">    [<span class="type">switch</span>]</span><br><span class="line">    <span class="variable">$LocalStackOnly</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Set-StrictMode</span> <span class="literal">-Version</span> <span class="number">2.0</span></span><br><span class="line"><span class="variable">$ErrorActionPreference</span> = <span class="string">&#x27;Stop&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Write-Output</span> <span class="string">&#x27;****** Running stubs ******&#x27;</span></span><br><span class="line"><span class="variable">$host</span>.ui.RawUI.WindowTitle = <span class="string">&#x27;Porky Stubs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$LocalStackOnly</span>.isPresent) &#123;</span><br><span class="line">    <span class="built_in">Write-Output</span> <span class="string">&#x27;****** STARTING ONLY LOCALSTACK ******&#x27;</span></span><br><span class="line">    docker <span class="built_in">start</span> pky_localstack</span><br><span class="line">&#125; <span class="keyword">elseif</span> (<span class="variable">$NoBff</span>.isPresent) &#123;</span><br><span class="line">    <span class="built_in">Write-Output</span> <span class="string">&#x27;****** NO BFF ******&#x27;</span></span><br><span class="line">    docker<span class="literal">-compose</span> <span class="literal">--project-name</span> porky <span class="operator">-f</span> ./stubs/docker<span class="literal">-compose-no-bff</span>.yml up (<span class="variable">$RebuildStubs</span> ? <span class="string">&quot;--build&quot;</span> : <span class="string">&quot;&quot;</span>) <span class="literal">--remove-orphans</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">Write-Output</span> <span class="string">&#x27;No params found! Try -LocalStackOnly or -NoBff and optionally -RebuildStubs&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<h2 id="Code-Conventions"><a href="#Code-Conventions" class="headerlink" title="Code Conventions"></a>Code Conventions</h2><p>We want all members of the team rowing in the same direction. As there are many IDEs (Visual Studio, Ryder ect) the simplest way is to commit a <code>.editorconfig</code> file with the source control. Check out <a target="_blank" rel="noopener" href="https://editorconfig.org/">https://editorconfig.org/</a></p>
+<details>
+  <summary>Example .editorconfig</summary>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">root = true</span><br><span class="line"></span><br><span class="line">[*.*]</span><br><span class="line">end_of_line = crlf</span><br><span class="line">indent_size = 4</span><br><span class="line">indent_style = space</span><br><span class="line">trim_trailing_whitespace = true</span><br><span class="line"></span><br><span class="line">[*.&#123;html,htm,xml,config,csproj,aspx,ascx,cshtml,resx,json,targets,props,yml,yaml&#125;]</span><br><span class="line">indent_size = 2</span><br><span class="line"></span><br><span class="line">[*.cs]</span><br><span class="line">accessor_owner_body = expression_body</span><br><span class="line">braces_for_foreach = required</span><br><span class="line">braces_for_ifelse = required</span><br><span class="line">braces_for_for = required</span><br><span class="line">csharp_new_line_before_open_brace = all</span><br><span class="line">csharp_parentheses_redundancy_style = remove_if_not_clarifies_precedence</span><br><span class="line">csharp_remove_blank_lines_near_braces_in_declarations = true</span><br><span class="line">csharp_space_after_keywords_in_control_flow_statements = true</span><br><span class="line">dotnet_sort_system_directives_first = true</span><br><span class="line">extra_spaces = remove_all</span><br><span class="line">insert_final_newline = false</span><br><span class="line">method_or_operator_body = expression_body</span><br><span class="line">namespace_body = file_scoped</span><br><span class="line">object_creation_when_type_evident = target_typed</span><br><span class="line">trailing_comma_in_multiline_lists = false</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[*.docker-compose.yml]</span><br><span class="line">quote_type = double</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<h2 id="Static-Code-Analysis"><a href="#Static-Code-Analysis" class="headerlink" title="Static Code Analysis"></a>Static Code Analysis</h2><p>You have more than one option!</p>
+<h3 id="SonarScanner-Remote-Server"><a href="#SonarScanner-Remote-Server" class="headerlink" title="SonarScanner (Remote Server)"></a>SonarScanner (Remote Server)</h3><p>Its important to understand that sonarscanner doesnt run tests, it reports on static code and can be provided test coverage reports. </p>
+<p>Run your own containerised <a href="/2018/07/sonarqube-and-docker/">Sonarqube server</a> locally.</p>
+<h3 id="SonarAnalyzer-Local-Static-Code-Analysis"><a href="#SonarAnalyzer-Local-Static-Code-Analysis" class="headerlink" title="SonarAnalyzer (Local Static Code Analysis)"></a>SonarAnalyzer (Local Static Code Analysis)</h3><p>Although many large IT companies have a sonar server which can be used a a quality gate in PRs and Master builds its possible to do these checks locally.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=0nVT1gM4vPg">https://www.youtube.com/watch?v=0nVT1gM4vPg</a></li>
+</ul>
+<p>Unit Test code coverage</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-code-coverage?tabs=linux">https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-code-coverage?tabs=linux</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jetbrains.com/help/rider/Analyzing_Coverage_NET.html">https://www.jetbrains.com/help/rider/Analyzing_Coverage_NET.html</a></li>
+</ul>
+<h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a>Logging</h2><ul>
+<li><a href="/2020/11/serilog/">Serilog</a></li>
+<li>App Insights</li>
+</ul>
+<h2 id="CI-CD-pipeline"><a href="#CI-CD-pipeline" class="headerlink" title="CI/CD pipeline"></a>CI/CD pipeline</h2><ul>
+<li>CI/CD pipeline for build &amp; tests</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2023/09/c-sharp-new-project/" data-id="clmonshu20000wkuh1tsw7j0i" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/09/unit-test-lazy-loaded-properties/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unit Test Lazy Loaded Properties</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/09/c-sharp-new-project/">C# New Project</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/unit-test-lazy-loaded-properties/">Unit Test Lazy Loaded Properties</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/rosetta-solution-design-ordering-system/">Solution Design - Ordering System</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/git-hooks-commit-example/">Git Hooks - Commit Example</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.45px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.82px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.55px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/software-testing/" style="font-size: 10px;">software-testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

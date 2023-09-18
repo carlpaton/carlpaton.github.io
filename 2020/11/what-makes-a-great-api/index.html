@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="I recently did some work on a new ASP.NET Web API project using .Net Core. While  doing research and development I could see some themes and patterns on What makes a great API and decided to collate t">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-11-29T11:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-14T03:17:22.080Z">
+<meta property="article:modified_time" content="2023-09-15T21:59:01.434Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="web api">
@@ -139,25 +139,25 @@ ga('send', 'pageview');
         <p>I recently did some work on a new <a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/apps/aspnet/apis">ASP.NET Web API</a> project using <a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/download/dotnet-core">.Net Core</a>. While  doing research and development I could see some themes and patterns on <code>What makes a great API</code> and decided to collate this information.</p>
 <p>This was for a RESTful (Representational State Transfer) Web based API (hypertext-driven) with JSON resonse, this was not the API of a new class interface. I dont believe being RESTful makes your API great, SOAP (Simple Object Access Protocol) could work just as well however REST is certainly more popular today. Have a look at <a target="_blank" rel="noopener" href="https://www.upwork.com/resources/soap-vs-rest-a-look-at-two-different-api-styles">SOAP vs. REST: A Look at Two Different API Styles</a>.</p>
 <p>For the URI format see <a href="/2018/06/http-verbs/">HTTP verbs</a>.</p>
-<h2 id="Pillars"><a href="#Pillars" class="headerlink" title="Pillars"></a>Pillars</h2><p>Clear pillars are needed for a great API, this is certainly not an exhaustive list but these stood out for me.</p>
-<h3 id="Security"><a href="#Security" class="headerlink" title="Security"></a>Security</h3><p><strong>Dont bolt security on at the end</strong>, secure your API from the start.</p>
+<h1 id="Pillars"><a href="#Pillars" class="headerlink" title="Pillars"></a>Pillars</h1><p>Clear pillars are needed for a great API, this is certainly not an exhaustive list but these stood out for me.</p>
+<h2 id="Security"><a href="#Security" class="headerlink" title="Security"></a>Security</h2><p><strong>Dont bolt security on at the end</strong>, secure your API from the start.</p>
 <ul>
 <li>Use <a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc6749">OAuth 2.0</a> for authorization</li>
 <li>Never put <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.stacktrace">stack traces</a> in responses, this can disclose sensitive information</li>
 <li>Errors must be represented in <a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc7807">Problem JSON (RFC 7807)</a> format, providing error <code>type</code> (URI), and optionally <code>title</code>, <code>status</code>, <code>detail</code> along with others.</li>
 </ul>
-<h3 id="Supported-amp-Well-Architected"><a href="#Supported-amp-Well-Architected" class="headerlink" title="Supported &amp; Well Architected"></a>Supported &amp; Well Architected</h3><ul>
+<h2 id="Supported-amp-Well-Architected"><a href="#Supported-amp-Well-Architected" class="headerlink" title="Supported &amp; Well Architected"></a>Supported &amp; Well Architected</h2><ul>
 <li>Use the <a target="_blank" rel="noopener" href="https://swagger.io/specification/">OpenAPI specification</a></li>
 <li>Later updates to the specification can be done at <a target="_blank" rel="noopener" href="https://editor.swagger.io/">editor.swagger.io</a></li>
 <li>Document the API first as a proposal and then implement the empty controllers and Generate the OpenAPI specification via Swashbuckle. Use the generated specification to test that the implementation respects the contract.</li>
 <li>Write <a target="_blank" rel="noopener" href="https://www.altexsoft.com/blog/api-documentation/">API documentation</a> and build API client SDKs (Software development kit) </li>
 <li>Utilize patterns, standards, templates, and frameworks to realize the features of an API which are not domain specific.</li>
 </ul>
-<h3 id="Consistent"><a href="#Consistent" class="headerlink" title="Consistent"></a>Consistent</h3><ul>
+<h2 id="Consistent"><a href="#Consistent" class="headerlink" title="Consistent"></a>Consistent</h2><ul>
 <li>Be stateless</li>
 <li>have a common look and feel</li>
 <li>The number of items returned by a collection must be limited and paginated (Sorting &amp; Paging)</li>
-<li>Fielding defined appropriate use within HTTP of the canonical verbs <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>, <code>HEAD</code>, and <code>OPTIONS</code>. So don’t change state with GET :). See <a href="/2018/06/http-verbs/">http-verbs</a></li>
+<li>Fielding defined appropriate use within HTTP of the canonical verbs <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>, <code>HEAD</code>, and <code>OPTIONS</code>. So don’t change state with GET :). See <a href="/2018/06/http-verbs/">http-verbs</a> and verb notes below.</li>
 <li>Search by criteria, examples<ul>
 <li><code>/audits/date?start=&amp;end=</code></li>
 <li><code>/audits/search?q=foobar</code></li>
@@ -188,11 +188,70 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
-<h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><ul>
+<h3 id="Verb-Notes"><a href="#Verb-Notes" class="headerlink" title="Verb Notes"></a>Verb Notes</h3><p><strong>GET</strong></p>
+<ul>
+<li>returns <code>200</code> when the resource or collection is found, the resource or collection is returned in the body</li>
+<li>returns <code>404</code> and no body when nothing was found </li>
+<li>should not have a payload, if you are in a situation where you need to send heaps of data as encoded query parameters then rather use a POST with content body</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /users/12345 HTTP/1.1</span><br><span class="line">Host: example.com</span><br><span class="line"></span><br><span class="line">GET /users?name=John%20Doe HTTP/1.1</span><br><span class="line">Host: example.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>PUT</strong></p>
+<ul>
+<li>used to do a resource update, complete content is provided</li>
+<li>returns <code>200</code> if the update was completed and no body, generally rather return <code>204</code> No Content</li>
+<li>returns <code>201</code> if something was created (here you should consider a POST)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PUT /users/12345 HTTP/1.1</span><br><span class="line">Host: example.com</span><br><span class="line">Content-Type: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: 12345,</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;email&quot;: &quot;john.doe@example.com&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This request will replace the entire user resource with the new data.</p>
+<p><strong>POST</strong></p>
+<ul>
+<li>used to create a single complete resource, not idempotent</li>
+<li>returns <code>200</code> if successful, the resource or collection is returned in the body</li>
+<li>returns <code>201</code> if something was created, the resource or collection is returned in the body</li>
+<li>returns <code>202</code> if the request was accepted and will be completed later</li>
+<li>returns <code>204</code> with <code>Location</code> header if the resource is not returned</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">POST /users HTTP/1.1</span><br><span class="line">Host: example.com</span><br><span class="line">Content-Type: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;email&quot;: &quot;john.doe@example.com&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>PATCH</strong></p>
+<ul>
+<li>used to do a resource update, partial content is provided</li>
+</ul>
+<p>The main difference between HTTP PATCH and PUT is that PATCH is used for partial updates to a resource, while PUT is used for full updates. This means that with PATCH, you can send only the data that you want to update, without having to send the entire resource again. With PUT, you must send the entire resource, even if you only want to update a small part of it.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PATCH /users/12345 HTTP/1.1</span><br><span class="line">Host: example.com</span><br><span class="line">Content-Type: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This request will update the user’s name to “John Doe”, without modifying any of their other data.</p>
+<p><strong>DELETE</strong></p>
+<ul>
+<li>used to delete a resource</li>
+<li>returns <code>200</code> with the deleted resource in the body</li>
+<li>returns <code>204</code> if you dont wish to return the deleted resource</li>
+<li>returns <code>404</code> if the resource you wanted to delete was not found</li>
+<li>returns <code>410</code> if the resource was already deleted</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /users/12345 HTTP/1.1</span><br><span class="line">Host: example.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>HEAD</strong></p>
+<ul>
+<li>used to retrieve header information</li>
+<li>its the same as a GET but only returns header and never a body</li>
+</ul>
+<p><strong>OPTIONS</strong></p>
+<ul>
+<li>used to inspect the avalible operations (so the HTTP verbs) of a given endpoint</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OPTIONS /users HTTP/1.1</span><br><span class="line">Host: example.com</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS</span><br></pre></td></tr></table></figure>
+
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><ul>
 <li>Allow to scale horizontally by using Docker containers and orchestration software like <a target="_blank" rel="noopener" href="https://aws.amazon.com/kubernetes">Kubernetes</a></li>
 <li>Rate limit client requests using HTTP Status Code <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429">429 Too Many Requests</a></li>
 </ul>
-<h3 id="Ability-to-change"><a href="#Ability-to-change" class="headerlink" title="Ability to change"></a>Ability to change</h3><ul>
+<h2 id="Ability-to-change"><a href="#Ability-to-change" class="headerlink" title="Ability to change"></a>Ability to change</h2><ul>
 <li>Avoid breaking changes, dont remove fields/methods/add additional validations</li>
 </ul>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
@@ -265,7 +324,15 @@ ga('send', 'pageview');
       <ul>
         
           <li>
-            <a href="/2023/10/rosetta-solution-design-ordering-system/">Solution Design - Ordering System</a>
+            <a href="/2023/09/c-sharp-new-project/">C# New Project</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/unit-test-lazy-loaded-properties/">Unit Test Lazy Loaded Properties</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/rosetta-solution-design-ordering-system/">Solution Design - Ordering System</a>
           </li>
         
           <li>
@@ -274,14 +341,6 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2023/06/cnc-machine-my-indymill-grbl-settings/">GRBL Settings For My IndyMill Build</a>
-          </li>
-        
-          <li>
-            <a href="/2023/06/implementation-aws-cloudformation-deploy-wordPress-website-aws/">Implementation - AWS CloudFormation - Deploy A WordPress Website On AWS</a>
-          </li>
-        
-          <li>
-            <a href="/2023/06/express-nodejs-mocking/">Express (Mock API Using Node)</a>
           </li>
         
       </ul>
@@ -293,7 +352,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.82px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.55px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.45px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.82px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 12.73px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.55px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/software-testing/" style="font-size: 10px;">software-testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
     </div>
   </div>
 
