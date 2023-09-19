@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Moq.Langauge Callback Function | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="When doing this to project has Moq.4.16.1 and the namespace I used was Moq.Language but it was just resolved with using Moq;. Why Callback?I was unit testing a command that runs a stored procedure for">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Moq.Langauge Callback Function">
+<meta property="og:url" content="https://carlpaton.github.io/2023/09/moq-language-callback/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="When doing this to project has Moq.4.16.1 and the namespace I used was Moq.Language but it was just resolved with using Moq;. Why Callback?I was unit testing a command that runs a stored procedure for">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-09-19T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-19T23:11:23.348Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="software testing">
+<meta property="article:tag" content="mocking">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-moq-language-callback" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/09/moq-language-callback/" class="article-date">
+  <time datetime="2023-09-19T12:00:00.000Z" itemprop="datePublished">2023-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Moq.Langauge Callback Function
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>When doing this to project has <code>Moq.4.16.1</code> and the namespace I used was <code>Moq.Language</code> but it was just resolved with <code>using Moq;</code>.</p>
+<h1 id="Why-Callback"><a href="#Why-Callback" class="headerlink" title="Why Callback?"></a>Why Callback?</h1><p>I was unit testing a command that runs a stored procedure for Dapper using DynamicParameters. The DynamicParameters are created privately inside the unit of work (the method Im testing).</p>
+<p>The stack is <code>MyController</code> -&gt; <code>IMyCommand</code> -&gt; <code>IDbUtility</code>. For the purpose of this post I dont look at <code>MyController</code>, it only gives some context.</p>
+<p>I needed to verify that <code>foo</code> and <code>bar</code> are set in the parameters in <code>MyCommand</code>.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyCommand</span> : <span class="title">IMyCommand</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">RunProcAsync</span>(<span class="params"><span class="built_in">string</span> foo, <span class="built_in">string</span> bar</span>)</span></span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">var</span> parameters = <span class="keyword">new</span> DynamicParameters();</span><br><span class="line">      parameters.Add(<span class="string">&quot;@foo&quot;</span>, foo);</span><br><span class="line">      parameters.Add(<span class="string">&quot;@bar&quot;</span>, bar);</span><br><span class="line"></span><br><span class="line">      _dbUtility.RunProc(<span class="string">&quot;MySweetProc&quot;</span>, parameters);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>As <code>_dbUtility</code> is injected into the constructor of my class under test, I was mocking it. So in the test I could use a <code>.CallBack()</code> to reach in and inspect the parameters.</p>
+<h1 id="Test-Structure"><a href="#Test-Structure" class="headerlink" title="Test Structure"></a>Test Structure</h1><p>After calling <code>.Setup()</code> to tell Moq which method and overload, I called <code>.Callback</code>. From the docs:</p>
+<p><em>.Callback(…) Specifies a callback to invoke when the method is called that receives the original arguments</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Arrange</span></span><br><span class="line"><span class="keyword">var</span> foo = <span class="string">&quot;fooValue&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> bar = <span class="string">&quot;barValue&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> dbUtilityMock = <span class="keyword">new</span> Mock&lt;IDbUtility&gt;();</span><br><span class="line"><span class="keyword">var</span> capturedDynamicParameters = <span class="keyword">new</span> DynamicParameters();</span><br><span class="line"></span><br><span class="line">dbUtilityMock</span><br><span class="line">   .Setup(x =&gt; x.RunProc(procname, It.IsAny&lt;DynamicParameters&gt;()))</span><br><span class="line">   .Callback((<span class="built_in">string</span> storedProcedureName, DynamicParameters parameters) =&gt;</span><br><span class="line">   &#123;</span><br><span class="line">      capturedDynamicParameters = parameters;</span><br><span class="line">   &#125;);</span><br><span class="line"></span><br><span class="line">IMyCommand classUndertest = <span class="keyword">new</span> MyCommand(databaseUtil.Object);</span><br></pre></td></tr></table></figure>
+
+<p>So then all I needed to do was call the unit of work and then check what was captured as <code>capturedDynamicParameters</code></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Act</span></span><br><span class="line"><span class="keyword">await</span> classUndertest.RunProcAsync(foo, bar);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Assert</span></span><br><span class="line">_databaseUtil.Verify(x =&gt; x.RunProc(</span><br><span class="line">   <span class="string">&quot;MySweetProc&quot;</span>,</span><br><span class="line">   It.IsAny&lt;DynamicParameters&gt;()), Times.Once);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> parametersLookup = capturedDynamicParameters <span class="keyword">as</span> SqlMapper.IParameterLookup;</span><br><span class="line">Assert.Equal(parametersLookup[<span class="string">&quot;foo&quot;</span>], foo);</span><br><span class="line">Assert.Equal(parametersLookup[<span class="string">&quot;bar&quot;</span>], bar);</span><br></pre></td></tr></table></figure>
+
+<p>I’ve used this <code>.Callback()</code> on the past for <a href="/2021/12/testing-with-cancellation-token/">CancellationToken</a>.</p>
+<p>Easy!</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/moq/moq/wiki/Quickstart#callbacks">https://github.com/moq/moq/wiki/Quickstart#callbacks</a></li>
+<li><a target="_blank" rel="noopener" href="https://documentation.help/Moq/6005E2B1.htm">https://documentation.help/Moq/6005E2B1.htm</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2023/09/moq-language-callback/" data-id="clmqxk2w80000lwuh0c043uy7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocking/" rel="tag">mocking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/" rel="tag">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/09/c-sharp-new-project/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">C# New Project</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/09/moq-language-callback/">Moq.Langauge Callback Function</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/c-sharp-new-project/">C# New Project</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/unit-test-lazy-loaded-properties/">Unit Test Lazy Loaded Properties</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/rosetta-solution-design-ordering-system/">Solution Design - Ordering System</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/git-hooks-commit-example/">Git Hooks - Commit Example</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.45px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.27px;">food</a> <a href="/tags/git/" style="font-size: 11.82px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 13.64px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.55px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.45px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
