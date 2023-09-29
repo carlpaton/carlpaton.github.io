@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="I recently did some work on a new ASP.NET Web API project using .Net Core. While  doing research and development I could see some themes and patterns on What makes a great API and decided to collate t">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-11-29T11:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-15T21:59:01.434Z">
+<meta property="article:modified_time" content="2023-09-29T03:02:12.304Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="wip">
 <meta property="article:tag" content="web api">
@@ -194,15 +194,34 @@ ga('send', 'pageview');
 <li>returns <code>404</code> and no body when nothing was found </li>
 <li>should not have a payload, if you are in a situation where you need to send heaps of data as encoded query parameters then rather use a POST with content body</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /users/12345 HTTP/1.1</span><br><span class="line">Host: example.com</span><br><span class="line"></span><br><span class="line">GET /users?name=John%20Doe HTTP/1.1</span><br><span class="line">Host: example.com</span><br></pre></td></tr></table></figure>
+<details>
+  <summary>GET Examples</summary>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET /users/12345                ~ filter in user 12345</span><br><span class="line"></span><br><span class="line">RESPONSE</span><br><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: 1,</span><br><span class="line">  &quot;name&quot;: &quot;Jane Doe&quot;,</span><br><span class="line">  &quot;email&quot;: &quot;john.doe@example.com&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GET /users?name=John%20Doe      ~ filter by name, this would return an array</span><br><span class="line"></span><br><span class="line">RESPONSE</span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;id&quot;: 1,</span><br><span class="line">    &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">    &quot;email&quot;: &quot;john.doe@example.com&quot;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">GET /users                      ~ get all users</span><br><span class="line">                                ~ pagination would be sensible. ie: return 10 users at page 1</span><br><span class="line"></span><br><span class="line">RESPONSE</span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;id&quot;: 1,</span><br><span class="line">    &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">    &quot;email&quot;: &quot;john.doe@example.com&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;id&quot;: 2,</span><br><span class="line">    &quot;name&quot;: &quot;Jane Doe&quot;,</span><br><span class="line">    &quot;email&quot;: &quot;jane.doe@example.com&quot;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">GET /users                     ~ example of how pagination can be added </span><br><span class="line">                               ~ with new props `items` and `links`</span><br><span class="line"></span><br><span class="line">RESPONSE</span><br><span class="line">&#123;</span><br><span class="line">  &quot;items&quot;: [</span><br><span class="line">    ...</span><br><span class="line">  ],</span><br><span class="line">  &quot;links&quot;: &#123;</span><br><span class="line">    &quot;next&quot;: &quot;/users?page=2&quot;,</span><br><span class="line">    &quot;previous&quot;: &quot;/users?page=1&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+<br/>
 
 <p><strong>PUT</strong></p>
 <ul>
-<li>used to do a resource update, complete content is provided</li>
+<li>used to do a resource update, complete content is provided </li>
+<li>sometimes partial resource is provided (here you should consider a PATCH)</li>
 <li>returns <code>200</code> if the update was completed and no body, generally rather return <code>204</code> No Content</li>
 <li>returns <code>201</code> if something was created (here you should consider a POST)</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PUT /users/12345 HTTP/1.1</span><br><span class="line">Host: example.com</span><br><span class="line">Content-Type: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: 12345,</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;email&quot;: &quot;john.doe@example.com&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<details>
+  <summary>PUT Examples</summary>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">PUT /users/12345</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Body:</span><br><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: 12345,</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;email&quot;: &quot;john.doe@example.com&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">RESPONSE (if you return a body)</span><br><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: 12345,</span><br><span class="line">  &quot;name&quot;: &quot;Jane Doe&quot;,</span><br><span class="line">  &quot;email&quot;: &quot;john.doe@example.com&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+<br/>
 
 <p>This request will replace the entire user resource with the new data.</p>
 <p><strong>POST</strong></p>
@@ -213,15 +232,26 @@ ga('send', 'pageview');
 <li>returns <code>202</code> if the request was accepted and will be completed later</li>
 <li>returns <code>204</code> with <code>Location</code> header if the resource is not returned</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">POST /users HTTP/1.1</span><br><span class="line">Host: example.com</span><br><span class="line">Content-Type: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;email&quot;: &quot;john.doe@example.com&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<details>
+  <summary>POST Examples</summary>
 
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">POST /users</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Body:</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;email&quot;: &quot;john.doe@example.com&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">RESPONSE (if you return a body)</span><br><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: 12346,</span><br><span class="line">  &quot;name&quot;: &quot;Jane Doe&quot;,</span><br><span class="line">  &quot;email&quot;: &quot;jane.doe@example.com&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+<br/>
 
 <p><strong>PATCH</strong></p>
 <ul>
 <li>used to do a resource update, partial content is provided</li>
 </ul>
 <p>The main difference between HTTP PATCH and PUT is that PATCH is used for partial updates to a resource, while PUT is used for full updates. This means that with PATCH, you can send only the data that you want to update, without having to send the entire resource again. With PUT, you must send the entire resource, even if you only want to update a small part of it.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PATCH /users/12345 HTTP/1.1</span><br><span class="line">Host: example.com</span><br><span class="line">Content-Type: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<details>
+  <summary>PATCH Examples</summary>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">PATCH /users/12345</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Body:</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">RESPONSE (if you return a body)</span><br><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: 12345,</span><br><span class="line">  &quot;name&quot;: &quot;Jane Doe&quot;,</span><br><span class="line">  &quot;email&quot;: &quot;john.doe@example.com&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+<br/>
 
 <p>This request will update the user’s name to “John Doe”, without modifying any of their other data.</p>
 <p><strong>DELETE</strong></p>
@@ -232,20 +262,40 @@ ga('send', 'pageview');
 <li>returns <code>404</code> if the resource you wanted to delete was not found</li>
 <li>returns <code>410</code> if the resource was already deleted</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /users/12345 HTTP/1.1</span><br><span class="line">Host: example.com</span><br></pre></td></tr></table></figure>
+<details>
+  <summary>DELETE Examples</summary>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DELETE /users/12345</span><br><span class="line"></span><br><span class="line">RESPONSE (if you are not returning a body)</span><br><span class="line">HTTP/1.1 204 No Content</span><br></pre></td></tr></table></figure>
+
+</details>
+<br/>
 
 <p><strong>HEAD</strong></p>
 <ul>
-<li>used to retrieve header information</li>
+<li>used to retrieve header information, often used by web crawlers to check the availability and last modification date of resources before downloading them</li>
 <li>its the same as a GET but only returns header and never a body</li>
 </ul>
+<details>
+  <summary>HEAD Examples</summary>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HEAD /index.html</span><br><span class="line"></span><br><span class="line">RESPONSE</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Last-Modified: Tue, 29 Aug 2023 15:55:18 GMT</span><br><span class="line">Content-Length: 1024</span><br></pre></td></tr></table></figure>
+
+</details>
+<br/>
+
 <p><strong>OPTIONS</strong></p>
 <ul>
 <li>used to inspect the avalible operations (so the HTTP verbs) of a given endpoint</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OPTIONS /users HTTP/1.1</span><br><span class="line">Host: example.com</span><br></pre></td></tr></table></figure>
+<details>
+  <summary>OPTIONS Examples</summary>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OPTIONS /users HTTP/1.1</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS</span><br></pre></td></tr></table></figure>
+
+</details>
+<br/>
 
 <h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><ul>
 <li>Allow to scale horizontally by using Docker containers and orchestration software like <a target="_blank" rel="noopener" href="https://aws.amazon.com/kubernetes">Kubernetes</a></li>
