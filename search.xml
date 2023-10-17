@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>Spaghetti Mince</title>
+      <link href="/2023/10/spaghetti-mince/"/>
+      <url>/2023/10/spaghetti-mince/</url>
+      
+        <content type="html"><![CDATA[<p><img src="/d/spaghetti-mince/spaghetti-mince.jpg" alt="Spaghetti Mince"></p><p><strong>Cooking time :</strong> Mince about 20 minutes, spaghetti about 25.</p><h3 id="Ingredients"><a href="#Ingredients" class="headerlink" title="Ingredients"></a>Ingredients</h3><ul><li>Onions (2 medium) </li><li>Mushrooms (half punnet)</li><li>Carrots (2 large)</li><li>Croquettes (Cucumber looking things, 3 or 4 of)</li><li>Spaghetti (about half the box, we like the vegan one)</li><li>Tim tomatoes (1)</li><li>Chicken stock cube (1)</li><li>Milk (half cup)</li></ul><h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><ul><li>Chop onions, mushrooms</li><li>Peel and grate carrots</li><li>Fry the onions and once they transulsant add the mince and brown that.</li><li>Add some spices to taste</li><li>Add the carrots and croquettes. And let cook for 2 min add a can of tin tomatoes</li><li>Add the chicken stock cube to a coffee cup with hot water and let it melt. Then add that to the mixture.</li><li>Pour half a cup of milk in and let it cook down. </li><li>Add more spices and some tomatoe paste with a teaspoon of sugar to taste (it may need more sugar)</li><li>Boil spaghetti with water and salt</li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> food </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Garbage Collection</title>
+      <link href="/2023/09/garbage-collection/"/>
+      <url>/2023/09/garbage-collection/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>Garbage collection (GC) is a memory recovery feature built into the framework. It runs in its own thread from your application.</p></blockquote><p>Also see <a href="/2018/06/value-type-vs-reference-type/">Value Type vs Reference Type</a></p><h2 id="Finalizer"><a href="#Finalizer" class="headerlink" title="Finalizer"></a>Finalizer</h2><p>A method that is call at the moment that an object is being garbage collected. Ive never had a use case for this besides demo code like this to keep track and show that GC is happening.</p><p>Here <code>~Foo</code> is the finalizer.</p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Public <span class="keyword">class</span> <span class="title">Foo</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Prop &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    ~Foo()</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;GC: <span class="subst">&#123;Name&#125;</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>You can instruct GC to cleanup but this is not something Ive ever needed to manually do, instead I trust that the GC Engine knows the suitable time to take out the trash. Normally when the runtime system is starting to run short of memory :)</p><p>Example instance code</p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> fooInstance = <span class="keyword">new</span> Foo() &#123; Prop = <span class="string">&quot;I was cleaned up&quot;</span> &#125;;</span><br><span class="line"></span><br><span class="line">    GC.Collect();</span><br><span class="line">    GC.WaitForPendingFinalizers();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>This wont output anything.</p><p>The line <code>GC.Collect()</code> will look for all of the local stack and static variables in our entire application. Anything referenced on the heap, from the stack variable that is reachable is marked as <code>reachable</code>. So that wont be garbage collected as its in scope when we called <code>GC.Collect()</code></p><p>So if we change the code as follows</p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    CreateFoo();</span><br><span class="line">    GC.Collect();</span><br><span class="line">    GC.WaitForPendingFinalizers();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">CreateFoo</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> fooInstance = <span class="keyword">new</span> Foo() &#123; Prop = <span class="string">&quot;I was cleaned up&quot;</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>This will output: <code>GC: I was cleaned up</code> as <code>fooInstance</code> is out of scope when we run GC so all memory will be re-claimed.</p><h2 id="Generations"><a href="#Generations" class="headerlink" title="Generations"></a>Generations</h2><p>In .Net there are 3 <a href="/2018/06/value-type-vs-reference-type/">heaps</a>, its called a 3 generational garbage collection system. Note that there is also a large object heap (anything greater than 85 kilobytes)</p><ul><li><strong>Generation 0</strong> (short lived objects where GC runs more often)</li></ul><p>Initially this is where a reference object is allocated. It stores the objects like a stack ontop of each other and has a heap pointer for the next avalible space. When marking happens, anything that is reachable is moved to <code>Generation 1</code>. So now the pointer is moved to 0 and new objects coming in simply replace the existing ones and the stack start again. This means there is no heap fragmentation. Additionally this gives a performance gain.</p><ul><li><strong>Generation 1</strong> (collected less frequently than Gen 0)</li></ul><p>These are objects that were marked as reachable and proved to have a reasonably long lifetime. When <code>Generation 1</code> starts to get full the exact same process as above is performed and anything marked as reachable moves to <code>Generation 2</code></p><ul><li><strong>Generation 2</strong> (collected less frequently than Gen 1)</li></ul><p>These objects have a really long lifetime and are likely to be around for the entire lifetime of the application. When <code>Generation 2</code> starts to get full, the framework will start to compact the heap. This just means that unreachable objects are removed, this is a slower process but should not happen much if at all. (thats NOT a challange to write bad code!)</p><ul><li><strong>Large Object Heap</strong> (collected less frequently)</li></ul><p>These are for large objects (anything over 85 kilobytes) and are assumed to be long lived based on their size. <code>Large Object Heap</code> behaves on its own and is like the <code>Generation 2</code> heap so it will instead be compacted when GC happens.</p><p>These large objects will generally be things like Lists/arrays.</p><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul><li><a href="https://www.youtube.com/watch?v=BeuNvhd1L_g">.NET Core Garbage Collection - Coding Tutorials</a></li><li><a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals">https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> c# </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Moq.Langauge Callback Function</title>
       <link href="/2023/09/moq-language-callback/"/>
       <url>/2023/09/moq-language-callback/</url>
@@ -260,7 +298,7 @@
       <link href="/2023/06/banana-bread-muffins/"/>
       <url>/2023/06/banana-bread-muffins/</url>
       
-        <content type="html"><![CDATA[<p><img src="/d/banana-bread-muffins/banana-bread-muffins01.jpg" alt="Banana Bread Muffins"></p><p><strong>Baking time :</strong> 20 minutes or until brown.</p><h3 id="Ingredients"><a href="#Ingredients" class="headerlink" title="Ingredients"></a>Ingredients</h3><ul><li>2 or 3 mashed brown bananas</li><li>0.3 cup melted butter (75 grams)</li><li>0.5 to 1 cups of brown sugar</li><li>1 egg</li><li>1 TSP baking soda</li><li>1 TSP vanilla essence</li><li>1 pinch of salt</li><li>1.5 cups of flower</li></ul><p>Optional</p><ul><li>White/brown chocolate flakes</li><li>Raw peacanuts</li></ul><h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><ul><li>Preheat oven to 180 degrees</li><li>Melt the butter in a bowl</li><li>Whisk the egg and add to the bowl</li><li>Mash the bananas and add them to the bowl</li><li>Add the rest of the ingredients (plus optional if you added)</li><li>Mix together, dont over mix</li><li>Place a little rice in the base of the muffin pans</li><li>Pop about 2/3 mixture in paper cupcake (makes about 15)</li><li>Bake for 20 minutes or until brown (test poke with a toothpick, if it comes out clean its cooked)</li></ul><p><img src="/d/banana-bread-muffins/banana-bread-muffins02.jpg" alt="Banana Bread Muffins"></p>]]></content>
+        <content type="html"><![CDATA[<p><img src="/d/banana-bread-muffins/banana-bread-muffins01.jpg" alt="Banana Bread Muffins"></p><p><strong>Baking time :</strong> 20 minutes or until brown.</p><h3 id="Ingredients"><a href="#Ingredients" class="headerlink" title="Ingredients"></a>Ingredients</h3><ul><li>2 or 3 mashed brown bananas</li><li>0.3 cup melted butter (75 grams)</li><li>0.5 to 1 cups of brown sugar</li><li>1 egg</li><li>1 TSP baking soda</li><li>1 TSP vanilla essence</li><li>1 pinch of salt</li><li>1.5 cups of flour</li></ul><p>Optional</p><ul><li>White/brown chocolate flakes</li><li>Raw peacanuts</li></ul><h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><ul><li>Preheat oven to 180 degrees</li><li>Melt the butter in a bowl</li><li>Whisk the egg and add to the bowl</li><li>Mash the bananas and add them to the bowl</li><li>Add the rest of the ingredients (plus optional if you added)</li><li>Mix together, dont over mix</li><li>Place a little rice in the base of the muffin pans</li><li>Pop about 2/3 mixture in paper cupcake (makes about 15)</li><li>Bake for 20 minutes or until brown (test poke with a toothpick, if it comes out clean its cooked)</li></ul><p><img src="/d/banana-bread-muffins/banana-bread-muffins02.jpg" alt="Banana Bread Muffins"></p>]]></content>
       
       
       
@@ -6957,8 +6995,6 @@
         <tags>
             
             <tag> c# </tag>
-            
-            <tag> patterns principles </tag>
             
         </tags>
       
