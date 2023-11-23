@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>SQL Change Data Capture - CDC | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Change data capture utilizes the SQL Server Agent to log insertions, updates, and deletions occurring in a table. So, it makes these data changes accessible to be easily consumed using a relational f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL Change Data Capture - CDC">
+<meta property="og:url" content="https://carlpaton.github.io/2023/11/sql-change-data-capture-cdc/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Change data capture utilizes the SQL Server Agent to log insertions, updates, and deletions occurring in a table. So, it makes these data changes accessible to be easily consumed using a relational f">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/sql-change-data-capture-cdc/databasename-in-object-explorer.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/sql-change-data-capture-cdc/databasename-owner.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/sql-change-data-capture-cdc/table-changes.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/sql-change-data-capture-cdc/cdc-jobs.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/sql-change-data-capture-cdc/person-is-being-tracked.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/sql-change-data-capture-cdc/empty-change-table.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/sql-change-data-capture-cdc/insert-changes.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/sql-change-data-capture-cdc/update-changes.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/sql-change-data-capture-cdc/delete-changes.jpg">
+<meta property="article:published_time" content="2023-11-23T11:00:00.000Z">
+<meta property="article:modified_time" content="2023-11-23T18:05:28.945Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="sql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/sql-change-data-capture-cdc/databasename-in-object-explorer.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-sql-change-data-capture-cdc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/11/sql-change-data-capture-cdc/" class="article-date">
+  <time datetime="2023-11-23T11:00:00.000Z" itemprop="datePublished">2023-Nov</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SQL Change Data Capture - CDC
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Change data capture utilizes the SQL Server Agent to log insertions, updates, and deletions occurring in a table. So, it makes these data changes accessible to be easily consumed using a relational format. - learn.microsoft.com</p>
+</blockquote>
+<p>This is useful when data from different databases is sucked up into a data lake, this way we can easily keep the data lake current with changes we care about.</p>
+<h2 id="Simple-POC"><a href="#Simple-POC" class="headerlink" title="Simple POC"></a>Simple POC</h2><p>You can use sample databases from Microsoft like <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure">AdventureWorks</a> or <a target="_blank" rel="noopener" href="https://github.com/Microsoft/sql-server-samples/tree/master/samples/databases/northwind-pubs">Northwind</a> or you can just invent your own. For simplicity and reasons of being a nerd I did the latter.</p>
+<p>A. Create a container for the SQL Server with settings ready for CDC</p>
+<details>
+  <summary>Local Docker SQL Container</summary>
+
+<ol>
+<li>Spin up a <a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop/">Docker</a> <a target="_blank" rel="noopener" href="https://hub.docker.com/_/microsoft-mssql-server">SQL Container</a>. This will start the container with Product ID (PID) as Developer Edition.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name cdc-container -e &quot;ACCEPT_EULA=Y&quot; -e &quot;MSSQL_SA_PASSWORD=Password!&quot; -e MSSQL_AGENT_ENABLED=true -p 5901:1433 -d mcr.microsoft.com/mssql/server:2019-latest</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>--name cdc-container</code> names the container, else you will get a <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/run/#container-identification">random name like <code>evil_ptolemy</code></a></li>
+<li><code>-e &quot;ACCEPT_EULA=Y&quot; -e &quot;MSSQL_SA_PASSWORD=Password!&quot; -e MSSQL_AGENT_ENABLED=true</code> are environmental variables, <code>MSSQL_AGENT_ENABLED</code> is important as this agent runs the CDC jobs</li>
+<li><code>-p 5901:1433</code> is the port, so 5001 is your machine which maps to 1433 in the container</li>
+<li> <code>-d</code> means run detached from the console</li>
+</ul>
+<ol start="2">
+<li>Connect to the instance from <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms">SQL Server Management Studio</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Server Name: localhost,5901</span><br><span class="line">Login: sa</span><br><span class="line">Password: Password!</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Create the sample database and table, I adapted these from <a target="_blank" rel="noopener" href="https://www.w3schools.com/sql/sql_create_table.asp">w3schools</a>. The table needs a primary key for CDC to track on.</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> DATABASE databasename;</span><br><span class="line"></span><br><span class="line">USE databasename;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> person (</span><br><span class="line">    id <span class="type">int</span> <span class="keyword">IDENTITY</span>(<span class="number">1</span>,<span class="number">1</span>) <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    last_name <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">    first_name <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">    address <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">    city <span class="type">varchar</span>(<span class="number">255</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>You should now see the database in the object explorer:</p>
+<p><img src="/d/sql-change-data-capture-cdc/databasename-in-object-explorer.jpg" alt="databasename in object explorer"></p>
+</details>
+
+<p>B. Confirgure the SQL database to track CDC changes</p>
+<details>
+  <summary>Setup CDC</summary>
+
+<ol>
+<li>The ownership of the table should be <code>sa</code>, if you restored a sample database you will need to run <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/sql/t-sql/statements/alter-authorization-transact-sql">ALTER AUTHORIZATION</a> before verifying the owner with the SQL below</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT d.name, d.owner_sid, sl.name</span><br><span class="line">FROM sys.databases AS d</span><br><span class="line">JOIN sys.sql_logins AS sl</span><br><span class="line">ON d.owner_sid = sl.sid;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/d/sql-change-data-capture-cdc/databasename-owner.jpg" alt="databasename owner"></p>
+<ol start="2">
+<li>Enable tracking changes, you can also disable with the commented out procedure below it.</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">EXEC</span> sys.sp_cdc_enable_db</span><br><span class="line"><span class="comment">--EXEC sys.sp_cdc_disable_db</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Verify table changes now exists, it will be blank but this means the above was successful. The <code>cdc</code> schema tables are surfaced under <code>System Tables</code></li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> cdc.change_tables</span><br></pre></td></tr></table></figure>
+
+<p><img src="/d/sql-change-data-capture-cdc/table-changes.jpg" alt="table changes"></p>
+<ol start="4">
+<li>Enable changes for the table <code>person</code>. </li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">EXEC</span> sys.sp_cdc_enable_table</span><br><span class="line"><span class="variable">@source_schema</span> <span class="operator">=</span> N<span class="string">&#x27;dbo&#x27;</span></span><br><span class="line">, <span class="variable">@source_name</span> <span class="operator">=</span> N<span class="string">&#x27;person&#x27;</span></span><br><span class="line">, <span class="variable">@role_name</span> <span class="operator">=</span> <span class="keyword">NULL</span></span><br><span class="line"><span class="comment">--  , @capture_instance = N&#x27;foo_person_changes&#x27;</span></span><br><span class="line">, <span class="variable">@capture_instance</span> <span class="operator">=</span> <span class="keyword">NULL</span></span><br><span class="line">, <span class="variable">@supports_net_changes</span> <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">, <span class="variable">@captured_column_list</span> <span class="operator">=</span> N<span class="string">&#x27;id, last_name, first_name&#x27;</span></span><br><span class="line">, <span class="variable">@filegroup_name</span> <span class="operator">=</span> N<span class="string">&#x27;PRIMARY&#x27;</span>;</span><br><span class="line">GO</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>capture_instance</code> is the new table name. NULL will set the default based on the params example <code>cdc.dbo_person_CT</code>. You could set this to be <code>foo_person_changes_CT</code> (the <code>_CT</code> is always suffixed by default)</li>
+<li><code>supports_net_changes</code> is for when the column changes frequently, so only capture the net change (ie the last one)</li>
+<li><code>captured_column_list</code> these are column you want to track, you have to include the primary key</li>
+</ul>
+<p>This will take a few seconds to complete as its creating jobs. The <code>capture</code> job captures the data as it changes from the log file. The <code>cleanup</code> job purges the captured data, it will only keep it for 3 days by default. You can change this with <code>@retention=</code> which needs to be in minutes.</p>
+<p><img src="/d/sql-change-data-capture-cdc/cdc-jobs.jpg" alt="cdc jobs"></p>
+<p>If you want to disable the table you can use this SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">EXEC</span> sys.sp_cdc_disable_table</span><br><span class="line"><span class="variable">@source_schema</span> <span class="operator">=</span> N<span class="string">&#x27;dbo&#x27;</span></span><br><span class="line">, <span class="variable">@source_name</span> <span class="operator">=</span> N<span class="string">&#x27;person&#x27;</span></span><br><span class="line">, <span class="variable">@capture_instance</span> <span class="operator">=</span> N<span class="string">&#x27;dbo_person&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>Checking the table changes should now surface that <code>person</code> is being tracked</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> cdc.change_tables</span><br></pre></td></tr></table></figure>
+
+<p><img src="/d/sql-change-data-capture-cdc/person-is-being-tracked.jpg" alt="person is being tracked"></p>
+<ol start="6">
+<li>Now query the change table, it should be empty</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> cdc.dbo_person_CT</span><br></pre></td></tr></table></figure>
+
+<p><img src="/d/sql-change-data-capture-cdc/empty-change-table.jpg" alt="empty change table"></p>
+<ol start="7">
+<li>Knowing what each change table column is used for helps understand the data when quering it</li>
+</ol>
+<ul>
+<li><code>_$start_lsn</code> commit log sequence number (LSN) within the same Transaction</li>
+<li><code>_$seqval</code> order changes within a transaction</li>
+<li><code>_$operation</code> 1=delete, 2=insert,3=updatebefore, 4=updateafter</li>
+<li><code>_$update_mask</code> for insert and delete all bits are set, for update bits set correspond to columns changed</li>
+</ul>
+</details>
+
+<p>C. Test and view the CDC changes </p>
+<details>
+  <summary>Test CDC</summary>
+
+<p>Now we can finally test the tracked changed</p>
+<ol>
+<li>INSERT some data, this is <code>_$operation</code> 2</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> databasename.dbo.person </span><br><span class="line">(last_name,first_name,address,city)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">(<span class="string">&#x27;paton&#x27;</span>, <span class="string">&#x27;carl&#x27;</span>, <span class="string">&#x27;10 road name&#x27;</span>, <span class="string">&#x27;durban&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>UPDATE the data, this is <code>_$operation</code> 3 and 4</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> databasename.dbo.person</span><br><span class="line"><span class="keyword">SET</span> last_name <span class="operator">=</span> <span class="string">&#x27;foo&#x27;</span>, first_name <span class="operator">=</span> <span class="string">&#x27;bar&#x27;</span></span><br><span class="line"><span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>DELETE the data, this is <code>_$operation</code> 1</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> databasename.dbo.person </span><br><span class="line"><span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Query the changes</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- INSERTS</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> cdc.dbo_person_CT <span class="keyword">WHERE</span> __$operation <span class="operator">=</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- UPDATE</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> cdc.dbo_person_CT <span class="keyword">WHERE</span> __$operation <span class="keyword">IN</span> (<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- DELETE</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> cdc.dbo_person_CT <span class="keyword">WHERE</span> __$operation <span class="operator">=</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>Here you can see for <code>__$operation = 2</code> new data was created</p>
+<p><img src="/d/sql-change-data-capture-cdc/insert-changes.jpg" alt="insert changes"></p>
+<p>For <code>__$operation IN (3,4)</code> we have the update before (3) and update after (4) and for both <code>__$seqval</code> is the same meaning it was in the same transaction</p>
+<p><img src="/d/sql-change-data-capture-cdc/update-changes.jpg" alt="update changes"></p>
+<p>For <code>__$operation = 1</code> new data was deleted</p>
+<p><img src="/d/sql-change-data-capture-cdc/delete-changes.jpg" alt="delete changes"></p>
+</details>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server">https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=IJbAhfFRHdA">https://www.youtube.com/watch?v=IJbAhfFRHdA</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2023/11/sql-change-data-capture-cdc/" data-id="clpbi9dx10004zwuhc7qvbp8f" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/" rel="tag">sql</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/10/spaghetti-mince/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spaghetti Mince</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/11/sql-change-data-capture-cdc/">SQL Change Data Capture - CDC</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/spaghetti-mince/">Spaghetti Mince</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/garbage-collection/">Garbage Collection</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/moq-language-callback/">Moq.Langauge Callback Function</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/c-sharp-new-project/">C# New Project</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.45px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/authentication/" style="font-size: 14.09px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.82px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.36px;">cad</a> <a href="/tags/cam/" style="font-size: 10.45px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 12.27px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 10.45px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3-printing/" style="font-size: 10.45px;">d3 printing</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.91px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.73px;">food</a> <a href="/tags/git/" style="font-size: 11.82px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 10.91px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/javascript/" style="font-size: 12.27px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 13.64px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.73px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.36px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 12.73px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.36px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.55px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.18px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.91px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.45px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.64px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
