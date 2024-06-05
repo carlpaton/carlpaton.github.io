@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>Tarmo5 3d Printed RC Car</title>
+      <link href="/2024/06/tarmo5-3d-printed-rc-car/"/>
+      <url>/2024/06/tarmo5-3d-printed-rc-car/</url>
+      
+        <content type="html"><![CDATA[<p>Thought this would be a fun project to build with my son, shout out to <a href="https://www.youtube.com/@EngineeringNS">EngineeringNS</a> for this open source projet.</p><h2 id="3D-Printed-Parts"><a href="#3D-Printed-Parts" class="headerlink" title="3D Printed Parts"></a>3D Printed Parts</h2><p>All the <a href="https://www.printables.com/@CarlPaton_1994848/collections/1490005">parts are here</a> with instructions <a href="https://docs.google.com/spreadsheets/d/1C7DmwJFF867uO1p4XnHtL0gA5qFRWjidJHE4BQigMw0/edit#gid=0">here copied from EngineeringNS</a></p><ul><li>PLA for the main body parts</li><li>ABS for the shock risors, control/swing arms to the wheels and gears</li><li>TPU (95A SHORE HARDNESS) for the shafts, bumpers and connectors</li></ul><p><img src="/d/tarmo5-3d-printed-rc-car/tarmo5-3d-printed.jpg" alt="RC Printer BOM"></p><h2 id="Bill-Of-Materials"><a href="#Bill-Of-Materials" class="headerlink" title="Bill Of Materials"></a>Bill Of Materials</h2><p>I listed them below but there is also a <a href="https://docs.google.com/spreadsheets/d/1-O0J67EAyh5Nz9dIrC9S_p4eQbkO4tZm0FXZRw8YPfQ/edit#gid=0">copy here from EngineeringNS</a></p><p>Electronics</p><ul><li><a href="https://www.aliexpress.com/item/1005006257408964.html">D3542 1450KV Brushless Outrunner</a> (its meant for a plane but clearly works)</li><li><a href="https://www.aliexpress.com/item/1005006176924038.html">Hobbywing 10BL120 Sensored 120A 2-3S Lipo Brushless ESC Speed Controller</a> (need to find a 4s)</li><li><a href="https://www.aliexpress.com/item/32631695994.html">PDI-6221MG 20KG Digital Servo</a></li></ul><p>Mechanical</p><ul><li><a href="https://www.aliexpress.com/item/1005005590988618.html">4 Wheels sets, between 100MM/120MM OD with 12mm Rim Drive Hex</a></li><li><a href="https://www.aliexpress.com/item/1005003731118967.html">6802RS Bearing 15x24x5mm</a></li><li><a href="https://www.aliexpress.com/item/1005004200587729.html">80mm Shock Absorber Oil Damper</a></li><li>6mm steel balls for CV Joints x18</li><li>M3*350 rod x3</li><li>M3*8 cap screws x6</li><li>M3*12 cap screws x5</li><li>M3*16 cap screws x9</li><li>M3 nylock nuts x7</li><li>M4 nylock nuts x5</li><li>M4 washers x5</li><li>M4*20 cap screws x23</li><li>M4*40 cap screws x24</li><li>M4*12 cap screws x6</li><li>M4*35 hex head screws x4 (hub drivers)</li><li>Main Drive Gear Adaptor, 5mm ID 11mm OD shank (Stop Collar Ring Positioner)</li><li>Super Lube 92003 Silicone Lubricating Grease with PTFE</li></ul><p>Radio Options</p><ul><li><a href="https://www.aliexpress.com/item/1005003546252718.html">FLYSKY FS-GT2B GT2B 2.4G 3CH Radio Transmitter</a></li><li><a href="https://www.aliexpress.com/item/1005006685228201.html">Flysky FS-GT3B 2.4G 3CH Radio Model Remote Control</a></li></ul><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul><li><a href="https://www.reddit.com/r/EngineeringNS/comments/zvellk/tarmo5/">Tarmo5 subreddit</a></li><li><a href="https://www.youtube.com/watch?v=r2UDc4A8huY">Tarmo5 3D Printed RC Car - Engineering Nonsense</a></li><li><a href="https://www.youtube.com/watch?v=heEsQMkIaAc">Tarmo5 Build, First Run and Initial Impressions - RC Printer</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> model airplanes </tag>
+            
+            <tag> 3d printing </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SQL Change Data Capture - CDC</title>
       <link href="/2023/11/sql-change-data-capture-cdc/"/>
       <url>/2023/11/sql-change-data-capture-cdc/</url>
@@ -464,7 +485,7 @@
       
         <tags>
             
-            <tag> d3 printing </tag>
+            <tag> 3d printing </tag>
             
         </tags>
       
@@ -1095,7 +1116,7 @@
       
         <tags>
             
-            <tag> d3 printing </tag>
+            <tag> 3d printing </tag>
             
         </tags>
       
