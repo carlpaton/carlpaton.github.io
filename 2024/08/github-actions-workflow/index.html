@@ -27,11 +27,15 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="I needed to understand the fundamentals to setup a GitHub Actions workflow, the links in the references explain the costs, Linux builds are the clear favorite. The workflow structure is: workflow -&amp;gt">
 <meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/github-actions-workflow/first-job.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/github-actions-workflow/first-job-steps.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/github-actions-workflow/first-job-steps-closer.jpg">
 <meta property="article:published_time" content="2024-08-23T12:00:00.000Z">
-<meta property="article:modified_time" content="2024-08-26T04:10:37.022Z">
+<meta property="article:modified_time" content="2024-08-26T04:27:53.706Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/github-actions-workflow/first-job.jpg">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -137,7 +141,7 @@ ga('send', 'pageview');
       
         <p>I needed to understand the fundamentals to setup a GitHub Actions workflow, the links in the references explain the costs, Linux builds are the clear favorite.</p>
 <p>The workflow structure is: <code>workflow</code> -&gt; <code>jobs</code> -&gt; <code>steps</code> -&gt; <code>run</code></p>
-<h2 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h2><p>This will build out a workflow that just checks the version of your developer sdk on the build agent.</p>
+<h2 id="Simple-version-check-workflow"><a href="#Simple-version-check-workflow" class="headerlink" title="Simple version check workflow"></a>Simple version check workflow</h2><p>This will build out a workflow that just checks the version of your developer sdk on the build agent.</p>
 <ol>
 <li>Create and clone a new repository, mine was <a target="_blank" rel="noopener" href="https://github.com/carlpaton/github-actions-workflow-demo">https://github.com/carlpaton/github-actions-workflow-demo</a></li>
 <li>Create a workflow as <code>.github/workflows/build.yml</code>, where build.yml can be named anything related to your workflow</li>
@@ -146,7 +150,20 @@ ga('send', 'pageview');
 
 <ol start="3">
 <li>Commit and push</li>
-<li>Inspect the workflow</li>
+<li>Inspect the workflow outcome for the commit by clicking the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/github-actions-workflow-demo/actions">actions tab</a></li>
+<li>Here I can see the jobs, following the demo I called it <code>first-job</code></li>
+</ol>
+<p><img src="/d/github-actions-workflow/first-job.jpg" alt="first-job"></p>
+<ol start="6">
+<li>Clicking <code>first-job</code> I can see the steps</li>
+</ol>
+<p><img src="/d/github-actions-workflow/first-job-steps.jpg" alt="first-job-steps"></p>
+<ol start="7">
+<li>On closer inspection I can see the machine it ran on was <code>Image: windows-2022</code> and the results of my version steps</li>
+</ol>
+<p><img src="/d/github-actions-workflow/first-job-steps-closer.jpg" alt="first-job-steps-closer"></p>
+<ol start="8">
+<li>This can then be adapted to perform more complex workflows</li>
 </ol>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=47zYGHwXPmE">Build your first GitHub Actions workflow</a></li>
