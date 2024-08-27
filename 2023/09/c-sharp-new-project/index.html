@@ -20,18 +20,17 @@ ga('send', 'pageview');
   
   <title>C# New Project | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP  Everytime I setup a new project, besides consideration on if I need microservice architecture or a good old monolithic application there are always simliar steps needed to get the project in a m">
+  <meta name="description" content="Everytime I setup a new project, besides consideration on if I need microservice architecture or a good old monolithic application there are always simliar steps needed to get the project in a maintai">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C# New Project">
 <meta property="og:url" content="https://carlpaton.github.io/2023/09/c-sharp-new-project/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP  Everytime I setup a new project, besides consideration on if I need microservice architecture or a good old monolithic application there are always simliar steps needed to get the project in a m">
+<meta property="og:description" content="Everytime I setup a new project, besides consideration on if I need microservice architecture or a good old monolithic application there are always simliar steps needed to get the project in a maintai">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-09-14T12:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-18T08:57:13.517Z">
+<meta property="article:modified_time" content="2024-08-27T08:50:32.677Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="c#">
-<meta property="article:tag" content="wip">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
@@ -136,12 +135,8 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p><a href="/2017/06/work-in-progress/">WIP</a></p>
-</blockquote>
-<p>Everytime I setup a new project, besides consideration on if I need <a href="/2020/07/microservice-architecture/">microservice architecture</a> or a good old <a href="/2019/12/web-application-architecture/">monolithic application</a> there are always simliar steps needed to get the project in a maintainable state.</p>
-<h2 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h2><p>Regardless of the architecture, anything new needs to run in a container. This is just defacto now days. I built a <a href="/2018/08/docker-compose-demo/">simple demo</a> a few years back which is still relavant.</p>
-<p>Today I’d add that compose locally should bring up a containerised local environment for everything your application needs to run.</p>
+        <p>Everytime I setup a new project, besides consideration on if I need <a href="/2020/07/microservice-architecture/">microservice architecture</a> or a good old <a href="/2019/12/web-application-architecture/">monolithic application</a> there are always simliar steps needed to get the project in a maintainable state.</p>
+<h2 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h2><p>Regardless of the architecture, anything new needs to run in a container. This is just defacto now days. I built a <a href="/2018/08/docker-compose-demo/">simple demo</a> a few years back which is still relavant. Today I’d add that compose locally should bring up a containerised local environment for everything your application needs to run.</p>
 <ul>
 <li>containerised database</li>
 <li>stubs of downstream internal dependencies, you can use tooling like <a href="/2021/05/wiremocks/">wiremocks (.Net)</a>, <a href="/2023/06/express-nodejs-mocking/">Express (Node)</a> or a simple <a href="/2022/02/json-server/">JSON Server</a></li>
@@ -180,8 +175,12 @@ ga('send', 'pageview');
 <li><a href="/2020/11/serilog/">Serilog</a></li>
 <li>App Insights</li>
 </ul>
-<h2 id="CI-CD-pipeline"><a href="#CI-CD-pipeline" class="headerlink" title="CI/CD pipeline"></a>CI/CD pipeline</h2><ul>
-<li>CI/CD pipeline for build &amp; tests</li>
+<h2 id="CI-CD-pipeline"><a href="#CI-CD-pipeline" class="headerlink" title="CI/CD pipeline"></a>CI/CD pipeline</h2><p>CI/CD pipeline for build &amp; tests</p>
+<ul>
+<li><a href="/2024/08/github-actions-workflow/">GitHub Actions is a good modern candidate</a></li>
+</ul>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=B9ZUJN1Juhk">Milan Jovanovic: Use These 4 Best Practices For Your .NET Project Setup</a></li>
 </ul>
 
       
@@ -190,7 +189,7 @@ ga('send', 'pageview');
       <a data-url="https://carlpaton.github.io/2023/09/c-sharp-new-project/" data-id="clmonshu20000wkuh1tsw7j0i" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c#</a></li></ul>
 
     </footer>
   </div>
