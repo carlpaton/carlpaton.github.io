@@ -20,18 +20,17 @@ ga('send', 'pageview');
   
   <title>Command and Query Responsibility Segregation (CQRS) | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP   Use Case: When applications change frequently, you can updated the Queries &amp; Commands without affecting each other. When the Application is read heavy, you can then split the database into">
+  <meta name="description" content="Use Case: When applications change frequently, you can updated the Queries &amp; Commands without affecting each other. When the Application is read heavy, you can then split the database into a Read">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Command and Query Responsibility Segregation (CQRS)">
 <meta property="og:url" content="https://carlpaton.github.io/2020/08/cqrs/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP   Use Case: When applications change frequently, you can updated the Queries &amp; Commands without affecting each other. When the Application is read heavy, you can then split the database into">
+<meta property="og:description" content="Use Case: When applications change frequently, you can updated the Queries &amp; Commands without affecting each other. When the Application is read heavy, you can then split the database into a Read">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-08-24T12:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-13T09:11:10.815Z">
+<meta property="article:modified_time" content="2024-08-27T08:33:10.059Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="patterns principles">
-<meta property="article:tag" content="wip">
 <meta property="article:tag" content="architecture">
 <meta name="twitter:card" content="summary">
   
@@ -138,9 +137,6 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p><a href="/2017/06/work-in-progress/">WIP</a></p>
-</blockquote>
-<blockquote>
 <p>Use Case: When applications change frequently, you can updated the Queries &amp; Commands without affecting each other. When the Application is read heavy, you can then split the database into a Read (performance tuned for read) and Write (Fully normalized)</p>
 </blockquote>
 <h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><blockquote>
@@ -167,7 +163,7 @@ ga('send', 'pageview');
 <td>Return data that we want to return encapsulated as an object.</td>
 </tr>
 </tbody></table>
-<h3 id="Net-5-C-9-amp-MediatR"><a href="#Net-5-C-9-amp-MediatR" class="headerlink" title=".Net 5 C# 9 &amp; MediatR"></a>.Net 5 C# 9 &amp; MediatR</h3><p>All of the examples below are from <a target="_blank" rel="noopener" href="https://github.com/carlpaton/CQRSInDotnetCore">Jonathan Williams: CQRS using C# and MediatR</a></p>
+<h3 id="MediatR"><a href="#MediatR" class="headerlink" title="MediatR"></a>MediatR</h3><p>All of the examples below are from <a target="_blank" rel="noopener" href="https://github.com/carlpaton/CQRSInDotnetCore">Jonathan Williams: CQRS using C# and MediatR</a> and use .Net 5 and C# 9 but the principle will carry to others. </p>
 <p>Dependancy libraries</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/MediatR/">MediatR 9.0.0</a></li>
@@ -201,7 +197,40 @@ ga('send', 'pageview');
 <p>Jonathan did a sweet video covering the code above.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/mdzEKGlH0_Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<h3 id="Net-3-1"><a href="#Net-3-1" class="headerlink" title=".Net 3.1"></a>.Net 3.1</h3><p>TODO</p>
+<h3 id="Hand-rolling"><a href="#Hand-rolling" class="headerlink" title="Hand rolling"></a>Hand rolling</h3><p>MediatR is great but I think its best to introduce a library when it solves a problem, you can just as easily hand roll CQRS into your application. Always group though by feature (what it actually does).</p>
+<ol>
+<li>Setup your folder structure, here my feature is “Files”</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">src/MySweetApp/Commands/Files</span><br><span class="line">src/MySweetApp/Queries/Files</span><br></pre></td></tr></table></figure>
+
+<p>The steps going forward are the same for Commands (ie: go do something, could be creating a resource) and Queries (ie: go fetch something), so I will just focus on a Command</p>
+<ol start="2">
+<li>Create your class files in <code>src/MySweetApp/Commands/Files</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DeleteFileCommand.cs</span><br><span class="line">DeleteFileCommandHandler.cs</span><br><span class="line">IDeleteFileCommandHandler.cs</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>The command encapsulates the data of the request and can be extended with properties, here its just a simple file id. Its best only construct the object though its constructor, so the public <code>FileId</code> only has a get.</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">MySweetApp.Commands.Files</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DeleteFileCommand</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">DeleteFileCommand</span>(<span class="params">Guid fileId</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            FileId = fileId;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> Guid FileId &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Define the interface, if you have many you could create an <code>Interfaces</code> folder, you can make <code>HandleAsync</code> more descriptive if you want, however the command should do only ONE thing and if you start adding more functionality you are not really thinking about <a href="/2018/05/single-responsibility-principle-srp/">Single Responsibility Principle (SRP)</a>.</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">MySweetApp.Commands.Files</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IDeleteFileCommandHandler</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">Task <span class="title">HandleAsync</span>(<span class="params">DeleteFileCommand command</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>Define the command itself</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MySweetApp.Commands.Files</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DeleteFileCommandHandler</span> : <span class="title">IDeleteFileCommandHandler</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> IFileRepository _fileRepository;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> IRequestContext _requestContext;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> IBlobRepository _blobRepository;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">DeleteFileCommandHandler</span>(<span class="params">IFileRepository fileRepository, IRequestContext requestContext, IBlobRepository blobRepository</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            _fileRepository = fileRepository;</span><br><span class="line">            _requestContext = requestContext;</span><br><span class="line">            _blobRepository = blobRepository;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">HandleAsync</span>(<span class="params">DeleteFileCommand command</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// find the file in fileRepository based on </span></span><br><span class="line">            <span class="comment">//    command.FileId</span></span><br><span class="line">            <span class="comment">//    _requestContext.Identifier ~ this is something the application knows about the user/app making the request, normally a tenant UUID</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// delete </span></span><br><span class="line">            <span class="comment">//    in _blobRepository</span></span><br><span class="line">            <span class="comment">//    in _fileRepository ~ some systems set a soft delete flag</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li><p>So then to consume inject <code>IDeleteFileCommandHandler</code> into your calling code, for me it was in the controller, create the <code>DeleteFileCommand</code> instance and call <code>HandleAsync</code>. This is then easily unit tested because you dont need to mock heaps of things.</p>
+</li>
+<li><p>You just need to wire up the DI resolution of DeleteFileCommandHandler to IDeleteFileCommandHandler, MediatR would have done that for you as a benifit. </p>
+</li>
+</ol>
+<p>The <code>DeleteFileCommand</code> above returned <code>NoContent();</code> but you could have a <code>CreateFileCommand</code> where it has more properties and returns the created file object, this would be a public API model (DTO)</p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs">https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs</a></li>
 <li><a target="_blank" rel="noopener" href="https://microservices.io/patterns/data/cqrs.html">https://microservices.io/patterns/data/cqrs.html</a></li>
@@ -214,7 +243,7 @@ ga('send', 'pageview');
       <a data-url="https://carlpaton.github.io/2020/08/cqrs/" data-id="cll98m8xt005mqouhbojabcp5" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/architecture/" rel="tag">architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/" rel="tag">patterns principles</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/architecture/" rel="tag">architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/patterns-principles/" rel="tag">patterns principles</a></li></ul>
 
     </footer>
   </div>
