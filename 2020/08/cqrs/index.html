@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="Use Case: When applications change frequently, you can updated the Queries &amp; Commands without affecting each other. When the Application is read heavy, you can then split the database into a Read">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-08-24T12:00:00.000Z">
-<meta property="article:modified_time" content="2024-08-27T08:33:10.059Z">
+<meta property="article:modified_time" content="2024-08-27T08:41:35.182Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="patterns principles">
 <meta property="article:tag" content="architecture">
@@ -231,6 +231,7 @@ ga('send', 'pageview');
 </li>
 </ol>
 <p>The <code>DeleteFileCommand</code> above returned <code>NoContent();</code> but you could have a <code>CreateFileCommand</code> where it has more properties and returns the created file object, this would be a public API model (DTO)</p>
+<p>Tests to enforce naming see <a href="/2019/06/unit-testing-with-xunit/">Enforce command handler naming</a></p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs">https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs</a></li>
 <li><a target="_blank" rel="noopener" href="https://microservices.io/patterns/data/cqrs.html">https://microservices.io/patterns/data/cqrs.html</a></li>
