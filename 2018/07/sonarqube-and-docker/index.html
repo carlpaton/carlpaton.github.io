@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="Sonarqube provides static code analysis, testing and continuous inspection. Also see Quality Assurance Tools  You can also have these validations as part of your IDE – https:&#x2F;&#x2F;www.sonarlint.org&#x2F;visual">
 <meta property="og:locale">
 <meta property="article:published_time" content="2018-07-19T00:08:24.000Z">
-<meta property="article:modified_time" content="2024-08-27T07:45:39.398Z">
+<meta property="article:modified_time" content="2024-08-28T09:03:47.509Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="static code analysis">
@@ -185,8 +185,6 @@ ga('send', 'pageview');
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet sonarscanner end /d:sonar.login=&quot;93292c24ba95f6dc5a9275ec169dd654a3382a2d&quot;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Exclusions"><a href="#Exclusions" class="headerlink" title="Exclusions"></a>Exclusions</h3><p>If you need to exclude a class from quality checks while you are dev/testing just add <code>[ExcludeFromCodeCoverage]</code></p>
-<p>Also see <a target="_blank" rel="noopener" href="https://docs.sonarsource.com/sonarqube/latest/project-administration/analysis-scope/">Analysis scope</a></p>
 <h2 id="Remote-Server"><a href="#Remote-Server" class="headerlink" title="Remote Server"></a>Remote Server</h2><p>A fully licenced sonar server can scan branches! Additionally if you want to have test reporting the test results can be sent to the server. (The actual test run is done on the Team City agent)</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># --- Sonarscanner begin ---</span><br><span class="line">WORKDIR /code/project/My.Worker</span><br><span class="line">RUN dotnet sonarscanner begin \</span><br><span class="line">    /k:$PROJECT_ID \</span><br><span class="line">    /n:&quot;[Prefix] $PROJECT_NAME&quot; \</span><br><span class="line">    /v:$BUILD_NUMBER \</span><br><span class="line">    /d:sonar.host.url=$SONAR_HOST_URL \</span><br><span class="line">    /d:sonar.login=$SONAR_LOGIN \</span><br><span class="line">    /d:sonar.password=$SONAR_PASSWORD \</span><br><span class="line">    /d:sonar.cs.opencover.reportsPaths=&quot;../My.Worker.Tests.Unit/opencover-report.xml&quot; \</span><br><span class="line">    /d:sonar.cs.xunit.reportsPaths=&quot;../My.Worker.Tests.Unit/xunit-report.xml&quot; \</span><br><span class="line">    $SONAR_PR_BRANCH $SONAR_PR_KEY</span><br></pre></td></tr></table></figure>
 
@@ -194,6 +192,11 @@ ga('send', 'pageview');
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># --- Sonarscanner end ---</span><br><span class="line">WORKDIR /code/project/My.Worker</span><br><span class="line">RUN dotnet sonarscanner end \</span><br><span class="line">    /d:sonar.login=$SONAR_LOGIN \</span><br><span class="line">    /d:sonar.password=$SONAR_PASSWORD</span><br></pre></td></tr></table></figure>
 
+<h2 id="Exclusions"><a href="#Exclusions" class="headerlink" title="Exclusions"></a>Exclusions</h2><p>If you need to exclude a class from quality checks while you are dev/testing just add <code>[ExcludeFromCodeCoverage(Justification = &quot;I do what I want&quot;)]</code> or <code>//NOSONAR</code></p>
+<p>Its also common to pass exclusions the with the <code>sonar.exclusions</code> parameter, example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/d:sonar.exclusions=&quot;**/Startup.cs,**/Program.cs,**/IoC/**,**/Dtos/**,**/Constants/**,**/Models/*&quot;</span><br></pre></td></tr></table></figure>
+
+<p>See <a target="_blank" rel="noopener" href="https://docs.sonarsource.com/sonarqube/latest/project-administration/analysis-scope/">Analysis scope</a> to understand more about pattern matching.</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+MSBuild">https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+MSBuild</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.sonarqube.org/display/SONAR/Project+Existence">https://docs.sonarqube.org/display/SONAR/Project+Existence</a></li>
