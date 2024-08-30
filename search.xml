@@ -63,6 +63,27 @@
     
     
     <entry>
+      <title>Digital dice</title>
+      <link href="/2024/02/digital-dice/"/>
+      <url>/2024/02/digital-dice/</url>
+      
+        <content type="html"><![CDATA[<p>Digital dice solves a silly problem where I keep throwing dice off the table, ok ok it solves no problem and I just wanted to play with a Pico Pi and write some <a href="https://docs.micropython.org/">MicroPython</a> :D Besides the sillyness, I really wanted to have digital dice. I thought it would be a cool project that I could actually use when playing <a href="/2021/06/two-player-settlers-of-catan/">Catan</a>.</p><h2 id="Conceptual-Thinking"><a href="#Conceptual-Thinking" class="headerlink" title="Conceptual Thinking"></a>Conceptual Thinking</h2><p>There are a few options I looked at, I included the research if applicable so I dont have to go snorkel in the future if I decide to tinker.</p><p><strong>I2C 16x2 LCD Display</strong> ❌</p><p>Pico Pi with I2C 16x2 LCD Display Module (PCF8574)</p><ul><li>This screen is cool but its meant for longer text so will keep it for another project</li><li><a href="https://github.com/T-622/RPI-PICO-I2C-LCD">Drivers for I2C 16x2 LCD Display</a></li><li><a href="https://www.youtube.com/watch?v=bXLgxEcT1QU">NerdCave - Raspberry Pi Pico Tutorial: 16x2 LCD I2C Micropython</a></li></ul><p><strong>2 Digit Alphanumeric LED Display</strong> ❌</p><p>Pico Pi with 2 Digit Alphanumeric LED Display:</p><ul><li>This screen is really cool but the cheap ones I can find with a simple pinout (ie: CLK, DIO, GND, 5V) and chip like a TM1637 are all 4 digit displays so I thought that would look funny</li><li><a href="https://www.instructables.com/Raspberry-Pi-Pico-MX7219-Eight-Digits-of-Seven-Seg/">Cool example from a larger 8 digit display</a></li></ul><p><strong>Arduino with any screen</strong> ❌</p><ul><li>I dont really know how to code in C and C++ programming languages (Embedded C) so yeah na</li><li><a href="https://docs.arduino.cc/built-in-examples/basics/Blink/">Arduino docs on how to toggle LEDs</a></li></ul><p><strong>NE555 Chip</strong> ❌</p><ul><li>There are super cheap kits that come with everything you need but I wont get to do any coding</li><li><a href="https://a.aliexpress.com/_mtYhMBm">DIY Electronic Dice Kit LED</a></li></ul><p><strong>Pico Pi with LEDs</strong> ✅</p><ul><li><a href="https://docs.micropython.org/">MicroPython</a> is super easy to write</li><li><a href="https://www.pbtech.co.nz/product/SEVRBP0318/Raspberry-Pi-Pico-SC0915-Microcontrollers-Board">Raspberry Pi Pico SC0915 Microcontrollers Board</a> are real cheap</li><li>The board has enough digital pins and I have heaps of LEDs &amp; Resisters</li></ul><h2 id="Pico-Pi-with-LEDs"><a href="#Pico-Pi-with-LEDs" class="headerlink" title="Pico Pi with LEDs"></a>Pico Pi with LEDs</h2><p>With <code>Pico Pi with LEDs</code> as the best path I did some conceptual whiteboarding to think about the physical layout, how many pins I needed to use ect</p><p><img src="/d/digital-dice/conceptualize-pins-to-leds.png" alt="conceptualize pins to leds"></p><p>I then made up some test LED with inline resisters, there is a bit <a href="/2020/05/pi-led-control/">math to figure out what resister</a> to use. I physically soldered one to the board to test.</p><p><img src="/d/digital-dice/leds-with-resisters.png" alt="leds with resisters"></p><p>I then used a Pi4 <a href="https://www.raspberrypi.com/software/">Raspberry Pi OS</a> and <a href="https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico/5">Thonny</a> IDE adapting their examples to test blinking the LED. After that worked I soldered and made up the rest.</p><p><img src="/d/digital-dice/digital-dice-leds-connected.png" alt="digital dice leds connected"></p><p>I then completed the code and tested that worked, the complete code is here <a href="https://github.com/carlpaton/PicoPiHoon/blob/main/Pi%20Pico/Dice/main.py">https://github.com/carlpaton/PicoPiHoon/blob/main/Pi%20Pico/Dice/main.py</a></p><p>I then added a button, updated the code and printed a quick box (the design is prototype so I didnt upload the STL)</p><p><img src="/d/digital-dice/digital-dice-prototype.png" alt="digital dice prototype"></p><p>I powered it with 4 old AAA batteries connected in series, I need to draw up a better box, future Carls problem :D</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> raspberry pi </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SQL Change Data Capture - CDC</title>
       <link href="/2023/11/sql-change-data-capture-cdc/"/>
       <url>/2023/11/sql-change-data-capture-cdc/</url>
