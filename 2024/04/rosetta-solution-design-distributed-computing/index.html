@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Solution Design - Distributed Computing | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="StoryI want to solution design something that teaches me more about distributed computing, in the past I had a play with this useing a Raspberry Pi Cluster and a message passing interface library (mpi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Solution Design - Distributed Computing">
+<meta property="og:url" content="https://carlpaton.github.io/2024/04/rosetta-solution-design-distributed-computing/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="StoryI want to solution design something that teaches me more about distributed computing, in the past I had a play with this useing a Raspberry Pi Cluster and a message passing interface library (mpi">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/rosetta-solution-design-distributed-computing/white-board.jpg">
+<meta property="article:published_time" content="2024-04-12T12:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-30T10:13:30.468Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="c#">
+<meta property="article:tag" content="wip">
+<meta property="article:tag" content="architecture">
+<meta property="article:tag" content="aws">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/rosetta-solution-design-distributed-computing/white-board.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-rosetta-solution-design-distributed-computing" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/04/rosetta-solution-design-distributed-computing/" class="article-date">
+  <time datetime="2024-04-12T12:00:00.000Z" itemprop="datePublished">2024-Apr</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Solution Design - Distributed Computing
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h2><p>I want to solution design something that teaches me more about distributed computing, in the past I had a play with this useing a <a href="/2019/10/raspberry-pi-cluster/">Raspberry Pi Cluster</a> and a message passing interface library (<a target="_blank" rel="noopener" href="https://www.open-mpi.org/doc/v3.0/man1/mpiexec.1.php">mpiexec</a>) which ran Python 2. </p>
+<p>This was cool but I want to leverage more modern technologies like REST to be able to queue a request and then query its progress/result based on an identifier, this is esentially the <a href="/2021/10/asynchronous-request-reply-pattern/">Asynchronous Request-Reply pattern</a>.</p>
+<p>I want to use a queue service (perhaps <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/">RabbitMQ</a> or <a href="/2021/11/aws-sqs/">AWS SQS</a>) to decouple/loosely couple the components. Leaning towards RabbitMQ as although I understand the fundamentals of a queue, I have not used RabbitMQ itself. I think <a href="/2022/02/cloudevents/">Cloud Events</a> is a good starting point to structure the event but in reality <code>MessagingContracts</code> can just be classes shared between applications, these are just record DTOs describing the event.</p>
+<p>Additionally I want to use <a href="/tags/c/">C#</a> for the heavy lifting as I have a good understanding of a <a href="/2021/03/c-sharp-hosted-service/">BackgroundService</a> and love the language. I want to try out <a target="_blank" rel="noopener" href="https://masstransit.io/">masstransit</a> as it claims to <code>Easily build reliable distributed applications</code> and deploy using RabbitMQ, Azure Service Bus, and Amazon SQS. I like all these words ❤️</p>
+<p>Lastly I want to use Kubernetes on a <a href="/2020/09/raspberry-pi-cluster-kubernetes/">Raspberry Pi Cluster running K3s</a> as this can host my <code>Publisher</code> (the REST API), the Queues themself, my <code>Consumers</code> and any persistant storage mechanism.</p>
+<h2 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h2><p>The story needs some problem to solve. For this I’ll just a calculate prime numbers in a given range which was solved in the past by <a href="/2020/09/raspberry-pi-cluster-kubernetes/">Gary Explains using Python 2</a>.</p>
+<p>Example: Calculate the number of prime numbers between 0 and 1,000,000. Google Gemini suggested I use <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Prime_number_theorem">Prime Number Theorem</a> instead of an itterative approach. This theorem tells us that the number of primes less than a certain value (x) is approximately equal to x divided by the natural logarithm of x (ln(x)). I understand some of those words but essentially thats <code>1,000,000 / ln(1,000,000) ≈ 78,498</code>. So if anything I now have a value to balance back to.</p>
+<p>Meh, but then how would I warm the CPUs in the Pi’s. I’ll do the itterative approach thank you very much as solving the math problem is not the focus here, its learning more about solution design and distributed computing. The solution could then be applied to other problems needing distributed compute power. </p>
+<p>Also I do what I want  ╭∩╮ (︶︿︶) ╭∩╮</p>
+<h2 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h2><h3 id="White-Board"><a href="#White-Board" class="headerlink" title="White Board"></a>White Board</h3><p>I wrote up a quick white board design, this will most likely change as I organise my thoughts but as a first cut this looks like it will work.</p>
+<p><img src="/d/rosetta-solution-design-distributed-computing/white-board.jpg" alt="White Board Hoon"></p>
+<p>After drawing this up some concearns I could think of include</p>
+<ul>
+<li>How will the <code>Publisher</code> aggregate all the responses that the <code>Consumers</code> created, the message can only be polled for x times before it expires or is pushed to a DLQ. Additionally messages only live for a short time, AWS SQS default retention is 4 days but can be configured between 1 minute and 14 days.<ul>
+<li>Potentially a database store is better or perhaps for a POC I could just log somewhere</li>
+</ul>
+</li>
+<li>What happens if a <code>Consumer</code> crashes while processing a request<ul>
+<li>SQS has a timeout visibility of a message once its polled for, so another <code>Consumer</code> cannot pick it up at the same time</li>
+<li>I’ll need to consider how many times its polled for and also ensure its deleted once processed</li>
+</ul>
+</li>
+<li>Why use queues at all?<ul>
+<li>Supports a simpler message bus, a database will need to serialize the message to string  </li>
+<li>Cheaper in the long run and a message in the queue is intended to be ephemeral (last a short time)</li>
+</ul>
+</li>
+<li>This brings another concearn, how can I make sure these component events are atomic<ul>
+<li>IE: the <code>Consumer</code> picks up some work to do and it successfully publishes the result</li>
+<li>Potentially a queue is not the best way to aggregate the results, maybe this must go directly to a database store</li>
+<li>The Inbox/Outbox pattern solves this issue as using masstransit. <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=032SfEBFIJs">Super helpful video here by Nick Chapsas</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="Miro-Overview"><a href="#Miro-Overview" class="headerlink" title="Miro Overview"></a>Miro Overview</h3><p>I love a good Miro board to itterate on an idea! Here I structured high level based on the white board ideas. </p>
+<p>WIP!</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=4FFYefcx4Bg">Build Clean Messaging in .NET with MassTransit (Nick Chapsas)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=MzC0PgYocmk">How To Build Loosely Coupled Microservices With MassTransit (Milan Jovanović)</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2024/04/rosetta-solution-design-distributed-computing/" data-id="cm0gk3cpo0009dsuhaf2h4rrh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/architecture/" rel="tag">architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/" rel="tag">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/05/build-rate-limiter-service/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Build Rate Limiter Service
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/02/digital-dice/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Digital dice</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/08/install-grbl-on-uno/">Install GRBL On Arduino Uno</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/install-ugs-on-pi4/">Install UGS On Pi4</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/github-actions-workflow/">GitHub Actions Workflow</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/dbup/">DbUp</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/cnc-wood/">CNC Wood</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.87px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.74px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.22px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.43px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.43px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/authentication/" style="font-size: 13.91px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.96px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.3px;">cad</a> <a href="/tags/cam/" style="font-size: 10.43px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 13.48px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 10.87px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/data-structures/" style="font-size: 11.74px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.04px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.43px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 16.52px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.87px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.87px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.61px;">food</a> <a href="/tags/git/" style="font-size: 12.17px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.87px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.74px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.74px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.87px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.04px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mocking/" style="font-size: 13.48px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.83px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.87px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.87px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.74px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.87px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.04px;">python</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.09px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.43px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.74px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.78px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.26px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.65px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.7px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.22px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 19.13px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.87px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.3px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

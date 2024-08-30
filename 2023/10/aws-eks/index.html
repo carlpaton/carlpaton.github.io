@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>AWS EKS | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="EKS OverviewControl PlaneEKS is Amazon Elastic Kubernetes Service, its a managed Kubernetes services in the cloud. (although they have options for on prem). Managed EKS means AWS will manage the contr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS EKS">
+<meta property="og:url" content="https://carlpaton.github.io/2023/10/aws-eks/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="EKS OverviewControl PlaneEKS is Amazon Elastic Kubernetes Service, its a managed Kubernetes services in the cloud. (although they have options for on prem). Managed EKS means AWS will manage the contr">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-10-26T11:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-30T03:06:29.693Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="aws">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-aws-eks" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/10/aws-eks/" class="article-date">
+  <time datetime="2023-10-26T11:00:00.000Z" itemprop="datePublished">2023-Oct</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AWS EKS
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="EKS-Overview"><a href="#EKS-Overview" class="headerlink" title="EKS Overview"></a>EKS Overview</h2><h3 id="Control-Plane"><a href="#Control-Plane" class="headerlink" title="Control Plane"></a>Control Plane</h3><p>EKS is Amazon <a target="_blank" rel="noopener" href="https://aws.amazon.com/eks/">Elastic Kubernetes Service</a>, its a managed Kubernetes services in the cloud. (although they have options for on prem). Managed EKS means AWS will manage the <code>control plane</code> of the K8s cluster. This means it will provision/maintain master nodes, install all the control plane processes (API Server, Scheduler, Controller Manager and etcd). They will also help with scaling and backups. All of this is in an AWS VPC.</p>
+<p>Security and best practices are managed by AWS. Integration with other AWS services is easy. (S3, IAM, Secrets Manager, Load Balancer)</p>
+<h3 id="Data-Plane"><a href="#Data-Plane" class="headerlink" title="Data Plane"></a>Data Plane</h3><p>The <code>worker nodes</code> (this is in the <code>data plane</code> and in your VPC) are the only nodes you need to worry about.</p>
+<p>We can setup worker nodes in different ways</p>
+<ul>
+<li><strong>Self-managed nodes</strong><ul>
+<li>Provision EC2 instances manually that you want to use as worker nodes</li>
+<li>Install processes like <code>Kubelet</code>, <code>Kube-proxy</code>, <code>Container runtime</code></li>
+<li>You will need to update/patch the servers yourself</li>
+<li>Register node with the control plane</li>
+</ul>
+</li>
+<li><strong>Managed node group</strong><ul>
+<li>AWS automates the provisioning and lifecycle of the EC2 nodes</li>
+<li>This uses a EKS optimized image</li>
+<li>Uses single AWS/EKS API call (<code>Create, Update, Terminate</code>)</li>
+<li>Nodes are part of an Auto Scaling Group managed by EKS</li>
+</ul>
+</li>
+<li><strong>Fargate</strong><ul>
+<li>Serverless architecture, you dont have to provision worker nodes (mantain EC2 instances)</li>
+<li>When you deploy resources to the K8s cluster, fargate will provision worker nodes on demand</li>
+<li>Based on your requirements it figures out the most optimal EC2 sizing</li>
+<li>You only pay for what you use</li>
+</ul>
+</li>
+</ul>
+<p><strong>Create EKS Cluster</strong></p>
+<p>Needs the following to run</p>
+<ul>
+<li>Cluster name and K8s version</li>
+<li>IAM role for cluster to run (privileges like provision nodes, access storage, secrets)</li>
+<li>VPC and Subnets to run the cluster on</li>
+<li>Needs security group (allow traffic to and from cluster)</li>
+</ul>
+<p><strong>Create Worker Nodes</strong></p>
+<p>The high level steps are</p>
+<ul>
+<li>Create node group</li>
+<li>Specify instance type</li>
+<li>Define min/max number of nodes you want</li>
+<li>Specify the EKS cluster to connect to</li>
+</ul>
+<p><strong>Connect To Cluster</strong></p>
+<p>This is from our local machine.</p>
+<p>There are several ways to do this:</p>
+<ul>
+<li><strong>AWS Console</strong> <ul>
+<li>AWS UI using EKS and the configuration wizard</li>
+<li>This is long winded, you need to create cluster, create worker nodes, setup kubectl locally</li>
+<li>Provision VPC, subnets and routing</li>
+</ul>
+</li>
+<li><strong>EKSCTL</strong><ul>
+<li>Sets up the cluster with a single command</li>
+<li>This will provision all you need (Control plane, VPCs, subnets, worker nodes)</li>
+</ul>
+</li>
+<li><strong>Infasturcture As Code (Terraform)</strong><ul>
+<li>Define infastructure configuration in code</li>
+<li>Deploy by using Terraform/Pulumi</li>
+</ul>
+</li>
+</ul>
+<h2 id="eksctl"><a href="#eksctl" class="headerlink" title="eksctl"></a>eksctl</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html">https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html</a></li>
+</ul>
+<p>There are several commands you can see with <code>eksctl --help</code>. You can also run help for the sub commands like <code>eksctl create --help</code> and <code>eksctl create cluster --help</code></p>
+<ul>
+<li><code>eksctl create cluster --name mycluster1 --nodegroup-name mynodegroup1 --region us-east1 --node-type t2.micro --nodes 2</code> will create the cluster with the given name, node group, region ect. This will take several minutes.<ul>
+<li>The VPC and subnet names will be prefixed with <code>eksctl-</code></li>
+<li>This will update your <code>kubectl</code> (in <code>~/username/.kube/config</code>)</li>
+</ul>
+</li>
+<li><code>eksctl delete cluster --name mycluster1</code><ul>
+<li>This will also delete the other associated resources like the VPC</li>
+</ul>
+</li>
+</ul>
+<h2 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html">https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html</a></li>
+</ul>
+<p>Basic kubectl commands, also see <a href="/2020/09/raspberry-pi-cluster-kubernetes/">Raspberry Pi Cluster - Kubernetes</a></p>
+<ul>
+<li><code>kubectl config view</code> Will show the cluster config in <code>~/username/.kube/config</code></li>
+<li><code>kubectl get nodes</code> Will list the EC2 instance nodes in the cluster</li>
+<li><code>kubectl get pods</code>  Will list all of the pods that are available in the cluster, their names, whether they are ready or not, their status, restarts and age</li>
+<li><code>kubectl logs &lt;pod name&gt;</code> Will print the logs from a given pod name.</li>
+<li><code>kubectl describe pod &lt;pod name&gt;</code> Will print detailed information about such as information on the containers in the pod, its volumes, events and other meta data.</li>
+<li><code>kubectl exec &lt;pod name&gt; -- &lt;command&gt;</code> Will run the specified command in the container of the pod.</li>
+<li><code>kubectl exec &lt;pod name&gt; -- env</code> Will use the exec command, and run the env command in the container for the pod.</li>
+<li><code>kubectl rollout restart deployment &lt;deployment_name&gt;</code> Will restart pods one by one without any downtime.</li>
+<li><code>kubectl config set-cluster</code></li>
+</ul>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/">https://kubernetes.io/docs/reference/kubectl/cheatsheet/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bluematador.com/learn/kubectl-cheatsheet">https://www.bluematador.com/learn/kubectl-cheatsheet</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=CukYk43agA4">AWS EKS Tutorial | What is EKS? | EKS Explained | KodeKloud</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2023/10/aws-eks/" data-id="cm0gjxy660006dsuhhjwi0nbh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/" rel="tag">aws</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/11/sql-change-data-capture-cdc/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SQL Change Data Capture - CDC
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/10/spaghetti-mince/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spaghetti Mince</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/08/install-grbl-on-uno/">Install GRBL On Arduino Uno</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/install-ugs-on-pi4/">Install UGS On Pi4</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/github-actions-workflow/">GitHub Actions Workflow</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/dbup/">DbUp</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/cnc-wood/">CNC Wood</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.87px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.74px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.22px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.43px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.43px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/authentication/" style="font-size: 13.91px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.96px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.3px;">cad</a> <a href="/tags/cam/" style="font-size: 10.43px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 13.48px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 10.87px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/data-structures/" style="font-size: 11.74px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.04px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.43px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 16.52px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.87px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.87px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.61px;">food</a> <a href="/tags/git/" style="font-size: 12.17px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.87px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.74px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.74px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.87px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.04px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mocking/" style="font-size: 13.48px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.83px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.87px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.87px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.74px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.87px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.04px;">python</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.09px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.43px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.74px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 14.78px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.26px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 15.65px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.7px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.22px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 19.13px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.87px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.3px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
