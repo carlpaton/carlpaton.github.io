@@ -8,7 +8,7 @@
       <link href="/2024/09/kiri-moto/"/>
       <url>/2024/09/kiri-moto/</url>
       
-        <content type="html"><![CDATA[<blockquote><p>A Browser-Based Slicer for 3D FDM and SLA printing, CNC Milling, and Laser cutting</p></blockquote><ul><li><a href="https://grid.space/kiri/">https://grid.space/kiri/</a></li><li><a href="https://docs.grid.space/projects/kiri-moto">https://docs.grid.space/projects/kiri-moto</a></li><li><a href="https://www.youtube.com/watch?v=nQUvXOjDib4">Guide: Open source free CNC CAM - Kiri:Moto</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<blockquote><p>A Browser-Based Slicer for 3D FDM and SLA printing, CNC Milling, and Laser cutting</p></blockquote><h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><p>(Top right)</p><ul><li><code>Mode</code> -&gt; set <code>CNC</code></li><li><code>Setup</code> -&gt; select <code>Machines</code></li></ul><h2 id=""><a href="#" class="headerlink" title=""></a></h2><ul><li><a href="https://grid.space/kiri/">https://grid.space/kiri/</a></li><li><a href="https://docs.grid.space/projects/kiri-moto">https://docs.grid.space/projects/kiri-moto</a></li><li><a href="https://www.youtube.com/watch?v=nQUvXOjDib4">Guide: Open source free CNC CAM - Kiri:Moto</a></li></ul>]]></content>
       
       
       
@@ -185,6 +185,8 @@
             <tag> architecture </tag>
             
             <tag> aws </tag>
+            
+            <tag> rosetta code </tag>
             
         </tags>
       
