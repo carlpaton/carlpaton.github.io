@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Sonarqube With Opencover And xUnit Reports | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Previously Ive used Sonarqube to analyze without test coverage, recently Ive learnt how to use opencover to generate code coverage stats and use XunitXml.TestLogger to generate the test coverage repor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sonarqube With Opencover And xUnit Reports">
+<meta property="og:url" content="https://carlpaton.github.io/2020/11/sonarqube-with-opencover-xunit-reports/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Previously Ive used Sonarqube to analyze without test coverage, recently Ive learnt how to use opencover to generate code coverage stats and use XunitXml.TestLogger to generate the test coverage repor">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/sonarqube-with-opencover-xunit-reports/report-with-coverage.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/sonarqube-with-opencover-xunit-reports/coverage-change.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/sonarqube-with-opencover-xunit-reports/file-level-exclusion.png">
+<meta property="article:published_time" content="2020-11-02T11:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-14T08:31:52.366Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="static code analysis">
+<meta property="article:tag" content="sonarqube">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/sonarqube-with-opencover-xunit-reports/report-with-coverage.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-sonarqube-with-opencover-xunit-reports" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/sonarqube-with-opencover-xunit-reports/" class="article-date">
+  <time datetime="2020-11-02T11:00:00.000Z" itemprop="datePublished">2020-Nov</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Sonarqube With Opencover And xUnit Reports
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Previously Ive used <a href="/2018/07/sonarqube-and-docker/">Sonarqube to analyze without test coverage</a>, recently Ive learnt how to use <a target="_blank" rel="noopener" href="https://github.com/OpenCover/opencover">opencover</a> to generate code coverage stats and use <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/XunitXml.TestLogger/">XunitXml.TestLogger</a> to generate the test coverage report, this data is then used by Sonarqube to generate reports on the code base.</p>
+<h2 id="Software-Setup"><a href="#Software-Setup" class="headerlink" title="Software Setup"></a>Software Setup</h2><h3 id="Sonarqube-Server"><a href="#Sonarqube-Server" class="headerlink" title="Sonarqube Server"></a>Sonarqube Server</h3><ol>
+<li>Start the container, the default login is <code>admin\admin</code>, here Im using v8.3 community</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name sonarqube83c -p 9000:9000 sonarqube:8.3-community</span><br></pre></td></tr></table></figure>
+
+<h3 id="Sonar-Scanner"><a href="#Sonar-Scanner" class="headerlink" title="Sonar Scanner"></a>Sonar Scanner</h3><ol>
+<li>Install the <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/dotnet-sonarscanner/5.0.4">dotnet-sonarscanner</a> tool into the path <code>c:\dev\sonardemo\tools</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet tool install dotnet-sonarscanner --tool-path tools --version 5.0.4</span><br></pre></td></tr></table></figure>
+
+<h3 id="Net-Core-SDK"><a href="#Net-Core-SDK" class="headerlink" title=".Net Core SDK"></a>.Net Core SDK</h3><p>The source code Im going scan is <code>netcoreapp2.2</code>, I think later versions will be backwards compatible so you could skip this step.</p>
+<ol>
+<li>Download and install <a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/en-us/download/dotnet/2.2">SDK 2.2.207</a></li>
+</ol>
+<p>On my machine this installs to <code>C:\Program Files\dotnet\sdk\2.2.207</code></p>
+<h2 id="Setup-Source-Code"><a href="#Setup-Source-Code" class="headerlink" title="Setup Source Code"></a>Setup Source Code</h2><h3 id="Clone-And-Build"><a href="#Clone-And-Build" class="headerlink" title="Clone And Build"></a>Clone And Build</h3><ol>
+<li>Clone the project <a target="_blank" rel="noopener" href="https://github.com/carlpaton/VulnusCloud/">VulnusCloud</a> to <code>c:\dev\sonardemo\tmp</code>, I picked this project for a few reasons:</li>
+</ol>
+<ul>
+<li>it uses <a target="_blank" rel="noopener" href="https://nunit.org/">NUnit</a> and I wanted to see if this would work the same as it does for a project using <a target="_blank" rel="noopener" href="https://xunit.net/">xUnit</a>, turn out it does. FYI <code>xUnit</code> is more popular and its the default at most large software houses.</li>
+<li>its got muiltiple test projects, I want to only run the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/VulnusCloud/tree/master/UnitTests">UnitTests</a> and ignore the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/VulnusCloud/tree/master/IntegrationTest">IntegrationTest</a> in the coverage report, currently the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/VulnusCloud/blob/master/VulnusCloud.sln">sln</a> only references the UnitTests, I’ll include the IntegrationTest to test excluding them from the dotnet build and test steps.</li>
+</ul>
+<ol start="2">
+<li><p>Copy the contents of <code>C:\dev\sonardemo\tmp\VulnusCloud</code> to <code>C:\dev\sonardemo\</code> so that the <code>.sln</code> file is in the root, this just makes the sonar steps easier.</p>
+</li>
+<li><p>Check the solution builds</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet &quot;C:\Program Files\dotnet\sdk\2.2.207\MSBuild.dll&quot; .</span><br></pre></td></tr></table></figure>
+
+<h3 id="Add-Dependencies"><a href="#Add-Dependencies" class="headerlink" title="Add Dependencies"></a>Add Dependencies</h3><ol>
+<li>We need to install <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/XunitXml.TestLogger/2.1.26">XunitXml.TestLogger</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\dev\sonardemo\UnitTests</span><br><span class="line">dotnet add package XunitXml.TestLogger --version 2.1.26</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Additionally we need a collector, the de facto is <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/coverlet.collector/1.3.0">coverlet.collector</a>, I dont know of any other options </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\dev\sonardemo\UnitTests</span><br><span class="line">dotnet add package coverlet.collector --version 1.3.0</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Create a <code>.runsettings</code> file in <code>C:\dev\sonardemo\UnitTests</code>, the <code>friendlyName=&quot;XPlat code coverage&quot;</code> links to the package <code>coverlet.collector</code>, I have no idea how, magic?</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">RunSettings</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">DataCollectionRunSettings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DataCollectors</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">DataCollector</span> <span class="attr">friendlyName</span>=<span class="string">&quot;XPlat code coverage&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Configuration</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">Format</span>&gt;</span>opencover<span class="tag">&lt;/<span class="name">Format</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">ExcludeByAttribute</span>&gt;</span>Foo<span class="tag">&lt;/<span class="name">ExcludeByAttribute</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">Exclude</span>&gt;</span>Bar<span class="tag">&lt;/<span class="name">Exclude</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Configuration</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">DataCollector</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">DataCollectors</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">DataCollectionRunSettings</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">RunSettings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Runsettings can be added in <code>UnitTests.csproj</code> with in the PropertyGroup, the downside is then when you run the tests from an IDE like Visual Studio it will create <code>TestResults</code> folder in the root, adding to the csproj file is not required because we will pass it with the <code>dotnet test</code> command so I just mention it here for completeness.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="tag">&lt;<span class="name">SonarQubeExclude</span>&gt;</span>true<span class="tag">&lt;/<span class="name">SonarQubeExclude</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">SonarQubeTestProject</span>&gt;</span>true<span class="tag">&lt;/<span class="name">SonarQubeTestProject</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">RunSettingsFilePath</span>&gt;</span>$(MSBuildProjectDirectory)\.runsettings<span class="tag">&lt;/<span class="name">RunSettingsFilePath</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Also see</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-dotnet/">https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-dotnet/</a> </li>
+<li><a target="_blank" rel="noopener" href="https://docs.sonarsource.com/sonarqube/latest/project-administration/analysis-scope/">https://docs.sonarsource.com/sonarqube/latest/project-administration/analysis-scope/</a></li>
+</ul>
+<h2 id="Oh-Its-Scan-time-😬"><a href="#Oh-Its-Scan-time-😬" class="headerlink" title="Oh Its Scan time! 😬"></a>Oh Its Scan time! 😬</h2><p>You can use <code>sonar.login</code> and pass a key like I did <a href="/2018/07/sonarqube-and-docker/">here</a> but passwords belong in source code right? (I do what I want 🙈)</p>
+<ol>
+<li>Run scanner begin</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">./tools/dotnet-sonarscanner.exe begin `</span><br><span class="line">    -d:sonar.login=admin `</span><br><span class="line">    -d:sonar.password=admin `</span><br><span class="line">    -d:sonar.host.url=http://localhost:9000 `</span><br><span class="line">    -k:VulnusCloud `</span><br><span class="line">    -d:sonar.cs.opencover.reportsPaths=&#x27;UnitTests\TestResults\**\coverage.opencover.xml&#x27; `</span><br><span class="line">    -d:sonar.cs.xunit.reportsPaths=&#x27;UnitTests\TestResults\xunit.report.xml&#x27;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Run dotnet tests, if you dont specify the <code>--framework</code> argument it will use what ever version of dotnet thats in your systems <code>PATH</code> environmental variables, here Im rolling with .Net Core 2.2</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dotnet test VulnusCloud.sln `</span><br><span class="line">    --settings &#x27;./UnitTests/.runsettings&#x27; `</span><br><span class="line">    --logger &#x27;xunit;LogFilePath=TestResults\xunit.report.xml&#x27; `</span><br><span class="line">    --framework netcoreapp2.2</span><br></pre></td></tr></table></figure>
+
+<p>Along with running the tests it creates the XML reports listed below, you could delete them as a run step, however sonarscanner keeps track of the based on the path but if this is running in a CI/CD pipeline on a volatile TeamCity agent the report file probably wont exist on the next run. Ta ta ma chance, uhambe kahle mfowethu ❤️</p>
+<ul>
+<li>C:\dev\sonardemo\UnitTests\TestResults\20cbc40e-1bb1-449e-a3e2-3d1a33c75315\coverage.opencover.xml</li>
+<li>C:\dev\sonardemo\UnitTests\TestResults\xunit.report.xml</li>
+</ul>
+<ol start="3">
+<li>Run scanner end</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./tools/dotnet-sonarscanner.exe end `</span><br><span class="line">    -d:sonar.login=admin `</span><br><span class="line">    -d:sonar.password=admin</span><br></pre></td></tr></table></figure>
+
+<p>The code analysis can then be seen at <a target="_blank" rel="noopener" href="http://localhost:9000/dashboard?id=VulnusCloud">http://localhost:9000/dashboard?id=VulnusCloud</a></p>
+<p><img src="/d/sonarqube-with-opencover-xunit-reports/report-with-coverage.png" alt="Yeah Boi"></p>
+<h3 id="xUnit-Report-Path-Defaults"><a href="#xUnit-Report-Path-Defaults" class="headerlink" title="xUnit Report Path Defaults"></a>xUnit Report Path Defaults</h3><p>Adding <code>sonar.cs.xunit.reportsPaths</code> is not actually required, if you omit it the report will be added as <code>TestResults.xml</code> and picked up automagically, the resulting XML report paths are the same as the above. <code>LogFilePath</code> is then also not needed for the dotnet test logger argument (is that an arguments, argument? LOL)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">./tools/dotnet-sonarscanner.exe begin `</span><br><span class="line">    -d:sonar.login=admin `</span><br><span class="line">    -d:sonar.password=admin `</span><br><span class="line">    -d:sonar.host.url=http://localhost:9000 `</span><br><span class="line">    -k:VulnusCloud2 `</span><br><span class="line">    -d:sonar.cs.opencover.reportsPaths=&#x27;UnitTests\TestResults\**\coverage.opencover.xml&#x27;</span><br><span class="line"></span><br><span class="line">dotnet test VulnusCloud.sln `</span><br><span class="line">    --settings &#x27;./UnitTests/.runsettings&#x27; `</span><br><span class="line">    --logger xunit `</span><br><span class="line">    --framework netcoreapp2.2</span><br><span class="line"></span><br><span class="line">./tools/dotnet-sonarscanner.exe end `</span><br><span class="line">    -d:sonar.login=admin `</span><br><span class="line">    -d:sonar.password=admin</span><br></pre></td></tr></table></figure>
+
+<h3 id="File-Level-Exclusions"><a href="#File-Level-Exclusions" class="headerlink" title="File Level Exclusions"></a>File Level Exclusions</h3><ol>
+<li>We need to install <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/coverlet.msbuild/2.9.0">coverlet.msbuild</a> for this to work</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\dev\sonardemo\UnitTests</span><br><span class="line">dotnet add package coverlet.msbuild --version 2.9.0</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Then add annotation <code>[ExcludeFromCodeCoverage] //Justification I do what I want</code> with valid justification. I’ve seen <code>//NOSONAR</code> comments in some code bases but couldnt get it to work, maybe oneday I’ll figure it out and add it here.</li>
+</ol>
+<p>ExcludeFromCodeCoverage examples</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Business</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">ExcludeFromCodeCoverage</span>] <span class="comment">// class level</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OssReportService</span> : <span class="title">IOssReportService</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> IReportRepository _reportRepository;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    [<span class="meta">ExcludeFromCodeCoverage</span>] <span class="comment">// method level</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">ProcessOssRecords</span>(<span class="params">DateTime dateTimeOfMethodCall</span>)</span> </span><br><span class="line">    &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>We can then see the coverage value increases:</p>
+<p><img src="/d/sonarqube-with-opencover-xunit-reports/coverage-change.png" alt="Coverage goes up"></p>
+<p>Additionally the file level exclusions no longer have the red line on the left:</p>
+<p><img src="/d/sonarqube-with-opencover-xunit-reports/file-level-exclusion.png" alt="File level exclusion"></p>
+<h4 id="Alternative-Without-coverlet-msbuild"><a href="#Alternative-Without-coverlet-msbuild" class="headerlink" title="Alternative Without coverlet.msbuild"></a>Alternative Without coverlet.msbuild</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-excludebyattribute:*.ExcludeFromCodeCoverageAttribute</span><br></pre></td></tr></table></figure>
+
+<h3 id="Parameter-Level-Exclusions"><a href="#Parameter-Level-Exclusions" class="headerlink" title="Parameter Level Exclusions"></a>Parameter Level Exclusions</h3><p>Its also common to pass exclusions the with the <code>sonar.exclusions</code> parameter, example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/d:sonar.exclusions=&quot;**/Startup.cs,**/Program.cs,**/IoC/**,**/Dtos/**,**/Constants/**,**/Models/*&quot;</span><br></pre></td></tr></table></figure>
+
+<p>See <a target="_blank" rel="noopener" href="https://docs.sonarsource.com/sonarqube/latest/project-administration/analysis-scope/">Analysis scope</a> to understand more about pattern matching.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2020/11/sonarqube-with-opencover-xunit-reports/" data-id="cm11onf2h0000jsuh562fe2lc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sonarqube/" rel="tag">sonarqube</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/static-code-analysis/" rel="tag">static code analysis</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/11/sql-parameter-sniffing/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SQL Parameter Sniffing
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/10/raspberry-create-a-service/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Raspberry Pi - Create a system service</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/09/kiri-moto/">Kiri Moto</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/install-grbl-on-uno/">Install GRBL On Arduino Uno</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/install-ugs-on-pi4/">Install UGS On Pi4</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/github-actions-workflow/">GitHub Actions Workflow</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/dbup/">DbUp</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.87px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.74px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.65px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.43px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.43px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/authentication/" style="font-size: 13.91px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.96px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.3px;">cad</a> <a href="/tags/cam/" style="font-size: 10.87px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 13.91px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 10.87px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/data-structures/" style="font-size: 11.74px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.04px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.43px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 16.96px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.87px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.87px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.61px;">food</a> <a href="/tags/git/" style="font-size: 12.17px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.87px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.74px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.74px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.87px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.04px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mocking/" style="font-size: 13.48px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.83px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.87px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.87px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 11.74px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.87px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.04px;">python</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.52px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.43px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.74px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 15.22px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.26px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.43px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.09px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 10.87px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.7px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.65px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 19.13px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.87px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.3px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
