@@ -29,7 +29,7 @@ ga('send', 'pageview');
 <meta property="og:locale">
 <meta property="og:image" content="https://carlpaton.github.io/d/testing-coverage-report-generator/html-report.png">
 <meta property="article:published_time" content="2024-09-17T12:00:00.000Z">
-<meta property="article:modified_time" content="2024-09-18T06:05:37.241Z">
+<meta property="article:modified_time" content="2024-09-18T06:56:00.852Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="static code analysis">
 <meta property="article:tag" content="software testing">
@@ -152,7 +152,7 @@ ga('send', 'pageview');
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c:\dev\CoverageReportGeneratorDemo</span><br><span class="line">dotnet build</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
-<li>Install the .NET Core version of <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/dotnet-reportgenerator-globaltool">ReportGenerator - dotnet-reportgenerator-globaltool</a>, here Im using the path <code>tools</code> which is excluded in <a href="">.gitignore</a></li>
+<li>Install the .NET Core version of <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/dotnet-reportgenerator-globaltool">ReportGenerator - dotnet-reportgenerator-globaltool</a>, here Im using the path <code>tools</code> which is excluded in <a target="_blank" rel="noopener" href="https://github.com/carlpaton/CoverageReportGeneratorDemo/blob/main/.gitignore#L264">.gitignore</a></li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet tool install dotnet-reportgenerator-globaltool --tool-path tools --version 5.3.9</span><br></pre></td></tr></table></figure>
 
@@ -161,7 +161,7 @@ ga('send', 'pageview');
 </ol>
 <p><a target="_blank" rel="noopener" href="https://github.com/carlpaton/CoverageReportGeneratorDemo">CoverageReportGeneratorDemo</a> already has <a target="_blank" rel="noopener" href="https://github.com/coverlet-coverage/coverlet">coverlet.collector 6.0.0</a> installed, it came with the scaffold template from Microsoft when I created the test project and selected <code>xUnit Test Project</code></p>
 <p>As mentioned in at the top <code>coverlet.collector</code> can generate coverage results in <a target="_blank" rel="noopener" href="https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/GlobalTool.md#coverage-output">multiple formats</a>. The usual <a target="_blank" rel="noopener" href="https://github.com/OpenCover/opencover">opencover</a> format is no longer maintained 😔 and when I tested with the default <code>json</code> format this resulted in no coverage, perhaps there is more settings I missed. 🤷</p>
-<p>I next tested with <a target="_blank" rel="noopener" href="https://cobertura.github.io/cobertura/">cobertura</a> in my <a href="">.runsettings</a> file and this worked, so I rolled with it.</p>
+<p>I next tested with <a target="_blank" rel="noopener" href="https://cobertura.github.io/cobertura/">cobertura</a> in my <a target="_blank" rel="noopener" href="https://github.com/carlpaton/CoverageReportGeneratorDemo/blob/main/Cover.Tests/.runsettings">.runsettings</a> file and this worked, so I rolled with it.</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">RunSettings</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">DataCollectionRunSettings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DataCollectors</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">DataCollector</span> <span class="attr">friendlyName</span>=<span class="string">&quot;XPlat code coverage&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Configuration</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">Format</span>&gt;</span>cobertura<span class="tag">&lt;/<span class="name">Format</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Configuration</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">DataCollector</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">DataCollectors</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">DataCollectionRunSettings</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">RunSettings</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <ol start="4">
@@ -169,7 +169,7 @@ ga('send', 'pageview');
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet test --settings=&quot;./Cover.Tests/.runsettings&quot;</span><br></pre></td></tr></table></figure>
 
-<p>This then results in an attachment, example:</p>
+<p>This then results in an attachment coverage.cobertura.xml:</p>
 <details>
   <summary>C:\dev\CoverageReportGeneratorDemo\Cover.Tests\TestResults\10e130bb-7829-4a36-bef3-bf16119422c8\coverage.cobertura.xml</summary>
 
@@ -180,7 +180,7 @@ ga('send', 'pageview');
 <p>You dont have to use the runsettings file, you can instead just pass <code>collect=&quot;XPlat Code Coverage&quot;</code>, where <code>XPlat</code> just means cross platform, the resulting file is <code>coverage.cobertura.xml</code>, I thought it would be <code>coverage.json</code> but it wasnt.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet test --collect=&quot;XPlat Code Coverage&quot;</span><br></pre></td></tr></table></figure>
 
-<p>If you have other test projects you can use <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests?pivots=xunit">—filter</a></p>
+<p>If you have other test projects you can use <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests?pivots=xunit">filter</a>, here Im filtering where the project name is <em>like</em> <code>UnitTests</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c:\dev\CoverageReportGeneratorDemo</span><br><span class="line">dotnet test --collect=&quot;XPlat Code Coverage&quot; --filter FullyQualifiedName~UnitTests</span><br></pre></td></tr></table></figure>
 
 <ol start="5">
@@ -189,7 +189,7 @@ ga('send', 'pageview');
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./tools/reportgenerator.exe `</span><br><span class="line">-reports:Cover.Tests/TestResults/10e130bb-7829-4a36-bef3-bf16119422c8/coverage.cobertura.xml `</span><br><span class="line">-targetdir:report/</span><br></pre></td></tr></table></figure>
 
 <ol start="6">
-<li>A html report is then generated in <code>c:\dev\CoverageReportGeneratorDemo\report</code> which shows what paths have coverage and which do not, the attribute <a href="">ExcludeFromCodeCoverage</a> is supported out of the box. <a href="/2020/11/sonarqube-with-opencover-xunit-reports/">Previously Ive had to install coverlet.msbuild</a> to get this to work.</li>
+<li>A html report is then generated in <code>c:\dev\CoverageReportGeneratorDemo\report</code> which shows what paths have coverage and which do not, the attribute <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.codeanalysis.excludefromcodecoverageattribute">ExcludeFromCodeCoverage</a> is supported out of the box. <a href="/2020/11/sonarqube-with-opencover-xunit-reports/#:~:text=sonar.password=admin-,File%20Level%20Exclusions,-We%20need%20to">Previously Ive had to install coverlet.msbuild</a> to get this to work.</li>
 </ol>
 <p><img src="/d/testing-coverage-report-generator/html-report.png" alt="html-report"></p>
 <p>You can see my <a href="/examples/dotnet-reportgenerator-globaltool/" target="blank">generated html report here</a> </p>
@@ -202,7 +202,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://carlpaton.github.io/2024/09/testing-coverage-report-generator/" data-id="cm17gmqkp00rnl8uh2ldyacig" class="article-share-link">Share</a>
+      <a data-url="https://carlpaton.github.io/2024/09/testing-coverage-report-generator/" data-id="cm17ifjk600rl74uh8xd9geed" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/" rel="tag">software testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/static-code-analysis/" rel="tag">static code analysis</a></li></ul>
