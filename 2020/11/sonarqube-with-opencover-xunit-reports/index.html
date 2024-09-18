@@ -31,7 +31,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/sonarqube-with-opencover-xunit-reports/coverage-change.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/sonarqube-with-opencover-xunit-reports/file-level-exclusion.png">
 <meta property="article:published_time" content="2020-11-02T11:00:00.000Z">
-<meta property="article:modified_time" content="2024-09-15T06:03:17.210Z">
+<meta property="article:modified_time" content="2024-09-18T00:09:55.954Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="static code analysis">
@@ -178,12 +178,12 @@ ga('send', 'pageview');
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\dev\sonardemo\UnitTests</span><br><span class="line">dotnet add package XunitXml.TestLogger --version 2.1.26</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
-<li>Additionally we need a collector, the de facto is <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/coverlet.collector/1.3.0">coverlet.collector</a>, I dont know of any other options </li>
+<li>Additionally we need a collector, the de facto is <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/coverlet.collector/1.3.0">coverlet.collector</a>. <code>coverlet.collector</code> is a tool specifically designed to measure code coverage for .NET applications running on various platforms</li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\dev\sonardemo\UnitTests</span><br><span class="line">dotnet add package coverlet.collector --version 1.3.0</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
-<li>Create a <code>.runsettings</code> file in <code>C:\dev\sonardemo\UnitTests</code>, the <code>friendlyName=&quot;XPlat code coverage&quot;</code> links to the package <code>coverlet.collector</code>, I dont really follow how, the <a target="_blank" rel="noopener" href="https://www.nuget.org/packages/coverlet.collector/#readme-body-tab">docs have a How it works section but TLDR;</a></li>
+<li>Create a <code>.runsettings</code> file in <code>C:\dev\sonardemo\UnitTests</code>, the <code>friendlyName=&quot;XPlat code coverage&quot;</code> refers to the measurement of how much of your codebase is executed during testing across different platforms (hence, “cross-platform” or “XPlat”)</li>
 </ol>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">RunSettings</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">DataCollectionRunSettings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DataCollectors</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">DataCollector</span> <span class="attr">friendlyName</span>=<span class="string">&quot;XPlat code coverage&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Configuration</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">Format</span>&gt;</span>opencover<span class="tag">&lt;/<span class="name">Format</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Configuration</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">DataCollector</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">DataCollectors</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">DataCollectionRunSettings</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">RunSettings</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
