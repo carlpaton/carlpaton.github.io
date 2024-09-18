@@ -31,7 +31,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/sonarqube-with-opencover-xunit-reports/coverage-change.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/sonarqube-with-opencover-xunit-reports/file-level-exclusion.png">
 <meta property="article:published_time" content="2020-11-02T11:00:00.000Z">
-<meta property="article:modified_time" content="2024-09-18T00:09:55.954Z">
+<meta property="article:modified_time" content="2024-09-18T21:45:51.878Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="sonarqube">
@@ -241,10 +241,14 @@ ga('send', 'pageview');
 <p><img src="/d/sonarqube-with-opencover-xunit-reports/coverage-change.png" alt="Coverage goes up"></p>
 <p>Additionally the file level exclusions no longer have the red line on the left:</p>
 <p><img src="/d/sonarqube-with-opencover-xunit-reports/file-level-exclusion.png" alt="File level exclusion"></p>
-<h3 id="Parameter-Level-Exclusions"><a href="#Parameter-Level-Exclusions" class="headerlink" title="Parameter Level Exclusions"></a>Parameter Level Exclusions</h3><p>Its also common to pass exclusions the with the <code>sonar.exclusions</code> parameter, example:</p>
+<h3 id="Parameter-Level-Exclusions"><a href="#Parameter-Level-Exclusions" class="headerlink" title="Parameter Level Exclusions"></a>Parameter Level Exclusions</h3><p>See <a target="_blank" rel="noopener" href="https://docs.sonarsource.com/sonarqube/latest/project-administration/analysis-scope/">Analysis scope</a> to understand more about pattern matching used below.</p>
+<p><strong>sonar.exclusions</strong></p>
+<p>Configure the files that should be completely ignored by the analysis, so this is things like bad code and code smells.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-d:sonar.exclusions=&quot;**/Startup.cs,**/Program.cs,**/IoC/**,**/Dtos/**,**/Constants/**,**/Models/*&quot;</span><br></pre></td></tr></table></figure>
 
-<p>See <a target="_blank" rel="noopener" href="https://docs.sonarsource.com/sonarqube/latest/project-administration/analysis-scope/">Analysis scope</a> to understand more about pattern matching.</p>
+<p><strong>sonar.coverage.exclusions</strong></p>
+<p>Configure the files that should be ignored by code coverage calculations, so this is just for test coverage.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-d:sonar.coverage.exclusions=&quot;**/SomeCrappyServiceThatIProbablyWontFixLater.cs,**/FooService/*&quot;</span><br></pre></td></tr></table></figure>
 
       
     </div>
