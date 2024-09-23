@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Unit Testing When SUT Has Static Methods | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Also see Unit Testing When SUT Has Protected Methods  I have a simple repository InvoiceRepository which is my SUT (software under test), its using Dapper extension methods and I want to unit test th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unit Testing When SUT Has Static Methods">
+<meta property="og:url" content="https://carlpaton.github.io/2024/09/unit-testing-static-methods/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Also see Unit Testing When SUT Has Protected Methods  I have a simple repository InvoiceRepository which is my SUT (software under test), its using Dapper extension methods and I want to unit test th">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-09-20T12:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-23T00:34:37.052Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="orm">
+<meta property="article:tag" content="software testing">
+<meta property="article:tag" content="dapper">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-unit-testing-static-methods" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/09/unit-testing-static-methods/" class="article-date">
+  <time datetime="2024-09-20T12:00:00.000Z" itemprop="datePublished">2024-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unit Testing When SUT Has Static Methods
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>Also see <a href="/2021/01/unit-testing-protected-methods/">Unit Testing When SUT Has Protected Methods</a></li>
+</ul>
+<p>I have a simple repository <code>InvoiceRepository</code> which is my SUT (software under test), its using <a target="_blank" rel="noopener" href="https://www.learndapper.com/">Dapper extension methods</a> and I want to <a href="/2019/06/unit-testing-with-xunit/">unit test</a> the repository methods and <a target="_blank" rel="noopener" href="https://github.com/devlooped/moq">mock</a> out the database calls. As Im not using <a href="/2021/02/entity-framework-core/">Entity Framework</a>‘s <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.inmemorydbcontextoptionsextensions.useinmemorydatabase">UseInMemoryDatabase</a> so I need to mock the connection which dapper extends. Additionally I have a factory that returns the connection because thats how the cool kids do it.</p>
+<p><em>See <a href="/2022/03/minimal-api/">Minimal API example</a> for a functional example of UseInMemoryDatabase.</em></p>
+<p>So the code looks like this, ooh fancy its got a <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors">primary contructor</a>, must be nice to work on modern code 🤓</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">InvoiceRepository</span>(<span class="params">ISqlConnectionFactory factory</span>) : IInvoiceRepository</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;MyInvoice&gt; <span class="title">GetAsync</span>(<span class="params">Guid id</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">using</span> <span class="keyword">var</span> connection = factory.CreateConnection(); </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">await</span> connection</span><br><span class="line">            .QueryFirstAsync&lt;MyInvoice&gt;(<span class="string">&quot;SELECT * FROM dbo.my_invoice WHERE id = @id&quot;</span>, <span class="keyword">new</span> &#123; id &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Note that <code>CreateConnection</code> returns <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/api/system.data.idbconnection">IDbConnection</a> and <a target="_blank" rel="noopener" href="https://www.learndapper.com/dapper-query/selecting-single-rows#dapper-queryfirstasync">QueryFirstAsync</a> is the dapper extension method.</p>
+<p>Being OG noob you might be tempted to try mock the dapper method <code>QueryFirstAsync</code>. The code below will compile but at test runtime Moq will protest as its <a target="_blank" rel="noopener" href="https://github.com/devlooped/moq/blob/a481e8d19e3130659a6b5d2b046ea2eee01ad24b/src/Moq/MethodExpectation.cs#L87">Guard.IsOverridable</a> -&gt; <a target="_blank" rel="noopener" href="https://github.com/devlooped/moq/blob/main/src/Moq/Guard.cs#L83">Guard.cs</a> will throw with <code>Extension methods (here: SqlMapper.QueryFirstAsync) may not be used in setup / verification expressions.</code></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Dapper;</span><br><span class="line">...</span><br><span class="line">[<span class="meta">Fact</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">GetAsync_GivenWhenThen</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Arrange</span></span><br><span class="line">    <span class="keyword">var</span> factoryMock = <span class="keyword">new</span> Mock&lt;ISqlConnectionFactory&gt;();</span><br><span class="line">    <span class="keyword">var</span> connectionMock = <span class="keyword">new</span> Mock&lt;IDbConnection&gt;();</span><br><span class="line">    connectionMock</span><br><span class="line">        .Setup(x =&gt; x.QueryFirstAsync&lt;MyInvoice&gt;(      <span class="comment">// static method you cannot mock, you dont deserve any snick snacks!</span></span><br><span class="line">            It.IsAny&lt;<span class="built_in">string</span>&gt;(),</span><br><span class="line">            It.IsAny&lt;<span class="built_in">object</span>&gt;(),</span><br><span class="line">            It.IsAny&lt;IDbTransaction&gt;(),</span><br><span class="line">            It.IsAny&lt;<span class="built_in">int</span>&gt;(),</span><br><span class="line">            It.IsAny&lt;CommandType&gt;()))</span><br><span class="line">        .ReturnsAsync(<span class="keyword">new</span> MyInvoice());</span><br><span class="line"></span><br><span class="line">    factoryMock</span><br><span class="line">        .Setup(x =&gt; x.CreateConnection())</span><br><span class="line">        .Returns(connectionMock.Object);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>So we need a work around.</p>
+<p><strong>CAVEAT:</strong> You could argue that unit tests in the repository are low value and this is more of an integration test concearn, <a href="/2022/07/integration-tests-with-webapplicationfactory-testcontainers/">WebApplicationFactory and Test Containers</a> is your friend if you go down this route, if you are a component tests kind of nerd then <a href="/2022/01/component-tests/">Component Tests With Collection &amp; Class Fixtures</a> is probably your jam!</p>
+<p>On the other hand it would be nice to know that your software behaves as expected at a unit test level, things like the command text and parameters passed have not changed. The key is to be pragmatic and weigh up the options with your team and companys suggested way of working.</p>
+<p>I’ll roll with some work-arounds, else whats the point of this blog post besides to brag about my cool primary contructor!</p>
+<h2 id="Workaround-1-Wrapper"><a href="#Workaround-1-Wrapper" class="headerlink" title="Workaround 1 : Wrapper"></a>Workaround 1 : Wrapper</h2><p>An acceptable approach is to add another layer of abstraction, you could name it based on what it does so <code>DapperWrapper</code> fits this description, Im childish so had a good LOL at this name 😂🤣. This abstraction would then have an interface that we can mock.</p>
+<ol>
+<li>Define the wrapper, here I used the same name, <code>QueryFirstAsync</code> for my function but you could call it something like <code>QueryFirstWrapperAsync</code> to mitigate confusion, or I dont know - you could read the class name.</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Dapper;</span><br><span class="line"><span class="keyword">using</span> System.Data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IDapperWrapper</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="title">Task</span>&lt;<span class="title">T</span>&gt; <span class="title">QueryFirstAsync</span>&lt;<span class="title">T</span>&gt;(<span class="params">IDbConnection connection, <span class="built_in">string</span> sql, <span class="built_in">object</span> param = <span class="literal">null</span></span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DapperWrapper</span> : <span class="title">IDapperWrapper</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> <span class="title">Task</span>&lt;<span class="title">T</span>&gt; <span class="title">QueryFirstAsync</span>&lt;<span class="title">T</span>&gt;(<span class="params">IDbConnection connection, <span class="built_in">string</span> sql, <span class="built_in">object</span> param = <span class="literal">null</span></span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">await</span> connection.QueryFirstAsync&lt;T&gt;(sql, param);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Then inject and use the wrapper in the repository, this functions the same as before but now has the additional layer of abstraction.</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">InvoiceRepository</span>(<span class="params">ISqlConnectionFactory factory, IDapperWrapper wrapper</span>) : IInvoiceRepository</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;MyInvoice&gt; <span class="title">GetAsync</span>(<span class="params">Guid id</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">using</span> <span class="keyword">var</span> connection = factory.CreateConnection();   </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">await</span> wrapper.QueryFirstAsync&lt;MyInvoice&gt;(</span><br><span class="line">            connection, </span><br><span class="line">            <span class="string">&quot;SELECT * FROM dbo.my_invoice WHERE id = @id&quot;</span>, </span><br><span class="line">            <span class="keyword">new</span> &#123; id &#125;);</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Update the test to now mock the wrapper, this will now return a new instance of <code>MyInvoice</code>. The tests as they stand could now just assert the response and would be adding a guard for the sql command text, honestly the integration test in the caveat above could have done that ʕʘ̅͜ʘ̅ʔ</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Fact</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">GetAsync_GivenWhenThen</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Arrange</span></span><br><span class="line">    <span class="keyword">var</span> id = Guid.NewGuid();</span><br><span class="line">    <span class="keyword">var</span> factoryMock = <span class="keyword">new</span> Mock&lt;ISqlConnectionFactory&gt;();</span><br><span class="line">    <span class="keyword">var</span> dapperWrapperMock = <span class="keyword">new</span> Mock&lt;IDapperWrapper&gt;();</span><br><span class="line">    <span class="keyword">var</span> connectionMock = <span class="keyword">new</span> Mock&lt;IDbConnection&gt;();</span><br><span class="line"></span><br><span class="line">    factoryMock</span><br><span class="line">        .Setup(x =&gt; x.CreateConnection())</span><br><span class="line">        .Returns(connectionMock.Object);</span><br><span class="line"></span><br><span class="line">    dapperWrapperMock</span><br><span class="line">        .Setup(x =&gt; x.QueryFirstAsync&lt;MyInvoice&gt;(</span><br><span class="line">            connectionMock.Object, </span><br><span class="line">            <span class="string">&quot;SELECT * FROM dbo.my_invoice WHERE id = @id&quot;</span>,</span><br><span class="line">            It.IsAny&lt;<span class="built_in">object</span>&gt;()))</span><br><span class="line">        .ReturnsAsync(<span class="keyword">new</span> MyInvoice() &#123; Id = id &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> classUnderTest = <span class="keyword">new</span> InvoiceRepository(factoryMock.Object, dapperWrapperMock.Object);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Act</span></span><br><span class="line">    <span class="keyword">var</span> actual = <span class="keyword">await</span> classUnderTest.GetAsync(Guid.NewGuid());</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>I would go a step futher and now also check the <code>param</code> argument, as my mock setup I used <code>It.IsAny&lt;object&gt;()</code> because in the implentation the argument is new’d up, so the memory address is not the same. Remember kids, Steve Smith says <a target="_blank" rel="noopener" href="https://ardalis.com/new-is-glue/">new is glue</a>.</li>
+</ol>
+<p>You can use <a href="/2023/09/moq-language-callback/">Moq.Langauge Callback Function</a> to capture these and assert on them by value, its like magic.</p>
+<h2 id="Workaround-2-delegate"><a href="#Workaround-2-delegate" class="headerlink" title="Workaround 2 : delegate"></a>Workaround 2 : delegate</h2><p><strong>Spoiler</strong>: This is pretty much the same as the wrapper but with some additional complications.</p>
+<p>I would generally steer clear of <a href="/2020/04/c-sharp-delegates/">delegates</a>, they harder to understand and I favour code that is easy to read for my old-dad eyes, however for completness I did some delegate magic.</p>
+<p>Potentially this code could pass the delegate as <code>Func&lt;T, TResult&gt;</code> which just defines a function that takes a parameter <code>T</code> and returns <code>TResult</code> but I thought this was was more understandable to <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/standard/linq/functional-vs-imperative-programming">imperative</a> programmers like me.  Also, I do what I want. I am Batman 🦇</p>
+<ol>
+<li>Create the dapper delegate implementation and base class. <code>QueryFirstAsyncDeligate</code> could be an interface but I just popped it in the base class, I dont normally code with delegates so I made 💩 up as I went along from here. </li>
+</ol>
+<p>I just called my class file <code>DapperDeligate.cs</code> and popped it in the root of my <code>Infrastructure</code> project.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Dapper;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DapperDeligateBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> Task&lt;MyInvoice&gt; <span class="title">QueryFirstAsyncDeligate</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">        IDbConnection connection, </span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="built_in">string</span> sql, </span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="built_in">object</span>? param = <span class="literal">null</span></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> required QueryFirstAsyncDeligate QueryFirstAsync &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DapperDeligate</span> : <span class="title">DapperDeligateBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DapperDeligate</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        QueryFirstAsync = <span class="keyword">async</span> (connection, sql, param) =&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">await</span> connection</span><br><span class="line">                .QueryFirstAsync&lt;MyInvoice&gt;(sql, param);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>In the repository, inject and use the delegate</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">InvoiceRepository</span>(<span class="params">ISqlConnectionFactory factory, DapperDeligateBase dapperDeligate</span>) : IInvoiceRepository</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;MyInvoice&gt; <span class="title">GetAsync</span>(<span class="params">Guid id</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">using</span> <span class="keyword">var</span> connection = factory.CreateConnection();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">await</span> dapperDeligate.QueryFirstAsync(</span><br><span class="line">            connection, </span><br><span class="line">            <span class="string">&quot;SELECT * FROM dbo.my_invoice WHERE id = @id&quot;</span>, </span><br><span class="line">            <span class="keyword">new</span> &#123; id &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Wire up the services registration, this just means when you ask for <code>DapperDeligateBase</code> in your code, you will get <code>DapperDeligate</code></li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">builder</span><br><span class="line">    .Services</span><br><span class="line">    .AddTransient&lt;DapperDeligateBase, DapperDeligate&gt;();</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Update the tests, bet you wrote the tests first you <a href="/2018/06/test-driven-development-tdd/">TDD</a> champion!</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">InvoiceRepositoryTests</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">Fact</span>]</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">GetAsync_GivenWhenThen</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// Arrange</span></span><br><span class="line">        <span class="keyword">var</span> expectedId = Guid.NewGuid();</span><br><span class="line">        <span class="keyword">var</span> expected = <span class="keyword">new</span> MyInvoice &#123; Id = expectedId &#125;;</span><br><span class="line">        <span class="keyword">var</span> connectionMock = <span class="keyword">new</span> Mock&lt;IDbConnection&gt;();</span><br><span class="line">        <span class="keyword">var</span> factoryMock = <span class="keyword">new</span> Mock&lt;ISqlConnectionFactory&gt;();</span><br><span class="line">        <span class="keyword">var</span> deligateMock = <span class="keyword">new</span> Mock&lt;DapperDeligateBase.QueryFirstAsyncDeligate&gt;();</span><br><span class="line">        </span><br><span class="line">        factoryMock</span><br><span class="line">            .Setup(x =&gt; x.CreateConnection())</span><br><span class="line">            .Returns(connectionMock.Object);</span><br><span class="line"></span><br><span class="line">        deligateMock</span><br><span class="line">            .Setup(x =&gt; x.Invoke(</span><br><span class="line">                It.IsAny&lt;IDbConnection&gt;(),</span><br><span class="line">                It.IsAny&lt;<span class="built_in">string</span>&gt;(),                          <span class="comment">// could pass actial command text here</span></span><br><span class="line">                It.IsAny&lt;<span class="built_in">object</span>&gt;()))</span><br><span class="line">            .ReturnsAsync(expected);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> dapperDeligate = <span class="keyword">new</span> DapperDeligate</span><br><span class="line">        &#123;</span><br><span class="line">            QueryFirstAsync = deligateMock.Object</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> classUnderTest = <span class="keyword">new</span> InvoiceRepository(mockConnectionFactory.Object, dapperDeligate);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Act</span></span><br><span class="line">        <span class="keyword">var</span> actual = <span class="keyword">await</span> classUnderTest.GetAsync(expectedId);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Assert</span></span><br><span class="line">        Assert.NotNull(actual);</span><br><span class="line">        Assert.Equal(expectedId, actual.Id);</span><br><span class="line">        mockConnectionFactory</span><br><span class="line">            .Verify(x =&gt; x.CreateConnection(), Times.Once);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Then as with the wrapper, I would also use <a href="/2023/09/moq-language-callback/">Moq.Langauge Callback Function</a> to capture the <code>IDbConnection</code>, <code>string</code> command text and <code>object</code> parameters being passed to <code>QueryFirstAsyncDeligate</code> to validate their shape.</p>
+<p>After writing this code I feel more like Robin 🐦</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2024/09/unit-testing-static-methods/" data-id="cm1dbf0e50000a8uhgh8d22rg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dapper/" rel="tag">dapper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/orm/" rel="tag">orm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/" rel="tag">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/09/testing-coverage-report-generator/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Testing Coverage Report Generator</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/09/unit-testing-static-methods/">Unit Testing When SUT Has Static Methods</a>
+          </li>
+        
+          <li>
+            <a href="/2024/09/testing-coverage-report-generator/">Testing Coverage Report Generator</a>
+          </li>
+        
+          <li>
+            <a href="/2024/09/kiri-moto/">Kiri Moto</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/install-grbl-on-uno/">Install GRBL On Arduino Uno</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/install-ugs-on-pi4/">Install UGS On Pi4</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.87px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.74px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.65px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.43px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.43px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/authentication/" style="font-size: 13.91px;">authentication</a> <a href="/tags/aws/" style="font-size: 16.96px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.3px;">cad</a> <a href="/tags/cam/" style="font-size: 10.87px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 13.91px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 10.87px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.74px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.04px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.43px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 16.96px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.87px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.87px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.61px;">food</a> <a href="/tags/git/" style="font-size: 12.17px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.87px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.74px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.74px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 10.87px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.04px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mocking/" style="font-size: 13.48px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.83px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.87px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/nginx/" style="font-size: 10.87px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 12.17px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.87px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.04px;">python</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.52px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.43px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.74px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 15.22px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.26px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.43px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.09px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.3px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.7px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.65px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 19.13px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.87px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.3px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
