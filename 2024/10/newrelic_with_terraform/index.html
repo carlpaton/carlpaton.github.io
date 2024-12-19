@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>New Relic With Terraform | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="“Terraform is a popular infrastructure-as-code software tool built by HashiCorp. You use it to provision all kinds of infrastructure and services, including New Relic dashboards and alerts.” - docs.n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="New Relic With Terraform">
+<meta property="og:url" content="https://carlpaton.github.io/2024/10/newrelic_with_terraform/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="“Terraform is a popular infrastructure-as-code software tool built by HashiCorp. You use it to provision all kinds of infrastructure and services, including New Relic dashboards and alerts.” - docs.n">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/terraform-init.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/terraform-apply-1.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/terraformtfstate.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/policy.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/alert-condition.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/state-update.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/notification.png">
+<meta property="article:published_time" content="2024-10-29T11:00:00.000Z">
+<meta property="article:modified_time" content="2024-12-19T04:59:11.967Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="infrastructure as code">
+<meta property="article:tag" content="newrelic">
+<meta property="article:tag" content="terraform">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/terraform-init.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-newrelic_with_terraform" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/10/newrelic_with_terraform/" class="article-date">
+  <time datetime="2024-10-29T11:00:00.000Z" itemprop="datePublished">2024-Oct</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      New Relic With Terraform
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>“Terraform is a popular infrastructure-as-code software tool built by HashiCorp. You use it to provision all kinds of infrastructure and services, including New Relic dashboards and alerts.” - docs.newrelic.com</p>
+</blockquote>
+<p>In this post I will create an <code>Error</code> New Relic alert via Terraform, I see this Error Rate as <code>Availability</code> and the resulting New Relic resources would be a <code>provider</code>, <code>alert policy</code> which is the parent, <code>alert condition</code> which are children to the parent and <code>alert trigger</code></p>
+<h2 id="Four-Golden-Signals"><a href="#Four-Golden-Signals" class="headerlink" title="Four Golden Signals"></a>Four Golden Signals</h2><p>For your alerts you need to think about whats sensible to alert on, <a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#xref_monitoring_golden-signals">Goole SRE</a> is the golden standard, because you know… its Google :D … so you can re-invent the wheel or learn from their Golden Signals:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#errors">Error rate</a> (Availability)</li>
+<li><a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#latency">Latency</a></li>
+<li><a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#traffic">Traffic</a></li>
+<li><a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#saturation">Saturation</a></li>
+</ul>
+<h2 id="High-Level-Commands-amp-Flow"><a href="#High-Level-Commands-amp-Flow" class="headerlink" title="High Level Commands &amp; Flow"></a>High Level Commands &amp; Flow</h2><ul>
+<li>terraform configuration (or clone existing), for new configuration the <strong>provider</strong> the minimum requirement</li>
+<li><a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/cli/commands/init">terraform init</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/cli/commands/validate">terraform validate</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/cli/commands/plan">terraform plan</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/cli/commands/apply">terraform apply</a></li>
+</ul>
+<h2 id="Required-Terraform-Config"><a href="#Required-Terraform-Config" class="headerlink" title="Required Terraform Config"></a>Required Terraform Config</h2><p>The <a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/infrastructure-as-code/terraform/terraform-intro/">Newrelic docs have a great example</a> which I based the below on, you will notice they are also focused on the <a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#xref_monitoring_golden-signals">Goole SRE Golden Signals</a></p>
+<p>The high level config that I used to create my <code>.tf</code> files are</p>
+<ul>
+<li><code>providers.tf</code><ul>
+<li>creates <code>terraform</code> &amp; <code>provider</code> resources</li>
+<li>optionally includes a backend which is just a space to keep the <code>terraform.tfstate</code>, Ive seen AWS S3 and Dynamo being used here<ul>
+<li>See <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/cli/commands/init#backend-initialization">Backend Initialization</a> and <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/language/backend">Backend block configuration overview</a>, the default is <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/language/backend/local">local</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>alerts.tf</code><ul>
+<li>alert policy (this is the parent)</li>
+<li>alert conditions (these are the children)</li>
+<li>alert triggers </li>
+</ul>
+</li>
+<li><code>locals.tf</code> (optional)</li>
+<li><code>variables.tf</code> (optional)</li>
+</ul>
+<details>
+  <summary>Additional abstractions</summary>
+
+<p><strong>Locals</strong></p>
+<p>Locals are like constants in terraform, example <code>locals.tf</code> file with property <code>newrelic_account_id</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">locals &#123;</span><br><span class="line">  newrelic_account_id = &quot;123456789&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>To access <code>newrelic_account_id</code> in another file like <code>providers.tf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">provider &quot;newrelic&quot; &#123;</span><br><span class="line">  account_id = local.newrelic_account_id</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Variables</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">variable &quot;environment&quot; &#123;</span><br><span class="line">  type = string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">variable &quot;newrelic_slack_channels&quot; &#123;</span><br><span class="line">  type = map(string)</span><br><span class="line">  default = &#123;</span><br><span class="line">    uat  = &quot;X05LBNSKMHU&quot;</span><br><span class="line">    prod = &quot;X05LIBNLBYJ&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>I set the <code>environment</code> in <code>prod.tfvars, uat.tfvars</code> files, example value <code>environment = &quot;uat&quot;</code></p>
+<p>You can access the map <code>newrelic_slack_channels</code> in a file, example <code>locals.tf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">locals &#123;</span><br><span class="line">  newrelic_slack_channel_id = var.newrelic_slack_channels[var.environment]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</details>
+
+<h2 id="Example-Setup"><a href="#Example-Setup" class="headerlink" title="Example Setup"></a>Example Setup</h2><ol>
+<li>Install Terraform</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://docs.chocolatey.org/en-us/getting-started">Chocolatey</a> makes this easy for windows users like me … <code>sudo apt-get</code> this 🖕</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">choco install terraform</span><br><span class="line">terraform -version</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli">https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli</a></li>
+</ul>
+<ol start="2">
+<li>Create your initial config with <code>providers.tf</code> and <code>locals.tf</code></li>
+</ol>
+<p><strong>providers.tf</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">terraform &#123;</span><br><span class="line">  required_version = &quot;~&gt; 1.9.8&quot;</span><br><span class="line">  required_providers &#123;</span><br><span class="line">    newrelic = &#123;</span><br><span class="line">      source  = &quot;newrelic/newrelic&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">provider &quot;newrelic&quot; &#123;</span><br><span class="line">  account_id = local.newrelic_account_id</span><br><span class="line">  api_key    = local.api_key</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>locals.tf</strong></p>
+<p>You can get this from your NR account under <code>Administration</code> -&gt; <code>API Keys</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">locals &#123;</span><br><span class="line">  newrelic_account_id = &quot;0000000&quot;</span><br><span class="line">  api_key             = &quot;NRAK-00000000000000000000000000&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Run <code>terraform init</code> which will initialize the backend and provider plugins, mine created these files/folder locally. I manually modified my <code>locals.tf</code> with my account id and api key.</li>
+</ol>
+<p><img src="/d/newrelic_with_terraform/terraform-init.png"></p>
+<p>I then also updated my .gitignore with the config below</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.terraform/*</span><br><span class="line">.terraform.lock.hcl</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Create <code>Alert Policy</code> (parent) and <code>Alert Condition</code> (children) inside <code>alerts.tf</code></li>
+</ol>
+<p><strong>locals.tf</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// *** Alert policy</span><br><span class="line"></span><br><span class="line">resource &quot;newrelic_alert_policy&quot; &quot;hoonapi_alert_policy&quot; &#123;</span><br><span class="line">  name  = &quot;Hoon API Alert Policy $&#123;var.environment&#125;&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// *** Alert conditions</span><br><span class="line"></span><br><span class="line">resource &quot;newrelic_nrql_alert_condition&quot; &quot;error_rate&quot; &#123;</span><br><span class="line">  name                         = &quot;Golden Shower Error Rate&quot;</span><br><span class="line">  account_id                   = local.newrelic_account_id</span><br><span class="line">  policy_id                    = newrelic_alert_policy.hoonapi_alert_policy[count.index].id</span><br><span class="line">  type                         = &quot;static&quot;</span><br><span class="line">  enabled                      = true</span><br><span class="line">  violation_time_limit_seconds = 259200</span><br><span class="line">  runbook_url                  = &quot;https://carlpaton.github.io/2023/01/newrelic/&quot;</span><br><span class="line"></span><br><span class="line">  nrql &#123;</span><br><span class="line">    query = &quot;FROM Transaction SELECT percentage(count(*), WHERE `response.status` LIKE &#x27;5%&#x27;) WHERE appName in (&#x27;NewRelicHoon&#x27;) AND request.uri NOT IN (&#x27;/foo&#x27;, &#x27;/bar&#x27;)&quot;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  critical &#123;</span><br><span class="line">    operator              = &quot;above&quot;</span><br><span class="line">    threshold             = 2</span><br><span class="line">    threshold_duration    = 300</span><br><span class="line">    threshold_occurrences = &quot;all&quot;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  fill_option        = &quot;none&quot;</span><br><span class="line">  aggregation_window = 60</span><br><span class="line">  aggregation_method = &quot;event_flow&quot;</span><br><span class="line">  aggregation_delay  = 120</span><br><span class="line">  slide_by           = 30</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/nrql_alert_condition">https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/nrql_alert_condition</a></li>
+<li><a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/infra_alert_condition">https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/infra_alert_condition</a></li>
+</ul>
+<p><strong>variables.tf</strong></p>
+<p>Additionally create <code>variables.tf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">variable &quot;environment&quot; &#123;</span><br><span class="line">  type = string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>Run <code>terraform validate</code> and fix any errors.</p>
+</li>
+<li><p>Run <code>terraform plan</code> and specify the environment as <code>test</code></p>
+</li>
+<li><p>Run <code>terraform apply</code></p>
+</li>
+</ol>
+<p>The console will confirm the actions</p>
+<p><img src="/d/newrelic_with_terraform/terraform-apply-1.png"></p>
+<p>Additionall the local <code>terraform.tfstate</code> file will be created</p>
+<p><img src="/d/newrelic_with_terraform/terraformtfstate.png"></p>
+<ol start="8">
+<li>Log in to <a target="_blank" rel="noopener" href="https://login.newrelic.com/login">New Relic</a> and navigate to <a target="_blank" rel="noopener" href="https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/alert-policies/create-edit-or-find-alert-policy/#alert-policy-view">Alert Policies</a> to confirm that Terraform created your new policy.</li>
+</ol>
+<p>Alert Parent policy</p>
+<p><img src="/d/newrelic_with_terraform/policy.png"></p>
+<p>Child Alert Condition</p>
+<p><img src="/d/newrelic_with_terraform/alert-condition.png"></p>
+<ol start="9">
+<li>Add triggers, the example below is of type <code>EMAIL</code>, others exist like <code>SLACK</code></li>
+</ol>
+<p><strong>trigger.tf</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;newrelic_notification_destination&quot; &quot;team_email_destination&quot; &#123;</span><br><span class="line">  name = &quot;email-example&quot;</span><br><span class="line">  type = &quot;EMAIL&quot;</span><br><span class="line"></span><br><span class="line">  property &#123;</span><br><span class="line">    key = &quot;email&quot;</span><br><span class="line">    value = &quot;team.member1@email.com,team.member2@email.com,team.member3@email.com&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;newrelic_notification_channel&quot; &quot;team_email_channel&quot; &#123;</span><br><span class="line">  name = &quot;email-example&quot;</span><br><span class="line">  type = &quot;EMAIL&quot;</span><br><span class="line">  destination_id = newrelic_notification_destination.team_email_destination.id</span><br><span class="line">  product = &quot;IINT&quot;</span><br><span class="line"></span><br><span class="line">  property &#123;</span><br><span class="line">    key = &quot;subject&quot;</span><br><span class="line">    value = &quot;New Subject&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;newrelic_workflow&quot; &quot;team_workflow&quot; &#123;</span><br><span class="line">  name = &quot;Hoon API Workflow $&#123;var.environment&#125;&quot;</span><br><span class="line">  muting_rules_handling = &quot;NOTIFY_ALL_ISSUES&quot;</span><br><span class="line"></span><br><span class="line">  issues_filter &#123;</span><br><span class="line">    name = &quot;alerts_filter&quot;</span><br><span class="line">    type = &quot;FILTER&quot;</span><br><span class="line"></span><br><span class="line">    predicate &#123;</span><br><span class="line">      attribute = &quot;labels.policyIds&quot;</span><br><span class="line">      operator  = &quot;EXACTLY_MATCHES&quot;</span><br><span class="line">      values    = [newrelic_alert_policy.hoonapi_alert_policy.id]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    predicate &#123;</span><br><span class="line">      attribute = &quot;priority&quot;</span><br><span class="line">      operator  = &quot;EQUAL&quot;</span><br><span class="line">      values    = [&quot;CRITICAL&quot;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  destination &#123;</span><br><span class="line">    channel_id = newrelic_notification_channel.team_email_channel.id</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li><p>Run <code>terraform validate</code> and fix any errors.</p>
+</li>
+<li><p>Run <code>terraform plan</code> and specify the environment as <code>test</code></p>
+</li>
+<li><p>Run <code>terraform apply</code></p>
+</li>
+</ol>
+<p>You will notice the state updates and it creates a backup file for its internal process</p>
+<p><img src="/d/newrelic_with_terraform/state-update.png"></p>
+<p>Then the notification can be seen under the policy</p>
+<p><img src="/d/newrelic_with_terraform/notification.png"></p>
+<h2 id="Synthetic-Monitor"><a href="#Synthetic-Monitor" class="headerlink" title="Synthetic Monitor"></a>Synthetic Monitor</h2><p>This would be</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">newrelic_alert_condition</span><br><span class="line">newrelic_synthetics_alert_condition</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/synthetics_alert_condition">https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/synthetics_alert_condition</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2024/10/newrelic_with_terraform/" data-id="cm2va6j580000nkuh2eok8n1f" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/infrastructure-as-code/" rel="tag">infrastructure as code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/newrelic/" rel="tag">newrelic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/terraform/" rel="tag">terraform</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/11/sumolgic_with_terraform/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Sumologic With Terraform
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/10/mockoon/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mockoon (Mock API Using .Net)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/11/flyway-database-migration/">Flyway Database Migration (Local Dev)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/make/">Make</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/sumolgic_with_terraform/">Sumologic With Terraform</a>
+          </li>
+        
+          <li>
+            <a href="/2024/10/newrelic_with_terraform/">New Relic With Terraform</a>
+          </li>
+        
+          <li>
+            <a href="/2024/10/mockoon/">Mockoon (Mock API Using .Net)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.87px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.74px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.65px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.43px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.43px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.35px;">auth</a> <a href="/tags/aws/" style="font-size: 16.96px;">aws</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.3px;">cad</a> <a href="/tags/cam/" style="font-size: 10.87px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 13.91px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 10.87px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.74px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.04px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.43px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 16.96px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/encryption/" style="font-size: 10.87px;">encryption</a> <a href="/tags/feature-management/" style="font-size: 10.87px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.61px;">food</a> <a href="/tags/git/" style="font-size: 12.17px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.87px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.74px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.74px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 12.61px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.04px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mocking/" style="font-size: 13.91px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 17.83px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.87px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/newrelic/" style="font-size: 10.43px;">newrelic</a> <a href="/tags/nginx/" style="font-size: 10.87px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 12.17px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.87px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.04px;">python</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.52px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.43px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.74px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 15.22px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.26px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.43px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.09px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.3px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/terraform/" style="font-size: 10.43px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 18.7px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.65px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 19.13px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.87px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.3px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
