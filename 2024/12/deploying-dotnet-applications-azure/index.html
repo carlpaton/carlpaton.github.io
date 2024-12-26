@@ -28,9 +28,10 @@ ga('send', 'pageview');
 <meta property="og:description" content="Overview of my notes for Deploying .NET Applications To Azure, for a guided tutorial I highly recommend Dometrain - From Zero to Hero: Deploying .NET Applications to Azure by Mohamad Lawand Technologi">
 <meta property="og:locale">
 <meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/initial-resources-created.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/tfstate-in-blob.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/test-sql-connection.jpg">
 <meta property="article:published_time" content="2024-12-21T11:00:00.000Z">
-<meta property="article:modified_time" content="2024-12-23T06:24:40.762Z">
+<meta property="article:modified_time" content="2024-12-26T08:13:15.195Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="infrastructure as code">
 <meta property="article:tag" content="azure">
@@ -165,7 +166,7 @@ ga('send', 'pageview');
 <li><a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform">https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform</a></li>
 </ul>
 <p><strong>Azure</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">az login --tenant TENANT_ID             ~ auth the console to Entra so you can create resources in Azure</span><br><span class="line">az group list --output table            ~ list resource groups</span><br><span class="line">az account list-locations -o table      ~ list of Azure regions</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">~ create Entra `Service Principle`, this is used to deploy in Container Apps</span><br><span class="line"></span><br><span class="line">az ad sp create-for-rbac --name github-auth --role contributor --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/demo-rg --json-auth --output json</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">az login --tenant TENANT_ID             ~ auth the console to Entra so you can create resources in Azure</span><br><span class="line">az group list --output table            ~ list resource groups</span><br><span class="line">az account list-locations -o table      ~ list of Azure regions</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">~ create Entra `Service Principle`, this is used to deploy in Container Apps</span><br><span class="line">~ here we copy the entire JSON object and save as `AZ_CREDENTIALS` github secret</span><br><span class="line"></span><br><span class="line">az ad sp create-for-rbac --name github-auth --role contributor --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/demo-rg --json-auth --output json</span><br><span class="line"></span><br><span class="line">~ create Entra `Service Principle`, this is used to deploy IAC</span><br><span class="line">~ here we copy values out of the JSON and save as individual github secrets</span><br><span class="line"></span><br><span class="line">az ad sp create-for-rbac --name iac-terraform-auth</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli">https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli</a></li>
@@ -218,6 +219,56 @@ ga('send', 'pageview');
 </ul>
 <p>The end result seen from Azure showed the resources in my Resource Group:</p>
 <p><img src="/d/deploying-dotnet-applications-azure/initial-resources-created.jpg" alt="Resources created in Azure"></p>
+<h3 id="Backend-Long-Term-Storage"><a href="#Backend-Long-Term-Storage" class="headerlink" title="Backend (Long Term Storage)"></a>Backend (Long Term Storage)</h3><p>When I ran the <code>terraform x</code> commands locally it created some state listed below, this needs to be pushed to blob storage if we want to run these commands in a CI/CD pipeline. These files also contain GUIDs like the subscription ID which I dont think should be pushed to source control.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">terraform.tfstate</span><br><span class="line">terraform.tfstate.backup</span><br></pre></td></tr></table></figure>
+
+<p>Note the file <code>.terraform.lock.hcl</code> can be commited to source control and I created my backend manually in Azure portal.</p>
+<ol>
+<li>Resource groups -&gt; create</li>
+</ol>
+<ul>
+<li>Name -&gt; <code>reference-rg</code></li>
+<li>Region -&gt; <code>(Asia Pacific) Australia East</code></li>
+<li>Tags -&gt; <code>environment=dev, source=azure-portal</code></li>
+<li>Review and create -&gt; create</li>
+</ul>
+<ol start="2">
+<li>Select <code>reference-rg</code> -&gt; create -&gt; search -&gt; <code>storage account</code> -&gt; select <code>Storage account</code> by Microsoft | Azure Service</li>
+</ol>
+<ul>
+<li>Plan -&gt; <code>Storage account</code></li>
+<li>Storage account name -&gt; <code>demoiac</code></li>
+<li>Region -&gt; <code>(Asia Pacific) Australia East</code></li>
+<li>Primary service -&gt; <code>Azure Blob Storage or Azure Data Lake Storage Gen 2</code></li>
+<li>Performance -&gt; <code>Standard</code></li>
+<li>Redundancy -&gt; <code>Locally-redundant storage (LRS)</code></li>
+<li>Review and create -&gt; create</li>
+<li><em>this will take a minute or so to create</em></li>
+<li>Go to resource -&gt; Data storage -&gt; Containers -&gt; + Container (New Container)</li>
+<li>Name -&gt; <code>terraform</code> -&gt; Create</li>
+</ul>
+<ol start="3">
+<li>Update <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/setup.tf">Setup.tf</a> to include the backend</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">terraform &#123;</span><br><span class="line">  required_providers &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  backend &quot;azurerm&quot; &#123;</span><br><span class="line">    resource_group_name = &quot;reference-rg&quot;</span><br><span class="line">    storage_account_name = &quot;demoiac&quot;</span><br><span class="line">    container_name = &quot;terraform&quot;</span><br><span class="line">    key = &quot;terraform.tfstate&quot;</span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>To migrate the terraform files from local to the new blob storage run</li>
+</ol>
+<ul>
+<li>run <code>terraform plan</code></li>
+<li>Do you want to copy existing state to the new backend -&gt; yes</li>
+</ul>
+<p><img src="/d/deploying-dotnet-applications-azure/tfstate-in-blob.jpg" alt="tfstate was copied to blob storage"></p>
+<ol start="5">
+<li>Add a testing tag to the existing <code>demo-rg</code> resource group</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tags = &#123;</span><br><span class="line">  ...</span><br><span class="line">  test1       = &quot;test1&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>Run <code>terraform plan</code>, this will show the changes, no need to apply it, this will be done next in a pipeline.</li>
+</ol>
+<p>… WIP!</p>
 <h2 id="Connect-To-SQL"><a href="#Connect-To-SQL" class="headerlink" title="Connect To SQL"></a>Connect To SQL</h2><p>The username and DNS shown here was just for the demo, best practice is never to commit or share any secrets.</p>
 <p>I then added my own IP address to the firewall by navigating to Resource Group (<code>demo-rg</code>) -&gt; selected the SQL server (<code>demo-sql-dev</code>) -&gt; Networking (Show networking settings) -&gt; Firewall rules -&gt; Add your client IPv4 address (xxx.xxx.xxx.xxx) -&gt; Azure automagically filled mine in -&gt; I called mine <code>Carl home IP</code> -&gt; Save. Your IP wont be static so will probs need an update later.</p>
 <p>I then needed to get the server address for SQL in Azure by navigating to <code>SQL server</code>, my server name was <strong>demo-sql-dev.database.windows.net</strong>, so the suffix comes from <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/mssql.tf#L3">mssql.tf where we set the server name</a></p>
@@ -235,6 +286,10 @@ ga('send', 'pageview');
 <p><strong>For Azure Container App</strong></p>
 <p>Create a service principal and configure its access to Azure resources. See <code>az ad sp create-for-rbac</code> above, save the whole JSON output into git secrets.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; secrets.AZ_CREDENTIALS &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>For IAC</strong></p>
+<p>Create a service principal and configure its access to Azure resources. See <code>az ad sp create-for-rbac</code> above, save keys out of the JSON into git secrets.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; secrets.ARM_CLIENT_ID &#125;&#125;         ~ appId</span><br><span class="line">$&#123;&#123; secrets.ARM_CLIENT_SECRET &#125;&#125;     ~ password</span><br><span class="line">$&#123;&#123; secrets.ARM_SUBSCRIPTION_ID &#125;&#125;   ~ you get this from `az login` or the Azure portal under and resource</span><br><span class="line">$&#123;&#123; secrets.ARM_TENANT_ID &#125;&#125;         ~ existing tenant</span><br></pre></td></tr></table></figure>
 
 <h2 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI/CD"></a>CI/CD</h2><ul>
 <li><p><strong>WORKFLOW</strong></p>
@@ -281,6 +336,7 @@ ga('send', 'pageview');
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">old                                                   new</span><br><span class="line">&quot;latestRevisionName&quot;: &quot;demo-acadev--gw4qzwk&quot;          &quot;latestRevisionName&quot;: &quot;demo-acadev--kj2aaos&quot;</span><br></pre></td></tr></table></figure>
 
 <p>Under <code>Monitoring</code> -&gt; <code>Log stream</code> select the Revision matching <code>kj2aaos</code>, this is going to give you the running container logs, so you can see why you code code sucks :D</p>
+<p>Under <code>Monitoring</code> -&gt; <code>Logs</code> you can write and execute your own log queries, this is helpful when you have heaps of logs and need to diagnose problems.</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.npgsql.org/efcore/?tabs=onconfiguring">https://www.npgsql.org/efcore/?tabs=onconfiguring</a></li>
 <li><a target="_blank" rel="noopener" href="https://datacenters.microsoft.com/globe/explore">https://datacenters.microsoft.com/globe/explore</a></li>
