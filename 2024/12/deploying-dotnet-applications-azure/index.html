@@ -31,7 +31,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/tfstate-in-blob.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/test-sql-connection.jpg">
 <meta property="article:published_time" content="2024-12-21T11:00:00.000Z">
-<meta property="article:modified_time" content="2025-01-08T02:38:20.945Z">
+<meta property="article:modified_time" content="2025-01-08T04:37:36.383Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="infrastructure as code">
 <meta property="article:tag" content="azure">
@@ -159,12 +159,6 @@ ga('send', 'pageview');
 <p><strong>Run EF migrations locally</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dotnet tool install --global dotnet-ef                                                     ~ globally install the EF tooling</span><br><span class="line">dotnet build                                                                               ~ build the solution</span><br><span class="line"></span><br><span class="line">dotnet ef migrations add Initial_Migration --project .\src\DemoApi\DemoApi.csproj          ~ add a migration based on the application models</span><br><span class="line">dotnet ef database update --project .\src\DemoApi\DemoApi.csproj                           ~ apply the migration</span><br></pre></td></tr></table></figure>
 
-<p><strong>Terraform</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">terraform version</span><br><span class="line">terraform init                          ~ local initialization, and tracking with `.terraform.lock.hcl`</span><br><span class="line">                                        ~ this is not the backend, its to record the provider selections</span><br><span class="line"></span><br><span class="line">terraform plan                          ~ test run, compare local tf with azure, show the difference</span><br><span class="line"></span><br><span class="line">terraform apply                         ~ execute, should create the resources described in tf plan</span><br><span class="line">                                        ~ this will then create `terraform.tfstate` which is used to compare local to Azure</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform">https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform</a></li>
-</ul>
 <p><strong>Azure</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">az login --tenant TENANT_ID             ~ auth the console to Entra so you can create resources in Azure</span><br><span class="line">az group list --output table            ~ list resource groups</span><br><span class="line">az account list-locations -o table      ~ list of Azure regions</span><br><span class="line"></span><br><span class="line">~ create Entra `Service Principle`, this is used to deploy in Container Apps</span><br><span class="line">~ here we copy the entire JSON object and save as `AZ_CREDENTIALS` github secret</span><br><span class="line"></span><br><span class="line">az ad sp create-for-rbac --name github-auth --role contributor --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/demo-rg --json-auth --output json</span><br><span class="line"></span><br><span class="line">~ create Entra `Service Principle`, this is used to deploy IAC</span><br><span class="line">~ here we copy values out of the JSON and save as individual github secrets</span><br><span class="line"></span><br><span class="line">az ad sp create-for-rbac --name iac-terraform-auth</span><br></pre></td></tr></table></figure>
 
@@ -172,20 +166,27 @@ ga('send', 'pageview');
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli">https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli</a></li>
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest#az-ad-sp-create-for-rbac">https://learn.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest#az-ad-sp-create-for-rbac</a></li>
 </ul>
+<p><strong>Terraform</strong></p>
+<p>You need to run <code>az login</code> locally first before you run <code>terraform apply</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">terraform version</span><br><span class="line">terraform init                          ~ local initialization, and tracking with `.terraform.lock.hcl` to record the provider selections made</span><br><span class="line">                                        ~ Per the docs: Include this file in your version control repository </span><br><span class="line">                                        ~ so that Terraform can guarantee to make the same selections by default when you run &quot;terraform init&quot; in the future.</span><br><span class="line"></span><br><span class="line">terraform plan                          ~ test run, compare local tf with azure, show the difference</span><br><span class="line"></span><br><span class="line">terraform apply                         ~ execute, should create the resources described in tf plan</span><br><span class="line">                                        ~ this will then create `terraform.tfstate` which is used to compare local to Azure</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform">https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform</a></li>
+</ul>
 <h2 id="Terraform"><a href="#Terraform" class="headerlink" title="Terraform"></a>Terraform</h2><p>I created <code>vars.tf</code>, <code>setup.tf</code> and <code>resource-group.tf</code> and updated vars with <code>subscription_id</code> (you get this from <code>az login</code>). The values for <code>sql_pass</code> and <code>sql_user</code> I made up just before deploying with terraform, if you dont set a default in the terraform files, it will prompt for a value, this is how I pass the values though github actions.</p>
 <p>I then ran <code>terraform plan/apply</code> which created my Resource Group (<code>demo-rg</code>)</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/vars.tf">vars.tf</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/vars.tf">vars.tf</a><ul>
 <li>variables to be reused in the other .tf files</li>
 <li>set subscription id, you get this when you login with <code>az login</code></li>
 </ul>
 </li>
-<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/setup.tf">setup.tf</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/setup.tf">setup.tf</a><ul>
 <li>sets the cloud provider, API versions and account to connect to by subscription id</li>
 <li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest">azurerm</a></li>
 </ul>
 </li>
-<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/resource-group.tf">resource-group.tf</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/resource-group.tf">resource-group.tf</a><ul>
 <li>groups resources in Azure</li>
 <li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group">resource-group</a></li>
 </ul>
@@ -193,25 +194,25 @@ ga('send', 'pageview');
 </ul>
 <p>I then added the following <code>.tf</code> files, one at a time in the order listed here again running <code>terraform plan/apply</code>, each time it creates the resources in Azure.</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/azure-container-registry.tf">azure-container-registry.tf</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/container-registry.tf">container-registry.tf</a><ul>
 <li>registry to store and manage docker images by version</li>
 <li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry">container_registry</a></li>
 </ul>
 </li>
-<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/azurerm_log_analytics_workspace.tf">azurerm_log_analytics_workspace.tf</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/log_analytics_workspace.tf">log_analytics_workspace.tf</a><ul>
 <li>logging and analytics</li>
 <li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/log_analytics_workspace">log_analytics_workspace</a></li>
 </ul>
 </li>
-<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/container_app_environment.tf">container_app_environment.tf</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/container_app_environment.tf">container_app_environment.tf</a><ul>
 <li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_app_environment">container_app_environment</a></li>
 </ul>
 </li>
-<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/container_app.tf">container_app.tf</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/container_app.tf">container_app.tf</a><ul>
 <li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_app">container_app</a></li>
 </ul>
 </li>
-<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/mssql.tf">mssql.tf</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/mssql.tf">mssql.tf</a><ul>
 <li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server">mssql_server</a></li>
 <li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_database">mssql_database</a></li>
 <li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_firewall_rule">mssql_firewall_rule</a></li>
@@ -290,7 +291,7 @@ ga('send', 'pageview');
 
 <p><strong>For IAC</strong></p>
 <p>Create a service principal and configure its access to Azure resources. See <code>az ad sp create-for-rbac</code> above, save keys out of the JSON into git secrets.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; secrets.ARM_CLIENT_ID &#125;&#125;         ~ appId</span><br><span class="line">$&#123;&#123; secrets.ARM_CLIENT_SECRET &#125;&#125;     ~ password</span><br><span class="line">$&#123;&#123; secrets.ARM_SUBSCRIPTION_ID &#125;&#125;   ~ you get this from `az login` or the Azure portal under and resource</span><br><span class="line">$&#123;&#123; secrets.ARM_TENANT_ID &#125;&#125;         ~ existing tenant</span><br><span class="line"></span><br><span class="line">$&#123;&#123; secrets.TF_VAR_DB_PASSWORD &#125;&#125;    ~ used with `Terraform plan` as var `sql_pass`</span><br><span class="line">$&#123;&#123; secrets.TF_VAR_DB_USER &#125;&#125;        ~ used with `Terraform plan` as var `sql_user`</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; secrets.ARM_CLIENT_ID &#125;&#125;         ~ appId</span><br><span class="line">$&#123;&#123; secrets.ARM_CLIENT_SECRET &#125;&#125;     ~ password</span><br><span class="line">$&#123;&#123; secrets.ARM_SUBSCRIPTION_ID &#125;&#125;   ~ you get this from `az login` or the Azure portal under and resource</span><br><span class="line">$&#123;&#123; secrets.ARM_TENANT_ID &#125;&#125;         ~ existing tenant</span><br><span class="line"></span><br><span class="line">$&#123;&#123; secrets.TF_VAR_DB_PASSWORD &#125;&#125;    ~ used with `Terraform plan` as var `sql_pass`</span><br><span class="line">$&#123;&#123; secrets.TF_VAR_DB_USER &#125;&#125;        ~ used with `Terraform plan` as var `sql_user`</span><br><span class="line"></span><br><span class="line">$&#123;&#123; secrets.AZ_MSSQL_DB_CONN &#125;&#125;      ~ used when deploying, changes app settings ConnectionStrings__SqlServer</span><br></pre></td></tr></table></figure>
 
 <h2 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI/CD"></a>CI/CD</h2><ul>
 <li><p><strong>WORKFLOW</strong></p>
