@@ -32,7 +32,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/tfstate-in-blob.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/multiple-revisions.jpg">
 <meta property="article:published_time" content="2024-12-21T11:00:00.000Z">
-<meta property="article:modified_time" content="2025-01-09T02:27:53.312Z">
+<meta property="article:modified_time" content="2025-01-13T09:21:04.093Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="infrastructure as code">
 <meta property="article:tag" content="azure">
@@ -145,10 +145,8 @@ ga('send', 'pageview');
 <p>For a guided tutorial I highly recommend <a target="_blank" rel="noopener" href="https://dometrain.com/course/from-zero-to-hero-deploying-dotnet-apps-to-azure/">Dometrain - From Zero to Hero: Deploying .NET Applications to Azure by Mohamad Lawand</a></p>
 <h2 id="Local-Setup"><a href="#Local-Setup" class="headerlink" title="Local Setup"></a>Local Setup</h2><p><strong>Terraform CLI</strong></p>
 <ol>
-<li><p>Install terraform CLI, see <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform">https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform</a></p>
-</li>
-<li><p>Check its available after installing, this should show a version, example <code>v1.9.8</code></p>
-</li>
+<li>Install terraform CLI, see <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform">https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform</a></li>
+<li>Check its available after installing, this should show a version, example <code>v1.9.8</code></li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">terraform version</span><br></pre></td></tr></table></figure>
 
@@ -177,7 +175,6 @@ ga('send', 'pageview');
 <ol start="4">
 <li>Check the app can locally insert and read data from the database</li>
 </ol>
-<p>TODO insert some example screen snippets</p>
 <h2 id="Create-Azure-Infrastructure-With-Terraform"><a href="#Create-Azure-Infrastructure-With-Terraform" class="headerlink" title="Create Azure Infrastructure With Terraform"></a>Create Azure Infrastructure With Terraform</h2><p>You will need to know your tenant id, its just a GUID like 00000000-0000-0000-0000-000000000001</p>
 <ol>
 <li>Login to Azure, select and note the subscription</li>
@@ -244,6 +241,15 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
+<p>Note: <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server">azurerm_postgresql_flexible_server</a> replaces the single server used <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/postgresql/migrate/whats-happening-to-postgresql-single-server">March 28, 2025</a></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/pgsql.tf">pgsql.tf</a> (Single Server)<ul>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server">postgresql_server</a></li>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_database">postgresql_database</a></li>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_firewall_rule">postgresql_firewall_rule</a></li>
+</ul>
+</li>
+</ul>
 <p>The end result seen from Azure showed the resources in my Resource Group:</p>
 <p><img src="/d/deploying-dotnet-applications-azure/initial-resources-created.jpg" alt="Resources created in Azure"></p>
 <p>You can also view the groups from the CLI</p>
@@ -287,10 +293,8 @@ ga('send', 'pageview');
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; secrets.AZ_MSSQL_DB_CONN &#125;&#125;      ~ used when deploying, changes app settings ConnectionStrings__SqlServer</span><br></pre></td></tr></table></figure>
 
 <h2 id="Github-Actions-Deploy-Application"><a href="#Github-Actions-Deploy-Application" class="headerlink" title="Github Actions - Deploy Application"></a>Github Actions - Deploy Application</h2><ol>
-<li><p>Copy <code>\.github\examples\deploy-api.yaml</code> to <code>\.github\workflows\deploy-api.yaml</code></p>
-</li>
-<li><p>Update the config values, potentially this could be from a config but this is more intentional and these values wont change for the applications life span.</p>
-</li>
+<li>Copy <code>\.github\examples\deploy-api.yaml</code> to <code>\.github\workflows\deploy-api.yaml</code></li>
+<li>Update the config values, potentially this could be from a config but this is more intentional and these values wont change for the applications life span.</li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">demoacrdev (few instance values)     -&gt; demoacrbb8c7a39dev</span><br><span class="line">containerAppName                     -&gt; demo-aca-bb8c7a39-dev</span><br><span class="line">containerAppEnvironment              -&gt; demo-cae-bb8c7a39-dev</span><br><span class="line">resourceGroup                        -&gt; demo-rg-bb8c7a39-dev</span><br></pre></td></tr></table></figure>
 
@@ -299,15 +303,7 @@ ga('send', 'pageview');
 </ol>
 <p>Overview of <code>deploy-api.yaml</code></p>
 <ul>
-<li><p><strong>WORKFLOW</strong></p>
-<ul>
-<li>push: When you commit</li>
-<li>pull_request: When you create a pull request</li>
-<li>workflow_dispatch: When you manually trigger a job, useful for pull request job re-runs</li>
-</ul>
-</li>
-<li><p><strong>JOB</strong>: </p>
-<ul>
+<li><strong>JOB</strong>: <ul>
 <li>build-and-push-image<ul>
 <li><strong>STEPS</strong>: <ul>
 <li>Checkout repository</li>
@@ -391,17 +387,29 @@ ga('send', 'pageview');
 <p><img src="/d/deploying-dotnet-applications-azure/tfstate-in-blob.jpg" alt="tfstate was copied to blob storage"></p>
 <p>Locally <code>terraform.tfstate</code> should now be blank.</p>
 <ol start="5">
-<li><p>Copy <code>\.github\examples\deploy-api.yaml</code> to <code>\.github\workflows\deploy-api.yaml</code>, no changes needed, commit and push.</p>
-</li>
-<li><p>This should fail with role sadness</p>
-</li>
+<li>Copy <code>\.github\examples\deploy-iac.yaml</code> to <code>\.github\workflows\deploy-iac.yaml</code>, no changes needed, commit and push.</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">│ Error: Failed to get existing workspaces: Error retrieving keys for Storage Account &quot;demoiacbb8c7a39&quot;: storage.AccountsClient#ListKeys: Failure responding to request: StatusCode=403 -- Original Error: autorest/azure: Service returned an error. Status=403 Code=&quot;AuthorizationFailed&quot; Message=&quot;The client &#x27;a22c2ac0-df8d-4b13-9e6c-d56b2c13ebf6&#x27; with object id &#x27;a22c2ac0-df8d-4b13-9e6c-d56b2c13ebf6&#x27; does not have authorization to perform action &#x27;Microsoft.Storage/storageAccounts/listKeys/action&#x27; over scope &#x27;/subscriptions/***/resourceGroups/reference-rg/providers/Microsoft.Storage/storageAccounts/demoiacbb8c7a39&#x27; or the scope is invalid. If access was recently granted, please refresh your credentials.&quot;</span><br></pre></td></tr></table></figure>
-
-<p>We need to apply a role to this client</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az role assignment create --assignee a22c2ac0-df8d-4b13-9e6c-d56b2c13ebf6 --role Contributor --scope /subscriptions/00000000-0000-0000-0000-000000000002</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
+<p>Overview of <code>deploy-iac.yaml</code></p>
+<ul>
+<li><strong>JOB</strong>: <ul>
+<li>terraform-deploy<ul>
+<li><strong>STEPS</strong>: <ul>
+<li>Checkout repository</li>
+<li>Login to Azure</li>
+<li>Terraform install</li>
+<li>Terraform initialization</li>
+<li>Terraform validate</li>
+<li>Terraform plan</li>
+<li>Terraform apply</li>
+<li>Notify failure</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="6">
 <li>Add a tag change, commit &amp; push</li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;azurerm_resource_group&quot; &quot;demo-rg&quot; &#123;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  tags = &#123;</span><br><span class="line">...</span><br><span class="line">    testtag     = &quot;testtag1&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -449,6 +457,12 @@ ga('send', 'pageview');
 
 <p>Registered</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Namespace      RegistrationState    RegistrationPolicy</span><br><span class="line">-------------  -------------------  --------------------</span><br><span class="line">Microsoft.App  Registered           RegistrationRequired</span><br></pre></td></tr></table></figure>
+
+<p><strong>AuthorizationFailed</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">│ Error: Failed to get existing workspaces: Error retrieving keys for Storage Account &quot;demoiacbb8c7a39&quot;: storage.AccountsClient#ListKeys: Failure responding to request: StatusCode=403 -- Original Error: autorest/azure: Service returned an error. Status=403 Code=&quot;AuthorizationFailed&quot; Message=&quot;The client &#x27;a22c2ac0-df8d-4b13-9e6c-d56b2c13ebf6&#x27; with object id &#x27;a22c2ac0-df8d-4b13-9e6c-d56b2c13ebf6&#x27; does not have authorization to perform action &#x27;Microsoft.Storage/storageAccounts/listKeys/action&#x27; over scope &#x27;/subscriptions/***/resourceGroups/reference-rg/providers/Microsoft.Storage/storageAccounts/demoiacbb8c7a39&#x27; or the scope is invalid. If access was recently granted, please refresh your credentials.&quot;</span><br></pre></td></tr></table></figure>
+
+<p>We need to apply a role to this client</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az role assignment create --assignee a22c2ac0-df8d-4b13-9e6c-d56b2c13ebf6 --role Contributor --scope /subscriptions/00000000-0000-0000-0000-000000000002</span><br></pre></td></tr></table></figure>
 
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.npgsql.org/efcore/?tabs=onconfiguring">https://www.npgsql.org/efcore/?tabs=onconfiguring</a></li>
