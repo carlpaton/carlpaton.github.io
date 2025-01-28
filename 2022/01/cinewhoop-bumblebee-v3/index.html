@@ -20,12 +20,12 @@ ga('send', 'pageview');
   
   <title>Cinewhoop Bumblebee V3 | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP   A space to keep track of all the parts needed to build this quad. Frame iFlight CineWhoop V3 HD Bumblebee  Flight controllers My board is a DIAT&#x2F;MAMBAF722_I2C(STM32F7X2) Betaflight F4 flight co">
+  <meta name="description" content="Updated 28&#x2F;01&#x2F;2025  A space to keep track of all the parts needed to build this quad. Frame iFlight CineWhoop V3 HD Bumblebee  Flight controllers My board is a DIAT&#x2F;MAMBAF722_I2C(STM32F7X2) Betaflight">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cinewhoop Bumblebee V3">
 <meta property="og:url" content="https://carlpaton.github.io/2022/01/cinewhoop-bumblebee-v3/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP   A space to keep track of all the parts needed to build this quad. Frame iFlight CineWhoop V3 HD Bumblebee  Flight controllers My board is a DIAT&#x2F;MAMBAF722_I2C(STM32F7X2) Betaflight F4 flight co">
+<meta property="og:description" content="Updated 28&#x2F;01&#x2F;2025  A space to keep track of all the parts needed to build this quad. Frame iFlight CineWhoop V3 HD Bumblebee  Flight controllers My board is a DIAT&#x2F;MAMBAF722_I2C(STM32F7X2) Betaflight">
 <meta property="og:locale">
 <meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/bumblebee.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/f7-ports.jpg">
@@ -42,10 +42,9 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/osd.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/dji-air-unit-wires.png">
 <meta property="article:published_time" content="2022-01-09T11:00:00.000Z">
-<meta property="article:modified_time" content="2025-01-28T09:20:52.316Z">
+<meta property="article:modified_time" content="2025-01-28T21:23:47.775Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="model airplanes">
-<meta property="article:tag" content="wip">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/bumblebee.png">
   
@@ -151,9 +150,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p><a href="/2017/06/work-in-progress/">WIP</a></p>
-</blockquote>
+        <p><strong>Updated 28/01/2025</strong></p>
 <p><img src="/d/cinewhoop-bumblebee-v3/bumblebee.png" alt="Bumblebee"></p>
 <p>A space to keep track of all the parts needed to build this quad.</p>
 <h2 id="Frame"><a href="#Frame" class="headerlink" title="Frame"></a>Frame</h2><ul>
@@ -190,12 +187,14 @@ ga('send', 'pageview');
   <summary>MAMBAF722</summary>
 
 <p>Some settings like <code>Modes</code> are the same as the <code>OMNIBUSF4SD</code></p>
-<h3 id="Ports"><a href="#Ports" class="headerlink" title="Ports"></a>Ports</h3><p><img src="/d/cinewhoop-bumblebee-v3/f7-ports.jpg" alt="ports"></p>
+<h3 id="Ports"><a href="#Ports" class="headerlink" title="Ports"></a>Ports</h3><p>This means my SBUS (orange signal wire) to the Futaba RX is connected to <code>RX 4</code> on the MAMBAF722 controller. The brown is connected to <code>G</code> and the red is connected to <code>5V</code></p>
+<p><img src="/d/cinewhoop-bumblebee-v3/f7-ports.jpg" alt="ports"></p>
 <h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AIRMODE:            Enabled</span><br><span class="line">PID loop freq:      8.00hHz</span><br><span class="line">Max ARM angle:      180</span><br><span class="line">OSD:                Enabled</span><br></pre></td></tr></table></figure>
 
 <h3 id="Motors-1"><a href="#Motors-1" class="headerlink" title="Motors"></a>Motors</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mixer:              QUAD X</span><br><span class="line">ESC/Motor:          DSHOT600</span><br></pre></td></tr></table></figure>
 
 </details>
+<br>
 
 <details>
   <summary>OMNIBUSF4SD</summary>
@@ -203,7 +202,9 @@ ga('send', 'pageview');
 <p>This controller was second hand and kept dropping power so I bought the <code>MAMBAF722</code> and moved over to it.</p>
 <h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p><img src="/d/cinewhoop-bumblebee-v3/setup.png" alt="setup"></p>
 <h3 id="Ports-1"><a href="#Ports-1" class="headerlink" title="Ports"></a>Ports</h3><ul>
-<li>Enable the UART that was linked to the DJI Air Unit above (the white and gray wires)</li>
+<li>This means the DJI white wire is connected to <code>TX6</code> and the DJI grey wire is connected to <code>RX6</code></li>
+<li>The controller had a <code>SBUS</code> pad which I used for the orange signal wire to the Futaba RX, Futaba brown wire went to <code>-</code> and Futaba red wire went to <code>5V</code>. </li>
+<li>My assumption is <code>SBUS</code> is <code>UART1</code> so enabled Serial Rx</li>
 </ul>
 <p><img src="/d/cinewhoop-bumblebee-v3/ports.png" alt="ports"></p>
 <h3 id="Configuration-1"><a href="#Configuration-1" class="headerlink" title="Configuration"></a>Configuration</h3><ul>
@@ -289,7 +290,7 @@ ga('send', 'pageview');
       <a data-url="https://carlpaton.github.io/2022/01/cinewhoop-bumblebee-v3/" data-id="cm17ifjd1004q74uhh32kbz9h" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model-airplanes/" rel="tag">model airplanes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wip/" rel="tag">wip</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model-airplanes/" rel="tag">model airplanes</a></li></ul>
 
     </footer>
   </div>
