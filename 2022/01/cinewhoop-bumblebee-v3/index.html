@@ -20,15 +20,15 @@ ga('send', 'pageview');
   
   <title>Cinewhoop Bumblebee V3 | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WIP   A space to keep track of all the parts needed to build this quad. Frame BumbleBee HD V3 Frame  Flight controllersThe current V3 ships with the F7 all in one however an older F4 would work just">
+  <meta name="description" content="WIP   A space to keep track of all the parts needed to build this quad. Frame iFlight CineWhoop V3 HD Bumblebee  Flight controllers My board is a DIAT&#x2F;MAMBAF722_I2C(STM32F7X2) Betaflight F4 flight co">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cinewhoop Bumblebee V3">
 <meta property="og:url" content="https://carlpaton.github.io/2022/01/cinewhoop-bumblebee-v3/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="WIP   A space to keep track of all the parts needed to build this quad. Frame BumbleBee HD V3 Frame  Flight controllersThe current V3 ships with the F7 all in one however an older F4 would work just">
+<meta property="og:description" content="WIP   A space to keep track of all the parts needed to build this quad. Frame iFlight CineWhoop V3 HD Bumblebee  Flight controllers My board is a DIAT&#x2F;MAMBAF722_I2C(STM32F7X2) Betaflight F4 flight co">
 <meta property="og:locale">
 <meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/bumblebee.png">
-<meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/dji-air-unit-wires.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/f7-ports.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/setup.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/ports.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/config.png">
@@ -40,8 +40,9 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/receiver-2.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/modes-1.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/osd.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/cinewhoop-bumblebee-v3/dji-air-unit-wires.png">
 <meta property="article:published_time" content="2022-01-09T11:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-13T09:11:10.808Z">
+<meta property="article:modified_time" content="2025-01-28T09:14:14.413Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="model airplanes">
 <meta property="article:tag" content="wip">
@@ -156,74 +157,56 @@ ga('send', 'pageview');
 <p><img src="/d/cinewhoop-bumblebee-v3/bumblebee.png" alt="Bumblebee"></p>
 <p>A space to keep track of all the parts needed to build this quad.</p>
 <h2 id="Frame"><a href="#Frame" class="headerlink" title="Frame"></a>Frame</h2><ul>
-<li>BumbleBee HD V3 Frame</li>
+<li>iFlight CineWhoop V3 HD Bumblebee</li>
 </ul>
-<h2 id="Flight-controllers"><a href="#Flight-controllers" class="headerlink" title="Flight controllers"></a>Flight controllers</h2><p>The current V3 ships with the F7 all in one however an older F4 would work just as well and having a stack (so the ESC’s on their own board) means if one craps out you dont have to replace an expensive AIO unit.</p>
-<ul>
-<li>Beast F7 45A BLHeli-S true AIO board</li>
-</ul>
-<p>Cheaper (and older) boards</p>
-<ul>
+<h2 id="Flight-controllers"><a href="#Flight-controllers" class="headerlink" title="Flight controllers"></a>Flight controllers</h2><ul>
+<li>My board is a <code>DIAT/MAMBAF722_I2C(STM32F7X2)</code></li>
 <li>Betaflight F4 flight controller</li>
-</ul>
-<p>Others</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.quadjunkie.co.nz/product/diatone-mamba-f405-dji-fc-2/">Diatone MAMBA F405 DJI FC</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.kiwiquads.co.nz/product/diatone-mamba-f405-dji-6s-flight-controller/">Diatone Mamba F405 MK2 DJI Flight Controller</a></li>
+<li>Diatone MAMBA F405 DJI FC</li>
+<li>Diatone Mamba F405 MK2 DJI Flight Controller</li>
 </ul>
 <h2 id="ESC"><a href="#ESC" class="headerlink" title="ESC"></a>ESC</h2><p>40 amp seems to be the standard but depending on the props and motors I guess 20 would work too.</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.quadjunkie.co.nz/product/diatone-mamba-f40-mini-dshot1200-4in1-32bit-esc-40a-6s/">Diatone MAMBA F40 MINI Dshot1200 4IN1 32bit ESC 40A 6S</a></li>
 </ul>
-<h2 id="Motors"><a href="#Motors" class="headerlink" title="Motors"></a>Motors</h2><p>This frame is 12x12 m2 for the motors.</p>
-<p>These are the suggested motors from iflight:</p>
+<h2 id="Motors"><a href="#Motors" class="headerlink" title="Motors"></a>Motors</h2><p>My motors are</p>
+<ul>
+<li>BrotherBobby 1806 2850KV</li>
+</ul>
+<p>This frame is 12x12 m2 for the motors and these are the suggested motors from iflight:</p>
 <ul>
 <li>4S XING 1408 3600KV (I think this was V1/V2)</li>
-<li>4S XING 2203.5 3600KV (currently shipped with V3 of the frame)</li>
+<li>4S XING 2203.5 3600KV (currently shipped with V3 of the frame)<ul>
+<li>22 is the diameter in mm of the stator inside and 03.5 is its height.</li>
 </ul>
-<p>22 is the diameter in mm of the stator inside and 03.5 is its height.</p>
-<p>Other motor sizes that will probably work are:</p>
-<ul>
-<li>1407</li>
-<li>1506</li>
-<li>1806</li>
+</li>
 </ul>
 <h2 id="Battery"><a href="#Battery" class="headerlink" title="Battery"></a>Battery</h2><ul>
-<li>4S 95C 1550mAh（6-7 minutes flight time w/GoPro Hero8）</li>
+<li>Mine are CNHL Black 1300mAh 100c</li>
+<li>From what Ive seen online up to 1550mAh will work（6-7 minutes flight time w/GoPro Hero8）</li>
 </ul>
-<h2 id="DJI-Air-Unit"><a href="#DJI-Air-Unit" class="headerlink" title="DJI Air Unit"></a>DJI Air Unit</h2><h3 id="Wires"><a href="#Wires" class="headerlink" title="Wires"></a>Wires</h3><p>If the flight controller doesnt have a DJI port its still possible to solder it in, just make sure if you are using 6S you run though a BEC/Regulator.</p>
-<p>The BEC is always ideal as it will give continuous clean power, the example in the video below was a 8V 3AMP (8x3 = 24 watts of power).</p>
-<p>The air unit only needs 4 to 9 watts but its better to have more avalible to it (it will only draw what it needs). Apparently it will draw as much as 16 watts.</p>
-<p>Common regulators are 9V 2AMP (9x2 = 18 watts)</p>
-<p>If you are just running 4S then you can just use VBAT off the flight controller.</p>
-<p><img src="/d/cinewhoop-bumblebee-v3/dji-air-unit-wires.png" alt="DJI Air Unit Wires"></p>
-<ul>
-<li>See this video <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=3qbQRJRmJrM">HOW-TO Wire the DJI FPV Air Unit (or Caddx Vista/Air Unit Lite) for Betaflight</a></li>
-</ul>
-<h3 id="Region-amp-Power-changes"><a href="#Region-amp-Power-changes" class="headerlink" title="Region &amp; Power changes"></a>Region &amp; Power changes</h3><ul>
-<li>The Air Unit allows you to set the region with a text file <code>naco.txt</code>, set the region 1 (Country=US, Radio mode=FCC)</li>
-<li>Save to the root of your SD card and pop it into the Air Unit</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">naco.txt</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<h2 id="Betaflight"><a href="#Betaflight" class="headerlink" title="Betaflight"></a>Betaflight</h2><p>You can download <a target="_blank" rel="noopener" href="https://github.com/betaflight/betaflight-configurator/releases">Betaflight Configurator from github</a>, look for the assets drop down.</p>
+<details>
+  <summary>MAMBAF722</summary>
 
-<ul>
-<li>The Goggles allow you to set the power with a text file <code>naco_pwr.txt</code></li>
-<li>Save to the root of your SD card and pop it into the Goggles, this will allow up to <code>1000mw</code> of power output (default is <code>25mw</code>)</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">naco_pwr.txt</span><br><span class="line">pwr_1                         ~ this is 1000 mwah (this is the highest value allowed in the US)</span><br><span class="line">pwr_1                         ~ this is 1200 mwah</span><br></pre></td></tr></table></figure>
+<p>Some settings like <code>Modes</code> are the same as the <code>OMNIBUSF4SD</code></p>
+<h3 id="Ports"><a href="#Ports" class="headerlink" title="Ports"></a>Ports</h3><p><img src="/d/cinewhoop-bumblebee-v3/f7-ports.png" alt="ports"></p>
+<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AIRMODE:            Enabled</span><br><span class="line">PID loop freq:      8.00hHz</span><br><span class="line">Max ARM angle:      180</span><br><span class="line">OSD:                Enabled</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>See this video <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=nOQ2jdoGGGQ&t=1s">How I Flew FAR With DJI’s FPV System - Easy Power Output Hacks!</a></li>
-</ul>
-<h2 id="Betaflight"><a href="#Betaflight" class="headerlink" title="Betaflight"></a>Betaflight</h2><p>You can download <a target="_blank" rel="noopener" href="https://github.com/betaflight/betaflight-configurator/releases">Betaflight Configurator from github</a>, look for the assets drop down. Then these are the settings that worked with my F4 flight controller (OMNIBUSF4SD)</p>
-<h3 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">version        ~ checks what firmware version is installed on the board </span><br></pre></td></tr></table></figure>
+<h3 id="Motors-1"><a href="#Motors-1" class="headerlink" title="Motors"></a>Motors</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mixer:              QUAD X</span><br><span class="line">ESC/Motor:          DSHOT600</span><br></pre></td></tr></table></figure>
 
+</details>
+
+<details>
+  <summary>OMNIBUSF4SD</summary>
+
+<p>This controller was second hand and kept dropping power so I bought the <code>MAMBAF722</code> and moved over to it.</p>
 <h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p><img src="/d/cinewhoop-bumblebee-v3/setup.png" alt="setup"></p>
-<h3 id="Ports"><a href="#Ports" class="headerlink" title="Ports"></a>Ports</h3><ul>
+<h3 id="Ports-1"><a href="#Ports-1" class="headerlink" title="Ports"></a>Ports</h3><ul>
 <li>Enable the UART that was linked to the DJI Air Unit above (the white and gray wires)</li>
 </ul>
 <p><img src="/d/cinewhoop-bumblebee-v3/ports.png" alt="ports"></p>
-<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><ul>
+<h3 id="Configuration-1"><a href="#Configuration-1" class="headerlink" title="Configuration"></a>Configuration</h3><ul>
 <li>Mixer=Quad X : set the motors orientation</li>
 <li>System configuration : I set the gyro &amp; loop frequency to <code>8.00 kHz</code> which is the highest. I dont think you can change the gyro speed on a F7 board.</li>
 <li>ESC/Motor Features : DSHOT600 is the fastest</li>
@@ -263,10 +246,37 @@ ga('send', 'pageview');
 <li>Crosshairs</li>
 </ul>
 <p><img src="/d/cinewhoop-bumblebee-v3/osd.png" alt="osd"></p>
-<h3 id="Motors-1"><a href="#Motors-1" class="headerlink" title="Motors"></a>Motors</h3><p>Allows you to check the correct motors spin up, this confirms the orientation of the quad (front and back) and is helpful if you did not check the flight controllers arrow and set that to face forward.</p>
+<h3 id="Motors-2"><a href="#Motors-2" class="headerlink" title="Motors"></a>Motors</h3><p>Allows you to check the correct motors spin up, this confirms the orientation of the quad (front and back) and is helpful if you did not check the flight controllers arrow and set that to face forward.</p>
 <ul>
 <li>Note this is NOT affected by <code>Configuration</code> -&gt; <code>Board and Sensor Alignment</code> -&gt; <code>Yaw Degrees</code></li>
 <li>See CLI <code>mmix</code></li>
+</ul>
+</details>
+<br>
+
+<h2 id="DJI-Air-Unit"><a href="#DJI-Air-Unit" class="headerlink" title="DJI Air Unit"></a>DJI Air Unit</h2><h3 id="Wires"><a href="#Wires" class="headerlink" title="Wires"></a>Wires</h3><p>If the flight controller doesnt have a DJI port (eg <code>OMNIBUSF4SD</code>) its still possible to solder it in, just make sure if you are using 6S you run though a BEC/Regulator.</p>
+<p>The BEC is always ideal as it will give continuous clean power, the example in the video below was a 8V 3AMP (8x3 = 24 watts of power).</p>
+<p>The air unit only needs 4 to 9 watts but its better to have more avalible to it (it will only draw what it needs). Apparently it will draw as much as 16 watts.</p>
+<p>Common regulators are 9V 2AMP (9x2 = 18 watts)</p>
+<p>If you are just running 4S then you can just use VBAT off the flight controller.</p>
+<p><img src="/d/cinewhoop-bumblebee-v3/dji-air-unit-wires.png" alt="DJI Air Unit Wires"></p>
+<ul>
+<li>See this video <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=3qbQRJRmJrM">HOW-TO Wire the DJI FPV Air Unit (or Caddx Vista/Air Unit Lite) for Betaflight</a></li>
+</ul>
+<h3 id="Region-amp-Power-changes"><a href="#Region-amp-Power-changes" class="headerlink" title="Region &amp; Power changes"></a>Region &amp; Power changes</h3><ul>
+<li>The Air Unit allows you to set the region with a text file <code>naco.txt</code>, set the region 1 (Country=US, Radio mode=FCC)</li>
+<li>Save to the root of your SD card and pop it into the Air Unit</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">naco.txt</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>The Goggles allow you to set the power with a text file <code>naco_pwr.txt</code></li>
+<li>Save to the root of your SD card and pop it into the Goggles, this will allow up to <code>1000mw</code> of power output (default is <code>25mw</code>)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">naco_pwr.txt</span><br><span class="line">pwr_1                         ~ this is 1000 mwah (this is the highest value allowed in the US)</span><br><span class="line">pwr_1                         ~ this is 1200 mwah</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>See this video <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=nOQ2jdoGGGQ&t=1s">How I Flew FAR With DJI’s FPV System - Easy Power Output Hacks!</a></li>
 </ul>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://shop.iflight-rc.com/bumblebee-hd-v3-cinewhoop-bnf-pro1487">https://shop.iflight-rc.com/bumblebee-hd-v3-cinewhoop-bnf-pro1487</a></li>
