@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="Updated 13&#x2F;02&#x2F;2025 My team needed a simple way to encrypt and decrypt some data, We chose Advanced Encryption Standard (AES), being a symmetric algorithm, it would use the same key for encryption &amp;amp">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-04-12T12:00:00.000Z">
-<meta property="article:modified_time" content="2025-02-13T02:41:26.509Z">
+<meta property="article:modified_time" content="2025-02-13T02:55:59.880Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="c#">
 <meta property="article:tag" content="cryptography">
@@ -138,9 +138,6 @@ ga('send', 'pageview');
       
         <p><strong>Updated 13/02/2025</strong></p>
 <p>My team needed a simple way to encrypt and decrypt some data, We chose <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes">Advanced Encryption Standard (AES)</a>, being a symmetric algorithm, it would use the same key for encryption &amp; decryption.</p>
-<p>The examples here encrypt and decrypt the text <code>This is something Id like to Encrypt for network transport.</code>, you could have an object instance thats needed to be transported/persisted:</p>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> MyObj &#123; Id = <span class="number">1</span>, Foo = <span class="string">&quot;bar&quot;</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> originalText = JsonConvert.SerializeObject(obj);</span><br></pre></td></tr></table></figure>
-
 <h2 id="Basic-Example"><a href="#Basic-Example" class="headerlink" title="Basic Example"></a>Basic Example</h2><p>The high level steps are:</p>
 <ol>
 <li>Create the encryptor method, <code>00000000000000000000000000000001</code> should be treated as a secret and <code>byte[16]</code> is trash per the comments below</li>
@@ -171,6 +168,13 @@ ga('send', 'pageview');
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> key = <span class="string">&quot;00000000-0000-0000-0000-000000000001&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> iv =  <span class="string">&quot;00000000-0000-0000-0000-000000000002&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> service = <span class="keyword">new</span> AesEncryptionService(key, iv);</span><br></pre></td></tr></table></figure>
 
 <p>Complete code is here <a target="_blank" rel="noopener" href="https://github.com/carlpaton/EncryptDecryptDemo">https://github.com/carlpaton/EncryptDecryptDemo</a></p>
+<h2 id="But-I-want-to-Encrypt-an-object"><a href="#But-I-want-to-Encrypt-an-object" class="headerlink" title="But I want to Encrypt an object"></a>But I want to Encrypt an object</h2><p>Calm down, you just serialize it 🐒</p>
+<p>The examples above encrypt and decrypt the text <code>This is something Id like to Encrypt for network transport.</code>, you could have an object instance thats needed to be transported/persisted:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> MyObj &#123; Id = <span class="number">1</span>, Foo = <span class="string">&quot;bar&quot;</span> &#125;;</span><br><span class="line">originalText = JsonConvert.SerializeObject(obj);</span><br></pre></td></tr></table></figure>
+
+<p>So if you plug that into the code the output is:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">OriginalText:</span><br><span class="line"> &#123;&quot;Id&quot;:1,&quot;Foo&quot;:&quot;bar&quot;&#125;</span><br><span class="line">--------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Encrypted (and converted Base64 for storage/transmission):</span><br><span class="line"> kv+TWU0M14jtL9qvGhlOZLcAkCPP+kv9c0oZIKDHHYM=</span><br><span class="line">--------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Decrypted:</span><br><span class="line"> &#123;&quot;Id&quot;:1,&quot;Foo&quot;:&quot;bar&quot;&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://www.techtarget.com/whatis/definition/initialization-vector-IV">https://www.techtarget.com/whatis/definition/initialization-vector-IV</a></li>
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes">https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes</a></li>
