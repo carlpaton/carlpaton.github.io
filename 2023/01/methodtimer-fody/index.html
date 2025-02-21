@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>MethodTimer Fody - Benchmarks | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Updated 28&#x2F;01&#x2F;2025  “Use Case: Simplest way to measure how long a method on your code takes to execute, this is helpful for logging, profiling and general performance measurement. Often there is degra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MethodTimer Fody - Benchmarks">
+<meta property="og:url" content="https://carlpaton.github.io/2023/01/methodtimer-fody/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Updated 28&#x2F;01&#x2F;2025  “Use Case: Simplest way to measure how long a method on your code takes to execute, this is helpful for logging, profiling and general performance measurement. Often there is degra">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-01-26T11:00:00.000Z">
+<meta property="article:modified_time" content="2025-02-21T07:11:55.486Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="c#">
+<meta property="article:tag" content="software testing">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-methodtimer-fody" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/01/methodtimer-fody/" class="article-date">
+  <time datetime="2023-01-26T11:00:00.000Z" itemprop="datePublished">2023-Jan</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MethodTimer Fody - Benchmarks
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Updated 28/01/2025</strong></p>
+<blockquote>
+<p>“Use Case: Simplest way to measure how long a method on your code takes to execute, this is helpful for logging, profiling and general performance measurement. Often there is degradation over time and its useful to compare how long execution takes.”</p>
+</blockquote>
+<h2 id="Stopwatch-classic-timer-way"><a href="#Stopwatch-classic-timer-way" class="headerlink" title="Stopwatch (classic timer way)"></a>Stopwatch (classic timer way)</h2><p>This was how I learnt how to measure things using a Stopwatch</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">MyMethod</span>()</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> sw = Stopwatch.StartNew();</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">await</span> UnitOfWorkAsync();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">finally</span></span><br><span class="line">    &#123;</span><br><span class="line">        sw.Stop();</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;MyMethod took <span class="subst">&#123;sw.ElapsedMilliseconds&#125;</span>ms (<span class="subst">&#123;sw.Elapsed&#125;</span>)ts&quot;</span>);</span><br><span class="line">        <span class="comment">// Elapsed is a timespace, that would be more accurate</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>As an example this could show <code>MyMethod took 91ms (00:00:00.0916101)ts</code> which is useful but the code now has noise. It really needs to just <code>UnitOfWorkAsync</code>, there are ways to make this smarter with wrappers (<a href="/2024/09/unit-testing-static-methods/">see dapper wrapper example</a>) or <a href="/2020/08/cqrs/">MediatR</a> but MethodTimer.Fody is a simpler implementation.</p>
+<h2 id="MethodTimer-Fody"><a href="#MethodTimer-Fody" class="headerlink" title="MethodTimer.Fody"></a>MethodTimer.Fody</h2><p>These examples are based on Nick Chapsas’s video <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=xlqcT4NSrZw">The Easiest Way to Measure Your Method’s Performance in C#</a> and the <a target="_blank" rel="noopener" href="https://github.com/Fody/MethodTimer/blob/master/readme.md">Fody MethodTimer docs</a>.</p>
+<p>The library <code>MethodTimer.Fody</code> does some assembly weaving magic, this just takes the compiled code and injects some new behavior, like the stopwatch timer above.</p>
+<ol>
+<li>Install <code>Fody</code> and <code>MethodTimer.Fody</code></li>
+<li>My debug did not immediately start working, I replaced the content of FodyWeavers.xml per the docs with the default, rebuilt and then it worked.</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Weavers</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">MethodTimer</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Weavers</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Add the attribute <code>[Time]</code> to the top of the method, this is just a marker that the weaving magic will look for and change the code</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> MethodTimer;</span><br><span class="line"></span><br><span class="line">[<span class="meta">Time</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">MyMethod</span>()</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">await</span> UnitOfWorkAsync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>If you look at the IL (intermediate language) it should have simliar code to the stop watch code above, I couldnt get this to work when trying in VS 2022.</p>
+<ol start="4">
+<li>This will write to the <code>trace</code> logger, so you can view the logs in debug, this is useful if you just want to eyeball some performance times.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FodyExample.MyMethod 96ms</span><br></pre></td></tr></table></figure>
+
+<h3 id="Interceptor-MethodTimeLogger"><a href="#Interceptor-MethodTimeLogger" class="headerlink" title="Interceptor MethodTimeLogger"></a>Interceptor MethodTimeLogger</h3><p>You can hook into <code>Fody</code> by writing some extensions that the weaver will look for and use when logging</p>
+<ol>
+<li>Define the method</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">MethodTimeLogger</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Log</span>(<span class="params">MethodBase baseMethod, TimeSpan ts, <span class="built_in">string</span> message</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            Trace.WriteLine(<span class="string">$&quot;ZZZZ MethodTimeLogger&quot;</span>);</span><br><span class="line">            Trace.WriteLine(<span class="string">$&quot;ZZZZ <span class="subst">&#123;baseMethod.DeclaringType!.Name&#125;</span>.<span class="subst">&#123;baseMethod.Name&#125;</span> <span class="subst">&#123;ts&#125;</span>&quot;</span>);</span><br><span class="line">            Trace.WriteLine(<span class="string">$&quot;ZZZZ message=<span class="subst">&#123;message&#125;</span>&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (Exception e)</span><br><span class="line">        &#123;</span><br><span class="line">            Trace.WriteLine(<span class="string">$&quot;e=<span class="subst">&#123;e.Message&#125;</span>&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Call as normal but pass the message param</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Time(<span class="string">&quot;this is the message with value &#123;message&#125;&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">MyMethod</span>(<span class="params"><span class="built_in">int</span> message</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Trace.WriteLine(<span class="string">$&quot;ZZZZ START <span class="subst">&#123;message&#125;</span>&quot;</span>);</span><br><span class="line">    <span class="keyword">await</span> UnitOfWorkAsync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>This now logs the same as before but then you have access to the logging details which you can use with what ever metrics persistance your code base uses</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZZZZ MethodTimeLogger</span><br><span class="line">ZZZZ FodyExample.MyMethod 00:00:00.0916101</span><br><span class="line">ZZZZ message=this is the message with value 42</span><br></pre></td></tr></table></figure>
+
+<p>The message is useful as you can then have some context of the load, here 42 could be creater than 1 so you would take that into account with your metrics.</p>
+<h3 id="MethodTimer-Fody-Example"><a href="#MethodTimer-Fody-Example" class="headerlink" title="MethodTimer.Fody Example"></a>MethodTimer.Fody Example</h3><p>I often struggle to understand the value of something if I have never needed it, although the below is a contrived example, selecting the correct data structure is something most developers will come across in their daily code.</p>
+<ol>
+<li>Consider these methods <code>DemoUseDict(..)</code> and <code>DemoUseLinq()</code>, here I pass in the data structures I want to query as I dont want to measure the creation, only the access. I dont do anything else like console writeline as that takes time, I just want to access the data. The variable <code>s</code> will be immutable, so we know a new string is created everytime but that shouldnt affect the results too much.</li>
+</ol>
+<p><strong>Spoiler Alert</strong>: Front of class nerds will know using a hash like <code>Dictionary</code> will be <em>Big O of 1</em> ie: <code>O(1)</code> which is constant time, see <a href="/2022/03/big-o-notation/">Big O Notation</a>. Lets ignore that for a second and just test the code</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DemoUseDict</span>(<span class="params">Dictionary&lt;<span class="built_in">int</span>, DemoClass&gt; dict</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> s = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5000</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        s = dict[i].Name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DemoUseLinq</span>(<span class="params">List&lt;DemoClass&gt; collection</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> s = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5000</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        s = collection.FirstOrDefault(x =&gt; x.Id == i).Name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Add the <code>[Time]</code> attribute as before</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DemoUseDict</span>(<span class="params">Dictionary&lt;<span class="built_in">int</span>, DemoClass&gt; dict</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DemoUseLinq</span>(<span class="params">List&lt;DemoClass&gt; collection</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Create the data upfront, again we are interested in access speed not creation and call the methods</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> dict = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">int</span>, DemoClass&gt;();</span><br><span class="line"><span class="keyword">var</span> collection = <span class="keyword">new</span> List&lt;DemoClass&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5000</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">    dict.Add(i, <span class="keyword">new</span> DemoClass() &#123; Id = i, Name = <span class="string">$&quot;Name<span class="subst">&#123;i&#125;</span>&quot;</span> &#125;);</span><br><span class="line">    collection.Add(<span class="keyword">new</span> DemoClass() &#123; Id = i, Name = <span class="string">$&quot;Name<span class="subst">&#123;i&#125;</span>&quot;</span> &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> eg = <span class="keyword">new</span> FodyActualExample();</span><br><span class="line">eg.DemoUseDict(dict);</span><br><span class="line">eg.DemoUseLinq(collection);</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Running the results a few times and running them individually consistantly produces results as per the below, its clear the front of class kids were right about the hash but we now have some data to back it up.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FodyActualExample.DemoUseDict 0ms</span><br><span class="line">FodyActualExample.DemoUseDict 0ms</span><br><span class="line">FodyActualExample.DemoUseDict 0ms</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">FodyActualExample.DemoUseLinq 291ms</span><br><span class="line">FodyActualExample.DemoUseLinq 227ms</span><br><span class="line">FodyActualExample.DemoUseLinq 266ms</span><br></pre></td></tr></table></figure>
+
+<p>Obviously the results would change based on the machines power, usage at the time and this is not an accurate average - but its at least a data driven decision based on a small sample set.</p>
+<h2 id="BenchmarkDotNet"><a href="#BenchmarkDotNet" class="headerlink" title="BenchmarkDotNet"></a>BenchmarkDotNet</h2><p>This alternate library is more advanced and shows cool outputs as shown below but the setup is harder and I have not seen a real use case.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">|   Method |    Mean |   Error |</span><br><span class="line">|----------|--------:|--------:|</span><br><span class="line">| MyMethod | 0.36 ns | 0.00 ns |</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Wa3sdKGp3wE">https://www.youtube.com/watch?v=Wa3sdKGp3wE</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dotnet/BenchmarkDotNet">https://github.com/dotnet/BenchmarkDotNet</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2023/01/methodtimer-fody/" data-id="cm7efr02r000098uha1se29s6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-testing/" rel="tag">software testing</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/01/newrelic/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          New Relic
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/honda-crf230f/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2017 Honda CRF230F</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/02/onshape/">Onshape</a>
+          </li>
+        
+          <li>
+            <a href="/2025/01/entra-roll-based-access-control-for-applications/">Entra RBAC For Applications</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/deploying-dotnet-applications-azure/">Deploying .NET Applications To Azure</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/flyway-database-migration-using-github-actions/">Flyway Database Migration Using Github Actions</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/flyway-database-migration/">Flyway Database Migration (Local Dev)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.91px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.91px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.55px;">auth</a> <a href="/tags/aws/" style="font-size: 17.27px;">aws</a> <a href="/tags/azure/" style="font-size: 10px;">azure</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.82px;">cad</a> <a href="/tags/cam/" style="font-size: 10.91px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 14.09px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.36px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/entra/" style="font-size: 10px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.73px;">food</a> <a href="/tags/git/" style="font-size: 12.27px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.82px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.64px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.18px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 14.09px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.18px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/newrelic/" style="font-size: 10.45px;">newrelic</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 12.27px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 10.91px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.18px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.82px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 15.45px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.64px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.45px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.36px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.36px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/terraform/" style="font-size: 10.45px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.09px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 19.09px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2025 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
