@@ -28,7 +28,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="Updated 28&#x2F;01&#x2F;2025  “Use Case: Simplest way to measure how long a method on your code takes to execute, this is helpful for logging, profiling and general performance measurement. Often there is degra">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-01-26T11:00:00.000Z">
-<meta property="article:modified_time" content="2025-02-21T07:11:55.486Z">
+<meta property="article:modified_time" content="2025-02-21T08:12:37.134Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="c#">
 <meta property="article:tag" content="software testing">
@@ -140,6 +140,7 @@ ga('send', 'pageview');
 <blockquote>
 <p>“Use Case: Simplest way to measure how long a method on your code takes to execute, this is helpful for logging, profiling and general performance measurement. Often there is degradation over time and its useful to compare how long execution takes.”</p>
 </blockquote>
+<p>The code used in this post can be found at <a target="_blank" rel="noopener" href="https://github.com/carlpaton/BenchmarkDemo">https://github.com/carlpaton/BenchmarkDemo</a></p>
 <h2 id="Stopwatch-classic-timer-way"><a href="#Stopwatch-classic-timer-way" class="headerlink" title="Stopwatch (classic timer way)"></a>Stopwatch (classic timer way)</h2><p>This was how I learnt how to measure things using a Stopwatch</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">MyMethod</span>()</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> sw = Stopwatch.StartNew();</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">await</span> UnitOfWorkAsync();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">finally</span></span><br><span class="line">    &#123;</span><br><span class="line">        sw.Stop();</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;MyMethod took <span class="subst">&#123;sw.ElapsedMilliseconds&#125;</span>ms (<span class="subst">&#123;sw.Elapsed&#125;</span>)ts&quot;</span>);</span><br><span class="line">        <span class="comment">// Elapsed is a timespace, that would be more accurate</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
