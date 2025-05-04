@@ -32,7 +32,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/tfstate-in-blob.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/multiple-revisions.jpg">
 <meta property="article:published_time" content="2024-12-21T11:00:00.000Z">
-<meta property="article:modified_time" content="2025-01-13T20:58:46.447Z">
+<meta property="article:modified_time" content="2025-05-04T21:15:31.507Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="infrastructure as code">
 <meta property="article:tag" content="azure">
@@ -270,20 +270,21 @@ ga('send', 'pageview');
 <p>To get these values navigate to Container Registry <code>demoacrbb8c7a39dev</code> -&gt; Settings -&gt; Access keys</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; vars.ACR_SERVER &#125;&#125;              ~ demoacrbb8c7a39dev.azurecr.io</span><br><span class="line">$&#123;&#123; secrets.ACR_USER &#125;&#125;             ~ demoacrbb8c7a39dev</span><br><span class="line">$&#123;&#123; secrets.ACR_PASSWORD &#125;&#125;         ~ 000000000000000000000/000000000000000000000000000000000000</span><br></pre></td></tr></table></figure>
 
-<p><strong>For Azure Container App</strong></p>
-<p>Create a <code>Service Principle</code> and configure its access to Azure resources, here we copy the entire JSON object and save as <code>AZ_CREDENTIALS</code> github secret</p>
+<p><strong>For Logging into Azure</strong></p>
+<p>Create a <code>Service Principle</code> (SP) and configure its access to Azure resources, here we copy the entire JSON object and save as <code>AZ_CREDENTIALS</code> github secret. This SP is used when logging into Azure to deploy both the Application and IAC.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az ad sp create-for-rbac --name github-auth --role contributor --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/demo-rg-bb8c7a39-dev --json-auth --output json</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; secrets.AZ_CREDENTIALS &#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>For IAC (RBAC)</strong></p>
-<p>Create a <code>Service Principle</code> and configure its access to Azure resources, here we copy values out of the JSON and save as individual github secrets</p>
+<p>Create a another <code>Service Principle</code> (SP), here we copy values out of the JSON and save as individual github secrets. This SP has no <code>role</code> or <code>scopes</code> and is used with the terraform deployment itself.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az ad sp create-for-rbac --name iac-terraform-auth</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; secrets.ARM_CLIENT_ID &#125;&#125;         ~ appId</span><br><span class="line">$&#123;&#123; secrets.ARM_CLIENT_SECRET &#125;&#125;     ~ password</span><br><span class="line">$&#123;&#123; secrets.ARM_SUBSCRIPTION_ID &#125;&#125;   ~ you get this from `az login` or the Azure portal under and resource</span><br><span class="line">$&#123;&#123; secrets.ARM_TENANT_ID &#125;&#125;         ~ tenant</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest#az-ad-sp-create-for-rbac">https://learn.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest#az-ad-sp-create-for-rbac</a></li>
+<li><a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret">https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret</a></li>
 </ul>
 <p><strong>For IAC (SQL Secrets)</strong></p>
 <p>These are the values manually added to to <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/vars.tf#L26">vars.tf</a></p>
