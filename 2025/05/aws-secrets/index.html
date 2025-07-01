@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>AWS Secrets | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Secrets are any authentication details like a password that allow a user potentially using authorization code flow or a service potentially using client credentials flow to verify their identity.  AWS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS Secrets">
+<meta property="og:url" content="https://carlpaton.github.io/2025/05/aws-secrets/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Secrets are any authentication details like a password that allow a user potentially using authorization code flow or a service potentially using client credentials flow to verify their identity.  AWS">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-05-14T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-15T03:39:33.853Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="aws">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-aws-secrets" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/05/aws-secrets/" class="article-date">
+  <time datetime="2025-05-14T12:00:00.000Z" itemprop="datePublished">2025-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AWS Secrets
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Secrets are any authentication details like a password that allow a user potentially <a href="/2020/12/oauth2-authorization-code-flow/">using authorization code flow</a> or a service potentially <a href="/2020/12/oauth2-client-credentials-flow/">using client credentials flow</a> to verify their identity. </p>
+<p>AWS has a few ways to manage these secrets and often functionality overlaps, this is how I have found these to be useful.</p>
+<h2 id="Pre-cursor"><a href="#Pre-cursor" class="headerlink" title="Pre-cursor"></a>Pre-cursor</h2><p>The IAM role will need these policy statements</p>
+<ul>
+<li><code>Action: kms:Decrypt</code></li>
+<li><code>Action: ssm:GetParameters</code></li>
+<li><code>Action: secretsmanager:GetSecretValue</code> (if using secretsmanager programatically which is not the flows described below)</li>
+</ul>
+<h2 id="AWS-Systems-Manager-SSM-Parameter-Store"><a href="#AWS-Systems-Manager-SSM-Parameter-Store" class="headerlink" title="AWS Systems Manager (SSM) - Parameter Store"></a>AWS Systems Manager (SSM) - Parameter Store</h2><blockquote>
+<p>Use Case: Simple encrypted secret storage for your application to access</p>
+</blockquote>
+<p>Note that KMS does support <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/kms/latest/developerguide/rotating-keys-enable.html">rotation-period</a> if you wish.</p>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/systems-manager/">AWS Systems Manager</a> (SSM) with <code>Parameter Store</code> (Secure String) is a great way to store secrets which your application can read at runtime, then store as environment variables. With .Net these can override <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration">appsettings</a>. To get started you follow these high level steps</p>
+<ol>
+<li>Create a <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Key Management Service (KMS) key</a>, for the purpose of simple <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/kms/latest/developerguide/overview.html">data encryption</a> at rest, you can use a <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/kms/latest/developerguide/create-symmetric-cmk.html">symmetric encryption KMS key</a>. I normally use the AWS console, so their <a target="_blank" rel="noopener" href="https://console.aws.amazon.com/console/">website</a> to create these keys but you can also use the CLI with command <code>aws kms create-key</code></li>
+</ol>
+<p>You will need the <code>KMS-KEY-ARN</code>, it will look something like <code>arn:aws:kms:&#123;REGION&#125;:&#123;ACCOUNT-NUMBER&#125;:key/mrk-00000000000000000000000000000000</code></p>
+<ol start="2">
+<li>Create parameter, the simplest way is with the CLI because its hidden in the console and I always have to click around to find it</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">aws ssm put-parameter \</span><br><span class="line">--name &#x27;&#123;NAME&#125;&#x27; \</span><br><span class="line">--description &#x27;&#123;DESCRIPTION&#125;&#x27; \</span><br><span class="line">--value &#x27;&#123;PLAIN-TEXT-SECRET-VALUE&#125;&#x27; \</span><br><span class="line">--type SecureString \</span><br><span class="line">--key-id &#x27;&#123;KMS-KEY-ARN&#125;&#x27; \</span><br><span class="line">--tags &#x27;[&#123;&quot;Key&quot;:&quot;created-with&quot;,&quot;Value&quot;:&quot;aws-cli&quot;&#125;]&#x27;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Using the KMS key access the secret from parameter store, at a high level this could look like</li>
+</ol>
+<p>Create a <code>GetSecureParameterAsync</code> in an abstracted service:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Amazon;</span><br><span class="line"><span class="keyword">using</span> Amazon.Runtime;</span><br><span class="line"><span class="keyword">using</span> Amazon.SSM;</span><br><span class="line"><span class="keyword">using</span> Amazon.SSM.Model;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="built_in">string</span>&gt; <span class="title">GetSecureParameterAsync</span>(<span class="params"><span class="built_in">string</span> parameterName, <span class="built_in">string</span> regionEndpoint</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Specify your AWS credentials. If running on an EC2 instance with an IAM role</span></span><br><span class="line">    <span class="comment">// or if your AWS CLI is configured, you can often omit this.</span></span><br><span class="line">    <span class="comment">// Replace with your actual access key and secret key if needed.</span></span><br><span class="line">    <span class="comment">// var credentials = new BasicAWSCredentials(&quot;YOUR_ACCESS_KEY&quot;, &quot;YOUR_SECRET_KEY&quot;);</span></span><br><span class="line">    <span class="comment">// var config = new AmazonSSMConfig &#123; RegionEndpoint = RegionEndpoint.GetBySystemName(regionEndpoint) &#125;;</span></span><br><span class="line">    <span class="comment">// using (var ssmClient = new AmazonSSMClient(credentials, config))</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// If you have default AWS credentials configured (e.g., IAM role, AWS CLI), you can use:</span></span><br><span class="line">    <span class="keyword">using</span> (<span class="keyword">var</span> ssmClient = <span class="keyword">new</span> AmazonSSMClient(RegionEndpoint.GetBySystemName(regionEndpoint)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> request = <span class="keyword">new</span> GetParameterRequest</span><br><span class="line">        &#123;</span><br><span class="line">            Name = parameterName,</span><br><span class="line">            WithDecryption = <span class="literal">true</span> <span class="comment">// This is crucial for secure parameters</span></span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> response = <span class="keyword">await</span> ssmClient.GetParameterAsync(request);</span><br><span class="line">            <span class="keyword">return</span> response.Parameter.Value;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (AmazonSSMException e)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">$&quot;Error retrieving parameter &#x27;<span class="subst">&#123;parameterName&#125;</span>&#x27;: <span class="subst">&#123;e.Message&#125;</span>&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Call the method <code>GetSecureParameterAsync</code> and use the secret in your application.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> parameterName = <span class="string">&quot;/path/to/your/secret&quot;</span>;</span><br><span class="line"><span class="built_in">string</span> awsRegion = <span class="string">&quot;ap-southeast-2&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> secretValue = <span class="keyword">await</span> GetSecureParameterAsync(parameterName, awsRegion);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrEmpty(secretValue))</span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;Successfully retrieved secret &#x27;<span class="subst">&#123;parameterName&#125;</span>&#x27;: <span class="subst">&#123;secretValue&#125;</span>&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;Failed to retrieve secret &#x27;<span class="subst">&#123;parameterName&#125;</span>&#x27;.&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Secrets-Manager"><a href="#Secrets-Manager" class="headerlink" title="Secrets Manager"></a>Secrets Manager</h2><blockquote>
+<p>Use Case: Simple encrypted secret storage for secrets you want to rotate and generally access manually by humans</p>
+</blockquote>
+<p>Note, you can also programatically access <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdkfornet/v4/apidocs/items/SecretsManager/NSecretsManager.html">Secrets Manager</a> if you wish.</p>
+<ol>
+<li><p>Create the KMS, same as details above.</p>
+</li>
+<li><p>Create the secret, the simplest way is with the CLI</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">aws secretsmanager create-secret \</span><br><span class="line">--name &#x27;&#123;NAME&#125;&#x27; \</span><br><span class="line">--description &#x27;&#123;DESCRIPTION&#125;&#x27; \</span><br><span class="line">--key-id &#x27;&#123;KMS-KEY-ARN&#125;&#x27; \</span><br><span class="line">--secret-string &#x27;&#123;PLAIN-TEXT-SECRET-VALUE&#125;&#x27; \</span><br><span class="line">--tags &#x27;[&#123;&quot;Key&quot;:&quot;created-with&quot;,&quot;Value&quot;:&quot;aws-cli&quot;&#125;]&#x27;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Access the secret manually in the console</li>
+</ol>
+<p>If you want to instead use this for secrets in your code, the method to get the secret could look like</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="built_in">string</span>&gt; <span class="title">GetSecretValueAsync</span>(<span class="params"><span class="built_in">string</span> secretName, <span class="built_in">string</span> regionEndpoint</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Specify your AWS credentials if needed (less recommended for production).</span></span><br><span class="line">    <span class="comment">// var credentials = new BasicAWSCredentials(&quot;YOUR_ACCESS_KEY&quot;, &quot;YOUR_SECRET_KEY&quot;);</span></span><br><span class="line">    <span class="comment">// var config = new AmazonSecretsManagerConfig &#123; RegionEndpoint = RegionEndpoint.GetBySystemName(regionEndpoint) &#125;;</span></span><br><span class="line">    <span class="comment">// using (var client = new AmazonSecretsManagerClient(credentials, config))</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use default AWS credentials (IAM role, AWS CLI, etc.) - recommended for production.</span></span><br><span class="line">    <span class="keyword">using</span> (<span class="keyword">var</span> client = <span class="keyword">new</span> AmazonSecretsManagerClient(RegionEndpoint.GetBySystemName(regionEndpoint)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> request = <span class="keyword">new</span> GetSecretValueRequest</span><br><span class="line">        &#123;</span><br><span class="line">            SecretId = secretName</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> response = <span class="keyword">await</span> client.GetSecretValueAsync(request);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Secrets can be a string or binary data.</span></span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrEmpty(response.SecretString))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> response.SecretString;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (response.SecretBinary != <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// Handle binary secret (e.g., decode from Base64)</span></span><br><span class="line">                <span class="keyword">using</span> (<span class="keyword">var</span> reader = <span class="keyword">new</span> System.IO.StreamReader(response.SecretBinary))</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">await</span> reader.ReadToEndAsync(); <span class="comment">// Or process as needed</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">$&quot;Secret &#x27;<span class="subst">&#123;secretName&#125;</span>&#x27; has no String or Binary value.&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (AmazonSecretsManagerException e)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">$&quot;Error retrieving secret &#x27;<span class="subst">&#123;secretName&#125;</span>&#x27;: <span class="subst">&#123;e.Message&#125;</span>&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2025/05/aws-secrets/" data-id="cmckuuvpj00004see076n2it9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/" rel="tag">aws</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2025/04/dynamics-365-business-central-api-integration/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Dynamics 365 Business Central API Integration</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/05/aws-secrets/">AWS Secrets</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/dynamics-365-business-central-api-integration/">Dynamics 365 Business Central API Integration</a>
+          </li>
+        
+          <li>
+            <a href="/2025/03/dns-records/">DNS Records</a>
+          </li>
+        
+          <li>
+            <a href="/2025/03/psql-performance/">PSQL Performance</a>
+          </li>
+        
+          <li>
+            <a href="/2025/02/onshape/">Onshape</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.36px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.91px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.45px;">agile</a> <a href="/tags/algorithms/" style="font-size: 11.82px;">algorithms</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.91px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.45px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.45px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.91px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.55px;">auth</a> <a href="/tags/aws/" style="font-size: 17.73px;">aws</a> <a href="/tags/azure/" style="font-size: 10.45px;">azure</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.55px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.45px;">benchmarks</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.45px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.82px;">cad</a> <a href="/tags/cam/" style="font-size: 10.91px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.36px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.45px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 14.09px;">cnc</a> <a href="/tags/continuous-integration/" style="font-size: 10.45px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.36px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.36px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.82px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.82px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.91px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.18px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.45px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10px;">dns</a> <a href="/tags/docker/" style="font-size: 17.27px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.91px;">docker compose</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/entra/" style="font-size: 10.45px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.91px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.73px;">food</a> <a href="/tags/git/" style="font-size: 12.27px;">git</a> <a href="/tags/health-checks/" style="font-size: 10.91px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.45px;">hexo</a> <a href="/tags/ide/" style="font-size: 11.82px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.82px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.64px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.64px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.18px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.91px;">jquery</a> <a href="/tags/json/" style="font-size: 11.82px;">json</a> <a href="/tags/kibana/" style="font-size: 10.45px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 10.45px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.64px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.82px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.82px;">linux</a> <a href="/tags/logging/" style="font-size: 11.36px;">logging</a> <a href="/tags/mocking/" style="font-size: 14.09px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.18px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.18px;">mvc</a> <a href="/tags/mysql/" style="font-size: 10.91px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.82px;">net core</a> <a href="/tags/newrelic/" style="font-size: 10.45px;">newrelic</a> <a href="/tags/nginx/" style="font-size: 10.91px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.36px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 12.27px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.55px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.36px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.18px;">python</a> <a href="/tags/random/" style="font-size: 11.82px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.82px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.73px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.45px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.45px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.82px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 15.45px;">rosetta code</a> <a href="/tags/serialization/" style="font-size: 12.73px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.64px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.45px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.36px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.45px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.91px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.36px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.64px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/swagger/" style="font-size: 10.45px;">swagger</a> <a href="/tags/terraform/" style="font-size: 10.45px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.18px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.09px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.45px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.45px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 15.91px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.64px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.91px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.36px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2025 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
