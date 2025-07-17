@@ -27,6 +27,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="There are no silly questions">
 <meta property="og:description" content="Updated 17&#x2F;04&#x2F;2025  “Terraform is a popular infrastructure-as-code software tool built by HashiCorp. You use it to provision all kinds of infrastructure and services, including New Relic dashboards an">
 <meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/new-relic-alert-policy.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/terraform-init.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/terraform-apply-1.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/terraformtfstate.png">
@@ -35,13 +36,13 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/state-update.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/notification.png">
 <meta property="article:published_time" content="2024-10-29T11:00:00.000Z">
-<meta property="article:modified_time" content="2025-04-17T01:53:09.959Z">
+<meta property="article:modified_time" content="2025-07-17T20:28:34.034Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="infrastructure as code">
 <meta property="article:tag" content="newrelic">
 <meta property="article:tag" content="terraform">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/terraform-init.png">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/newrelic_with_terraform/new-relic-alert-policy.png">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -149,10 +150,11 @@ ga('send', 'pageview');
 <blockquote>
 <p>“Terraform is a popular infrastructure-as-code software tool built by HashiCorp. You use it to provision all kinds of infrastructure and services, including New Relic dashboards and alerts.” - docs.newrelic.com</p>
 </blockquote>
-<p>In this post I will create an <code>Error</code> New Relic alert via Terraform, I see this Error Rate as <code>Availability</code> and the resulting New Relic resources would be a <code>provider</code>, <code>alert policy</code> which is the parent, <code>alert condition</code> which are children to the parent and <code>alert trigger</code></p>
-<h2 id="Four-Golden-Signals"><a href="#Four-Golden-Signals" class="headerlink" title="Four Golden Signals"></a>Four Golden Signals</h2><p>For your alerts you need to think about whats sensible to alert on, <a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#xref_monitoring_golden-signals">Goole SRE</a> is the golden standard, because you know… its Google :D … so you can re-invent the wheel or learn from their Golden Signals:</p>
+<p>In this post I will create an <code>Error</code> New Relic alert via Terraform, the resulting New Relic resources would be a <code>provider</code>, <code>alert policy</code> which is the parent, <code>alert trigger</code> which belongs to the <code>alert policy</code> and <code>alert condition</code>(s) which are children to the <code>alert policy</code>. </p>
+<p><img src="/d/newrelic_with_terraform/new-relic-alert-policy.png"></p>
+<h2 id="Alerts-Four-Golden-Signals-From-Google"><a href="#Alerts-Four-Golden-Signals-From-Google" class="headerlink" title="Alerts: Four Golden Signals From Google"></a>Alerts: Four Golden Signals From Google</h2><p>For your alerts you need to think about whats sensible to alert on, <a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#xref_monitoring_golden-signals">Goole SRE</a> is the golden standard, because you know… its Google :D … so you can re-invent the wheel or learn from their Golden Signals:</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#errors">Error rate</a> (Availability)</li>
+<li><a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#errors">Error rate</a></li>
 <li><a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#latency">Latency</a></li>
 <li><a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#traffic">Traffic</a></li>
 <li><a target="_blank" rel="noopener" href="https://sre.google/sre-book/monitoring-distributed-systems/#saturation">Saturation</a></li>
