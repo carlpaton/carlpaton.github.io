@@ -32,7 +32,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker. You can quickly spin up a container and have a hoon using docker. Redis Administra">
 <meta property="og:locale">
 <meta property="article:published_time" content="2019-05-02T03:42:16.000Z">
-<meta property="article:modified_time" content="2023-08-13T09:11:10.916Z">
+<meta property="article:modified_time" content="2025-08-22T00:14:19.678Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="redis">
@@ -155,7 +155,7 @@ ga('send', 'pageview');
 <ol start="3">
 <li>Bring up <a target="_blank" rel="noopener" href="https://hub.docker.com/r/carlpaton/redis-administrator">Redis Administrator</a>, this is the user interface.</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name red-admin -d -p 8081:80 --network redis-bridge-network --env REDIS_CONNECTION=red-srv,allowAdmin=true  carlpaton/redis-administrator:latest</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name red-admin -d -p 8081:80 --network redis-bridge-network --env Database__ConnectionString=red-srv,allowAdmin=true carlpaton/redis-administrator:latest</span><br></pre></td></tr></table></figure>
 
 <p>This UI can then be seen at - <a target="_blank" rel="noopener" href="http://localhost:8081/">http://localhost:8081/</a></p>
 <h3 id="Redis-Commander"><a href="#Redis-Commander" class="headerlink" title="Redis Commander"></a>Redis Commander</h3><p>Redis Commander and was written by <a target="_blank" rel="noopener" href="https://github.com/joeferner/redis-commander">Joe Ferner</a> and is the OG redis UI. I think its really good and I used it a lot to understand Redis. If I was stronger in node.js I would try contribute towards its source code but as Im a .NET guy and wanted to take a deeper dive I built Redis Administartor instead.</p>
