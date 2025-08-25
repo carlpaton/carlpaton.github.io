@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Location Finder</title>
+    <!-- Use Tailwind CSS for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use the Inter font from Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 flex items-center justify-center h-screen p-4">
+
+    <!-- Main container for the app, centered and styled -->
+    <div class="bg-slate-800 p-8 rounded-2xl shadow-lg w-full max-w-sm flex flex-col items-center space-y-6">
+        <h1 class="text-3xl font-bold text-blue-400 text-center">Location Finder</h1>
+        <p class="text-center text-slate-400">Tap the button to get your device's approximate location.</p>
+
+        <!-- Button to trigger the geolocation request -->
+        <button id="getLocationBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-md">
+            Get My Location
+        </button>
+
+        <!-- Container to display the location information -->
+        <div id="locationOutput" class="w-full bg-slate-700 p-4 rounded-xl text-center space-y-2">
+            <p id="statusMessage" class="font-medium text-slate-300">
+                Awaiting your request...
+            </p>
+            <p id="latitude" class="text-slate-400 text-sm hidden">
+                <span class="font-semibold text-slate-200">Latitude:</span> <span id="latValue"></span>
+            </p>
+            <p id="longitude" class="text-slate-400 text-sm hidden">
+                <span class="font-semibold text-slate-200">Longitude:</span> <span id="lngValue"></span>
+            </p>
+            <p id="accuracy" class="text-slate-400 text-sm hidden">
+                <span class="font-semibold text-slate-200">Accuracy:</span> <span id="accValue"></span> meters
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Get all the DOM elements we'll be interacting with.
+        const getLocationBtn = document.getElementById('getLocationBtn');
+        const statusMessage = document.getElementById('statusMessage');
+        const latElement = document.getElementById('latitude');
+        const lngElement = document.getElementById('longitude');
+        const accElement = document.getElementById('accuracy');
+        const latValue = document.getElementById('latValue');
+        const lngValue = document.getElementById('lngValue');
+        const accValue = document.getElementById('accValue');
+
+        // Function to handle a successful location retrieval
+        const showPosition = (position) => {
+            // Hide the status message and show the location details
+            statusMessage.textContent = 'Location found!';
+            latElement.classList.remove('hidden');
+            lngElement.classList.remove('hidden');
+            accElement.classList.remove('hidden');
+
+            // Update the HTML with the received coordinates and accuracy
+            latValue.textContent = position.coords.latitude.toFixed(6);
+            lngValue.textContent = position.coords.longitude.toFixed(6);
+            accValue.textContent = position.coords.accuracy;
+        };
+
+        // Function to handle an error during location retrieval
+        const showError = (error) => {
+            let message = '';
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    message = 'User denied the request for Geolocation. Please allow location access in your browser settings.';
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    message = 'Location information is currently unavailable.';
+                    break;
+                case error.TIMEOUT:
+                    message = 'The request to get user location timed out.';
+                    break;
+                case error.UNKNOWN_ERROR:
+                    message = 'An unknown error occurred.';
+                    break;
+                default:
+                    message = 'An unexpected error occurred.';
+            }
+            // Display a user-friendly error message
+            statusMessage.textContent = `Error: ${message}`;
+        };
+
+        // Main function to get the location
+        const getLocation = () => {
+            // Check if the browser supports the Geolocation API
+            if (navigator.geolocation) {
+                statusMessage.textContent = 'Fetching location...';
+                
+                // Set options for the geolocation request
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
+
+                // Use getCurrentPosition to get the location once
+                navigator.geolocation.getCurrentPosition(showPosition, showError, options);
+            } else {
+                // Browser doesn't support Geolocation
+                statusMessage.textContent = 'Geolocation is not supported by this browser.';
+            }
+        };
+
+        // Add the click event listener to the button
+        getLocationBtn.addEventListener('click', getLocation);
+    </script>
+
+</body>
+</html>
