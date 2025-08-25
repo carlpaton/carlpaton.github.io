@@ -41,11 +41,17 @@
                 <span class="font-semibold text-slate-200">Accuracy:</span> <span id="accValue"></span> meters
             </p>
         </div>
+
+        <!-- Button to open location on maps, initially hidden -->
+        <a id="openMapsBtn" href="#" target="_blank" class="hidden w-full bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-6 rounded-xl text-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-md">
+            Open on Google Maps
+        </a>
     </div>
 
     <script>
         // Get all the DOM elements we'll be interacting with.
         const getLocationBtn = document.getElementById('getLocationBtn');
+        const openMapsBtn = document.getElementById('openMapsBtn');
         const statusMessage = document.getElementById('statusMessage');
         const latElement = document.getElementById('latitude');
         const lngElement = document.getElementById('longitude');
@@ -61,11 +67,18 @@
             latElement.classList.remove('hidden');
             lngElement.classList.remove('hidden');
             accElement.classList.remove('hidden');
-
+            
             // Update the HTML with the received coordinates and accuracy
-            latValue.textContent = position.coords.latitude.toFixed(6);
-            lngValue.textContent = position.coords.longitude.toFixed(6);
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            latValue.textContent = latitude.toFixed(6);
+            lngValue.textContent = longitude.toFixed(6);
             accValue.textContent = position.coords.accuracy;
+
+            // Construct the Google Maps URL with the coordinates and make the button visible
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+            openMapsBtn.href = mapsUrl;
+            openMapsBtn.classList.remove('hidden');
         };
 
         // Function to handle an error during location retrieval
@@ -87,12 +100,16 @@
                 default:
                     message = 'An unexpected error occurred.';
             }
-            // Display a user-friendly error message
+            // Display a user-friendly error message and hide the maps button
             statusMessage.textContent = `Error: ${message}`;
+            openMapsBtn.classList.add('hidden');
         };
 
         // Main function to get the location
         const getLocation = () => {
+            // Hide the maps button before fetching new data
+            openMapsBtn.classList.add('hidden');
+
             // Check if the browser supports the Geolocation API
             if (navigator.geolocation) {
                 statusMessage.textContent = 'Fetching location...';
