@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>MCP Transports</title>
+      <link href="/2025/09/mcp-transports/"/>
+      <url>/2025/09/mcp-transports/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>Model Context Protocol (MCP) is an open protocol that standardizes how applications provide context to large language models (LLMs) - <a href="https://modelcontextprotocol.io/docs/getting-started/intro">https://modelcontextprotocol.io/docs/getting-started/intro</a></p></blockquote><p>The transports supported are:</p><h2 id="STDIO-Standard-input-output"><a href="#STDIO-Standard-input-output" class="headerlink" title="STDIO - Standard input/output"></a>STDIO - Standard input/output</h2><p><strong>STDIO Transport</strong>: Uses standard input/output for communication, typically for local, subprocess-based servers.</p><p>STDIO: This method communicates via the standard input and output of a process. It’s often used for local, simple, and single-use tools, as well as for quick development and testing. It’s considered a secure and straightforward method, especially for agents running on the same machine. However, it’s not recommended for production environments where you need high reliability or concurrent access.</p><ul><li>C# example tutorial: <a href="https://devblogs.microsoft.com/dotnet/build-a-model-context-protocol-mcp-server-in-csharp/">https://devblogs.microsoft.com/dotnet/build-a-model-context-protocol-mcp-server-in-csharp/</a> </li></ul><h2 id="SHTTP-Streamable-HTTP"><a href="#SHTTP-Streamable-HTTP" class="headerlink" title="SHTTP - Streamable HTTP"></a>SHTTP - Streamable HTTP</h2><p><strong>SHTTP Transport</strong>: The modern, recommended network-based transport that uses Streamable HTTP for a robust, multi-client connection.</p><p>SHTTP (Streamable HTTP): This is the modern, recommended transport protocol for MCP servers. It’s built for reliability and features, providing a more robust solution for production-grade applications. It allows for advanced features like session management and connection resumability. Many official and remote-hosted MCP servers use this transport.</p><h2 id="SSE-Server-Sent-Events"><a href="#SSE-Server-Sent-Events" class="headerlink" title="SSE - Server-Sent Events"></a>SSE - Server-Sent Events</h2><p><strong>SSE Transport</strong>: A legacy network-based transport that uses Server-Sent Events for a one-way, server-to-client stream.</p><p>SSE (Server-Sent Events): This is a legacy HTTP-based transport that uses a unidirectional stream from the server to the client. While it’s suitable for basic streaming, it has limitations compared to SHTTP in areas like session management. Some services still use SSE, but SHTTP is generally preferred for new implementations</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> ai </tag>
+            
+            <tag> mcp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>AWS IAM</title>
       <link href="/2025/08/aws-iam/"/>
       <url>/2025/08/aws-iam/</url>
