@@ -24,23 +24,25 @@ ga('send', 'pageview');
   
   <title>.Net MCP Server | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="It seems with rise in popularity of AI LLMs the code we generate is starting to feel language agnostic, now more than ever I can apply what I know if .Net to any other langauge, even Rust with its non">
+  <meta name="description" content="It seems with rise in popularity of AI LLMs the code we generate is starting to feel language agnostic, now more than ever I can apply what I know if .Net to any other langauge, even Rust with its no">
 <meta property="og:type" content="article">
 <meta property="og:title" content=".Net MCP Server">
 <meta property="og:url" content="https://carlpaton.github.io/2025/09/dotnet-mcp-server/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="It seems with rise in popularity of AI LLMs the code we generate is starting to feel language agnostic, now more than ever I can apply what I know if .Net to any other langauge, even Rust with its non">
+<meta property="og:description" content="It seems with rise in popularity of AI LLMs the code we generate is starting to feel language agnostic, now more than ever I can apply what I know if .Net to any other langauge, even Rust with its no">
 <meta property="og:locale">
-<meta property="og:image" content="https://carlpaton.github.io/2025/09/dotnet-mcp-server/d/dotnet-mcp-server/confirm-mcp-execution.png">
-<meta property="og:image" content="https://carlpaton.github.io/2025/09/dotnet-mcp-server/d/dotnet-mcp-server/mcp-results.png">
-<meta property="og:image" content="https://carlpaton.github.io/2025/09/dotnet-mcp-server/d/dotnet-mcp-server/fetch-post.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/dotnet-mcp-server/dotnet-mcp-server.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/dotnet-mcp-server/confirm-mcp-execution.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/dotnet-mcp-server/mcp-results.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/dotnet-mcp-server/fetch-post.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/dotnet-mcp-server/monkey-hide.png">
 <meta property="article:published_time" content="2025-09-06T12:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-14T05:00:44.351Z">
+<meta property="article:modified_time" content="2025-09-14T05:15:51.568Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="ai">
 <meta property="article:tag" content="mcp">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://carlpaton.github.io/2025/09/dotnet-mcp-server/d/dotnet-mcp-server/confirm-mcp-execution.png">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/dotnet-mcp-server/dotnet-mcp-server.png">
   
     <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
   
@@ -144,7 +146,8 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>It seems with rise in popularity of AI LLMs the code we generate is starting to feel language agnostic, now more than ever I can apply what I know if .Net to any other langauge, even Rust with its none <a href="/2023/09/garbage-collection/">garbage collection</a> antics!</p>
+        <p><img src="/d/dotnet-mcp-server/dotnet-mcp-server.png" alt="dotnet-mcp-server"></p>
+<p>It seems with rise in popularity of AI LLMs the code we generate is starting to feel language agnostic, now more than ever I can apply what I know if .Net to any other langauge, even Rust with its none <a href="/2023/09/garbage-collection/">garbage collection</a> antics!</p>
 <p>Im not ready to loose focus from .Net, I mean getting better right? :D And <a href="/2025/09/mcp-transports/">MCP</a> is all the rage so why not learn to build my own MCP server?</p>
 <p>I found this Video from <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=DpyjAKmNwpI">Nick Chapsas | Getting Started with MCP</a> and this blog post from James Montemagno <a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/dotnet/build-a-model-context-protocol-mcp-server-in-csharp/">Build a Model Context Protocol (MCP) server in C#</a> super useful, they explain the core concepts and how to implement MCP in .Net. PS: James your monkey examples are cool 🐒</p>
 <p>So I decided to make my own notes as I built a .Net MCP Server using <a href="/2025/09/mcp-transports/">STDIO transports</a>, potentially next I will try Streamable HTTP but Im a noob, so STDIO it is!</p>
@@ -251,21 +254,22 @@ ga('send', 'pageview');
 <li><p>I dont have auto allow set, so it asks for permission each time</p>
 </li>
 </ol>
-<p><img src="d/dotnet-mcp-server/confirm-mcp-execution.png" alt="confirm-mcp-execution"></p>
+<p><img src="/d/dotnet-mcp-server/confirm-mcp-execution.png" alt="confirm-mcp-execution"></p>
 <ol start="4">
 <li>This will then list out the responses</li>
 </ol>
-<p><img src="d/dotnet-mcp-server/mcp-results.png" alt="mcp-results"></p>
+<p><img src="/d/dotnet-mcp-server/mcp-results.png" alt="mcp-results"></p>
 <ol start="5">
 <li>Because you are using a LLM, you can prompt something like <code>show me the contents of the post about hosted services</code></li>
 </ol>
-<p><img src="d/dotnet-mcp-server/fetch-post.png" alt="fetch-mcp"></p>
+<p><img src="/d/dotnet-mcp-server/fetch-post.png" alt="fetch-mcp"></p>
 <p>To be fair, this shows my MCP is pretty useless as it stands because the LLM has a intrinsic <code>fetch tool</code> that allows it to fetch contents over HTTP.</p>
+<p><img src="/d/dotnet-mcp-server/monkey-hide.png" alt="monkey-hide"></p>
 <p>However this is just an example tool showing how to build a MCP Server with a tool <code>SearchCarlPatonBlog</code></p>
 <h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><p>When I was testing I just wrote an integration test CarlBlogSearchToolTests:</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Demo.MCP.Tests</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CarlBlogSearchToolIntegrationTests</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">Fact</span>]</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">SearchCarlPatonBlog_RealRequest_ReturnsResults</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// Arrange</span></span><br><span class="line">        <span class="keyword">var</span> keyword = <span class="string">&quot;C#&quot;</span>;</span><br><span class="line">        <span class="keyword">using</span> <span class="keyword">var</span> httpClient = <span class="keyword">new</span> HttpClient();</span><br><span class="line">        <span class="keyword">var</span> tool = <span class="keyword">new</span> CarlBlogSearchTool(httpClient);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Act</span></span><br><span class="line">        <span class="keyword">var</span> results = <span class="keyword">await</span> tool.SearchCarlPatonBlog(keyword);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Assert</span></span><br><span class="line">        Assert.NotNull(results);</span><br><span class="line">        Assert.NotEmpty(results);</span><br><span class="line">        Assert.All(results, r =&gt; Assert.False(<span class="built_in">string</span>.IsNullOrWhiteSpace(r.Title)));</span><br><span class="line">        Assert.All(results, r =&gt; Assert.False(<span class="built_in">string</span>.IsNullOrWhiteSpace(r.Url)));</span><br><span class="line">        Assert.Contains(results, r =&gt; r.Url.Contains(<span class="string">&quot;carlpaton.github.io&quot;</span>, System.StringComparison.OrdinalIgnoreCase));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h2><p>The full source code for Demo.MCP is at </p>
+<h2 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h2><p>The full source code for Demo.MCP is at <a target="_blank" rel="noopener" href="https://github.com/carlpaton/Demo.MCP">https://github.com/carlpaton/Demo.MCP</a></p>
 
       
     </div>
