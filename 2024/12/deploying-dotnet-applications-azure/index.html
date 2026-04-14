@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Deploying .NET Applications To Azure | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Updated 14&#x2F;07&#x2F;2025 Overview of my notes for Deploying .NET Applications To Azure, the idea is to be able to follow them again later and apply to other deployments. Also see Errors When Deploying .NET">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deploying .NET Applications To Azure">
+<meta property="og:url" content="https://carlpaton.github.io/2024/12/deploying-dotnet-applications-azure/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Updated 14&#x2F;07&#x2F;2025 Overview of my notes for Deploying .NET Applications To Azure, the idea is to be able to follow them again later and apply to other deployments. Also see Errors When Deploying .NET">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/initial-resources-created.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/test-sql-connection.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/tfstate-in-blob.jpg">
+<meta property="article:published_time" content="2024-12-21T11:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-14T10:06:07.074Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="azure">
+<meta property="article:tag" content="infrastructure as code">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/deploying-dotnet-applications-azure/initial-resources-created.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article style="margin-top: 10px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article>
+
+<article id="post-deploying-dotnet-applications-azure" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/12/deploying-dotnet-applications-azure/" class="article-date">
+  <time datetime="2024-12-21T11:00:00.000Z" itemprop="datePublished">2024-Dec</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Deploying .NET Applications To Azure
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Updated 14/07/2025</strong></p>
+<p>Overview of my notes for Deploying .NET Applications To Azure, the idea is to be able to follow them again later and apply to other deployments. Also see <a href="/2025/07/deploying-dotnet-applications-azure-errors/">Errors When Deploying .NET Applications To Azure</a> and <a href="/2025/07/finding-container-apps-logs-in-azure/">Finding Container Apps Logs In Azure</a></p>
+<p>For a guided tutorial I highly recommend <a target="_blank" rel="noopener" href="https://dometrain.com/course/from-zero-to-hero-deploying-dotnet-apps-to-azure/">Dometrain - From Zero to Hero: Deploying .NET Applications to Azure by Mohamad Lawand</a></p>
+<p>Example container app ingress is <code>https://demo-aca-bb8c7a39-dev.bluefield-f45026b3.australiaeast.azurecontainerapps.io/swagger/index.html</code>, so <code>demo-aca-bb8c7a39-dev</code> comes from <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac_example/container_app.tf#L3">container_app.tf</a></p>
+<h2 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h2><p>Each heading shows the steps I followed:</p>
+<details>
+  <summary>Local Setup: CLI</summary>
+
+<ol>
+<li>Install <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform">Terraform CLI</a> and <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows">Azure CLI</a></li>
+<li>Check they available after installing</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">terraform version                ~ example v1.9.8</span><br><span class="line">az version                       ~ example 2.67.0</span><br></pre></td></tr></table></figure>
+
+</details>
+<br>
+
+<details>
+  <summary>Local Setup: Sample code</summary>
+
+<ol>
+<li>Clone <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/src/DemoApi">DemoApi</a>. </li>
+</ol>
+<p>I built this simple CRUD(ish) app based on the Microsoft templates and adapted it to use <a href="/2021/02/entity-framework-core/">EF Core</a> and <a target="_blank" rel="noopener" href="https://hub.docker.com/_/postgres">Postgres</a></p>
+<ol start="2">
+<li>Run the database locally using docker compose, there are 2 dbs because the tutorial used MS SQL but PGSQL is cheaper and the one that I would use for actual deployments.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose up</span><br></pre></td></tr></table></figure>
+
+<p>The default passwords are</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Type        | User        | Password                             | Port</span><br><span class="line">------------------------------------------------------------------------</span><br><span class="line">MS SQL      | sa          | 00000000-0000-0000-0000-919333ac7aaf | 1433</span><br><span class="line">PostgreSQL  | postgres    | 00000000-0000-0000-0000-919333ac7aaf | 5432</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Run the API, its .NET 8.0 so still has <a target="_blank" rel="noopener" href="https://github.com/dotnet/aspnetcore/issues/54599">Swagger</a>. The DB migrations should run <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/2a3f10fe8d9c8de2b93a0eb4d0bee9741f9d144b/src/DemoApi/Program.cs#L34">automagically</a> when the app starts.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet run</span><br></pre></td></tr></table></figure>
+
+<p><em>Swagger is enabled for all environments so I can use the Swagger UI when deployed to Azure, normally this is only for local development or demo purposes.</em></p>
+<p>The manual steps to run the migrations when testing were as follows</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dotnet tool install --global dotnet-ef                                                     ~ globally install the EF tooling</span><br><span class="line">dotnet build                                                                               ~ build the solution</span><br><span class="line"></span><br><span class="line">dotnet ef migrations add Initial_Migration --project .\src\DemoApi\DemoApi.csproj          ~ add a migration based on the application models</span><br><span class="line">dotnet ef database update --project .\src\DemoApi\DemoApi.csproj                           ~ apply the migration</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Check the app can locally insert and read data from the database</li>
+</ol>
+</details>
+<br>
+
+<details>
+  <summary>Create Azure Infrastructure With Terraform</summary>
+
+<p>You will need to know your tenant id, its just a GUID like 00000000-0000-0000-0000-000000000001</p>
+<ol>
+<li>Login to Azure, select and note the subscription</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">az login --tenant 00000000-0000-0000-0000-000000000001       ~ logs you into the tenant, will open Azure portal login</span><br><span class="line">az account show --query tenantId                             ~ shows which tenant you are logged in as</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Copy <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac_example/vars.tf">vars.tf</a> from <code>iac_example</code> into <code>iac</code> and update some values</li>
+</ol>
+<ul>
+<li><code>subscription_id</code> which came from az login (this is just temp while creating the infra from local)</li>
+<li><code>sql_pass</code>, example <code>dfb18358-5994-4470-b75a-109981a3fcf9</code>, this is just a <a target="_blank" rel="noopener" href="https://guidgenerator.com/">random GUID</a></li>
+<li><code>sql_user</code>, example <code>sqldemo-admin</code></li>
+<li><code>group_key</code>, example <code>bb8c7a39</code> (Some Azure resources need to be unique, while testing its helpful to use the start of a random GUID)</li>
+</ul>
+<p>This CLI command was helpful when I was trying to understand the regions which I stored as <code>location</code> in <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac_example/vars.tf">vars.tf</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az account list-locations -o table      ~ list of Azure regions</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Copy <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac_example/setup.tf">setup.tf</a> and check the <code>hashicorp/azurerm</code> provider version is current, example <code>4.14.0</code></li>
+</ol>
+<ul>
+<li>sets the cloud provider, API versions and account to connect to by subscription id</li>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest">azurerm</a></li>
+</ul>
+<ol start="4">
+<li>Run <code>terraform init</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">terraform init    ~ local initialization, and tracking with `.terraform.lock.hcl` to record the provider selections made</span><br><span class="line">                  ~ Per the docs: Include this file in your version control repository </span><br><span class="line">                  ~ so that Terraform can guarantee to make the same selections by default when you run &quot;terraform init&quot; in the future.</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>Copy the files listed below, one at a time, in order of the list, each time run <code>terraform plan</code> and <code>terraform apply</code>, this will create the infrastructure needed to run the application in Azure </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">terraform plan    ~ test run, compare local tf with azure, show the difference</span><br><span class="line"></span><br><span class="line">terraform apply   ~ execute, should create the resources described in tf plan</span><br><span class="line">                  ~ this will then create `terraform.tfstate` which is used to compare local to Azure</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac_example/resource-group.tf">resource-group.tf</a><ul>
+<li>groups resources in Azure</li>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group">resource-group</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/container-registry.tf">container-registry.tf</a><ul>
+<li>registry to store and manage docker images by version</li>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry">container_registry</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/log_analytics_workspace.tf">log_analytics_workspace.tf</a><ul>
+<li>logging and analytics</li>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/log_analytics_workspace">log_analytics_workspace</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/container_app_environment.tf">container_app_environment.tf</a><ul>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_app_environment">container_app_environment</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/container_app.tf">container_app.tf</a><ul>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_app">container_app</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/mssql.tf">mssql.tf</a><ul>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server">mssql_server</a></li>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_database">mssql_database</a></li>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_firewall_rule">mssql_firewall_rule</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac_example/pgsql-flexible_server.tf">pgsql-flexible_server.tf</a></li>
+</ul>
+<p>Note: <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server">azurerm_postgresql_flexible_server</a> replaced the single server on <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/postgresql/migrate/whats-happening-to-postgresql-single-server">March 28, 2025</a></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/tree/main/iac_example/pgsql.tf">pgsql.tf</a> (Single Server)<ul>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server">postgresql_server</a></li>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_database">postgresql_database</a></li>
+<li>see <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_firewall_rule">postgresql_firewall_rule</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac_example/front-door.tf">front-door.tf</a>, see <a href="/2025/10/azure-front-door/">Azure Front Door</a></li>
+</ul>
+<p>The end result seen from Azure showed the resources in my Resource Group:</p>
+<p><img src="/d/deploying-dotnet-applications-azure/initial-resources-created.jpg" alt="Resources created in Azure"></p>
+<p>You can also view the groups from the CLI</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az group list --output table            ~ list resource groups</span><br></pre></td></tr></table></figure>
+
+<p>You can also format the terraform files with <code>terraform fmt myfile.tf</code></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/cli/commands/fmt">https://developer.hashicorp.com/terraform/cli/commands/fmt</a></li>
+</ul>
+</details>
+<br>
+
+<details>
+  <summary>Test Connect To SQL</summary>
+
+<p>The username and DNS shown here was just for the demo, best practice is never to commit or share any secrets.</p>
+<p>I then added my own IP address to the firewall by navigating to Resource Group (<code>demo-rg-bb8c7a39-dev</code>) -&gt; selected the SQL server (<code>demo-sql-bb8c7a39-dev</code>) -&gt; <code>Security</code> -&gt; <code>Networking</code> -&gt; Firewall rules -&gt; Add your client IPv4 address (xxx.xxx.xxx.xxx) -&gt; Azure automagically filled mine in -&gt; Rule name <code>Carl home IP</code> -&gt; Save. Your IP wont be static so will probs need an update later.</p>
+<p>I then needed to get the server address for SQL in Azure by navigating to SQL server (<code>demo-sql-bb8c7a39-dev</code>), my server name was <em>demo-sql-bb8c7a39-dev.database.windows.net</em>, so the suffix comes from <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/mssql.tf#L3">mssql.tf where we set the server name</a></p>
+<p>Based on the <code>sql_pass/user</code> values in <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/vars.tf#L26">vars.tf</a> I build then connected using <a target="_blank" rel="noopener" href="https://dbeaver.io/">DBeaver</a> </p>
+<p><img src="/d/deploying-dotnet-applications-azure/test-sql-connection.jpg" alt="Test sql connection"></p>
+</details>
+<br>
+
+<details>
+  <summary>Create Github Secrets and Variables</summary>
+
+<p>You set these in the Github UI under <code>Github Settings</code> -&gt; <code>Secrets and variables</code> -&gt; <code>actions</code></p>
+<ul>
+<li>Secrets tab -&gt; Repository secrets -&gt; New repository secret</li>
+<li>Variables tab -&gt; Repository variables -&gt; New repository variable</li>
+</ul>
+<p><strong>For Azure Container Registry</strong></p>
+<p>To get these values navigate to Container Registry <code>demoacrbb8c7a39dev</code> -&gt; Settings -&gt; Access keys</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; vars.ACR_SERVER &#125;&#125;              ~ demoacrbb8c7a39dev.azurecr.io</span><br><span class="line">$&#123;&#123; secrets.ACR_USER &#125;&#125;             ~ demoacrbb8c7a39dev</span><br><span class="line">$&#123;&#123; secrets.ACR_PASSWORD &#125;&#125;         ~ 000000000000000000000/000000000000000000000000000000000000</span><br></pre></td></tr></table></figure>
+
+<p><strong>For Logging into Azure</strong></p>
+<p>Create a <code>Service Principle</code> (SP) and configure its access to Azure resources, here we copy the entire JSON object and save as <code>AZ_CREDENTIALS</code> github secret. This SP is used when logging into Azure to deploy both the Application and IAC.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az ad sp create-for-rbac --name github-auth --role contributor --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/demo-rg-bb8c7a39-dev --json-auth --output json</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; secrets.AZ_CREDENTIALS &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>For IAC (RBAC)</strong></p>
+<p>Create a another <code>Service Principle</code> (SP), here we copy values out of the JSON and save as individual github secrets. This SP has no <code>role</code> or <code>scopes</code> and is used with the terraform deployment itself.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az ad sp create-for-rbac --name iac-terraform-auth</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; secrets.ARM_CLIENT_ID &#125;&#125;         ~ appId</span><br><span class="line">$&#123;&#123; secrets.ARM_CLIENT_SECRET &#125;&#125;     ~ password</span><br><span class="line">$&#123;&#123; secrets.ARM_SUBSCRIPTION_ID &#125;&#125;   ~ you get this from `az login` or the Azure portal under and resource</span><br><span class="line">$&#123;&#123; secrets.ARM_TENANT_ID &#125;&#125;         ~ tenant</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest#az-ad-sp-create-for-rbac">https://learn.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest#az-ad-sp-create-for-rbac</a></li>
+<li><a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret">https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret</a></li>
+</ul>
+<p><strong>For IAC (SQL Secrets)</strong></p>
+<p>These are the values manually added to to <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac/vars.tf#L26">vars.tf</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; secrets.TF_VAR_DB_PASSWORD &#125;&#125;    ~ used with `Terraform plan` as var `sql_pass`, example dfb18358-5994-4470-b75a-109981a3fcf9</span><br><span class="line">$&#123;&#123; secrets.TF_VAR_DB_USER &#125;&#125;        ~ used with `Terraform plan` as var `sql_user`, example sqldemo-admin</span><br></pre></td></tr></table></figure>
+
+<p>This will look something like <code>Server=demo-sql-bb8c7a39-dev.database.windows.net,1433; Initial Catalog=demo_db; User=sqldemo-admin; Password=dfb18358-5994-4470-b75a-109981a3fcf9; Encrypt=False;</code></p>
+<p>ENSURE its added wrapped in quotes</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#123; secrets.AZ_MSSQL_DB_CONN &#125;&#125;      ~ used when deploying, changes app settings ConnectionStrings__SqlServer</span><br></pre></td></tr></table></figure>
+
+</details>
+<br>
+
+<details>
+  <summary>Github Actions - Deploy Application</summary>
+
+<ol>
+<li>Copy <code>\.github\examples\deploy-api.yaml</code> to <code>\.github\workflows\deploy-api.yaml</code></li>
+<li>Update the config values, potentially this could be from a config but this is more intentional and these values wont change for the applications life span.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">demoacrdev (few instance values)     -&gt; demoacrbb8c7a39dev</span><br><span class="line">containerAppName                     -&gt; demo-aca-bb8c7a39-dev</span><br><span class="line">containerAppEnvironment              -&gt; demo-cae-bb8c7a39-dev</span><br><span class="line">resourceGroup                        -&gt; demo-rg-bb8c7a39-dev</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Commit it and check it deploys, example <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/actions/runs/12670053312">https://github.com/carlpaton/deploying-dotnet-azure/actions/runs/12670053312</a></li>
+</ol>
+<p>Overview of <code>deploy-api.yaml</code></p>
+<ul>
+<li><strong>JOB</strong>: <ul>
+<li>build-and-push-image<ul>
+<li><strong>STEPS</strong>: <ul>
+<li>Checkout repository</li>
+<li>Setup WebApi .NET</li>
+<li>Configure Azure Container Registry (ACR)</li>
+<li>Get commit SHA</li>
+<li>Build and push image to Azure Container Registry (ACR)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>deploy-image-to-container-service<ul>
+<li><strong>STEPS</strong><ul>
+<li>Login to Azure</li>
+<li>Deploy to Azure Container Apps (ACA)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</details>
+<br>
+
+<details>
+  <summary>Github Actions - Deploy IAC</summary>
+
+<p>We need to migrate the TF state, <code>terraform.tfstate</code> and <code>terraform.tfstate.backup</code> from being stored locally to being stored in the cloud.</p>
+<ol>
+<li>Create a new resource group in Azure using the portal -&gt; <code>Resource groups</code> -&gt; <code>Create</code></li>
+</ol>
+<ul>
+<li>Name -&gt; <code>reference-rg</code></li>
+<li>Region -&gt; <code>(Asia Pacific) Australia East</code></li>
+<li>Tags -&gt; <code>environment=dev, source=azure-portal, group_key=bb8c7a39</code></li>
+<li><code>Review and create</code> -&gt; <code>Create</code></li>
+</ul>
+<ol start="2">
+<li>Add storage in the portal -&gt; <code>reference-rg</code> -&gt; create -&gt; search -&gt; <code>storage account</code> -&gt; select <code>Storage account</code> by Microsoft | Azure Service</li>
+</ol>
+<ul>
+<li>Plan -&gt; <code>Storage account</code> -&gt; <code>Create</code></li>
+<li>Storage account name -&gt; <code>demoiacbb8c7a39</code></li>
+<li>Region -&gt; <code>(Asia Pacific) Australia East</code></li>
+<li>Primary service -&gt; <code>Azure Blob Storage or Azure Data Lake Storage Gen 2</code></li>
+<li>Performance -&gt; <code>Standard</code></li>
+<li>Redundancy -&gt; <code>Locally-redundant storage (LRS)</code></li>
+<li><code>Review and create</code> -&gt; <code>Create</code> … <em>this will take a minute or so to create and says <code>Deployment is in progress</code></em></li>
+<li><code>Go to resource</code> -&gt; <code>Data storage</code> -&gt; <code>Containers</code> -&gt; <code>+ Container</code> (New Container)</li>
+<li>Name -&gt; <code>terraform</code> -&gt; Create</li>
+</ul>
+<ol start="3">
+<li>Update <a target="_blank" rel="noopener" href="https://github.com/carlpaton/deploying-dotnet-azure/blob/main/iac_example/setup.tf">setup.tf</a> to include the backend</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">terraform &#123;</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  backend &quot;azurerm&quot; &#123;</span><br><span class="line">    resource_group_name = &quot;reference-rg&quot;</span><br><span class="line">    storage_account_name = &quot;demoiacbb8c7a39&quot;</span><br><span class="line">    container_name = &quot;terraform&quot;</span><br><span class="line">    key = &quot;terraform.tfstate&quot;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Migrate the terraform files from local to the new blob storage</li>
+</ol>
+<ul>
+<li>run <code>terraform plan</code>, this should error with <code>Error: Backend initialization required, please run &quot;terraform init&quot;</code> because we added a new backend</li>
+<li>run <code>terraform init</code>, this will ask <code>Do you want to copy existing state to the new backend?</code>, type <code>yes</code></li>
+</ul>
+<p><img src="/d/deploying-dotnet-applications-azure/tfstate-in-blob.jpg" alt="tfstate was copied to blob storage"></p>
+<p>Locally <code>terraform.tfstate</code> should now be blank.</p>
+<ol start="5">
+<li>Copy <code>\.github\examples\deploy-iac.yaml</code> to <code>\.github\workflows\deploy-iac.yaml</code>, no changes needed, commit and push.</li>
+</ol>
+<p>Overview of <code>deploy-iac.yaml</code></p>
+<ul>
+<li><strong>JOB</strong>: <ul>
+<li>terraform-deploy<ul>
+<li><strong>STEPS</strong>: <ul>
+<li>Checkout repository</li>
+<li>Login to Azure</li>
+<li>Terraform install</li>
+<li>Terraform initialization</li>
+<li>Terraform validate</li>
+<li>Terraform plan</li>
+<li>Terraform apply</li>
+<li>Notify failure</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="6">
+<li>Add a tag change, commit &amp; push</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;azurerm_resource_group&quot; &quot;demo-rg&quot; &#123;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  tags = &#123;</span><br><span class="line">...</span><br><span class="line">    testtag     = &quot;testtag1&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>If there are state lock issues run like <code>Error: Error acquiring the state lock</code> -&gt; <code>Error message: state blob is already locked</code> then this can be unlocked from the CLI where <code>092ff1c9-467a-39a4-d0cf-b72ae52e5805</code> is the lock ID</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">terraform force-unlock -force 092ff1c9-467a-39a4-d0cf-b72ae52e5805</span><br></pre></td></tr></table></figure>
+
+<p>This should now deploy IAC changes.</p>
+</details>
+<br>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.npgsql.org/efcore/?tabs=onconfiguring">https://www.npgsql.org/efcore/?tabs=onconfiguring</a></li>
+<li><a target="_blank" rel="noopener" href="https://datacenters.microsoft.com/globe/explore">https://datacenters.microsoft.com/globe/explore</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/troubleshooting/common-deployment-errors">https://learn.microsoft.com/en-us/azure/azure-resource-manager/troubleshooting/common-deployment-errors</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/troubleshooting/error-register-resource-provider">https://learn.microsoft.com/en-us/azure/azure-resource-manager/troubleshooting/error-register-resource-provider</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli">https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli</a></li>
+</ul>
+<p><strong>Technologies Used</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/products/container-registry">Azure Container Registry</a> (Build store and manage container images)</li>
+<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/products/container-apps">Azure Container Apps</a> (Built on K8s, is Serverless &amp; Fully managed by Azure)</li>
+<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/products/azure-sql/database">Azure SQL Database</a> (Managed PaaS database engine)</li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-workspace-overview">Azure Log Analytics Workspace</a> (Observability and Analytics)</li>
+<li><a href="/2024/08/github-actions-workflow/">Github Actions</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform">Terraform</a> (Consistently build infrastructure using automation)</li>
+<li><a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/en-us/download">.NET SDK</a></li>
+</ul>
+<p><strong>Costings</strong></p>
+<ul>
+<li>Database<ul>
+<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/">https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/</a></li>
+<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/pricing/details/postgresql/flexible-server/">https://azure.microsoft.com/en-us/pricing/details/postgresql/flexible-server/</a></li>
+<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/pricing/details/mysql/">https://azure.microsoft.com/en-us/pricing/details/mysql/</a></li>
+</ul>
+</li>
+<li>Container App<ul>
+<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/pricing/details/container-apps/">https://azure.microsoft.com/en-us/pricing/details/container-apps/</a></li>
+</ul>
+</li>
+<li>Container Registry<ul>
+<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/pricing/details/container-registry/">https://azure.microsoft.com/en-us/pricing/details/container-registry/</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus/">https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus/</a></li>
+</ul>
+</li>
+<li>Storage<ul>
+<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/pricing/details/storage/blobs/">https://azure.microsoft.com/en-us/pricing/details/storage/blobs/</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2024/12/deploying-dotnet-applications-azure/" data-id="cmlsbqumn007rrsga02yvbxf7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/azure/" rel="tag">azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/infrastructure-as-code/" rel="tag">infrastructure as code</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2025/01/entra-roll-based-access-control-for-applications/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Entra RBAC For Applications
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/12/flyway-database-migration-using-github-actions/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Flyway Database Migration Using Github Actions</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<article style="margin-bottom: 5px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/04/azure-container-app-extenal-dns/">Azure Container App With External DNS</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/mountebank-mocks/">How to use Mountebank for mocks</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/claude-code-prompt-anatomy/">Claude Code Prompt Anatomy</a>
+          </li>
+        
+          <li>
+            <a href="/2026/02/docker-image-digest/">Docker Image Digest</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/azure-container-apps-image-pull-back-off-error/">Azure Container Apps ImagePullBackOff Error</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.43px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.95px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.48px;">agile</a> <a href="/tags/ai/" style="font-size: 11.9px;">ai</a> <a href="/tags/algorithms/" style="font-size: 11.9px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.76px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.71px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.48px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.48px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.95px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.76px;">auth</a> <a href="/tags/aws/" style="font-size: 18.1px;">aws</a> <a href="/tags/azure/" style="font-size: 13.33px;">azure</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.29px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.48px;">benchmarks</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.48px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.9px;">cad</a> <a href="/tags/cam/" style="font-size: 11.9px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.43px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.48px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.24px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.48px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.43px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.9px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.9px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.9px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.95px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.33px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.48px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.48px;">dns</a> <a href="/tags/docker/" style="font-size: 17.62px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.95px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/entra/" style="font-size: 10.48px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.95px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.86px;">food</a> <a href="/tags/games/" style="font-size: 10.48px;">games</a> <a href="/tags/git/" style="font-size: 12.38px;">git</a> <a href="/tags/github-actions/" style="font-size: 10px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.95px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.48px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.33px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.9px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.81px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.81px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.81px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.95px;">jquery</a> <a href="/tags/json/" style="font-size: 11.9px;">json</a> <a href="/tags/kibana/" style="font-size: 10.48px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.81px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.9px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.9px;">linux</a> <a href="/tags/llm/" style="font-size: 10.95px;">llm</a> <a href="/tags/logging/" style="font-size: 11.43px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.48px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.29px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.1px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.43px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.9px;">net core</a> <a href="/tags/newrelic/" style="font-size: 10.48px;">newrelic</a> <a href="/tags/nginx/" style="font-size: 10.95px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.43px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.95px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 13.33px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.52px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.9px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/random/" style="font-size: 11.9px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 17.14px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.62px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.48px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.95px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.9px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 15.24px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.86px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.57px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.48px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.67px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.48px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.95px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.81px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/swagger/" style="font-size: 10.48px;">swagger</a> <a href="/tags/terraform/" style="font-size: 10.48px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.33px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.05px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.48px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.48px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.19px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.57px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.95px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.43px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

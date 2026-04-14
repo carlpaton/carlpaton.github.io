@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Adding Microsoft Identity Platform To An Existing App | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="You can do this when creating a new App from Visual Studio by selecting Authentication type -&gt; Microsoft identity platform. This will configure the template for you and even register the App if the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Adding Microsoft Identity Platform To An Existing App">
+<meta property="og:url" content="https://carlpaton.github.io/2025/07/add-microsoft-identity-platform-to-existing-app/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="You can do this when creating a new App from Visual Studio by selecting Authentication type -&gt; Microsoft identity platform. This will configure the template for you and even register the App if the">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/add-microsoft-identity-platform-to-existing-app/vs.png">
+<meta property="article:published_time" content="2025-07-20T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-14T09:46:46.729Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="azure">
+<meta property="article:tag" content="auth">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/add-microsoft-identity-platform-to-existing-app/vs.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article style="margin-top: 10px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article>
+
+<article id="post-add-microsoft-identity-platform-to-existing-app" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/07/add-microsoft-identity-platform-to-existing-app/" class="article-date">
+  <time datetime="2025-07-20T12:00:00.000Z" itemprop="datePublished">2025-Jul</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Adding Microsoft Identity Platform To An Existing App
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>You can do this when creating a new App from Visual Studio by selecting <code>Authentication type</code> -&gt; <code>Microsoft identity platform</code>. This will configure the template for you and even register the App if the account you authenticate to Visual Studio with has privilege.</p>
+<p><img src="/d/add-microsoft-identity-platform-to-existing-app/vs.png"></p>
+<p>In my case, I needed to add Microsoft identity platform to an <em>existing</em> ASP.NET Core MVC app. The Visual Studio template handles this automatically, but I had to wire it in manually. This post is the exact sequence I followed.</p>
+<h2 id="1-Register-the-app-with-Entra"><a href="#1-Register-the-app-with-Entra" class="headerlink" title="1. Register the app with Entra"></a>1. Register the app with Entra</h2><p>In Microsoft Entra admin center, go to <strong>App registrations</strong> and open your app (or create one). Under <strong>Authentication</strong>, add your redirect URI(s) under <strong>Web</strong> platform:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://localhost:5001/signin-oidc</span><br><span class="line">https://your-uat-host/signin-oidc</span><br><span class="line">https://your-prod-host/signin-oidc</span><br></pre></td></tr></table></figure>
+
+<p>Record the <code>Application (client) ID</code> and <code>Directory (tenant) ID</code>—you’ll need these in <code>appsettings.json</code>.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/entra/identity-platform/quickstart-register-app">Register an app</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/entra/identity-platform/how-to-add-redirect-uri">Add redirect URI</a></p>
+<h2 id="2-Install-the-identity-packages"><a href="#2-Install-the-identity-packages" class="headerlink" title="2. Install the identity packages"></a>2. Install the identity packages</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dotnet add package Microsoft.AspNetCore.Authentication.OpenIdConnect <span class="literal">--version</span> <span class="number">8.0</span>.<span class="number">15</span></span><br><span class="line">dotnet add package Microsoft.Identity.Web <span class="literal">--version</span> <span class="number">3.8</span>.<span class="number">2</span></span><br><span class="line">dotnet add package Microsoft.Identity.Web.UI <span class="literal">--version</span> <span class="number">3.8</span>.<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/entra/msal/dotnet/microsoft-identity-web/">Microsoft.Identity.Web</a></p>
+<h2 id="3-Configure-authentication-in-Program-cs"><a href="#3-Configure-authentication-in-Program-cs" class="headerlink" title="3. Configure authentication in Program.cs"></a>3. Configure authentication in Program.cs</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Authentication.OpenIdConnect;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Identity.Web;</span><br><span class="line"></span><br><span class="line">builder.Services</span><br><span class="line">    .AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)</span><br><span class="line">    .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection(<span class="string">&quot;AzureAd&quot;</span>));</span><br><span class="line"></span><br><span class="line">builder.Services.AddControllersWithViews();</span><br><span class="line">builder.Services.AddRazorPages().AddMicrosoftIdentityUI();</span><br></pre></td></tr></table></figure>
+
+<p>This sets up OpenID Connect with <code>AddMicrosoftIdentityWebApp(...)</code> and adds the built-in Microsoft Identity UI (which provides the Account controller).</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/dotnet/api/microsoft.identity.web.microsoftidentitywebappauthenticationbuilderextensions.addmicrosoftidentitywebapp">AddMicrosoftIdentityWebApp</a></p>
+<h2 id="4-Wire-up-the-middleware-in-Program-cs"><a href="#4-Wire-up-the-middleware-in-Program-cs" class="headerlink" title="4. Wire up the middleware in Program.cs"></a>4. Wire up the middleware in Program.cs</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">app.UseHttpsRedirection();</span><br><span class="line">app.UseStaticFiles();</span><br><span class="line"></span><br><span class="line">app.UseRouting();</span><br><span class="line"></span><br><span class="line">app.UseAuthentication();</span><br><span class="line">app.UseAuthorization();</span><br><span class="line"></span><br><span class="line">app.MapControllerRoute(</span><br><span class="line">    name: <span class="string">&quot;default&quot;</span>,</span><br><span class="line">    pattern: <span class="string">&quot;&#123;controller=Home&#125;/&#123;action=Index&#125;/&#123;id?&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line">app.MapRazorPages();  <span class="comment">// Required for Microsoft Identity UI</span></span><br></pre></td></tr></table></figure>
+
+<p>The order matters: <code>UseAuthentication()</code> must come before <code>UseAuthorization()</code>, and both must come after <code>UseRouting()</code>.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/entra/identity-platform/scenario-web-app-sign-user-overview">Middleware order</a></p>
+<h2 id="5-Add-AzureAd-config-to-appsettings-json"><a href="#5-Add-AzureAd-config-to-appsettings-json" class="headerlink" title="5. Add AzureAd config to appsettings.json"></a>5. Add AzureAd config to appsettings.json</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;AzureAd&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;Instance&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://login.microsoftonline.com/&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;TenantId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;tenant-id-from-step-1&gt;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;ClientId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;client-id-from-step-1&gt;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;CallbackPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/signin-oidc&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Make sure <code>CallbackPath</code> matches your redirect URI path from the app registration.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/entra/identity-platform/tutorial-web-app-dotnet-prepare-app?tabs=workforce-tenant#update-the-configuration-file">Configure appsettings.json</a></p>
+<h2 id="6-Add-sign-in-sign-out-links-to-your-layout"><a href="#6-Add-sign-in-sign-out-links-to-your-layout" class="headerlink" title="6. Add sign-in/sign-out links to your layout"></a>6. Add sign-in/sign-out links to your layout</h2><p>Create <code>/Views/Shared/_LoginPartial.cshtml</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul class=&quot;navbar-nav&quot;&gt;</span><br><span class="line">@if (User.Identity?.IsAuthenticated == true)</span><br><span class="line">&#123;</span><br><span class="line">    &lt;span class=&quot;navbar-text&quot;&gt;Hello @User.Identity?.Name!&lt;/span&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">        &lt;a class=&quot;nav-link&quot; asp-area=&quot;MicrosoftIdentity&quot; asp-controller=&quot;Account&quot; asp-action=&quot;SignOut&quot;&gt;Sign out&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">        &lt;a class=&quot;nav-link&quot; asp-area=&quot;MicrosoftIdentity&quot; asp-controller=&quot;Account&quot; asp-action=&quot;SignIn&quot;&gt;Sign in&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Then add it to <code>/Views/Shared/_Layout.cshtml</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;partial name=&quot;_LoginPartial&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>The <code>MicrosoftIdentity</code> area and <code>Account</code> controller are built in to <code>Microsoft.Identity.Web.UI</code>.</p>
+<h2 id="7-Protect-your-endpoints"><a href="#7-Protect-your-endpoints" class="headerlink" title="7. Protect your endpoints"></a>7. Protect your endpoints</h2><p>Add <code>[Authorize]</code> to controllers/actions you want to protect:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Authorize</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">HomeController</span> : <span class="title">Controller</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> IActionResult <span class="title">Index</span>()</span> =&gt; View();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Or enforce it globally in <code>Program.cs</code> (then use <code>[AllowAnonymous]</code> where needed):</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">builder.Services.AddControllersWithViews(options =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> policy = <span class="keyword">new</span> AuthorizationPolicyBuilder()</span><br><span class="line">        .RequireAuthenticatedUser()</span><br><span class="line">        .Build();</span><br><span class="line">    options.Filters.Add(<span class="keyword">new</span> AuthorizeFilter(policy));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/aspnet/core/security/authorization/simple">Simple authorization</a></p>
+<h2 id="8-If-you-get-AADSTS50011-redirect-URI-mismatch"><a href="#8-If-you-get-AADSTS50011-redirect-URI-mismatch" class="headerlink" title="8. If you get AADSTS50011 (redirect URI mismatch)"></a>8. If you get AADSTS50011 (redirect URI mismatch)</h2><p>This error means your app is sending a different redirect URI than what’s registered. Check:</p>
+<ol>
+<li>Scheme matches (<code>http</code> vs <code>https</code>)</li>
+<li>Host matches exactly</li>
+<li>Path is <code>/signin-oidc</code></li>
+<li>It’s registered in app registration → Authentication → Web</li>
+</ol>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/troubleshoot/entra/entra-id/app-integration/error-code-AADSTS50011-redirect-uri-mismatch">Troubleshoot AADSTS50011</a></p>
+<h2 id="9-If-hosted-behind-Azure-Container-Apps-or-reverse-proxy"><a href="#9-If-hosted-behind-Azure-Container-Apps-or-reverse-proxy" class="headerlink" title="9. If hosted behind Azure Container Apps or reverse proxy"></a>9. If hosted behind Azure Container Apps or reverse proxy</h2><p>When a reverse proxy terminates TLS, your app needs to read forwarded headers to know the request is really HTTPS.</p>
+<p>In <code>Program.cs</code>:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.HttpOverrides;</span><br><span class="line"></span><br><span class="line">builder.Services.Configure&lt;ForwardedHeadersOptions&gt;(options =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    options.ForwardedHeaders =</span><br><span class="line">        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;</span><br><span class="line">    options.KnownNetworks.Clear();</span><br><span class="line">    options.KnownProxies.Clear();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.UseForwardedHeaders();  <span class="comment">// Call this early, before UseHttpsRedirection()</span></span><br></pre></td></tr></table></figure>
+
+<p>This is especially important for OIDC redirect URIs—if your app thinks the request is <code>http</code> instead of <code>https</code>, the redirect URI won’t match what’s registered.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/aspnet/core/host-and-deploy/proxy-load-balancer">Configure for proxy/load balancer</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2025/07/add-microsoft-identity-platform-to-existing-app/" data-id="cmnygmt4u0000l4gacp4u1gtf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/auth/" rel="tag">auth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/azure/" rel="tag">azure</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2025/08/js-games-time-and-frames/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Javascript Games Time And Frames
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2025/07/deploying-dotnet-applications-azure-errors/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Errors When Deploying .NET Applications To Azure</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<article style="margin-bottom: 5px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/04/azure-container-app-extenal-dns/">Azure Container App With External DNS</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/mountebank-mocks/">How to use Mountebank for mocks</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/claude-code-prompt-anatomy/">Claude Code Prompt Anatomy</a>
+          </li>
+        
+          <li>
+            <a href="/2026/02/docker-image-digest/">Docker Image Digest</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/azure-container-apps-image-pull-back-off-error/">Azure Container Apps ImagePullBackOff Error</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.43px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.95px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.48px;">agile</a> <a href="/tags/ai/" style="font-size: 11.9px;">ai</a> <a href="/tags/algorithms/" style="font-size: 11.9px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.76px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.71px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.48px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.48px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.95px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.76px;">auth</a> <a href="/tags/aws/" style="font-size: 18.1px;">aws</a> <a href="/tags/azure/" style="font-size: 13.33px;">azure</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.29px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.48px;">benchmarks</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.48px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.9px;">cad</a> <a href="/tags/cam/" style="font-size: 11.9px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.43px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.48px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.24px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.48px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.43px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.9px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.9px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.9px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.95px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.33px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.48px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.48px;">dns</a> <a href="/tags/docker/" style="font-size: 17.62px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.95px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/entra/" style="font-size: 10.48px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.95px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.86px;">food</a> <a href="/tags/games/" style="font-size: 10.48px;">games</a> <a href="/tags/git/" style="font-size: 12.38px;">git</a> <a href="/tags/github-actions/" style="font-size: 10px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.95px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.48px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.33px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.9px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.81px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.81px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.81px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.95px;">jquery</a> <a href="/tags/json/" style="font-size: 11.9px;">json</a> <a href="/tags/kibana/" style="font-size: 10.48px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.81px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.9px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.9px;">linux</a> <a href="/tags/llm/" style="font-size: 10.95px;">llm</a> <a href="/tags/logging/" style="font-size: 11.43px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.48px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.29px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.1px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.43px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.9px;">net core</a> <a href="/tags/newrelic/" style="font-size: 10.48px;">newrelic</a> <a href="/tags/nginx/" style="font-size: 10.95px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.43px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.95px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 13.33px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.52px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.9px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/random/" style="font-size: 11.9px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 17.14px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.62px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.48px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.95px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.9px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 15.24px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.86px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.57px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.48px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.67px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.48px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.95px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.81px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/swagger/" style="font-size: 10.48px;">swagger</a> <a href="/tags/terraform/" style="font-size: 10.48px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.33px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.05px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.48px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.48px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.19px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.57px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.95px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.43px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

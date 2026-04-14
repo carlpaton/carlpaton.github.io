@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Claude Code Prompt Anatomy | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Practical guide to understanding what goes into Claude’s context window when you use Claude Code — what you can control, in what order things are loaded, and how to use that knowledge to get better re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Claude Code Prompt Anatomy">
+<meta property="og:url" content="https://carlpaton.github.io/2026/03/claude-code-prompt-anatomy/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Practical guide to understanding what goes into Claude’s context window when you use Claude Code — what you can control, in what order things are loaded, and how to use that knowledge to get better re">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-02-28T11:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-14T08:54:03.335Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="ai">
+<meta property="article:tag" content="ide">
+<meta property="article:tag" content="llm">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article style="margin-top: 10px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article>
+
+<article id="post-claude-code-prompt-anatomy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/03/claude-code-prompt-anatomy/" class="article-date">
+  <time datetime="2026-02-28T11:00:00.000Z" itemprop="datePublished">2026-Mar</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Claude Code Prompt Anatomy
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Practical guide to understanding what goes into Claude’s context window when you use Claude Code — what you can control, in what order things are loaded, and how to use that knowledge to get better results.</p>
+<h2 id="Context-Window"><a href="#Context-Window" class="headerlink" title="Context Window"></a>Context Window</h2><p>The context window is the total amount of text (system prompt + conversation history + tool results) that Claude can see at once. Claude Code manages this carefully:</p>
+<ul>
+<li>The system prompt is split into a <strong>static</strong> half (cached, never changes) and a <strong>dynamic</strong> half (rebuilt each turn)</li>
+<li>Older messages are automatically summarised as the window fills up</li>
+<li>CLAUDE.md files and your git status are injected fresh each conversation</li>
+</ul>
+<p>Context rot is the gradual degradation of usefulness as a conversation grows longer. The longer you go, the more Claude gets distracted by earlier, now-irrelevant content. Start a new conversation when you change topic.</p>
+<h2 id="What-Claude-Sees-—-In-Order"><a href="#What-Claude-Sees-—-In-Order" class="headerlink" title="What Claude Sees — In Order"></a>What Claude Sees — In Order</h2><h3 id="SYSTEM-PROMPT-static-—-same-for-every-user-cached"><a href="#SYSTEM-PROMPT-static-—-same-for-every-user-cached" class="headerlink" title="SYSTEM PROMPT (static — same for every user, cached)"></a>SYSTEM PROMPT (static — same for every user, cached)</h3><ul>
+<li>Who it is and what it does (Intro / Identity)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">You are an interactive agent that helps users with software engineering tasks.</span><br><span class="line">Use the instructions below and the tools available to you to assist the user.</span><br><span class="line"></span><br><span class="line">IMPORTANT: Assist with authorized security testing... [cyber risk instruction]</span><br><span class="line">IMPORTANT: You must NEVER generate or guess URLs...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Rules for tool use and permissions</li>
+<li>How to do tasks (coding style, safety, etc.)</li>
+<li>Tone and output format rules</li>
+</ul>
+<h3 id="SYSTEM-PROMPT-dynamic-—-rebuilt-each-session"><a href="#SYSTEM-PROMPT-dynamic-—-rebuilt-each-session" class="headerlink" title="SYSTEM PROMPT (dynamic — rebuilt each session)"></a>SYSTEM PROMPT (dynamic — rebuilt each session)</h3><ul>
+<li>Session guidance (plan mode, agent tool, skills)</li>
+<li>Your memory files (MEMORY.md)</li>
+<li>Environment: CWD, OS, shell, model name</li>
+<li>Language preference (if set)</li>
+<li>MCP server instructions (if any connected)</li>
+<li>Git status (appended separately)  </li>
+</ul>
+<h3 id="MESSAGES"><a href="#MESSAGES" class="headerlink" title="MESSAGES"></a>MESSAGES</h3><ul>
+<li>[system-reminder] current date + your CLAUDE.md files </li>
+<li>Conversation history (user turns + assistant turns) </li>
+<li>Tool results (file reads, bash output, etc.)</li>
+<li>Skill discovery hints (when relevant)  </li>
+</ul>
+<h2 id="The-Things-You-Control"><a href="#The-Things-You-Control" class="headerlink" title="The Things You Control"></a>The Things You Control</h2><h3 id="CLAUDE-md-—-Project-Instructions"><a href="#CLAUDE-md-—-Project-Instructions" class="headerlink" title="CLAUDE.md — Project Instructions"></a>CLAUDE.md — Project Instructions</h3><p>The most important thing you can configure. Equivalent to <a href="/2025/11/co-pilot-prompt-anatomy/">Copilot’s copilot-instructions.md</a>.</p>
+<p>Loaded fresh at the start of each conversation and injected into the messages as a reminder block. Claude is told it <em>may or may not</em> be relevant — so keep it focused and don’t pad it.</p>
+<p><strong>Four tiers, loaded in priority order (later = higher priority):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Location</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Managed</td>
+<td><code>/etc/claude-code/CLAUDE.md</code></td>
+<td>Team/org-wide rules (set by admins)</td>
+</tr>
+<tr>
+<td>User</td>
+<td><code>~/.claude/CLAUDE.md</code></td>
+<td>Your personal preferences across all projects</td>
+</tr>
+<tr>
+<td>Project</td>
+<td><code>CLAUDE.md</code> or <code>.claude/CLAUDE.md</code> or <code>.claude/rules/*.md</code></td>
+<td>Project-specific conventions, checked into source control</td>
+</tr>
+<tr>
+<td>Local</td>
+<td><code>CLAUDE.local.md</code></td>
+<td>Your private notes on a project, not committed</td>
+</tr>
+</tbody></table>
+<p>Files closer to your current directory win. Multiple files are all loaded and merged.</p>
+<p><strong>What to put in project CLAUDE.md:</strong></p>
+<ul>
+<li>Architecture overview (what the layers are, how they talk to each other)</li>
+<li>Patterns to follow or avoid (“we use X not Y”)</li>
+<li>Where key things live (“API routes are in src/routes/“)</li>
+<li>Testing approach (“always write integration tests, never mock the DB”)</li>
+<li>Things Claude tends to get wrong in your codebase</li>
+</ul>
+<p><strong>What not to put:</strong></p>
+<ul>
+<li>Everything — Claude reads the code too, don’t duplicate what’s obvious</li>
+<li>Step-by-step task instructions — those belong in your prompt</li>
+<li>Stuff that changes per-task — use your prompt for that</li>
+</ul>
+<p><strong>Splitting with <code>.claude/rules/*.md</code>:</strong></p>
+<p>Instead of one long CLAUDE.md you can split by topic:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.claude/</span><br><span class="line">  rules/</span><br><span class="line">    architecture.md</span><br><span class="line">    testing.md</span><br><span class="line">    style.md</span><br></pre></td></tr></table></figure>
+<p>All files in the rules directory are loaded automatically.</p>
+<p><strong><code>@include</code> — pulling in other files:</strong></p>
+<p>Any CLAUDE.md file can include another file with <code>@path</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@./docs/architecture-overview.md</span><br><span class="line">@~/.claude/my-preferences.md</span><br></pre></td></tr></table></figure>
+<p>The included file is inserted before the including file. Missing files are silently ignored.</p>
+<p><strong>Private local notes — <code>CLAUDE.local.md</code>:</strong></p>
+<p>Same as CLAUDE.md but not committed to source control. Good for your own reminders about a project without affecting teammates.</p>
+<h3 id="Memory-Files-—-Persistent-AI-Memory"><a href="#Memory-Files-—-Persistent-AI-Memory" class="headerlink" title="Memory Files — Persistent AI Memory"></a>Memory Files — Persistent AI Memory</h3><p>Separate from CLAUDE.md. These are files Claude writes to itself during a conversation to remember things across sessions. Stored in <code>.claude/</code> inside your project or in <code>~/.claude/projects/[project]/memory/</code>.</p>
+<p>Claude uses a <code>MEMORY.md</code> index file that points to individual memory files. When you ask Claude to “remember” something, it writes a file and adds a pointer to the index.</p>
+<p>Injected into the <strong>system prompt</strong> (not messages), so they count against the static context. Keep them concise.</p>
+<p>Types of memory Claude saves:</p>
+<ul>
+<li><strong>user</strong> — who you are, your role, your preferences</li>
+<li><strong>feedback</strong> — corrections you’ve made (“stop doing X”, “always do Y”)</li>
+<li><strong>project</strong> — ongoing work, decisions, deadlines</li>
+<li><strong>reference</strong> — where things are (Jira project, Slack channel, dashboard URL)</li>
+</ul>
+<h3 id="Environment-Info-—-Automatically-Injected"><a href="#Environment-Info-—-Automatically-Injected" class="headerlink" title="Environment Info — Automatically Injected"></a>Environment Info — Automatically Injected</h3><p>You don’t configure this — it’s added automatically every session:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Primary working directory: /your/project</span><br><span class="line">Is a git repository: true</span><br><span class="line">Platform: darwin / win32</span><br><span class="line">Shell: bash</span><br><span class="line">OS Version: ...</span><br><span class="line">Model: claude-sonnet-4-6</span><br><span class="line">Knowledge cutoff: August 2025</span><br></pre></td></tr></table></figure>
+
+<p>Plus your <strong>git status</strong> — current branch, main branch, last 5 commits, and <code>git status</code> output (up to 2000 characters). Claude uses this to understand where you are in the repo and what’s been changed.</p>
+<h3 id="Skills-—-Slash-Commands"><a href="#Skills-—-Slash-Commands" class="headerlink" title="Skills — Slash Commands"></a>Skills — Slash Commands</h3><p>Skills are reusable prompt files you invoke with <code>/skill-name</code>. They work like Copilot’s prompt files.</p>
+<p><strong>Where to store them:</strong></p>
+<ul>
+<li>Global: <code>~/.claude/skills/</code></li>
+<li>Project: <code>.claude/skills/</code> (checked into source control)</li>
+</ul>
+<p><strong>How they work:</strong></p>
+<ul>
+<li>Claude detects when a skill is relevant to your task and surfaces it as a hint</li>
+<li>You invoke a skill with <code>/skill-name</code> or by asking Claude to run it</li>
+<li>The skill’s content is expanded and used as your prompt</li>
+</ul>
+<p><strong>Built-in skills include:</strong> <code>/commit</code>, <code>/review-pr</code>, <code>/simplify</code> — you can see these with <code>/help</code>.</p>
+<p><strong>Writing your own:</strong></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: my-skill</span><br><span class="line"><span class="section">description: Does a specific thing for this project</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">Your reusable prompt instructions here.</span><br><span class="line">Reference files with @path syntax.</span><br></pre></td></tr></table></figure>
+
+<h3 id="MCP-Servers-—-External-Tools"><a href="#MCP-Servers-—-External-Tools" class="headerlink" title="MCP Servers — External Tools"></a>MCP Servers — External Tools</h3><p>Model Context Protocol servers extend Claude with additional tools (databases, APIs, services). When connected, each server can provide:</p>
+<ul>
+<li>Additional tools Claude can call</li>
+<li>A block of instructions injected into the system prompt</li>
+</ul>
+<p>The instructions section is the MCP server’s equivalent of CLAUDE.md — it tells Claude how to use the server’s tools.</p>
+<h2 id="The-Conversation-Loop"><a href="#The-Conversation-Loop" class="headerlink" title="The Conversation Loop"></a>The Conversation Loop</h2><p>Each time you send a message, Claude:</p>
+<ol>
+<li>Re-reads your CLAUDE.md files and today’s date (injected fresh)</li>
+<li>Looks at git status (injected into system prompt)</li>
+<li>Checks if any memory files are newly relevant</li>
+<li>Checks if any skills are relevant to your current task</li>
+<li>Runs your message through its tools (file reads, bash, etc.) as needed</li>
+<li>Replies</li>
+</ol>
+<p>Tool results (file contents, command output) are added to the messages array as user-role messages. The conversation alternates: user → assistant → user (tool results) → assistant → …</p>
+<h2 id="Plan-Mode"><a href="#Plan-Mode" class="headerlink" title="Plan Mode"></a>Plan Mode</h2><p>When Claude enters plan mode (<code>EnterPlanMode</code>), it shifts into a design-only mode:</p>
+<ul>
+<li>It can explore the codebase with read-only tools</li>
+<li>It cannot write files or run commands</li>
+<li>It presents a plan for your approval</li>
+<li>You approve with <code>ExitPlanMode</code> before it starts implementing</li>
+</ul>
+<p>Good for: non-trivial features, anything touching multiple files, decisions where you want sign-off before code is written.</p>
+<h2 id="Agent-Tool-Subagents"><a href="#Agent-Tool-Subagents" class="headerlink" title="Agent Tool (Subagents)"></a>Agent Tool (Subagents)</h2><p>Claude can spawn subagents to handle parallel or isolated work. Two built-in types:</p>
+<p><strong>Explore</strong> — fast, read-only codebase research. Use when you need to find something across a large codebase without polluting the main conversation with search results.</p>
+<p><strong>Plan</strong> — architect-mode subagent that designs implementation plans. Returns a step-by-step plan without writing code.</p>
+<p>Subagents get their own context window. Their results are returned as a single message to the main conversation.</p>
+<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p><strong>Start fresh conversations often.</strong> Context rot is real — a long conversation about one thing will degrade Claude’s performance on the next thing. New topic = new conversation.</p>
+<p><strong>Use CLAUDE.md for standing rules, your prompt for the task.</strong> Don’t repeat project conventions in every message. Put them in CLAUDE.md once and let Claude find them.</p>
+<p><strong>Git status is always visible.</strong> Claude always knows your current branch, recent commits, and what files are changed. You don’t need to tell it “I’m on branch X” — it can see.</p>
+<p><strong>Claude reads before it writes.</strong> The system prompt explicitly tells Claude not to propose changes to code it hasn’t read. If it seems to be guessing, ask it to read the file first.</p>
+<p><strong>Skills for repeated tasks.</strong> If you find yourself typing the same kind of prompt repeatedly (write a changelog, review this PR, set up a new module), make it a skill.</p>
+<p><strong>CLAUDE.local.md for your quirks.</strong> If you have personal preferences that aren’t right for the whole team (you like verbose explanations, you want it to always ask before running tests), put them in CLAUDE.local.md so they don’t affect others.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2026/03/claude-code-prompt-anatomy/" data-id="cmnyc8sks0003w8gahmyvg0vn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ai/" rel="tag">ai</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ide/" rel="tag">ide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/llm/" rel="tag">llm</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/03/mountebank-mocks/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          How to use Mountebank for mocks
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/02/docker-image-digest/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Docker Image Digest</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<article style="margin-bottom: 5px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/04/azure-container-app-extenal-dns/">Azure Container App With External DNS</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/mountebank-mocks/">How to use Mountebank for mocks</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/claude-code-prompt-anatomy/">Claude Code Prompt Anatomy</a>
+          </li>
+        
+          <li>
+            <a href="/2026/02/docker-image-digest/">Docker Image Digest</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/azure-container-apps-image-pull-back-off-error/">Azure Container Apps ImagePullBackOff Error</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.43px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.95px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.48px;">agile</a> <a href="/tags/ai/" style="font-size: 11.9px;">ai</a> <a href="/tags/algorithms/" style="font-size: 11.9px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.76px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.71px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.48px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.48px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.95px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.76px;">auth</a> <a href="/tags/aws/" style="font-size: 18.1px;">aws</a> <a href="/tags/azure/" style="font-size: 13.33px;">azure</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.29px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.48px;">benchmarks</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.48px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.9px;">cad</a> <a href="/tags/cam/" style="font-size: 11.9px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.43px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.48px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.24px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.48px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.43px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.9px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.9px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.9px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.95px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.33px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.48px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.48px;">dns</a> <a href="/tags/docker/" style="font-size: 17.62px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.95px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/entra/" style="font-size: 10.48px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.95px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.86px;">food</a> <a href="/tags/games/" style="font-size: 10.48px;">games</a> <a href="/tags/git/" style="font-size: 12.38px;">git</a> <a href="/tags/github-actions/" style="font-size: 10px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.95px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.48px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.33px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.9px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.81px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.81px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.81px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.95px;">jquery</a> <a href="/tags/json/" style="font-size: 11.9px;">json</a> <a href="/tags/kibana/" style="font-size: 10.48px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.81px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.9px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.9px;">linux</a> <a href="/tags/llm/" style="font-size: 10.95px;">llm</a> <a href="/tags/logging/" style="font-size: 11.43px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.48px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.29px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.1px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.43px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.9px;">net core</a> <a href="/tags/newrelic/" style="font-size: 10.48px;">newrelic</a> <a href="/tags/nginx/" style="font-size: 10.95px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.43px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.95px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 13.33px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.52px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.9px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/random/" style="font-size: 11.9px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 17.14px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.62px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.48px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.95px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.9px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 15.24px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.86px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.57px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.48px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.67px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.48px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.95px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.81px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/swagger/" style="font-size: 10.48px;">swagger</a> <a href="/tags/terraform/" style="font-size: 10.48px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.33px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.05px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.48px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.48px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.19px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.57px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.95px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.43px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

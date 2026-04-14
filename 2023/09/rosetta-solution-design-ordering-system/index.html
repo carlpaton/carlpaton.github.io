@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Solution Design - Ordering System | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="This is a Rosetta Code post. StoryYou need to come up with a Solution Design for an Ordering System that is fault tolerant. Orders are placed by the Admin user on behalf of Customers. The customer doe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Solution Design - Ordering System">
+<meta property="og:url" content="https://carlpaton.github.io/2023/09/rosetta-solution-design-ordering-system/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="This is a Rosetta Code post. StoryYou need to come up with a Solution Design for an Ordering System that is fault tolerant. Orders are placed by the Admin user on behalf of Customers. The customer doe">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/solution-design-ordering-system/first-draft.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/solution-design-ordering-system/second-draft-add-queue.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/solution-design-ordering-system/second-draft-add-worker.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/solution-design-ordering-system/third-draft-worker1.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/solution-design-ordering-system/third-draft-worker2.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/solution-design-ordering-system/third-draft-notification.jpg">
+<meta property="article:published_time" content="2023-09-09T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-08T02:52:29.623Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="architecture">
+<meta property="article:tag" content="rosetta code">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/solution-design-ordering-system/first-draft.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article style="margin-top: 10px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article>
+
+<article id="post-rosetta-solution-design-ordering-system" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/09/rosetta-solution-design-ordering-system/" class="article-date">
+  <time datetime="2023-09-09T12:00:00.000Z" itemprop="datePublished">2023-Sep</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Solution Design - Ordering System
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>This is a <a href="/2020/07/rosetta-code/">Rosetta Code</a> post.</p>
+<h3 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h3><p>You need to come up with a Solution Design for an Ordering System that is fault tolerant. Orders are placed by the Admin user on behalf of Customers. The customer doesnt login to anything, they place the order via E-mail/Telephonic conversation but their details are known to the company. Orders are shipped via an external company called <code>Bobs Post</code> but their API is unstable and can often go down for days, there is no other shipper we can use.</p>
+<h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>Design a system that allows an <code>Admin User</code> to place orders for <code>Customers</code>, the actual items (what they order) dont matter. The focus is on Solution Design for a fault tolerant system where the Customer is notified when the item(s) are shipped. </p>
+<h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><h4 id="Conceptual-Thinking"><a href="#Conceptual-Thinking" class="headerlink" title="Conceptual Thinking"></a>Conceptual Thinking</h4><ul>
+<li>Following KISS (Keep It Super Simple) solve the problem in the simplest manner, itterate later to allow for fault tolerance.</li>
+<li>Draft a few solutions and itterate on them<ul>
+<li>As such use an unconventional <code>Sticky Note</code> representation first to show the flow</li>
+<li>As a last draft represent as a <a target="_blank" rel="noopener" href="https://www.lucidchart.com/pages/uml-sequence-diagram">technical sequence diagram</a> (<a target="_blank" rel="noopener" href="https://miro.com/diagramming/uml-sequence-diagram/">Miro Template</a>)</li>
+</ul>
+</li>
+<li>The solution is Cloud Based (Focus on AWS), consider technologies for the pending decision register item<ul>
+<li>Security (Authentication and Authorisation), consider using <a href="/2020/12/oauth2/">OAuth2 flows</a></li>
+<li><a href="/2021/11/aws-sqs-step-function-and-lamdas/">Serverless Lamda Functions</a> to expose data / house logic</li>
+<li><a href="/2021/11/aws-sqs-step-function-and-lamdas/">State Machine if we want to group logic and Lamdas</a></li>
+<li>Kubernetes (EKS) <a href="/2021/07/c-sharp-timed-hosted-service/">for Workers</a></li>
+<li><a href="/2020/11/what-makes-a-great-api/">RESTful APIs</a> to expose data / house logic</li>
+<li>Persistant storage options like Relational (RDS) or Key/Value <a href="/2020/11/aws-dynamodb/">Document DB (Dynamo)</a></li>
+<li>Frontend Application. <a href="/tags/reactjs/">React</a>, <a href="/tags/angular/">Angular</a> or Vue Single Page Application (SPA) <a href="/2020/11/aws-s3/">hosted in S3</a></li>
+<li><a href="/2021/11/aws-sqs/">Messaging System (SQS)</a> and <a href="/2022/02/cloudevents/">Cloud Events</a></li>
+</ul>
+</li>
+<li>Potential Cloud Design Patterns<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/architecture/patterns/async-request-reply">Asynchronous Request-Reply pattern</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends">Backends for Frontends</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker">Circuit Breaker pattern</a></li>
+</ul>
+</li>
+<li><a href="/2021/10/bias/">Bias</a><ul>
+<li>Call out and try mitigate all bias from the decision making</li>
+</ul>
+</li>
+<li><a href="/2017/04/ubiquitous-language-ul/">Ubiquitous Language</a><ul>
+<li>Figure out the language of the domain, this this in all conversations with stakeholders and the customer</li>
+<li>Status = <code>Scheduled, Shipped</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="First-Draft"><a href="#First-Draft" class="headerlink" title="First Draft"></a>First Draft</h4><p>First lets understand the problem and use an unconventional <code>Sticky Note</code> representation.</p>
+<p><img src="/d/solution-design-ordering-system/first-draft.jpg" alt="First draft to understand a simple flow"></p>
+<h4 id="Second-Draft"><a href="#Second-Draft" class="headerlink" title="Second Draft"></a>Second Draft</h4><p>Remember <code>Bobs Post</code> has an unstable API, we can unload responsability from the BFF and introduce some retry logic using the Asynchronous Request-Reply pattern and Queues. Additionally <a href="/2021/12/http-retry-polly/">Polly</a> can be used to retry HTTP requests.</p>
+<p><img src="/d/solution-design-ordering-system/second-draft-add-queue.jpg" alt="Second Draft, move workload Async"></p>
+<p>Now add a <a href="/2021/07/c-sharp-timed-hosted-service/">Worker process</a> that will process the order request. If a message is not deleted and it has been received the maximum receive count times its pushed to the configured Dead Letter Queue (DLQ)</p>
+<p><img src="/d/solution-design-ordering-system/second-draft-add-worker.jpg" alt="Second Draft, understand the Async workload. Its doing too much!"></p>
+<h4 id="Third-Draft"><a href="#Third-Draft" class="headerlink" title="Third Draft"></a>Third Draft</h4><p>There is still a problem with the design as <code>Bobs Post</code> is unstable, so if any of the requests fail and the retry count for Polly is exhausted the process will fall over and cause possible duplication.</p>
+<p>We can try address this by adding a key/value database like Dynamo to keep track of the process. Additionally the responsability of the process can be delegated to several workers and queues. <span style="color:red;">The caveat being this brings complexity, so only introduce this when needed.</span></p>
+<p>Conditional logic would be added so that should the data exist in Dynamo then dont do that step. IE: We have the user data, dont call the <code>User API</code> ect.</p>
+<ul>
+<li>Third Draft: The main focus here is to place the order with <code>Bobs Post</code> (status=Scheduled)</li>
+</ul>
+<p><img src="/d/solution-design-ordering-system/third-draft-worker1.jpg" alt="Third Draft. Break it down, check and update `Scheduled` status"></p>
+<ul>
+<li>Third Draft: The main focus here is to check for updates at <code>Bobs Post</code> (status=Shipped)</li>
+<li>If no update is avalible, just Queue another message to check for shipped (<span style="color:red;">WARNING: Can cause infinite loop.</span>) So potentially just dont delete and rely on the DQL.</li>
+</ul>
+<p><img src="/d/solution-design-ordering-system/third-draft-worker2.jpg" alt="Third Draft. Break it down, check and update `Shipped` status"></p>
+<ul>
+<li>Third Draft: The main focus here is to notify the User that their item(s) have shipped</li>
+<li>Emails are a common thing to send, potentially a flow exists (Event Queue) where the request can be sent</li>
+</ul>
+<p><img src="/d/solution-design-ordering-system/third-draft-notification.jpg" alt="Third Draft - Notification"></p>
+<h4 id="Fourth-Draft"><a href="#Fourth-Draft" class="headerlink" title="Fourth  Draft"></a>Fourth  Draft</h4><p>The DLQs can be redriven.</p>
+<ul>
+<li>Another worker can poll each DLQ and re-drive</li>
+<li>The process could be manual</li>
+</ul>
+<p>Finally once you agree with your team(s) draw as a technical sequence diagram. Also see the <a target="_blank" rel="noopener" href="https://miro.com/diagramming/uml-sequence-diagram/">Miro Template</a>.</p>
+<h4 id="Final-Thoughts"><a href="#Final-Thoughts" class="headerlink" title="Final Thoughts"></a>Final Thoughts</h4><p>The process above is not without fault. The SQS messages <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-basic-architecture.html">default retention period is 4 days</a> so if <code>Bobs Post</code> is down for longer than this and the maxium retry period is exhausted the system will fall over. Potentially the flow could be <code>SPA -&gt; BFF -&gt; SQS -&gt; DYNAMO</code> with workers that progress the status and call the APIs based on the state of the <code>DYNAMO</code> database record.</p>
+<p>My suggestion is to be pragmatic and solve problems when they are problems, if you add complexity early you could solve a problem that doesnt exist and the potential gains are lost in the complexity. </p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/architecture/patterns/">https://learn.microsoft.com/en-us/azure/architecture/patterns/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2023/09/rosetta-solution-design-ordering-system/" data-id="cmlsbquq000ovrsgaflzlfofq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/architecture/" rel="tag">architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rosetta-code/" rel="tag">rosetta code</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/09/unit-test-lazy-loaded-properties/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Unit Test Lazy Loaded Properties
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/09/git-hooks-commit-example/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Git Hooks - Commit Example</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<article style="margin-bottom: 5px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/04/azure-container-app-extenal-dns/">Azure Container App With External DNS</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/mountebank-mocks/">How to use Mountebank for mocks</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/claude-code-prompt-anatomy/">Claude Code Prompt Anatomy</a>
+          </li>
+        
+          <li>
+            <a href="/2026/02/docker-image-digest/">Docker Image Digest</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/azure-container-apps-image-pull-back-off-error/">Azure Container Apps ImagePullBackOff Error</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.43px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.95px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.48px;">agile</a> <a href="/tags/ai/" style="font-size: 11.9px;">ai</a> <a href="/tags/algorithms/" style="font-size: 11.9px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.76px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.71px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.48px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.48px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.95px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.76px;">auth</a> <a href="/tags/aws/" style="font-size: 18.1px;">aws</a> <a href="/tags/azure/" style="font-size: 13.33px;">azure</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.29px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.48px;">benchmarks</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.48px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.9px;">cad</a> <a href="/tags/cam/" style="font-size: 11.9px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.43px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.48px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.24px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.48px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.43px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.9px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.9px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.9px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.95px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.33px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.48px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.48px;">dns</a> <a href="/tags/docker/" style="font-size: 17.62px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.95px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/entra/" style="font-size: 10.48px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.95px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.86px;">food</a> <a href="/tags/games/" style="font-size: 10.48px;">games</a> <a href="/tags/git/" style="font-size: 12.38px;">git</a> <a href="/tags/github-actions/" style="font-size: 10px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.95px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.48px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.33px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.9px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.81px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.81px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.81px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.95px;">jquery</a> <a href="/tags/json/" style="font-size: 11.9px;">json</a> <a href="/tags/kibana/" style="font-size: 10.48px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.81px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.9px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.9px;">linux</a> <a href="/tags/llm/" style="font-size: 10.95px;">llm</a> <a href="/tags/logging/" style="font-size: 11.43px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.48px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.29px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.1px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.43px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.9px;">net core</a> <a href="/tags/newrelic/" style="font-size: 10.48px;">newrelic</a> <a href="/tags/nginx/" style="font-size: 10.95px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.43px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.95px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 13.33px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.52px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.9px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/random/" style="font-size: 11.9px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 17.14px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.62px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.48px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.95px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.9px;">reporting</a> <a href="/tags/rosetta-code/" style="font-size: 15.24px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.86px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.57px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.48px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.67px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.48px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.95px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.81px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/swagger/" style="font-size: 10.48px;">swagger</a> <a href="/tags/terraform/" style="font-size: 10.48px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.33px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.05px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.48px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.48px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.19px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.57px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.95px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.43px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
