@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AoTech - Create Asset</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap");
+
+    :root {
+      --font-display: "Sora", "Segoe UI", sans-serif;
+      --font-body: "Public Sans", "Segoe UI", sans-serif;
+
+      --color-nav-top: #2a3f56;
+      --color-nav-main: #334d69;
+      --color-nav-active: #3f5f80;
+      --color-nav-hover: #3a5878;
+
+      --color-page-bg: #f3f5f8;
+      --color-surface: #ffffff;
+      --color-surface-muted: #eef3f8;
+      --color-border: #d7e0ea;
+
+      --color-text-strong: #10233a;
+      --color-text-body: #26394f;
+      --color-text-muted: #5f7185;
+      --color-text-on-dark: #f7fbff;
+
+      --color-focus: #5b8cc2;
+      --shadow-soft: 0 1px 2px rgba(10, 24, 40, 0.08), 0 6px 16px rgba(17, 36, 56, 0.04);
+
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--color-text-body);
+      background: var(--color-page-bg);
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: 0 1px 0 rgba(7, 18, 32, 0.15);
+    }
+
+    .top-bar {
+      height: 56px;
+      background: var(--color-nav-top);
+      color: var(--color-text-on-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-6);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .brand {
+      color: var(--color-text-on-dark);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .icon-btn {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+      position: relative;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .icon-btn:focus-visible,
+    .nav-link:focus-visible,
+    .input-field:focus,
+    .form-btn:focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+
+    .has-dot::after {
+      content: "";
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ff4d4d;
+    }
+
+    .main-nav {
+      min-height: 44px;
+      background: var(--color-nav-main);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 0 var(--space-5);
+      overflow-x: auto;
+    }
+
+    .nav-link {
+      color: rgba(247, 251, 255, 0.95);
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background 160ms ease;
+    }
+
+    .nav-link:hover {
+      background: var(--color-nav-hover);
+    }
+
+    .nav-link.is-active {
+      background: var(--color-nav-active);
+    }
+
+    .page-content {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6) var(--space-8);
+      animation: page-enter 280ms ease-out;
+    }
+
+    .page-toolbar {
+      margin-bottom: var(--space-5);
+    }
+
+    .page-title {
+      margin: 0;
+      color: var(--color-text-strong);
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .page-subtitle {
+      margin: var(--space-2) 0 0;
+      font-size: 1rem;
+      color: var(--color-text-muted);
+    }
+
+    .form-card {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-soft);
+      padding: var(--space-6);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+
+    .section-title {
+      margin: 0 0 var(--space-4);
+      color: var(--color-text-strong);
+      font-family: var(--font-display);
+      font-size: 1.08rem;
+      font-weight: 600;
+    }
+
+    .field-grid {
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.93rem;
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+      color: var(--color-text-body);
+    }
+
+    .input-field {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid #bcc9d8;
+      border-radius: var(--radius-sm);
+      padding: 0 var(--space-3);
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+      color: var(--color-text-body);
+      background: #ffffff;
+    }
+
+    .input-field::placeholder {
+      color: #96a5b8;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-2);
+      margin-bottom: var(--space-5);
+    }
+
+    .metric-chip {
+      min-height: 36px;
+      width: 100%;
+      border: 1px solid #333;
+      border-radius: 2px;
+      padding: 0 var(--space-2);
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+    }
+
+    .form-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border-radius: var(--radius-sm);
+      padding: 0 var(--space-5);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .form-btn-secondary {
+      background: #ffffff;
+      color: var(--color-text-body);
+      border-color: #bac8d8;
+    }
+
+    .form-btn-primary {
+      color: #ffffff;
+      background: linear-gradient(135deg, #324e6b, #3a5a7b);
+      box-shadow: 0 6px 12px rgba(42, 63, 86, 0.18);
+    }
+
+    .form-btn-primary:hover {
+      filter: brightness(0.95);
+    }
+
+    @keyframes page-enter {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 960px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        padding: 0 var(--space-4);
+      }
+
+      .page-content {
+        padding: var(--space-6) var(--space-4);
+      }
+
+      .form-card {
+        padding: var(--space-4);
+      }
+
+      .metric-row {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column-reverse;
+      }
+
+      .form-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header" role="banner">
+    <div class="top-bar">
+      <div class="brand-group">
+        <button class="icon-btn" aria-label="Open menu">&#9776;</button>
+        <a class="brand" href="index.html">AoTech</a>
+      </div>
+      <div class="utility-icons" aria-label="Utility actions">
+        <button class="icon-btn" aria-label="Search">&#128269;</button>
+        <button class="icon-btn has-dot" aria-label="Notifications">&#128276;</button>
+        <button class="icon-btn" aria-label="Profile">&#128100;</button>
+      </div>
+    </div>
+
+    <nav class="main-nav" aria-label="Primary">
+      <a href="users01.html" class="nav-link">Users</a>
+      <a href="reports01.html" class="nav-link">Reports</a>
+      <a href="contractor01.html" class="nav-link">Contractor</a>
+      <a href="calendar01.html" class="nav-link">Calendar</a>
+      <a href="assets01.html" class="nav-link is-active" aria-current="page">Assets</a>
+      <a href="sites01.html" class="nav-link">Sites</a>
+    </nav>
+  </header>
+
+  <main class="page-content" id="page-content">
+    <section class="page-toolbar" aria-label="Create asset heading">
+      <h1 class="page-title">Create Asset</h1>
+      <p class="page-subtitle">Enter details below to add a new asset to the register.</p>
+    </section>
+
+    <form class="form-card" aria-label="Create asset form">
+      <div class="form-grid">
+        <section>
+          <h2 class="section-title">Asset Details</h2>
+          <div class="field-grid">
+            <div>
+              <label class="field-label" for="make">Make</label>
+              <input class="input-field" id="make" name="make" type="text" placeholder="Enter make" />
+            </div>
+            <div>
+              <label class="field-label" for="model">Model</label>
+              <input class="input-field" id="model" name="model" type="text" placeholder="Enter model" />
+            </div>
+            <div>
+              <label class="field-label" for="serial-number">Serial Number</label>
+              <input class="input-field" id="serial-number" name="serial-number" type="text" placeholder="Enter serial number" />
+            </div>
+            <div>
+              <label class="field-label" for="site">Site</label>
+              <input class="input-field" id="site" name="site" type="text" placeholder="Enter site" />
+            </div>
+            <div>
+              <label class="field-label" for="location">Location</label>
+              <input class="input-field" id="location" name="location" type="text" placeholder="Enter location" />
+            </div>
+            <div>
+              <label class="field-label" for="warranty-period">Warranty Period</label>
+              <input class="input-field" id="warranty-period" name="warranty-period" type="text" placeholder="e.g. 24 months" />
+            </div>
+            <div>
+              <label class="field-label" for="maintenance-interval">Maintenance Interval</label>
+              <input class="input-field" id="maintenance-interval" name="maintenance-interval" type="text" placeholder="e.g. Quarterly" />
+            </div>
+            <div>
+              <label class="field-label" for="buy-price">Buy Price</label>
+              <input class="input-field" id="buy-price" name="buy-price" type="number" step="0.01" placeholder="0.00" />
+            </div>
+            <div>
+              <label class="field-label" for="photo">Photo</label>
+              <input class="input-field" id="photo" name="photo" type="file" />
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">Cost and Limits</h2>
+          <div class="metric-row" aria-label="Percentage and spend controls">
+            <input class="metric-chip" type="text" name="depreciating-percent" placeholder="depreciating %" />
+            <input class="metric-chip" type="text" name="spend-limit-percent" placeholder="Spend limit %" />
+            <input class="metric-chip" type="text" name="spend-limit-dollar" placeholder="Spend limit $" />
+          </div>
+          <div class="field-grid">
+            <div>
+              <label class="field-label" for="asset-cost">Asset Cost</label>
+              <input class="input-field" id="asset-cost" name="asset-cost" type="number" step="0.01" placeholder="0.00" />
+            </div>
+            <div>
+              <label class="field-label" for="spend-limit">Spend Limit</label>
+              <input class="input-field" id="spend-limit" name="spend-limit" type="number" step="0.01" placeholder="0.00" />
+            </div>
+            <div>
+              <label class="field-label" for="repair-cost">Repair Cost</label>
+              <input class="input-field" id="repair-cost" name="repair-cost" type="number" step="0.01" placeholder="0.00" />
+            </div>
+            <div>
+              <label class="field-label" for="maintenance-cost">Maintenance Cost</label>
+              <input class="input-field" id="maintenance-cost" name="maintenance-cost" type="number" step="0.01" placeholder="0.00" />
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="actions">
+        <a class="form-btn form-btn-secondary" href="assets01.html">Cancel</a>
+        <a class="form-btn form-btn-primary" href="assets01.html">Create Asset</a>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AoTech - Home</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap");
+
+    :root {
+      --font-display: "Sora", "Segoe UI", sans-serif;
+      --font-body: "Public Sans", "Segoe UI", sans-serif;
+
+      --color-nav-top: #2a3f56;
+      --color-nav-main: #334d69;
+      --color-nav-active: #3f5f80;
+      --color-nav-hover: #3a5878;
+
+      --color-page-bg: #f3f5f8;
+      --color-surface: #ffffff;
+      --color-border: #d7e0ea;
+
+      --color-text-strong: #10233a;
+      --color-text-body: #26394f;
+      --color-text-muted: #5f7185;
+      --color-text-on-dark: #f7fbff;
+
+      --color-focus: #5b8cc2;
+      --shadow-soft: 0 1px 2px rgba(10, 24, 40, 0.08), 0 6px 16px rgba(17, 36, 56, 0.04);
+
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--color-text-body);
+      background: var(--color-page-bg);
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: 0 1px 0 rgba(7, 18, 32, 0.15);
+    }
+
+    .top-bar {
+      height: 56px;
+      background: var(--color-nav-top);
+      color: var(--color-text-on-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-6);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .brand {
+      color: var(--color-text-on-dark);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .icon-btn {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+      position: relative;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .icon-btn:focus-visible,
+    .nav-link:focus-visible,
+    .home-link:focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+
+    .has-dot::after {
+      content: "";
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ff4d4d;
+    }
+
+    .main-nav {
+      min-height: 44px;
+      background: var(--color-nav-main);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 0 var(--space-5);
+      overflow-x: auto;
+    }
+
+    .nav-link {
+      color: rgba(247, 251, 255, 0.95);
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background 160ms ease;
+    }
+
+    .nav-link:hover {
+      background: var(--color-nav-hover);
+    }
+
+    .page-content {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    .hero {
+      margin-bottom: var(--space-6);
+    }
+
+    .page-title {
+      margin: 0;
+      color: var(--color-text-strong);
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .page-subtitle {
+      margin: var(--space-2) 0 0;
+      color: var(--color-text-muted);
+      font-size: 1.02rem;
+    }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+    .home-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+      padding: var(--space-5);
+      transition: border-color 160ms ease, transform 160ms ease;
+    }
+
+    .home-link:hover {
+      border-color: var(--color-nav-active);
+      transform: translateY(-1px);
+    }
+
+    .home-link-title {
+      margin: 0;
+      color: var(--color-text-strong);
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .home-link-meta {
+      margin: var(--space-2) 0 0;
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        padding: 0 var(--space-4);
+      }
+
+      .page-content {
+        padding: var(--space-6) var(--space-4);
+      }
+
+      .link-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header" role="banner">
+    <div class="top-bar">
+      <div class="brand-group">
+        <button class="icon-btn" aria-label="Open menu">&#9776;</button>
+        <a class="brand" href="index.html">AoTech</a>
+      </div>
+      <div class="utility-icons" aria-label="Utility actions">
+        <button class="icon-btn" aria-label="Search">&#128269;</button>
+        <button class="icon-btn has-dot" aria-label="Notifications">&#128276;</button>
+        <button class="icon-btn" aria-label="Profile">&#128100;</button>
+      </div>
+    </div>
+
+    <nav class="main-nav" aria-label="Primary">
+      <a href="users01.html" class="nav-link">Users</a>
+      <a href="reports01.html" class="nav-link">Reports</a>
+      <a href="contractor01.html" class="nav-link">Contractor</a>
+      <a href="calendar01.html" class="nav-link">Calendar</a>
+      <a href="assets01.html" class="nav-link">Assets</a>
+      <a href="sites01.html" class="nav-link">Sites</a>
+    </nav>
+  </header>
+
+  <main class="page-content" id="page-content"></main>
+</body>
+</html>
