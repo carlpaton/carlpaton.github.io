@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://carlpaton.github.io/2021/08/dependency-injection-container-console-app/</loc>
+    
+    <lastmod>2026-05-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://carlpaton.github.io/2021/08/feature-management-launchdarkly/</loc>
+    
+    <lastmod>2026-05-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://carlpaton.github.io/2023/06/ld-restapi/</loc>
+    
+    <lastmod>2026-05-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://carlpaton.github.io/2018/05/xamarin-setup-install/</loc>
     
     <lastmod>2026-05-29</lastmod>
@@ -2513,15 +2540,6 @@
   </url>
   
   <url>
-    <loc>https://carlpaton.github.io/2023/06/ld-restapi/</loc>
-    
-    <lastmod>2026-05-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://carlpaton.github.io/2019/01/learning-resources/</loc>
     
     <lastmod>2026-05-29</lastmod>
@@ -3089,15 +3107,6 @@
   </url>
   
   <url>
-    <loc>https://carlpaton.github.io/2021/08/feature-management-launchdarkly/</loc>
-    
-    <lastmod>2026-05-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://carlpaton.github.io/2021/02/filters-in-asp-net-core/</loc>
     
     <lastmod>2026-05-29</lastmod>
@@ -3477,15 +3486,6 @@
   
   <url>
     <loc>https://carlpaton.github.io/2020/02/decorator-pattern/</loc>
-    
-    <lastmod>2026-05-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://carlpaton.github.io/2021/08/dependency-injection-container-console-app/</loc>
     
     <lastmod>2026-05-29</lastmod>
     

@@ -35,7 +35,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/ld-restapi/add-segment-to-rule.png">
 <meta property="og:image" content="https://carlpaton.github.io/d/ld-restapi/confirm-removed-id.png">
 <meta property="article:published_time" content="2023-06-20T12:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-29T23:28:14.125Z">
+<meta property="article:modified_time" content="2026-05-29T23:53:06.650Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="feature management">
 <meta name="twitter:card" content="summary">
@@ -176,7 +176,7 @@ ga('send', 'pageview');
 <ol>
 <li>Create the HTTP client and set its headers, in a real world application this will be injected into the pipeline with <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.httpclientfactoryservicecollectionextensions.addhttpclient">Microsoft.Extensions.DependencyInjection.AddHttpClient</a> instead of being <code>new HttpClient();</code> - remember new is glue :D</li>
 </ol>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> httpClient = <span class="keyword">new</span> HttpClient();</span><br><span class="line">httpClient.DefaultRequestHeaders.Add(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;api-00000000-0000-0000-0000-000000000000&quot;</span>);</span><br><span class="line">httpClient.DefaultRequestHeaders.Add(<span class="string">&quot;Accept&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> httpClient = <span class="keyword">new</span> HttpClient();</span><br><span class="line">httpClient.DefaultRequestHeaders.Add(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;api-your-access-token&quot;</span>);</span><br><span class="line">httpClient.DefaultRequestHeaders.Add(<span class="string">&quot;Accept&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br></pre></td></tr></table></figure>
 
 <p>Additionally I setup some serializer options - I really dont understand why this is not the default</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jsonOptions = <span class="keyword">new</span> JsonSerializerOptions()</span><br><span class="line">&#123;</span><br><span class="line">	PropertyNamingPolicy = JsonNamingPolicy.CamelCase</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
