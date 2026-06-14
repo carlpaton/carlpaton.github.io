@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Vector Retrieval Scoring Metrics | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I was working through vector retrieval scoring and kept coming back to the same question: when my vector database returns a score like 0.937, is that a percentage? The short answer is no. That number">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vector Retrieval Scoring Metrics">
+<meta property="og:url" content="https://carlpaton.github.io/2026/05/vector-retrieval-scoring-metrics/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="I was working through vector retrieval scoring and kept coming back to the same question: when my vector database returns a score like 0.937, is that a percentage? The short answer is no. That number">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/retrieval-augmented-generation-rag-theory/csv-example.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/vector-retrieval-scoring-metrics/plotted-example.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/vector-retrieval-scoring-metrics/cosine-similarity.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/vector-retrieval-scoring-metrics/euclidean-distance.png">
+<meta property="og:image" content="https://carlpaton.github.io/d/vector-retrieval-scoring-metrics/dot-product.png">
+<meta property="article:published_time" content="2026-05-14T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-14T08:41:11.561Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="ai">
+<meta property="article:tag" content="rag">
+<meta property="article:tag" content="embeddings">
+<meta property="article:tag" content="vectors">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/retrieval-augmented-generation-rag-theory/csv-example.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article style="margin-top: 10px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article>
+
+<article id="post-vector-retrieval-scoring-metrics" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/05/vector-retrieval-scoring-metrics/" class="article-date">
+  <time datetime="2026-05-14T12:00:00.000Z" itemprop="datePublished">2026-May</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Vector Retrieval Scoring Metrics
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I was working through vector retrieval scoring and kept coming back to the same question: when my vector database returns a score like <code>0.937</code>, is that a percentage? The short answer is no. That number is the value from your index metric, not a percentage. So the interpretation depends on whether your index is using <code>cosine similarity</code>, <code>dot product</code>, or <code>euclidean distance</code>.</p>
+<p>Strictly speaking, <code>cosine</code> and <code>dot product</code> are similarity measures, while <code>euclidean</code> is a distance metric, and none of them are the full retrieval pipeline. There are other retrieval approaches too like <code>ANN indexing methods</code>, <code>hybrid keyword + vector search</code>, <code>metadata filters</code>, and <code>reranking</code>. However <code>cosine</code>, <code>dot product</code> and <code>euclidean</code> metrics are the most common starting point in vector databases so I focused on them as I dont know, what I dont know 🙈 🙉 🙊</p>
+<h2 id="How-to-read-retrieval-scores"><a href="#How-to-read-retrieval-scores" class="headerlink" title="How to read retrieval scores"></a>How to read retrieval scores</h2><p>If vectors are L2-normalized (common in embedding pipelines), dot product behaves like cosine for ranking and its values fall into the <code>[-1, 1]</code> range. With unit-normalized vectors, Euclidean distance is bounded from <code>0</code> to <code>2</code>.</p>
+<p>So if a cosine index returns <code>0.937</code>, I read that as high similarity, not <code>93.7%</code>. I also keep this comparison handy when I am reading retrieval scores:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cosine_similarity">Cosine</a></th>
+<th><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean</a></th>
+<th><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Dot_product">Dot product</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>What it measures</td>
+<td>Directional alignment between vectors</td>
+<td>Straight-line distance between points</td>
+<td>Alignment plus magnitude</td>
+</tr>
+<tr>
+<td>Formula</td>
+<td><code>cos(theta) = (a . b) / (norm(a) * norm(b))</code></td>
+<td><code>d(a, b) = sqrt((x_b - x_a)^2 + (y_b - y_a)^2)</code></td>
+<td><code>dot(a, b) = a . b</code></td>
+</tr>
+<tr>
+<td>Value range</td>
+<td><code>[-1, 1]</code></td>
+<td><code>[0, infinity)</code></td>
+<td>Unbounded</td>
+</tr>
+<tr>
+<td>Better score</td>
+<td>Higher</td>
+<td>Lower</td>
+<td>Higher</td>
+</tr>
+<tr>
+<td>Sensitive to magnitude</td>
+<td>Mostly no (focuses on direction)</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Typical retrieval question</td>
+<td>“How aligned are these meanings?”</td>
+<td>“How close are these points?”</td>
+<td>“How aligned are these vectors, weighted by size?”</td>
+</tr>
+</tbody></table>
+<p>In the examples below, Cosine and Euclidean both surfaced <code>tiger</code>, <code>cat</code>, <code>mouse</code> as the top-3 for <code>lion</code>.</p>
+<p>Dot product also surfaced the same set, but with a different order <code>cat</code>, <code>tiger</code>, <code>mouse</code> because vector magnitude affects ranking.</p>
+<p>When I am debugging retrieval, this is the checklist I use:</p>
+<ol>
+<li>Confirm the index metric first so <code>cosine</code>, <code>dotproduct</code> or <code>euclidean</code></li>
+<li>Interpret scores using that metric’s scale (never as a default percentage)</li>
+<li>Compare top-k neighbors and read the chunks, not just the float values</li>
+<li>Only compare scores directly when they come from the same index and metric</li>
+</ol>
+<h2 id="Vector-Database-And-Sample-Data"><a href="#Vector-Database-And-Sample-Data" class="headerlink" title="Vector Database And Sample Data"></a>Vector Database And Sample Data</h2><p>Pinecone is one of many vector database solutions, it has a free cloud tier and is gaining popularity. Most corporate companys Ive worked for are on the <a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/current/sql-createextension.html">PostgreSQL</a> route, you can use this with the extension <a target="_blank" rel="noopener" href="https://github.com/pgvector/pgvector">pgvector</a>. Another option for POC or self hosting is <a target="_blank" rel="noopener" href="https://www.sqlite.org/loadext.html">SQLite</a> which uses separate vector extensions such as <a target="_blank" rel="noopener" href="https://github.com/asg017/sqlite-vec">sqlite-vec</a>.</p>
+<p>Many more exist. A few popular ones I see often in posts are <a target="_blank" rel="noopener" href="https://qdrant.tech/">Qdrant</a>, <a target="_blank" rel="noopener" href="https://weaviate.io/">Weaviate</a>, <a target="_blank" rel="noopener" href="https://milvus.io/">Milvus</a> and <a target="_blank" rel="noopener" href="https://www.elastic.co/elasticsearch/vector-database">Elasticsearch</a></p>
+<p>Then using the data from the post <a href="/2026/05/principal-component-analysis-pca-reduction/">Principal Component Analysis PCA Reduction</a> we can explain the retrieval techniques using simple CSV data with only two vectors per label. This would not be a real world use case but as explained in <a href="/2026/04/retrieval-augmented-generation-rag-theory/">Retrieval Augmented Generation RAG (theory notes)</a> 2D is the simplest to understand.</p>
+<p><img src="/d/retrieval-augmented-generation-rag-theory/csv-example.png" alt="CSV Example Data"></p>
+<p>From the same post we can see this data plotted with groups starting to form, for the example to come I will then use <code>lion</code> as the query. So you can think of it as <code>What is semantically simliar to &#39;lion&#39;</code>. Some useless and unrelated content, in my birth country the lion is known as <strong>ibhubesi</strong> - king of the beasts 🦁</p>
+<p><img src="/d/vector-retrieval-scoring-metrics/plotted-example.png" alt="Plotted Example Data"></p>
+<h2 id="Cosine-Similarity"><a href="#Cosine-Similarity" class="headerlink" title="Cosine Similarity"></a>Cosine Similarity</h2><p>Now using the same vectors, but comparing directional alignment instead of absolute distance. The Cosine formula is <code>cos(theta) = (lion . p) / (|lion| * |p|)</code> with expanded form <code>cos(theta) = (x_l*x_p + y_l*y_p) / (sqrt(x_l^2 + y_l^2) * sqrt(x_p^2 + y_p^2))</code></p>
+<p>Im not a mathematician so for my simple brain the interpretation is</p>
+<ul>
+<li><code>1</code>: same direction</li>
+<li><code>0</code>: perpendicular (at a 90-degree angle, like an L-shape)</li>
+<li><code>-1</code>: opposite direction</li>
+</ul>
+<p>So when looking for something simliar to lion you could plot all the values by lable as below.</p>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Angle from lion (degrees)</th>
+<th align="right">Dot product (<code>lion . p</code>)</th>
+<th align="right">p magnitude (norm of candidate vector)</th>
+<th align="right">Cosine similarity</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lion</td>
+<td>0°</td>
+<td align="right">0.1618</td>
+<td align="right">0.4022</td>
+<td align="right">1.000</td>
+</tr>
+<tr>
+<td>tiger</td>
+<td>~20°</td>
+<td align="right">0.1327</td>
+<td align="right">0.3523</td>
+<td align="right"><code>* 0.937</code></td>
+</tr>
+<tr>
+<td>cat</td>
+<td>~24°</td>
+<td align="right">0.1577</td>
+<td align="right">0.4305</td>
+<td align="right"><code>* 0.911</code></td>
+</tr>
+<tr>
+<td>mouse</td>
+<td>~46°</td>
+<td align="right">0.0819</td>
+<td align="right">0.2961</td>
+<td align="right"><code>* 0.688</code></td>
+</tr>
+<tr>
+<td>blue</td>
+<td>~103°</td>
+<td align="right">-0.0503</td>
+<td align="right">0.5608</td>
+<td align="right">-0.223</td>
+</tr>
+<tr>
+<td>helicopter</td>
+<td>~128°</td>
+<td align="right">-0.1239</td>
+<td align="right">0.5029</td>
+<td align="right">-0.613</td>
+</tr>
+<tr>
+<td>space</td>
+<td>~129°</td>
+<td align="right">-0.1420</td>
+<td align="right">0.5614</td>
+<td align="right">-0.629</td>
+</tr>
+<tr>
+<td>train</td>
+<td>~130°</td>
+<td align="right">-0.1143</td>
+<td align="right">0.4464</td>
+<td align="right">-0.637</td>
+</tr>
+<tr>
+<td>carrot</td>
+<td>~149°</td>
+<td align="right">-0.1102</td>
+<td align="right">0.3206</td>
+<td align="right">-0.854</td>
+</tr>
+</tbody></table>
+<p><code>* Top k most simliar</code>, so when compared to <code>lion</code> the lables <code>tiger</code>,<code>cat</code> and <code>mouse</code> are most simliar.</p>
+<p>Pictures for my brain are simpler to understand, so in the chart below <code>lion</code> is the query vector and each vector is drawn as a ray from the origin <code>(0,0)</code>: rays to <code>tiger</code>, <code>cat</code>, and <code>mouse</code> represent higher alignment (scores closer to <code>1</code>), while rays to points like <code>blue</code> and <code>helicopter</code> represent lower or negative alignment.</p>
+<p><img src="/d/vector-retrieval-scoring-metrics/cosine-similarity.png" alt="Cosine Similarity"></p>
+<h2 id="Euclidean-Distance"><a href="#Euclidean-Distance" class="headerlink" title="Euclidean Distance"></a>Euclidean Distance</h2><p>For this walkthrough, each label in the chart is a 2D vector <code>(x, y)</code>, and I treat <code>lion</code> as the query point. So using the distance formula: <code>d(lion, p) = sqrt((x_p - x_l)^2 + (y_p - y_l)^2)</code> It is just the Pythagorean theorem in coordinate form which is horizontal offset and vertical offset define a right triangle, and distance is the hypotenuse.</p>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th align="right">x</th>
+<th align="right">y</th>
+<th align="right">delta x</th>
+<th align="right">delta y</th>
+<th align="right">Distance</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lion</td>
+<td align="right">-0.23</td>
+<td align="right">0.33</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.000</td>
+</tr>
+<tr>
+<td>tiger</td>
+<td align="right">-0.29</td>
+<td align="right">0.20</td>
+<td align="right">-0.06</td>
+<td align="right">-0.13</td>
+<td align="right"><code>* 0.143</code></td>
+</tr>
+<tr>
+<td>cat</td>
+<td align="right">-0.37</td>
+<td align="right">0.22</td>
+<td align="right">-0.14</td>
+<td align="right">-0.11</td>
+<td align="right"><code>* 0.178</code></td>
+</tr>
+<tr>
+<td>mouse</td>
+<td align="right">0.06</td>
+<td align="right">0.29</td>
+<td align="right">0.29</td>
+<td align="right">-0.04</td>
+<td align="right"><code>* 0.293</code></td>
+</tr>
+<tr>
+<td>carrot</td>
+<td align="right">0.02</td>
+<td align="right">-0.32</td>
+<td align="right">0.25</td>
+<td align="right">-0.65</td>
+<td align="right">0.696</td>
+</tr>
+<tr>
+<td>blue</td>
+<td align="right">0.52</td>
+<td align="right">0.21</td>
+<td align="right">0.75</td>
+<td align="right">-0.12</td>
+<td align="right">0.760</td>
+</tr>
+<tr>
+<td>train</td>
+<td align="right">-0.12</td>
+<td align="right">-0.43</td>
+<td align="right">0.11</td>
+<td align="right">-0.76</td>
+<td align="right">0.768</td>
+</tr>
+<tr>
+<td>helicopter</td>
+<td align="right">-0.15</td>
+<td align="right">-0.48</td>
+<td align="right">0.08</td>
+<td align="right">-0.81</td>
+<td align="right">0.814</td>
+</tr>
+<tr>
+<td>space</td>
+<td align="right">0.56</td>
+<td align="right">-0.04</td>
+<td align="right">0.79</td>
+<td align="right">-0.37</td>
+<td align="right">0.872</td>
+</tr>
+</tbody></table>
+<p><code>* Nearest neighbors by Euclidean distance</code> from <code>lion</code> are <code>tiger</code>,<code>cat</code> and <code>mouse</code>.</p>
+<p>Again, pictures for my brain are simpler to understand, so in the chart below each comparison is the line segment from <code>lion</code> to another point (not rays from the origin), and the shorter segments are the nearer neighbors by Euclidean distance.</p>
+<p><img src="/d/vector-retrieval-scoring-metrics/euclidean-distance.png" alt="Euclidean Distance."></p>
+<h2 id="Dot-Product"><a href="#Dot-Product" class="headerlink" title="Dot Product"></a>Dot Product</h2><p>Now using the same vectors again, but this time using raw dot product without normalization. The Dot product formula is <code>dot(lion, p) = x_l*x_p + y_l*y_p</code></p>
+<p>Quick interpretation:</p>
+<ul>
+<li>Bigger positive number: more aligned and/or larger magnitude</li>
+<li>Around <code>0</code>: weak alignment</li>
+<li>Negative: mostly opposite direction</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th align="right">x</th>
+<th align="right">y</th>
+<th align="right">Magnitude</th>
+<th align="right">Rank</th>
+<th align="right">Dot product (<code>lion . p</code>)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lion</td>
+<td align="right">-0.23</td>
+<td align="right">0.33</td>
+<td align="right">0.4022</td>
+<td align="right">1</td>
+<td align="right">0.1618</td>
+</tr>
+<tr>
+<td>cat</td>
+<td align="right">-0.37</td>
+<td align="right">0.22</td>
+<td align="right">0.4305</td>
+<td align="right">2</td>
+<td align="right"><code>* 0.1577</code></td>
+</tr>
+<tr>
+<td>tiger</td>
+<td align="right">-0.29</td>
+<td align="right">0.20</td>
+<td align="right">0.3523</td>
+<td align="right">3</td>
+<td align="right"><code>* 0.1327</code></td>
+</tr>
+<tr>
+<td>mouse</td>
+<td align="right">0.06</td>
+<td align="right">0.29</td>
+<td align="right">0.2961</td>
+<td align="right">4</td>
+<td align="right"><code>* 0.0819</code></td>
+</tr>
+<tr>
+<td>blue</td>
+<td align="right">0.52</td>
+<td align="right">0.21</td>
+<td align="right">0.5608</td>
+<td align="right">5</td>
+<td align="right">-0.0503</td>
+</tr>
+<tr>
+<td>carrot</td>
+<td align="right">0.02</td>
+<td align="right">-0.32</td>
+<td align="right">0.3206</td>
+<td align="right">6</td>
+<td align="right">-0.1102</td>
+</tr>
+<tr>
+<td>train</td>
+<td align="right">-0.12</td>
+<td align="right">-0.43</td>
+<td align="right">0.4464</td>
+<td align="right">7</td>
+<td align="right">-0.1143</td>
+</tr>
+<tr>
+<td>helicopter</td>
+<td align="right">-0.15</td>
+<td align="right">-0.48</td>
+<td align="right">0.5029</td>
+<td align="right">8</td>
+<td align="right">-0.1239</td>
+</tr>
+<tr>
+<td>space</td>
+<td align="right">0.56</td>
+<td align="right">-0.04</td>
+<td align="right">0.5614</td>
+<td align="right">9</td>
+<td align="right">-0.1420</td>
+</tr>
+</tbody></table>
+<p><code>* Most similar by dot product</code> with <code>lion</code> as the query are <code>cat</code>,<code>tiger</code> and <code>mouse</code></p>
+<p>Unlike cosine similarity (which normalizes by magnitude), dot product cares about both <strong>direction</strong> and <strong>magnitude</strong>. In the chart below, arrow length represents magnitude, which is why you can see cat (0.4305) has a longer arrow than tiger (0.3523), that extra magnitude is why cat ranks #2 instead of tiger at #3, even though they point in similar directions. Mouse has good direction but its tiny magnitude (0.2961) hurts its ranking. Meanwhile space and blue have the longest arrows but point away from <code>lion</code>, so their magnitude works against them. It’s direction times magnitude: bigger arrows pointing the right way win, smaller arrows or wrong directions lose.</p>
+<p><img src="/d/vector-retrieval-scoring-metrics/dot-product.png" alt="Dot Product"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2026/05/vector-retrieval-scoring-metrics/" data-id="cmqd98t3w000x4qga815u1mhn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ai/" rel="tag">ai</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/embeddings/" rel="tag">embeddings</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rag/" rel="tag">rag</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vectors/" rel="tag">vectors</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2026/05/principal-component-analysis-pca-reduction/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Principal Component Analysis PCA Reduction</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<article style="margin-bottom: 5px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/05/vector-retrieval-scoring-metrics/">Vector Retrieval Scoring Metrics</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/principal-component-analysis-pca-reduction/">Principal Component Analysis PCA Reduction</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/retrieval-augmented-generation-rag-theory/">Retrieval Augmented Generation RAG (theory notes)</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/retrieval-systems-ai/">Retrieval Systems AI</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/azure-container-app-extenal-dns/">Azure Container App With External DNS</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.43px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.95px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.48px;">agile</a> <a href="/tags/ai/" style="font-size: 13.81px;">ai</a> <a href="/tags/algorithms/" style="font-size: 11.9px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.76px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.71px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.48px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.48px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.95px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.76px;">auth</a> <a href="/tags/aws/" style="font-size: 18.1px;">aws</a> <a href="/tags/azure/" style="font-size: 13.33px;">azure</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.29px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.48px;">benchmarks</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.48px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.9px;">cad</a> <a href="/tags/cam/" style="font-size: 11.9px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.43px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.48px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.24px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.48px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.43px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.9px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.9px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.9px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.95px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.33px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.48px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.48px;">dns</a> <a href="/tags/docker/" style="font-size: 17.62px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.95px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/embeddings/" style="font-size: 11.43px;">embeddings</a> <a href="/tags/entra/" style="font-size: 10.48px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.95px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.86px;">food</a> <a href="/tags/games/" style="font-size: 10.48px;">games</a> <a href="/tags/git/" style="font-size: 12.38px;">git</a> <a href="/tags/github-actions/" style="font-size: 10px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.95px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.48px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.33px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.9px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.81px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.81px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.81px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.95px;">jquery</a> <a href="/tags/json/" style="font-size: 11.9px;">json</a> <a href="/tags/kibana/" style="font-size: 10.48px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.81px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.9px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.9px;">linux</a> <a href="/tags/llm/" style="font-size: 10.95px;">llm</a> <a href="/tags/logging/" style="font-size: 11.43px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.48px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.29px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.1px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.43px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.9px;">net core</a> <a href="/tags/newrelic/" style="font-size: 10.48px;">newrelic</a> <a href="/tags/nginx/" style="font-size: 10.95px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.43px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.95px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 13.33px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.52px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.9px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/rag/" style="font-size: 11.43px;">rag</a> <a href="/tags/random/" style="font-size: 11.9px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 17.14px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.62px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.48px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.95px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.9px;">reporting</a> <a href="/tags/retrieval/" style="font-size: 10px;">retrieval</a> <a href="/tags/rosetta-code/" style="font-size: 15.24px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.86px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.57px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.48px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.67px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.48px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.95px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.81px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/swagger/" style="font-size: 10.48px;">swagger</a> <a href="/tags/terraform/" style="font-size: 10.48px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.33px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.05px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.48px;">validation</a> <a href="/tags/vectors/" style="font-size: 10.48px;">vectors</a> <a href="/tags/virtualization/" style="font-size: 10.48px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.19px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.57px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.95px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.43px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

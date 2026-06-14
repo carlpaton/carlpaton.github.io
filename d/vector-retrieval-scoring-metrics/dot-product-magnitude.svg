@@ -1,0 +1,83 @@
+<svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid #ccc; background: #f9f9f9;">
+  <defs>
+    <marker id="arrowhead-warm" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#ff6b35" />
+    </marker>
+    <marker id="arrowhead-cool" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#4a90e2" />
+    </marker>
+  </defs>
+  
+  <!-- Grid lines -->
+  <line x1="300" y1="50" x2="300" y2="550" stroke="#eee" stroke-width="1"/>
+  <line x1="50" y1="300" x2="550" y2="300" stroke="#eee" stroke-width="1"/>
+  
+  <!-- Axis labels -->
+  <text x="540" y="320" font-size="12" fill="#666">X</text>
+  <text x="305" y="60" font-size="12" fill="#666">Y</text>
+  
+  <!-- Origin point -->
+  <circle cx="300" cy="300" r="4" fill="#ff6b35"/>
+  <text x="310" y="320" font-size="11" fill="#ff6b35" font-weight="bold">O (origin)</text>
+  
+  <!-- lion: x=-0.23, y=0.33, magnitude=0.4022, dot=0.1618 -->
+  <line x1="300" y1="300" x2="254" y2="234" stroke="#e74c3c" stroke-width="6" marker-end="url(#arrowhead-warm)"/>
+  <circle cx="254" cy="234" r="5" fill="none" stroke="#e74c3c" stroke-width="2"/>
+  <text x="240" y="225" font-size="12" fill="#e74c3c" font-weight="bold">lion</text>
+  <text x="240" y="240" font-size="10" fill="#999">mag: 0.40</text>
+  
+  <!-- cat: x=-0.37, y=0.22, magnitude=0.4305, dot=0.1577 -->
+  <line x1="300" y1="300" x2="226" y2="256" stroke="#ff6b35" stroke-width="5.8" marker-end="url(#arrowhead-warm)"/>
+  <text x="215" y="255" font-size="12" fill="#ff6b35" font-weight="bold">cat</text>
+  <text x="215" y="270" font-size="10" fill="#999">mag: 0.43</text>
+  
+  <!-- tiger: x=-0.29, y=0.20, magnitude=0.3523, dot=0.1327 -->
+  <line x1="300" y1="300" x2="242" y2="260" stroke="#ff8c42" stroke-width="5.0" marker-end="url(#arrowhead-warm)"/>
+  <text x="228" y="258" font-size="12" fill="#ff8c42" font-weight="bold">tiger</text>
+  <text x="228" y="273" font-size="10" fill="#999">mag: 0.35</text>
+  
+  <!-- mouse: x=0.06, y=0.29, magnitude=0.2961, dot=0.0819 -->
+  <line x1="300" y1="300" x2="312" y2="242" stroke="#ffb366" stroke-width="3.9" marker-end="url(#arrowhead-warm)"/>
+  <text x="315" y="238" font-size="12" fill="#ffb366" font-weight="bold">mouse</text>
+  <text x="315" y="253" font-size="10" fill="#999">mag: 0.30</text>
+  
+  <!-- blue: x=0.52, y=0.21, magnitude=0.5608, dot=-0.0503 -->
+  <line x1="300" y1="300" x2="404" y2="258" stroke="#7fb3d5" stroke-width="2.4" marker-end="url(#arrowhead-cool)"/>
+  <text x="410" y="255" font-size="12" fill="#7fb3d5" font-weight="bold">blue</text>
+  <text x="410" y="270" font-size="10" fill="#999">mag: 0.56</text>
+  
+  <!-- carrot: x=0.02, y=-0.32, magnitude=0.3206, dot=-0.1102 -->
+  <line x1="300" y1="300" x2="304" y2="364" stroke="#6fa8dc" stroke-width="3.3" marker-end="url(#arrowhead-cool)"/>
+  <text x="308" y="370" font-size="12" fill="#6fa8dc" font-weight="bold">carrot</text>
+  <text x="308" y="385" font-size="10" fill="#999">mag: 0.32</text>
+  
+  <!-- train: x=-0.12, y=-0.43, magnitude=0.4464, dot=-0.1143 -->
+  <line x1="300" y1="300" x2="276" y2="386" stroke="#6fa8dc" stroke-width="3.4" marker-end="url(#arrowhead-cool)"/>
+  <text x="265" y="392" font-size="12" fill="#6fa8dc" font-weight="bold">train</text>
+  <text x="265" y="407" font-size="10" fill="#999">mag: 0.45</text>
+  
+  <!-- helicopter: x=-0.15, y=-0.48, magnitude=0.5029, dot=-0.1239 -->
+  <line x1="300" y1="300" x2="270" y2="396" stroke="#5a9fd4" stroke-width="3.7" marker-end="url(#arrowhead-cool)"/>
+  <text x="255" y="405" font-size="12" fill="#5a9fd4" font-weight="bold">helicopter</text>
+  <text x="255" y="420" font-size="10" fill="#999">mag: 0.50</text>
+  
+  <!-- space: x=0.56, y=-0.04, magnitude=0.5614, dot=-0.1420 -->
+  <line x1="300" y1="300" x2="412" y2="308" stroke="#5a9fd4" stroke-width="4.2" marker-end="url(#arrowhead-cool)"/>
+  <text x="420" y="305" font-size="12" fill="#5a9fd4" font-weight="bold">space</text>
+  <text x="420" y="320" font-size="10" fill="#999">mag: 0.56</text>
+  
+  <!-- Legend -->
+  <g>
+    <text x="50" y="30" font-size="13" font-weight="bold" fill="#333">Magnitude Representation</text>
+    <line x1="50" y1="40" x2="100" y2="40" stroke="#ff6b35" stroke-width="6"/>
+    <text x="110" y="45" font-size="11" fill="#333">High positive dot product (similar direction, good match)</text>
+    
+    <line x1="50" y1="55" x2="100" y2="55" stroke="#ffb366" stroke-width="3.9"/>
+    <text x="110" y="60" font-size="11" fill="#333">Lower dot product</text>
+    
+    <line x1="50" y1="70" x2="100" y2="70" stroke="#7fb3d5" stroke-width="2.4"/>
+    <text x="110" y="75" font-size="11" fill="#333">Negative dot product (opposite direction)</text>
+    
+    <text x="50" y="95" font-size="10" fill="#666" font-style="italic">Arrow length = magnitude | Line width = |dot product| value</text>
+  </g>
+</svg>

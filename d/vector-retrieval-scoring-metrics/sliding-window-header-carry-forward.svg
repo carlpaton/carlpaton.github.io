@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="235" viewBox="0 0 1200 235" role="img" aria-labelledby="title desc">
+  <title id="title">Header Carry-Forward in Sliding Window Chunking</title>
+  <desc id="desc">Diagram showing two overlapping chunks where the section header is repeated in the next chunk to preserve topic meaning.</desc>
+
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#8ea0b4" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect x="40" y="30" width="520" height="190" rx="16" fill="#ffffff" stroke="#d2deec" stroke-width="2" filter="url(#shadow)"/>
+  <text x="300" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="700" fill="#14345a">Chunk 1 (tokens 1-100)</text>
+
+  <rect x="75" y="92" width="450" height="38" rx="8" fill="#e7f0ff" stroke="#9dbce5" stroke-width="2"/>
+  <text x="90" y="117" font-family="Consolas, monospace" font-size="20" fill="#15314f">Header: Authentication in ASP.NET Core</text>
+
+  <rect x="75" y="140" width="450" height="62" rx="10" fill="#f6f9ff" stroke="#c7d8ec" stroke-width="2"/>
+  <text x="90" y="165" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#314c68">Paragraph starts with setup details...</text>
+  <text x="90" y="190" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#314c68">Overlap zone continues near boundary.</text>
+
+  <rect x="640" y="30" width="520" height="190" rx="16" fill="#ffffff" stroke="#d2deec" stroke-width="2" filter="url(#shadow)"/>
+  <text x="900" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="700" fill="#14345a">Chunk 2 (tokens 81-180)</text>
+
+  <rect x="675" y="92" width="450" height="38" rx="8" fill="#fff4cd" stroke="#e0c560" stroke-width="2"/>
+  <text x="690" y="117" font-family="Consolas, monospace" font-size="20" fill="#5a4700">Header repeated: Authentication in ASP.NET Core</text>
+
+  <rect x="675" y="140" width="450" height="62" rx="10" fill="#f6f9ff" stroke="#c7d8ec" stroke-width="2"/>
+  <text x="690" y="165" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#314c68">Next paragraph details are now anchored</text>
+  <text x="690" y="190" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#314c68">to the correct topic even in isolation.</text>
+
+</svg>

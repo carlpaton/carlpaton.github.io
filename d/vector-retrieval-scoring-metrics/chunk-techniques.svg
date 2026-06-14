@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540" role="img" aria-labelledby="title desc">
+  <title id="title">Chunking Techniques for RAG</title>
+  <desc id="desc">Illustration showing sliding window chunking versus semantic fact-based chunking and the sentence embedding cost tradeoff.</desc>
+
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#9aa7b6" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect x="55" y="10" width="520" height="500" rx="18" fill="#ffffff" stroke="#d4dee9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="315" y="55" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="26" fill="#0f355e" font-weight="700">Sliding Window Chunking</text>
+
+  <rect x="95" y="100" width="440" height="76" rx="12" fill="#d8ebff" stroke="#9dc2ea" stroke-width="2"/>
+  <text x="115" y="132" font-family="Consolas, monospace" font-size="22" fill="#123">Chunk 1: tokens 1-100</text>
+  <text x="115" y="159" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#2f4a68">Includes early setup and definitions</text>
+
+  <rect x="95" y="165" width="440" height="76" rx="12" fill="#c7e2ff" stroke="#8bb7e6" stroke-width="2"/>
+  <text x="115" y="197" font-family="Consolas, monospace" font-size="22" fill="#123">Chunk 2: tokens 81-180</text>
+  <text x="115" y="224" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#2f4a68">20-token overlap keeps boundary context</text>
+
+  <rect x="95" y="230" width="440" height="76" rx="12" fill="#b6d9ff" stroke="#7daee1" stroke-width="2"/>
+  <text x="115" y="262" font-family="Consolas, monospace" font-size="22" fill="#123">Chunk 3: tokens 161-260</text>
+  <text x="115" y="289" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#2f4a68">Carries forward the transition region</text>
+
+  <rect x="85" y="338" width="460" height="142" rx="14" fill="#fff3f1" stroke="#e8b7b1" stroke-width="2"/>
+  <text x="105" y="370" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#7d1f17" font-weight="700">Tradeoffs</text>
+  <text x="105" y="397" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#7d1f17">Pro: Simple and cheap baseline.</text>
+  <text x="105" y="421" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#7d1f17">Pro: Good recall when ideas spill across chunk edges.</text>
+  <text x="105" y="445" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#7d1f17">Con: Can split semantically related ideas.</text>
+  <text x="105" y="469" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#7d1f17">Con: Overlap duplicates tokens and adds retrieval noise.</text>
+
+  <rect x="625" y="10" width="520" height="500" rx="18" fill="#ffffff" stroke="#d4dee9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="885" y="55" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="26" fill="#21450f" font-weight="700">Semantic / Fact-Based Chunking</text>
+
+  <rect x="665" y="100" width="460" height="52" rx="11" fill="#fff1b8" stroke="#e6cf6d" stroke-width="2"/>
+  <text x="685" y="132" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#5b4b08">1. Split text into sentences</text>
+
+  <rect x="665" y="165" width="460" height="52" rx="11" fill="#d8f0cd" stroke="#95ca7d" stroke-width="2"/>
+  <text x="685" y="197" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#1f4f12">2. Embed each sentence</text>
+
+  <rect x="665" y="230" width="460" height="52" rx="11" fill="#cceadf" stroke="#84bea8" stroke-width="2"/>
+  <text x="685" y="262" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#1b4d3f">3. Group nearby sentences by meaning</text>
+
+  <rect x="665" y="305" width="215" height="82" rx="12" fill="#d8ebff" stroke="#9dc2ea" stroke-width="2"/>
+  <text x="772" y="336" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#123" font-weight="700">Chunk A</text>
+  <text x="772" y="362" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#2f4a68">Facts about setup</text>
+
+  <rect x="910" y="305" width="215" height="82" rx="12" fill="#d8ebff" stroke="#9dc2ea" stroke-width="2"/>
+  <text x="1017" y="336" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#123" font-weight="700">Chunk B</text>
+  <text x="1017" y="362" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#2f4a68">Facts about tradeoffs</text>
+
+  <rect x="665" y="405" width="460" height="90" rx="12" fill="#fff3f1" stroke="#e8b7b1" stroke-width="2"/>
+  <text x="685" y="436" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#7d1f17" font-weight="700">Tradeoffs</text>
+  <text x="685" y="461" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#7d1f17">Embedding every sentence improves boundaries,</text>
+  <text x="685" y="482" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#7d1f17">but increases indexing cost.</text>
+
+</svg>

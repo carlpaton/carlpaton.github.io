@@ -24,12 +24,12 @@ ga('send', 'pageview');
   
   <title>Retrieval Augmented Generation RAG (theory notes) | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="These are notes I made while investigating RAG and completing the Dometrain course Let’s Build It: AI Chatbot with RAG in .NET Using Your Data by James Charlesworth. I highly completing the course and">
+  <meta name="description" content="Updated 15&#x2F;05&#x2F;2026 These are notes I made while investigating RAG (Retrieval-Augmented Generation). I found a heap of useful information in the Dometrain course Let’s Build It: AI Chatbot with RAG in">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Retrieval Augmented Generation RAG (theory notes)">
 <meta property="og:url" content="https://carlpaton.github.io/2026/04/retrieval-augmented-generation-rag-theory/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="These are notes I made while investigating RAG and completing the Dometrain course Let’s Build It: AI Chatbot with RAG in .NET Using Your Data by James Charlesworth. I highly completing the course and">
+<meta property="og:description" content="Updated 15&#x2F;05&#x2F;2026 These are notes I made while investigating RAG (Retrieval-Augmented Generation). I found a heap of useful information in the Dometrain course Let’s Build It: AI Chatbot with RAG in">
 <meta property="og:locale">
 <meta property="og:image" content="https://carlpaton.github.io/d/retrieval-augmented-generation-rag-theory/tokens.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/retrieval-augmented-generation-rag-theory/vector-example.jpg">
@@ -37,13 +37,15 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://carlpaton.github.io/d/retrieval-augmented-generation-rag-theory/2d-vector.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/retrieval-augmented-generation-rag-theory/2d-vector-several.jpg">
 <meta property="og:image" content="https://carlpaton.github.io/d/retrieval-augmented-generation-rag-theory/3d-vector.jpg">
+<meta property="og:image" content="https://carlpaton.github.io/d/vector-retrieval-scoring-metrics/chunk-techniques.svg">
+<meta property="og:image" content="https://carlpaton.github.io/d/vector-retrieval-scoring-metrics/sliding-window-header-carry-forward.svg">
 <meta property="article:published_time" content="2026-04-27T12:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-29T23:28:14.131Z">
+<meta property="article:modified_time" content="2026-06-14T08:40:27.686Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="ai">
-<meta property="article:tag" content="retrieval">
 <meta property="article:tag" content="rag">
 <meta property="article:tag" content="embeddings">
+<meta property="article:tag" content="vectors">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://carlpaton.github.io/d/retrieval-augmented-generation-rag-theory/tokens.jpg">
   
@@ -158,13 +160,15 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>These are notes I made while investigating RAG and completing the Dometrain course <a target="_blank" rel="noopener" href="https://dometrain.com/course/lets-build-it-ai-chatbot-with-rag-in-dotnet-using-your-data/">Let’s Build It: AI Chatbot with RAG in .NET Using Your Data by James Charlesworth</a>. I highly completing the course and supporting Dometrain ❤️</p>
+        <p><strong>Updated 15/05/2026</strong></p>
+<p>These are notes I made while investigating RAG (Retrieval-Augmented Generation). I found a heap of useful information in the Dometrain course <a target="_blank" rel="noopener" href="https://dometrain.com/course/lets-build-it-ai-chatbot-with-rag-in-dotnet-using-your-data/">Let’s Build It: AI Chatbot with RAG in .NET Using Your Data by James Charlesworth</a>. I highly recommend completing the course and supporting Dometrain ❤️</p>
+<p>Its important to note that the notes and collections captured here are not an exhaustive list, as I learn and discover more I do update all my posts.</p>
 <h2 id="Terms"><a href="#Terms" class="headerlink" title="Terms"></a>Terms</h2><p>RAG has associated terms that we need to understand before building retrieval systems</p>
 <ul>
 <li><strong>RAG</strong> - Retrieval Augmented Generation</li>
 <li><strong>Vector database</strong> - a database designed to store embeddings (numeric vectors) and retrieve the most similar items quickly</li>
 <li><strong>Embeddings</strong> - a numerical representation of text where similar meaning ends up close together in vector space; this is what allows semantic search to find relevant content even when exact keywords do not match</li>
-<li><strong>Retrieval techniques</strong> - similarity methods used to find the nearest vectors to a query embedding<ul>
+<li><a href="/2026/05/vector-retrieval-scoring-metrics/"><strong>Vector Retrieval Scoring Metrics</strong></a> - part of the retrieval pipeline are similarity methods which are used to find the nearest vectors to a query embedding, these are the most popular but are not all the methods:<ul>
 <li>Cosine Similarity</li>
 <li>Euclidean Distance</li>
 <li>Dot Product</li>
@@ -174,7 +178,7 @@ ga('send', 'pageview');
 <li><strong>HYDE</strong> - Hypothetical Document Embeddings, where the model generates a hypothetical answer first and embeds that text to improve retrieval</li>
 <li><strong>Tools</strong> - functions or APIs exposed to an AI agent so it can act beyond text generation</li>
 <li><strong>LLM</strong> - Large language model</li>
-<li><strong>Keyword Search</strong> - exact or partial term matching against indexed text, without understanding meaning</li>
+<li><strong>Lexical/Keyword Search</strong> - exact or partial term matching against indexed text, without understanding meaning</li>
 <li><strong>Semantic Search</strong> - searches by meaning using embeddings, so related phrasing can match even when exact words differ</li>
 <li><strong>Prompt Stuffing</strong> - putting source content directly into the prompt; fine for small datasets, but for larger corpora retrieval from a vector database scales better</li>
 <li><strong>Dimensions</strong> - the number of values in each embedding vector (for example 1536); more dimensions can capture more nuance, but increase storage and compute costs</li>
@@ -202,7 +206,11 @@ ga('send', 'pageview');
 <li>hill — lower but plausible</li>
 </ul>
 <p>Note that 0.85 is a probability, not a percentage. But you can convert it to a percentage: 0.85 = 85%. So building on the example: moon → 0.85 means the model assigns about an 85% chance that “moon” is the next token. These probabilities are relative to all possible next tokens, and they should sum to ~1 (or 100%) across the whole vocabulary.</p>
-<h2 id="Vectors"><a href="#Vectors" class="headerlink" title="Vectors"></a>Vectors</h2><p>In physics, a vector is defined as a quantity that has a <code>magnitude</code> and a <code>direction</code>.</p>
+<h2 id="Vectors"><a href="#Vectors" class="headerlink" title="Vectors"></a>Vectors</h2><p>In physics, a vector is defined as a quantity that has a <code>magnitude</code> and a <code>direction</code>. Generally vectors are stored with high dimensions as explained below, you can however use <a href="/2026/05/principal-component-analysis-pca-reduction/">Principal Component Analysis PCA Reduction</a> to reduce the vectors if needed.</p>
+<h3 id="Sparse-Vs-Dense"><a href="#Sparse-Vs-Dense" class="headerlink" title="Sparse Vs Dense"></a>Sparse Vs Dense</h3><p>Vectors can be sparse or dense. A dense vector stores every value, including zeros. For example: <code>[0, 0, 5, 0, 0, 3, 0, 0, 0, 2]</code>.</p>
+<p>A sparse vector stores only non-zero values and their positions. The sparse version of that same vector is <code>[(2, 5), (5, 3), (9, 2)]</code>, where each pair is <code>(index, value)</code> using zero-based indexing.</p>
+<p>This saves a lot of memory when most values are zero. Sparse vectors are commonly used in <code>Keyword search</code>, <code>TF-IDF representations</code>, <code>BM25 search</code>, <code>Bag-of-words models</code> ect.</p>
+<p>For example, if your vocabulary contains 100,000 words, a document may only contain 200 of them. A sparse vector stores those 200 values rather than all 100,000 dimensions.</p>
 <h3 id="2D-Example-Vector"><a href="#2D-Example-Vector" class="headerlink" title="2D Example Vector"></a>2D Example Vector</h3><p>This 2D example shows the direction as the 30 degree angle with a magnitude (length) of 5. For this example <code>&#123;4,3&#125;</code> represents the meaning of some text. This can be understood as a co-ordinate of 4,3 so 4 on the X and 3 on the Y axis. This a point in 2 dimensional space.</p>
 <p><img src="/d/retrieval-augmented-generation-rag-theory/2d-vector.jpg" alt="2D Vector with single point"></p>
 <p>You can then imagine several vectors in this 2D space</p>
@@ -212,7 +220,80 @@ ga('send', 'pageview');
 <h3 id="512-Dimensions"><a href="#512-Dimensions" class="headerlink" title="512 Dimensions"></a>512 Dimensions</h3><p>Example vector with 512 dimensions, these numbers have been normalized to be between -1 and +1. This is an array of 512 floating point numbers, my example below has been simplified to just have 24 for readability.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[-0.03503418, -0.024047852, 0.05895996, 0.031433105, -0.039367676, 0.0027675629, 0.045806885, -0.02381897, 0.007911682, 0.033081055, -0.00030350685, 0.015609741, 0.0046920776, 0.044708252, 0.009407043, -0.03201294, -0.016052246, -0.045654297, 0.08605957, 0.05105591, 0.06854248, 0.030715942, -0.06970215, -0.010292053, ...]</span><br></pre></td></tr></table></figure>
 
-<p>Vectors are useful because they allow you to do calculations when doing Machine learning and AI, Vectors can be fed into neural networks. The basic math could be finding out how similar 2 vectors are to each other, this is the technique that underpins semantic search.</p>
+<p>Vectors are useful because they allow you to do calculations when doing Machine learning and AI. Vectors can be fed into neural networks. The basic math could be finding out how similar 2 vectors are to each other, this is the technique that underpins semantic search.</p>
+<h3 id="How-Many-Dimensions-Should-I-Use"><a href="#How-Many-Dimensions-Should-I-Use" class="headerlink" title="How Many Dimensions Should I Use"></a>How Many Dimensions Should I Use</h3><p>The world is bigger than <code>512</code> Dimensions but it doesnt have to be! There isn’t a single “correct” vector size for RAG, so I usually think about it like this:</p>
+<ul>
+<li><strong>384</strong>: common in older Sentence Transformer and MiniLM-style models; best for lightweight local deployments or very large corpora where storage and speed matter most.</li>
+<li><strong>512-768</strong>: common in many open-source embeddings; a practical balance of retrieval quality, RAM usage, indexing speed, and query latency.</li>
+<li><strong>1024</strong>: used by models like BGE Large; useful when you want a noticeable quality lift and can afford higher compute/storage.</li>
+<li><strong>1536</strong>: used by models like OpenAI <code>text-embedding-3-small</code>; strong retrieval quality for production systems without jumping to the largest vector size.</li>
+<li><strong>3072</strong>: used by models like OpenAI <code>text-embedding-3-large</code>; best when you’re chasing maximum retrieval quality and can absorb much higher storage and memory costs (for example, roughly 6x the storage of a 512-dimensional vector).</li>
+</ul>
+<p>So why not always use more dimensions?</p>
+<ul>
+<li><strong>Pro</strong>: Can capture more semantic information and often improves retrieval quality.</li>
+<li><strong>Con</strong>: Increases storage, RAM usage, indexing time, and query latency, with diminishing returns after a point.</li>
+</ul>
+<p>The more important factors are often: Chunking strategy. Embedding model quality. Metadata filtering. Re-ranking.</p>
+<h2 id="Semantic-Vs-Keyword-Search"><a href="#Semantic-Vs-Keyword-Search" class="headerlink" title="Semantic Vs Keyword Search"></a>Semantic Vs Keyword Search</h2><p>In my experience, this is where keyword search starts to show its limits.</p>
+<p>Keyword search is basically string matching. If I search for <code>aspnet core dependency injection scopes</code>, it will mostly rank content containing those exact words (or close variants). That is great when the wording is precise, but it can also return irrelevant hits that only share tokens, and miss good content that uses different phrasing, like a post titled <code>service lifetimes in .NET</code>.</p>
+<p>Semantic search works differently. Instead of matching words directly, we convert each document into an embedding vector and store it in a vector database. At query time, we do the same conversion for the user’s question, then fetch the nearest vectors. “Nearest” here means closest in meaning, not closest in exact wording.</p>
+<p>A useful way to think about it:</p>
+<ul>
+<li>Keyword search asks: “does this text contain the same words?”</li>
+<li>Semantic search asks: “does this text mean something similar?”</li>
+</ul>
+<p>So if someone searches for <code>how to reduce cloud spend</code>, semantic search can still find posts written as <code>cutting infrastructure costs</code> because those ideas land near each other in vector space.</p>
+<p>Behind the scenes there is no explicit human label like “cost-optimization” attached to each post by default. The model encodes meaning as high-dimensional numbers (often hundreds or thousands of dimensions), and related content naturally clusters together. We can visualise this in 2D or 3D for teaching like I did above, but the real representation is much higher dimensional.</p>
+<p>The retrieval step is then: embed the query, calculate similarity against stored vectors, and pull back the closest chunks. Those chunks become the context we pass to the LLM.</p>
+<p>In practice, I treat keyword search as a good baseline and semantic search as the better option when users phrase things in many different ways.</p>
+<h2 id="Chunk-Techniques"><a href="#Chunk-Techniques" class="headerlink" title="Chunk Techniques"></a>Chunk Techniques</h2><p>Chunking is one of the biggest levers in RAG quality: sliding windows preserve local context, while semantic grouping keeps related facts together. Too small and you lose context. Too big and retrieval gets noisy.</p>
+<p><img src="/d/vector-retrieval-scoring-metrics/chunk-techniques.svg" alt="Chunking techniques comparison"></p>
+<h3 id="Sliding-Window-Chunking"><a href="#Sliding-Window-Chunking" class="headerlink" title="Sliding Window Chunking"></a>Sliding Window Chunking</h3><p>This is the classic baseline, aka naive sliding windows. You split text into fixed-size chunks (usually by token count) and add overlap so context carries across boundaries.</p>
+<p>For example, if chunk size is 100 tokens with 20-token overlap:</p>
+<ul>
+<li>Chunk 1 = tokens 1-100</li>
+<li>Chunk 2 = tokens 81-180</li>
+<li>Chunk 3 = tokens 161-260</li>
+</ul>
+<p>The overlap helps when an important idea spans the edge of two chunks.</p>
+<p>A useful subset technique is header carry-forward (boundary-aware sliding windows). When a new paragraph starts under a heading, prepend that heading (or short section label) to the next chunk as well, even if it was already present in the previous chunk. This gives the retriever explicit topic context at boundaries and helps the chunk keep its meaning when viewed in isolation.</p>
+<p><img src="/d/vector-retrieval-scoring-metrics/sliding-window-header-carry-forward.svg" alt="Header carry-forward in sliding window chunking"></p>
+<h3 id="Semantic-Fact-Based-Chunking"><a href="#Semantic-Fact-Based-Chunking" class="headerlink" title="Semantic/Fact-Based Chunking"></a>Semantic/Fact-Based Chunking</h3><p>Instead of splitting by raw token count, you split by meaning. A common approach is:</p>
+<ol>
+<li>Split into sentences.</li>
+<li>Embed each sentence.</li>
+<li>Group neighboring sentences that are semantically close into one chunk.</li>
+</ol>
+<p>This tends to produce cleaner topic boundaries (facts stay with related facts), which can improve retrieval precision.</p>
+<p>The tradeoff is cost: sentence-level chunking is expensive because you create vectors for every sentence before grouping.</p>
+<p>In practice, I treat it like this:</p>
+<ul>
+<li>Start with sliding window for a strong, cheap baseline.</li>
+<li>Move to semantic/fact chunking when precision matters and the extra embedding cost is acceptable.</li>
+</ul>
+<h2 id="Hypothetical-Document-Embeddings-HDE"><a href="#Hypothetical-Document-Embeddings-HDE" class="headerlink" title="Hypothetical Document Embeddings (HDE)"></a>Hypothetical Document Embeddings (HDE)</h2><p>HDE is a retrieval trick I reach for when normal semantic search keeps missing the intent.</p>
+<p>The idea is simple: instead of embedding the raw user question, you first ask a model to write a short <strong>hypothetical answer/document</strong> that looks like the kind of passage you hope to retrieve. Then you embed that generated text and use it for vector search.</p>
+<p>Why this helps: user questions are often messy (<code>half memory</code>, <code>wrong terms</code>, <code>vague clues</code>). A generated mini-document can be much closer to how your corpus is written, so nearest-neighbor search has a better chance of landing on the right chunks.</p>
+<p>Nerd example:</p>
+<ul>
+<li>Assume the corpus has .NET docs/posts about <code>IServiceCollection</code>, <code>ServiceLifetime</code>, and <code>AddScoped</code>.</li>
+<li>User query: <code>what was that thing in asp net where one object is reused per web request but not app wide</code></li>
+<li>Plain query embedding can over-index on fuzzy terms like <code>reused</code> and <code>object</code> and surface caching/singleton content.</li>
+<li>HDE step generates something more document-like, for example:</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The user is asking about dependency injection lifetimes in ASP.NET Core.</span><br><span class="line">They likely mean scoped lifetime: one instance per HTTP request.</span><br><span class="line">Related concepts: AddScoped, AddTransient, AddSingleton, IServiceCollection.</span><br></pre></td></tr></table></figure>
+
+<p>Embedding that hypothetical passage usually shifts retrieval toward chunks about <code>AddScoped</code> and per-request scope rather than generic caching/singleton articles.</p>
+<p>In practice my flow is:</p>
+<ol>
+<li>Generate hypothetical document from the query (small model is usually fine).</li>
+<li>Embed that document.</li>
+<li>Retrieve top-k chunks from the vector store.</li>
+<li>Answer using retrieved chunks only.</li>
+</ol>
+<p>One practical warning: HDE improves retrieval recall in hard queries, but adds extra latency/cost (one extra generation step) and can introduce bias if the hypothetical doc is too confident. I usually keep it short and factual, then still ground final answers strictly in retrieved sources.</p>
+<h2 id="Fusion"><a href="#Fusion" class="headerlink" title="Fusion"></a>Fusion</h2><p>todo</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/Dometrain/ai-chatbot-using-your-data-in-dotnet">https://github.com/Dometrain/ai-chatbot-using-your-data-in-dotnet</a></li>
 <li><a target="_blank" rel="noopener" href="https://platform.openai.com/">https://platform.openai.com/</a><ul>
@@ -244,13 +325,22 @@ ga('send', 'pageview');
       <a data-url="https://carlpaton.github.io/2026/04/retrieval-augmented-generation-rag-theory/" data-id="cmprk8zrd00op9mga7gvg96cn" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ai/" rel="tag">ai</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/embeddings/" rel="tag">embeddings</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rag/" rel="tag">rag</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/retrieval/" rel="tag">retrieval</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ai/" rel="tag">ai</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/embeddings/" rel="tag">embeddings</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rag/" rel="tag">rag</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vectors/" rel="tag">vectors</a></li></ul>
 
     </footer>
   </div>
   
     
 <nav id="article-nav">
+  
+    <a href="/2026/05/principal-component-analysis-pca-reduction/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Principal Component Analysis PCA Reduction
+        
+      </div>
+    </a>
   
   
     <a href="/2026/04/retrieval-systems-ai/" id="article-nav-older" class="article-nav-link-wrap">
@@ -299,6 +389,14 @@ ga('send', 'pageview');
       <ul>
         
           <li>
+            <a href="/2026/05/vector-retrieval-scoring-metrics/">Vector Retrieval Scoring Metrics</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/principal-component-analysis-pca-reduction/">Principal Component Analysis PCA Reduction</a>
+          </li>
+        
+          <li>
             <a href="/2026/04/retrieval-augmented-generation-rag-theory/">Retrieval Augmented Generation RAG (theory notes)</a>
           </li>
         
@@ -310,14 +408,6 @@ ga('send', 'pageview');
             <a href="/2026/04/azure-container-app-extenal-dns/">Azure Container App With External DNS</a>
           </li>
         
-          <li>
-            <a href="/2026/03/mountebank-mocks/">How to use Mountebank for mocks</a>
-          </li>
-        
-          <li>
-            <a href="/2026/03/claude-code-prompt-anatomy/">Claude Code Prompt Anatomy</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -327,7 +417,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/net-library/" style="font-size: 11.43px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.95px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.48px;">agile</a> <a href="/tags/ai/" style="font-size: 12.86px;">ai</a> <a href="/tags/algorithms/" style="font-size: 11.9px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.76px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.71px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.48px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.48px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.95px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.76px;">auth</a> <a href="/tags/aws/" style="font-size: 18.1px;">aws</a> <a href="/tags/azure/" style="font-size: 13.33px;">azure</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.29px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.48px;">benchmarks</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.48px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.9px;">cad</a> <a href="/tags/cam/" style="font-size: 11.9px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.43px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.48px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.24px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.48px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.43px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.9px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.9px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.9px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.95px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.33px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.48px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.48px;">dns</a> <a href="/tags/docker/" style="font-size: 17.62px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.95px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/embeddings/" style="font-size: 10.48px;">embeddings</a> <a href="/tags/entra/" style="font-size: 10.48px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.95px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.86px;">food</a> <a href="/tags/games/" style="font-size: 10.48px;">games</a> <a href="/tags/git/" style="font-size: 12.38px;">git</a> <a href="/tags/github-actions/" style="font-size: 10px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.95px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.48px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.33px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.9px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.81px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.81px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.81px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.95px;">jquery</a> <a href="/tags/json/" style="font-size: 11.9px;">json</a> <a href="/tags/kibana/" style="font-size: 10.48px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.81px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.9px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.9px;">linux</a> <a href="/tags/llm/" style="font-size: 10.95px;">llm</a> <a href="/tags/logging/" style="font-size: 11.43px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.48px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.29px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.1px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.43px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.9px;">net core</a> <a href="/tags/newrelic/" style="font-size: 10.48px;">newrelic</a> <a href="/tags/nginx/" style="font-size: 10.95px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.43px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.95px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 13.33px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.52px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.9px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/rag/" style="font-size: 10.48px;">rag</a> <a href="/tags/random/" style="font-size: 11.9px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 17.14px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.62px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.48px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.95px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.9px;">reporting</a> <a href="/tags/retrieval/" style="font-size: 10.48px;">retrieval</a> <a href="/tags/rosetta-code/" style="font-size: 15.24px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.86px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.57px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.48px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.67px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.48px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.95px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.81px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/swagger/" style="font-size: 10.48px;">swagger</a> <a href="/tags/terraform/" style="font-size: 10.48px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.33px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.05px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.48px;">validation</a> <a href="/tags/virtualization/" style="font-size: 10.48px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.19px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.57px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.95px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.43px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+      <a href="/tags/net-library/" style="font-size: 11.43px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.95px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.48px;">agile</a> <a href="/tags/ai/" style="font-size: 13.81px;">ai</a> <a href="/tags/algorithms/" style="font-size: 11.9px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.76px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.71px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.48px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.48px;">asp.net</a> <a href="/tags/assembly/" style="font-size: 10.95px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.76px;">auth</a> <a href="/tags/aws/" style="font-size: 18.1px;">aws</a> <a href="/tags/azure/" style="font-size: 13.33px;">azure</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.29px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.48px;">benchmarks</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.48px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.9px;">cad</a> <a href="/tags/cam/" style="font-size: 11.9px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.43px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.48px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.24px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.48px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.43px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.9px;">cryptography</a> <a href="/tags/css/" style="font-size: 11.9px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.9px;">data structures</a> <a href="/tags/ddd/" style="font-size: 10.95px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.33px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.48px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.48px;">dns</a> <a href="/tags/docker/" style="font-size: 17.62px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.95px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/embeddings/" style="font-size: 11.43px;">embeddings</a> <a href="/tags/entra/" style="font-size: 10.48px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.95px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.86px;">food</a> <a href="/tags/games/" style="font-size: 10.48px;">games</a> <a href="/tags/git/" style="font-size: 12.38px;">git</a> <a href="/tags/github-actions/" style="font-size: 10px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.95px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.48px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.33px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.9px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.81px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.81px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.81px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.95px;">jquery</a> <a href="/tags/json/" style="font-size: 11.9px;">json</a> <a href="/tags/kibana/" style="font-size: 10.48px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.43px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.81px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.9px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.9px;">linux</a> <a href="/tags/llm/" style="font-size: 10.95px;">llm</a> <a href="/tags/logging/" style="font-size: 11.43px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.48px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.29px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.1px;">model airplanes</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.43px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.9px;">net core</a> <a href="/tags/newrelic/" style="font-size: 10.48px;">newrelic</a> <a href="/tags/nginx/" style="font-size: 10.95px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.43px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.95px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/orm/" style="font-size: 13.33px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.52px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 11.9px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/rag/" style="font-size: 11.43px;">rag</a> <a href="/tags/random/" style="font-size: 11.9px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 17.14px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.62px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.48px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.95px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.9px;">reporting</a> <a href="/tags/retrieval/" style="font-size: 10px;">retrieval</a> <a href="/tags/rosetta-code/" style="font-size: 15.24px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.86px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.57px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.48px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.67px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.48px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.95px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.43px;">static code analysis</a> <a href="/tags/structural-patterns/" style="font-size: 13.81px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/swagger/" style="font-size: 10.48px;">swagger</a> <a href="/tags/terraform/" style="font-size: 10.48px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.33px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.05px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.48px;">validation</a> <a href="/tags/vectors/" style="font-size: 10.48px;">vectors</a> <a href="/tags/virtualization/" style="font-size: 10.48px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.19px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.57px;">wip</a> <a href="/tags/wood-work/" style="font-size: 10.95px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.43px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
     </div>
   </div>
 
