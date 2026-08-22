@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Azure Private Endpoints With Terraform | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="In my case, I needed to reach Azure Database for PostgreSQL from my laptop without punching temporary holes in the firewall every time my IP changed. This is the exact Terraform setup I used: private">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Azure Private Endpoints With Terraform">
+<meta property="og:url" content="https://carlpaton.github.io/2026/07/azure-private-endpoints-with-terraform/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="In my case, I needed to reach Azure Database for PostgreSQL from my laptop without punching temporary holes in the firewall every time my IP changed. This is the exact Terraform setup I used: private">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-07-30T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-22T10:02:53.720Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="postgresql">
+<meta property="article:tag" content="azure">
+<meta property="article:tag" content="terraform">
+<meta property="article:tag" content="networking">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article style="margin-top: 10px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article>
+
+<article id="post-azure-private-endpoints-with-terraform" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/07/azure-private-endpoints-with-terraform/" class="article-date">
+  <time datetime="2026-07-30T12:00:00.000Z" itemprop="datePublished">2026-Jul</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Azure Private Endpoints With Terraform
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>In my case, I needed to reach Azure Database for PostgreSQL from my laptop without punching temporary holes in the firewall every time my IP changed.</p>
+<p>This is the exact Terraform setup I used: private endpoint + private DNS + point-to-site VPN, with Azure VPN Client.</p>
+<h2 id="1-Add-dedicated-private-networking-Terraform"><a href="#1-Add-dedicated-private-networking-Terraform" class="headerlink" title="1. Add dedicated private networking Terraform"></a>1. Add dedicated private networking Terraform</h2><p>I kept this in its own file (<code>private-networking.tf</code>) so the core deployment files stay clean.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">locals &#123;</span><br><span class="line">  vnet_address_space       = [&quot;10.50.0.0/16&quot;]</span><br><span class="line">  private_endpoint_subnet  = &quot;10.50.1.0/24&quot;</span><br><span class="line">  gateway_subnet           = &quot;10.50.255.0/27&quot;</span><br><span class="line">  vpn_gateway_sku          = &quot;VpnGw1AZ&quot;</span><br><span class="line">  vpn_client_address_space = [&quot;172.16.201.0/24&quot;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;azurerm_virtual_network&quot; &quot;resolv-vnet&quot; &#123;</span><br><span class="line">  name                = &quot;resolv-$&#123;var.env_id&#125;-vnet&quot;</span><br><span class="line">  location            = azurerm_resource_group.resolv-rg.location</span><br><span class="line">  resource_group_name = azurerm_resource_group.resolv-rg.name</span><br><span class="line">  address_space       = local.vnet_address_space</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;azurerm_subnet&quot; &quot;private-endpoints&quot; &#123;</span><br><span class="line">  name                 = &quot;private-endpoints&quot;</span><br><span class="line">  resource_group_name  = azurerm_resource_group.resolv-rg.name</span><br><span class="line">  virtual_network_name = azurerm_virtual_network.resolv-vnet.name</span><br><span class="line">  address_prefixes     = [local.private_endpoint_subnet]</span><br><span class="line"></span><br><span class="line">  private_endpoint_network_policies = &quot;Disabled&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;azurerm_subnet&quot; &quot;gateway&quot; &#123;</span><br><span class="line">  name                 = &quot;GatewaySubnet&quot;</span><br><span class="line">  resource_group_name  = azurerm_resource_group.resolv-rg.name</span><br><span class="line">  virtual_network_name = azurerm_virtual_network.resolv-vnet.name</span><br><span class="line">  address_prefixes     = [local.gateway_subnet]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The key bits here are:</p>
+<ol>
+<li>A subnet for private endpoints.</li>
+<li>A <code>GatewaySubnet</code> for VPN gateway.</li>
+<li>AZ-compatible VPN SKU (<code>VpnGw1AZ</code>) to avoid deprecated SKU errors.</li>
+</ol>
+<p>Docs: </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/virtual-network/virtual-networks-overview">Azure Virtual Network</a> </li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/private-link/disable-private-endpoint-network-policy">Subnet delegation and policies</a></li>
+</ul>
+<h2 id="2-Add-PostgreSQL-private-endpoint-and-private-DNS"><a href="#2-Add-PostgreSQL-private-endpoint-and-private-DNS" class="headerlink" title="2. Add PostgreSQL private endpoint and private DNS"></a>2. Add PostgreSQL private endpoint and private DNS</h2><p>This is what let my <code>resolv-psql-uat.postgres.database.azure.com</code> resolve and route privately once connected over VPN.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;azurerm_private_dns_zone&quot; &quot;pgsql-privatelink&quot; &#123;</span><br><span class="line">  name                = &quot;privatelink.postgres.database.azure.com&quot;</span><br><span class="line">  resource_group_name = azurerm_resource_group.resolv-rg.name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;azurerm_private_dns_zone_virtual_network_link&quot; &quot;pgsql-privatelink-vnet-link&quot; &#123;</span><br><span class="line">  name                  = &quot;resolv-$&#123;var.env_id&#125;-pgsql-privatelink-link&quot;</span><br><span class="line">  resource_group_name   = azurerm_resource_group.resolv-rg.name</span><br><span class="line">  private_dns_zone_name = azurerm_private_dns_zone.pgsql-privatelink.name</span><br><span class="line">  virtual_network_id    = azurerm_virtual_network.resolv-vnet.id</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;azurerm_private_endpoint&quot; &quot;resolv-psql-pe&quot; &#123;</span><br><span class="line">  name                = &quot;resolv-psql-$&#123;var.env_id&#125;-pe&quot;</span><br><span class="line">  location            = azurerm_resource_group.resolv-rg.location</span><br><span class="line">  resource_group_name = azurerm_resource_group.resolv-rg.name</span><br><span class="line">  subnet_id           = azurerm_subnet.private-endpoints.id</span><br><span class="line"></span><br><span class="line">  private_service_connection &#123;</span><br><span class="line">    name                           = &quot;resolv-psql-$&#123;var.env_id&#125;-psc&quot;</span><br><span class="line">    private_connection_resource_id = azurerm_postgresql_flexible_server.resolv-psql.id</span><br><span class="line">    is_manual_connection           = false</span><br><span class="line">    subresource_names              = [&quot;postgresqlServer&quot;]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  private_dns_zone_group &#123;</span><br><span class="line">    name                 = &quot;default&quot;</span><br><span class="line">    private_dns_zone_ids = [azurerm_private_dns_zone.pgsql-privatelink.id]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Without the private DNS zone and VNet link, name resolution is usually where things break.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/postgresql/flexible-server/concepts-networking-private-link">Private Endpoint for Azure Database for PostgreSQL flexible server</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/dns/private-dns-overview">Azure Private DNS</a></p>
+<h2 id="3-Configure-P2S-VPN-for-Azure-VPN-Client"><a href="#3-Configure-P2S-VPN-for-Azure-VPN-Client" class="headerlink" title="3. Configure P2S VPN for Azure VPN Client"></a>3. Configure P2S VPN for Azure VPN Client</h2><p>I used Azure AD (Entra ID) auth with OpenVPN so sign-in is with the same tenant account used in the Azure portal.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;azurerm_public_ip&quot; &quot;resolv-vpngw-pip&quot; &#123;</span><br><span class="line">  name                = &quot;resolv-$&#123;var.env_id&#125;-vpngw-pip&quot;</span><br><span class="line">  location            = azurerm_resource_group.resolv-rg.location</span><br><span class="line">  resource_group_name = azurerm_resource_group.resolv-rg.name</span><br><span class="line">  allocation_method   = &quot;Static&quot;</span><br><span class="line">  sku                 = &quot;Standard&quot;</span><br><span class="line">  zones               = [&quot;1&quot;]</span><br><span class="line">  domain_name_label   = &quot;resolv-$&#123;var.env_id&#125;-vpngw&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;azurerm_virtual_network_gateway&quot; &quot;resolv-vpngw&quot; &#123;</span><br><span class="line">  name                = &quot;resolv-$&#123;var.env_id&#125;-vpngw&quot;</span><br><span class="line">  location            = azurerm_resource_group.resolv-rg.location</span><br><span class="line">  resource_group_name = azurerm_resource_group.resolv-rg.name</span><br><span class="line"></span><br><span class="line">  type     = &quot;Vpn&quot;</span><br><span class="line">  vpn_type = &quot;RouteBased&quot;</span><br><span class="line">  sku      = local.vpn_gateway_sku</span><br><span class="line"></span><br><span class="line">  ip_configuration &#123;</span><br><span class="line">    name                          = &quot;vpngw-ipconfig&quot;</span><br><span class="line">    public_ip_address_id          = azurerm_public_ip.resolv-vpngw-pip.id</span><br><span class="line">    private_ip_address_allocation = &quot;Dynamic&quot;</span><br><span class="line">    subnet_id                     = azurerm_subnet.gateway.id</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  vpn_client_configuration &#123;</span><br><span class="line">    address_space        = local.vpn_client_address_space</span><br><span class="line">    vpn_client_protocols = [&quot;OpenVPN&quot;]</span><br><span class="line">    vpn_auth_types       = [&quot;AAD&quot;]</span><br><span class="line">    aad_tenant           = &quot;https://login.microsoftonline.com/$&#123;var.tenant_id&#125;/&quot;</span><br><span class="line">    aad_audience         = &quot;41b23e61-6c1e-4545-b367-cd054e0ed4b4&quot;</span><br><span class="line">    aad_issuer           = &quot;https://sts.windows.net/$&#123;var.tenant_id&#125;/&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Two important gotchas here:</p>
+<ol>
+<li>AZ gateway SKUs require zoned Standard public IPs.</li>
+<li><code>domain_name_label</code> is required on the public IP. The Azure VPN Client only accepts an FQDN as the VPN Server address — a bare IP will fail with “Azure VPN Client can only connect to Azure VPN Servers”. Setting <code>domain_name_label</code> gives the IP a stable DNS name like <code>resolv-uat-vpngw.&lt;region&gt;.cloudapp.azure.com</code>.</li>
+</ol>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/vpn-gateway/point-to-site-about">About Point-to-Site VPN</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/vpn-gateway/openvpn-azure-ad-tenant">Configure Microsoft Entra authentication for P2S</a></p>
+<h2 id="4-Get-the-VPN-gateway-FQDN-after-deployment"><a href="#4-Get-the-VPN-gateway-FQDN-after-deployment" class="headerlink" title="4. Get the VPN gateway FQDN after deployment"></a>4. Get the VPN gateway FQDN after deployment</h2><p>Once applied, retrieve the exact FQDN to use in the Azure VPN Client:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">az network public-ip show \</span><br><span class="line">  --resource-group resolv-uat-rg \</span><br><span class="line">  --name resolv-uat-vpngw-pip \</span><br><span class="line">  --query dnsSettings.fqdn \</span><br><span class="line">  --output tsv</span><br></pre></td></tr></table></figure>
+
+<p>This returns something like <code>resolv-uat-vpngw.australiaeast.cloudapp.azure.com</code>. That value goes in the <strong>VPN Server</strong> field when importing the VPN profile in Azure VPN Client.</p>
+<h2 id="5-Run-Terraform-plan-and-apply"><a href="#5-Run-Terraform-plan-and-apply" class="headerlink" title="5. Run Terraform plan and apply"></a>5. Run Terraform plan and apply</h2><p>This is the sequence I used in UAT.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ./terraform/web/uat</span><br><span class="line"></span><br><span class="line"><span class="comment"># Login to the correct tenant/subscription</span></span><br><span class="line">az login --tenant 00000000-0000-0000-0000-000000000001</span><br><span class="line">az account <span class="built_in">set</span> --subscription 00000000-0000-0000-0000-000000000002</span><br><span class="line"></span><br><span class="line"><span class="comment"># If backend config changed or your .terraform folder was reset</span></span><br><span class="line">terraform init -reconfigure</span><br><span class="line"></span><br><span class="line"><span class="comment"># Review proposed infra changes</span></span><br><span class="line">terraform plan</span><br><span class="line"></span><br><span class="line"><span class="comment"># Apply once the plan looks correct</span></span><br><span class="line">terraform apply -auto-approve</span><br></pre></td></tr></table></figure>
+
+<p>What to expect while applying:</p>
+<ol>
+<li>Private DNS zone, VNet, and private endpoint create relatively quickly.</li>
+<li>VPN gateway creation is slow and can take 30 to 60 minutes depending on region load.</li>
+<li>Seeing repeated <code>Still creating...</code> for the VPN gateway is normal, so do not cancel as long as status updates keep appearing.</li>
+<li>If apply fails midway, fix the issue and run <code>terraform plan</code> then <code>terraform apply</code> again. Terraform will continue from current state.</li>
+</ol>
+<p>Docs: <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/cli/commands/plan">Terraform plan</a> • <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/cli/commands/apply">Terraform apply</a> • <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/cli/commands/init">Terraform init</a></p>
+<h2 id="6-Test-end-to-end"><a href="#6-Test-end-to-end" class="headerlink" title="6. Test end-to-end"></a>6. Test end-to-end</h2><p>These were my exact verification steps:</p>
+<ol>
+<li>Install <a target="_blank" rel="noopener" href="https://aka.ms/azvpnclientdownload">Azure VPN Client</a>.</li>
+<li>Download and import the VPN profile:</li>
+</ol>
+<ul>
+<li>In Azure Portal, open your virtual network gateway (<code>resolv-uat-vpngw</code>).</li>
+<li>Go to <code>Settings</code> -&gt; <code>Point-to-site configuration</code> and click <strong>Download VPN client</strong>.</li>
+<li>Extract the downloaded zip.</li>
+<li>Open Azure VPN Client, choose <strong>+</strong> then <strong>Import</strong>, and select the <code>azurevpnconfig.xml</code> file.</li>
+</ul>
+<ol start="3">
+<li>Connect and sign in with the same Microsoft account in the target tenant.</li>
+<li>Confirm DNS resolution and connectivity:</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nslookup &lt;DEPLOYMENT-NAME&gt;.postgres.database.azure.com</span><br><span class="line">psql <span class="string">&quot;host=&lt;DEPLOYMENT-NAME&gt;.postgres.database.azure.com port=5432 dbname=&lt;db&gt; user=&lt;user&gt; sslmode=require&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>If DNS resolves to a private RFC1918 address and <code>psql</code> connects, the path is working as intended.</p>
+<p>Docs: </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/vpn-gateway/point-to-site-entra-gateway">Configure P2S and download VPN client profile</a> </li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/vpn-gateway/openvpn-azure-ad-client">Azure VPN Client import/connect</a> </li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/postgresql/flexible-server/connect-and-query">Connect to Azure Database for PostgreSQL</a></li>
+</ul>
+<h2 id="7-Troubleshooting-I-hit-during-rollout"><a href="#7-Troubleshooting-I-hit-during-rollout" class="headerlink" title="7. Troubleshooting I hit during rollout"></a>7. Troubleshooting I hit during rollout</h2><p>I ran into both of these when applying in UAT:</p>
+<ol>
+<li><code>NonAzSkusNotAllowedForVPNGateway</code>.<br>Use <code>VpnGw1AZ</code> (or another <code>*AZ</code> SKU), not <code>VpnGw1</code>.</li>
+<li><code>VmssVpnGatewayPublicIpsMustHaveZonesConfigured</code>.<br>Set <code>zones</code> on the Standard public IP used by the VPN gateway.</li>
+<li><strong>“Azure VPN Client can only connect to Azure VPN Servers”</strong>.<br>The VPN Server field in the client must be an FQDN, not a raw IP. Add <code>domain_name_label</code> to the <code>azurerm_public_ip</code> resource (see section 3), redeploy, then use the FQDN from section 4 in the client.</li>
+</ol>
+<p>Also, if <code>terraform plan</code> suddenly says backend init is required, run:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">terraform init -reconfigure</span><br></pre></td></tr></table></figure>
+
+<p>That rebinds the working directory to backend config; it does not redeploy resources by itself.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/cli/commands/init">Terraform init command</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/vpn-gateway/gateway-sku-consolidation">Azure VPN gateway SKU changes</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2026/07/azure-private-endpoints-with-terraform/" data-id="cmt4875qf0003idgagamhb0ic" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/azure/" rel="tag">azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/networking/" rel="tag">networking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/terraform/" rel="tag">terraform</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/08/azure-cognative-account-with-deployments/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Azure AI Foundry And OpenAI Deployments For A Chatbot App
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/07/azure-storage-mocks-azurite/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mock Azure Blob Storage With Azurite In ASP.NET Core</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<article style="margin-bottom: 5px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/08/mongo/">Adding MongoDB to a Next.js App (App Router)</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/supa-base/">Adding Supabase PostgreSQL to Rackit (Prisma + Next.js App Router)</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/three-picket-planter-box/">Three Picket Planter Box</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/azure-blob-storage/">Azure Blob Storage For Private Files And Public Web Assets</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/azure-cognative-account-with-deployments/">Azure AI Foundry And OpenAI Deployments For A Chatbot App</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.87px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/ai/" style="font-size: 13.91px;">ai</a> <a href="/tags/ai-foundry/" style="font-size: 10px;">ai-foundry</a> <a href="/tags/algorithms/" style="font-size: 11.74px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.65px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.43px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.43px;">asp.net</a> <a href="/tags/aspnet-core/" style="font-size: 11.3px;">aspnet-core</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.78px;">auth</a> <a href="/tags/aws/" style="font-size: 17.83px;">aws</a> <a href="/tags/azure/" style="font-size: 15.22px;">azure</a> <a href="/tags/azurite/" style="font-size: 10px;">azurite</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.43px;">benchmarks</a> <a href="/tags/blob-storage/" style="font-size: 10.43px;">blob-storage</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.74px;">cad</a> <a href="/tags/cam/" style="font-size: 11.74px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.22px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.74px;">cryptography</a> <a href="/tags/csharp/" style="font-size: 10.87px;">csharp</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.74px;">data structures</a> <a href="/tags/database/" style="font-size: 10.43px;">database</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.04px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.43px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.43px;">dns</a> <a href="/tags/docker/" style="font-size: 17.39px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/embeddings/" style="font-size: 11.74px;">embeddings</a> <a href="/tags/entra/" style="font-size: 10.43px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.87px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.61px;">food</a> <a href="/tags/games/" style="font-size: 10.43px;">games</a> <a href="/tags/git/" style="font-size: 12.17px;">git</a> <a href="/tags/github-actions/" style="font-size: 10px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.87px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.04px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.74px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.48px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.48px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.3px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/llm/" style="font-size: 10.87px;">llm</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.43px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.35px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.26px;">model airplanes</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mongoose/" style="font-size: 10px;">mongoose</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.3px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/networking/" style="font-size: 10px;">networking</a> <a href="/tags/newrelic/" style="font-size: 10.43px;">newrelic</a> <a href="/tags/nextjs/" style="font-size: 10.43px;">nextjs</a> <a href="/tags/nginx/" style="font-size: 10.87px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.87px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/openai/" style="font-size: 10px;">openai</a> <a href="/tags/orm/" style="font-size: 13.91px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 12.61px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/prisma/" style="font-size: 10px;">prisma</a> <a href="/tags/python/" style="font-size: 13.04px;">python</a> <a href="/tags/rag/" style="font-size: 11.3px;">rag</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.96px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.87px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.74px;">reporting</a> <a href="/tags/retrieval/" style="font-size: 10px;">retrieval</a> <a href="/tags/rosetta-code/" style="font-size: 15.22px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.7px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.43px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.52px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.3px;">static code analysis</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/supabase/" style="font-size: 10px;">supabase</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/terraform/" style="font-size: 11.3px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.13px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/vectors/" style="font-size: 10.87px;">vectors</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.09px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.7px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.3px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.3px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

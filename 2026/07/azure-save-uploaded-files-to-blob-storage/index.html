@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Save Uploaded Files To Azure Blob Storage In ASP.NET Core | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="In my case, I had an ASP.NET Core MVC app where Step Two of onboarding accepted files, but only saved a database row. I needed the upload to actually land in Azure Blob Storage, under a folder named a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Save Uploaded Files To Azure Blob Storage In ASP.NET Core">
+<meta property="og:url" content="https://carlpaton.github.io/2026/07/azure-save-uploaded-files-to-blob-storage/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="In my case, I had an ASP.NET Core MVC app where Step Two of onboarding accepted files, but only saved a database row. I needed the upload to actually land in Azure Blob Storage, under a folder named a">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-07-10T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-11T07:55:24.018Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="c#">
+<meta property="article:tag" content="azure">
+<meta property="article:tag" content="aspnet-core">
+<meta property="article:tag" content="storage">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article style="margin-top: 10px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article>
+
+<article id="post-azure-save-uploaded-files-to-blob-storage" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/07/azure-save-uploaded-files-to-blob-storage/" class="article-date">
+  <time datetime="2026-07-10T12:00:00.000Z" itemprop="datePublished">2026-Jul</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Save Uploaded Files To Azure Blob Storage In ASP.NET Core
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>In my case, I had an ASP.NET Core MVC app where Step Two of onboarding accepted files, but only saved a database row. I needed the upload to actually land in Azure Blob Storage, under a folder named after the client <code>uid</code>.</p>
+<p>This post is the exact sequence I followed.</p>
+<h2 id="1-Add-the-Azure-Storage-packages"><a href="#1-Add-the-Azure-Storage-packages" class="headerlink" title="1. Add the Azure Storage packages"></a>1. Add the Azure Storage packages</h2><p>Start with the SDK packages for blobs and Azure identity.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">&quot;Azure.Identity&quot;</span> <span class="attr">Version</span>=<span class="string">&quot;1.14.2&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">&quot;Azure.Storage.Blobs&quot;</span> <span class="attr">Version</span>=<span class="string">&quot;12.25.1&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ItemGroup</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>Azure.Storage.Blobs</code> gives you <code>BlobContainerClient</code> and <code>BlobClient</code>. <code>Azure.Identity</code> gives you <code>DefaultAzureCredential</code>, which is useful when you want the same code to work locally and in Azure.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-dotnet">Azure Storage Blobs for .NET</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme">Azure Identity for .NET</a></p>
+<h2 id="2-Add-storage-configuration"><a href="#2-Add-storage-configuration" class="headerlink" title="2. Add storage configuration"></a>2. Add storage configuration</h2><p>I kept the blob settings in a dedicated config section so the upload code only cares about <code>IOptions&lt;AzureBlobStorageOptions&gt;</code>.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Chatbot.Web.Infrastructure.Storage</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title">AzureBlobStorageOptions</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> SectionName = <span class="string">&quot;AzureBlobStorage&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span>? ConnectionString &#123; <span class="keyword">get</span>; <span class="keyword">init</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span>? AccountName &#123; <span class="keyword">get</span>; <span class="keyword">init</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span>? ContainerName &#123; <span class="keyword">get</span>; <span class="keyword">init</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Then bind it in <code>Program.cs</code> and register the upload service.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">builder.Services.Configure&lt;AzureBlobStorageOptions&gt;(</span><br><span class="line">    builder.Configuration.GetSection(AzureBlobStorageOptions.SectionName));</span><br><span class="line"></span><br><span class="line">builder.Services.AddSingleton&lt;IClientFileStorage, AzureBlobClientFileStorage&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>My development config looked like this. I used a real connection string locally, but keep secrets out of source control and swap in your own values.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;AzureBlobStorage&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;ConnectionString&quot;</span><span class="punctuation">:</span> <span class="string">&quot;DefaultEndpointsProtocol=https;AccountName=&lt;account-name&gt;;AccountKey=&lt;account-key&gt;;EndpointSuffix=core.windows.net&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;AccountName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;account-name&gt;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ContainerName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;chatbot-files&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>If you already have a connection string, <code>AccountName</code> becomes optional for local runs. I still left it there because the same options class also supports identity-based auth.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration/options">Options pattern in ASP.NET Core</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration">Configuration in ASP.NET Core</a></p>
+<h2 id="3-Create-a-blob-storage-service"><a href="#3-Create-a-blob-storage-service" class="headerlink" title="3. Create a blob storage service"></a>3. Create a blob storage service</h2><p>I wrapped the Azure SDK in a small interface so the controller only knows it is uploading a file for a client.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IClientFileStorage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function">Task <span class="title">UploadAsync</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">        Guid clientUid,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="built_in">string</span> fileName,</span></span></span><br><span class="line"><span class="params"><span class="function">        Stream content,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="built_in">string</span>? contentType,</span></span></span><br><span class="line"><span class="params"><span class="function">        CancellationToken cancellationToken = <span class="literal">default</span></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The implementation does two things:</p>
+<ol>
+<li>Uses the connection string when one is configured.</li>
+<li>Falls back to <code>DefaultAzureCredential</code> when it is not.</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Azure;</span><br><span class="line"><span class="keyword">using</span> Azure.Identity;</span><br><span class="line"><span class="keyword">using</span> Azure.Storage.Blobs;</span><br><span class="line"><span class="keyword">using</span> Azure.Storage.Blobs.Models;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Options;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Chatbot.Web.Infrastructure.Storage</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title">AzureBlobClientFileStorage</span> : <span class="title">IClientFileStorage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> BlobContainerClient containerClient;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AzureBlobClientFileStorage</span>(<span class="params">IOptions&lt;AzureBlobStorageOptions&gt; options</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> settings = options.Value;</span><br><span class="line">        <span class="keyword">var</span> containerName = settings.ContainerName?.Trim();</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">string</span>.IsNullOrWhiteSpace(containerName))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InvalidOperationException(<span class="string">&quot;Azure Blob Storage container name is not configured.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrWhiteSpace(settings.ConnectionString))</span><br><span class="line">        &#123;</span><br><span class="line">            containerClient = <span class="keyword">new</span> BlobContainerClient(settings.ConnectionString, containerName);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> accountName = settings.AccountName?.Trim();</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">string</span>.IsNullOrWhiteSpace(accountName))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InvalidOperationException(<span class="string">&quot;Azure Blob Storage account name is not configured.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> serviceUri = <span class="keyword">new</span> Uri(<span class="string">$&quot;https://<span class="subst">&#123;accountName&#125;</span>.blob.core.windows.net&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> serviceClient = <span class="keyword">new</span> BlobServiceClient(serviceUri, <span class="keyword">new</span> DefaultAzureCredential());</span><br><span class="line">        containerClient = serviceClient.GetBlobContainerClient(containerName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">UploadAsync</span>(<span class="params">Guid clientUid, <span class="built_in">string</span> fileName, Stream content, <span class="built_in">string</span>? contentType, CancellationToken cancellationToken = <span class="literal">default</span></span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> sanitizedFileName = Path.GetFileName(fileName).Trim();</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">string</span>.IsNullOrWhiteSpace(sanitizedFileName))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InvalidOperationException(<span class="string">&quot;File name is required.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> blobClient = containerClient.GetBlobClient(<span class="string">$&quot;<span class="subst">&#123;clientUid:D&#125;</span>/<span class="subst">&#123;sanitizedFileName&#125;</span>&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">await</span> blobClient.UploadAsync(</span><br><span class="line">                content,</span><br><span class="line">                <span class="keyword">new</span> BlobUploadOptions</span><br><span class="line">                &#123;</span><br><span class="line">                    HttpHeaders = <span class="keyword">new</span> BlobHttpHeaders</span><br><span class="line">                    &#123;</span><br><span class="line">                        ContentType = <span class="built_in">string</span>.IsNullOrWhiteSpace(contentType)</span><br><span class="line">                            ? <span class="string">&quot;application/octet-stream&quot;</span></span><br><span class="line">                            : contentType</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                cancellationToken);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (RequestFailedException exception) <span class="keyword">when</span> (exception.ErrorCode == BlobErrorCode.BlobAlreadyExists)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InvalidOperationException(</span><br><span class="line">                <span class="string">&quot;A file with the same name already exists for this client.&quot;</span>,</span><br><span class="line">                exception);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The important bit is this line:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> blobClient = containerClient.GetBlobClient(<span class="string">$&quot;<span class="subst">&#123;clientUid:D&#125;</span>/<span class="subst">&#123;sanitizedFileName&#125;</span>&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>That gives you a blob path like <code>1ee45be0-202d-4c2b-91ba-2eb7362dcf52/my-file.pdf</code>. Azure Blob Storage does not have real folders, but that prefix behaves like one in the portal and SDK.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/dotnet/api/azure.storage.blobs.blobcontainerclient">BlobContainerClient</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/storage/blobs/storage-blob-upload">Upload blobs with .NET</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential">DefaultAzureCredential</a></p>
+<h2 id="4-Upload-the-file-before-inserting-the-database-row"><a href="#4-Upload-the-file-before-inserting-the-database-row" class="headerlink" title="4. Upload the file before inserting the database row"></a>4. Upload the file before inserting the database row</h2><p>My original bug was simple: the app inserted metadata, but never persisted the file itself. The fix was to make blob upload the gate before <code>InsertAsync(...)</code>.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">HttpPost(<span class="string">&quot;Onboarding/StepTwo/&#123;uid:guid&#125;/Upload&quot;</span>)</span>]</span><br><span class="line">[<span class="meta">ValidateAntiForgeryToken</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;IActionResult&gt; <span class="title">UploadFile</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">    Guid uid,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="built_in">string</span> <span class="keyword">group</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">    IFormFile <span class="keyword">file</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">    CancellationToken cancellationToken</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> client = <span class="keyword">await</span> clientRepository.GetByUidAsync(uid, cancellationToken);</span><br><span class="line">    <span class="keyword">if</span> (client <span class="keyword">is</span> <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        TempData[<span class="string">&quot;OnboardingMessage&quot;</span>] = <span class="string">&quot;Client not found.&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(StepOne));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">file</span> <span class="keyword">is</span> <span class="literal">null</span> || <span class="keyword">file</span>.Length == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        TempData[<span class="string">&quot;OnboardingMessage&quot;</span>] = <span class="string">&quot;Please choose a file to upload.&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(StepTwo), <span class="keyword">new</span> &#123; uid &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> fileTypeDescription = ResolveFileTypeDescription(<span class="keyword">group</span>);</span><br><span class="line">    <span class="keyword">if</span> (fileTypeDescription <span class="keyword">is</span> <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        TempData[<span class="string">&quot;OnboardingMessage&quot;</span>] = <span class="string">&quot;Unsupported file group.&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(StepTwo), <span class="keyword">new</span> &#123; uid &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> fileTypeId = <span class="keyword">await</span> fileRepository.GetFileTypeIdAsync(fileTypeDescription, cancellationToken);</span><br><span class="line">    <span class="keyword">if</span> (!fileTypeId.HasValue)</span><br><span class="line">    &#123;</span><br><span class="line">        TempData[<span class="string">&quot;OnboardingMessage&quot;</span>] = <span class="string">&quot;File type could not be resolved.&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(StepTwo), <span class="keyword">new</span> &#123; uid &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> fileName = Path.GetFileName(<span class="keyword">file</span>.FileName);</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">using</span> <span class="keyword">var</span> fileStream = <span class="keyword">file</span>.OpenReadStream();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">await</span> clientFileStorage.UploadAsync(uid, fileName, fileStream, <span class="keyword">file</span>.ContentType, cancellationToken);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (InvalidOperationException exception)</span><br><span class="line">    &#123;</span><br><span class="line">        TempData[<span class="string">&quot;OnboardingMessage&quot;</span>] = exception.Message;</span><br><span class="line">        <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(StepTwo), <span class="keyword">new</span> &#123; uid &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (RequestFailedException exception)</span><br><span class="line">    &#123;</span><br><span class="line">        logger.LogError(exception,</span><br><span class="line">            <span class="string">&quot;Azure Blob upload failed for client &#123;ClientUid&#125; and file &#123;FileName&#125;.&quot;</span>,</span><br><span class="line">            uid,</span><br><span class="line">            fileName);</span><br><span class="line"></span><br><span class="line">        TempData[<span class="string">&quot;OnboardingMessage&quot;</span>] = <span class="string">&quot;The file could not be uploaded to storage.&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(StepTwo), <span class="keyword">new</span> &#123; uid &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> fileRepository.InsertAsync(uid, fileTypeId.Value, fileName, cancellationToken);</span><br><span class="line"></span><br><span class="line">    TempData[<span class="string">&quot;OnboardingMessage&quot;</span>] = <span class="string">$&quot;<span class="subst">&#123;fileName&#125;</span> uploaded.&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(StepTwo), <span class="keyword">new</span> &#123; uid &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This ordering matters. If the blob upload fails, you do not want a database row claiming the file exists.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/aspnet/core/mvc/models/file-uploads">Upload files in ASP.NET Core</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/dotnet/core/extensions/logging">Logging in .NET and ASP.NET Core</a></p>
+<h2 id="5-Decide-how-you-want-to-authenticate"><a href="#5-Decide-how-you-want-to-authenticate" class="headerlink" title="5. Decide how you want to authenticate"></a>5. Decide how you want to authenticate</h2><p>I ended up with two useful modes.</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Config</th>
+<th>Auth path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Local development with a storage key</td>
+<td><code>ConnectionString</code> set</td>
+<td><code>BlobContainerClient(connectionString, containerName)</code></td>
+</tr>
+<tr>
+<td>Shared Azure environment</td>
+<td><code>ConnectionString</code> empty</td>
+<td><code>DefaultAzureCredential</code></td>
+</tr>
+</tbody></table>
+<p>For local development, a connection string is the fastest way to prove the upload path works.</p>
+<p>For Azure-hosted environments, I would rather use managed identity or a service principal with the right blob permissions than ship account keys around.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/storage/blobs/authorize-access-azure-active-directory">Authorize access to blobs with Microsoft Entra ID</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/storage/blobs/assign-azure-role-data-access">Assign Azure roles for blob data</a></p>
+<h2 id="6-Verify-the-result"><a href="#6-Verify-the-result" class="headerlink" title="6. Verify the result"></a>6. Verify the result</h2><p>Once the upload succeeds, you should see a blob inside the container with this shape:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chatbot-files/</span><br><span class="line">  &lt;client-uid&gt;/</span><br><span class="line">    &lt;file-name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>A quick test flow is:</p>
+<ol>
+<li>Open the page that posts the file.</li>
+<li>Upload a file for a known client <code>uid</code>.</li>
+<li>Check the Azure portal or Storage Explorer.</li>
+<li>Confirm both the blob and the database row exist.</li>
+</ol>
+<p>That was enough in my case to move from “the UI says uploaded” to “the file is actually in storage”.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/storage/common/storage-explorer/vs-azure-tools-storage-manage-with-storage-explorer">Azure Storage Explorer</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2026/07/azure-save-uploaded-files-to-blob-storage/" data-id="cmt4875qg0005idga0f2udaih" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aspnet-core/" rel="tag">aspnet-core</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/azure/" rel="tag">azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/storage/" rel="tag">storage</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/07/azure-storage-mocks-azurite/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Mock Azure Blob Storage With Azurite In ASP.NET Core
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/07/vector-database-pgsql/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Vector Database PGSQL</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<article style="margin-bottom: 5px;">
+    <div class="article-inner">
+        <div style="text-align: center; padding: 20px 0;">
+            <p>❤️❤️❤️ Does my content help you? Consider a small donation <a href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">if this blog helped you</a>❤️❤️❤️
+            </p>
+        </div>
+    </div>
+</article></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/08/mongo/">Adding MongoDB to a Next.js App (App Router)</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/supa-base/">Adding Supabase PostgreSQL to Rackit (Prisma + Next.js App Router)</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/three-picket-planter-box/">Three Picket Planter Box</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/azure-blob-storage/">Azure Blob Storage For Private Files And Public Web Assets</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/azure-cognative-account-with-deployments/">Azure AI Foundry And OpenAI Deployments For A Chatbot App</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.87px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/ai/" style="font-size: 13.91px;">ai</a> <a href="/tags/ai-foundry/" style="font-size: 10px;">ai-foundry</a> <a href="/tags/algorithms/" style="font-size: 11.74px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.65px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.43px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.43px;">asp.net</a> <a href="/tags/aspnet-core/" style="font-size: 11.3px;">aspnet-core</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.78px;">auth</a> <a href="/tags/aws/" style="font-size: 17.83px;">aws</a> <a href="/tags/azure/" style="font-size: 15.22px;">azure</a> <a href="/tags/azurite/" style="font-size: 10px;">azurite</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.43px;">benchmarks</a> <a href="/tags/blob-storage/" style="font-size: 10.43px;">blob-storage</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.74px;">cad</a> <a href="/tags/cam/" style="font-size: 11.74px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.22px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.74px;">cryptography</a> <a href="/tags/csharp/" style="font-size: 10.87px;">csharp</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.74px;">data structures</a> <a href="/tags/database/" style="font-size: 10.43px;">database</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.04px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.43px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.43px;">dns</a> <a href="/tags/docker/" style="font-size: 17.39px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/embeddings/" style="font-size: 11.74px;">embeddings</a> <a href="/tags/entra/" style="font-size: 10.43px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.87px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.61px;">food</a> <a href="/tags/games/" style="font-size: 10.43px;">games</a> <a href="/tags/git/" style="font-size: 12.17px;">git</a> <a href="/tags/github-actions/" style="font-size: 10px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.87px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.04px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.74px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.48px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.48px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.3px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/llm/" style="font-size: 10.87px;">llm</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.43px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.35px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.26px;">model airplanes</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mongoose/" style="font-size: 10px;">mongoose</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.3px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/networking/" style="font-size: 10px;">networking</a> <a href="/tags/newrelic/" style="font-size: 10.43px;">newrelic</a> <a href="/tags/nextjs/" style="font-size: 10.43px;">nextjs</a> <a href="/tags/nginx/" style="font-size: 10.87px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.87px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/openai/" style="font-size: 10px;">openai</a> <a href="/tags/orm/" style="font-size: 13.91px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 12.61px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/prisma/" style="font-size: 10px;">prisma</a> <a href="/tags/python/" style="font-size: 13.04px;">python</a> <a href="/tags/rag/" style="font-size: 11.3px;">rag</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.96px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.87px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.74px;">reporting</a> <a href="/tags/retrieval/" style="font-size: 10px;">retrieval</a> <a href="/tags/rosetta-code/" style="font-size: 15.22px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.7px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.43px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.52px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.3px;">static code analysis</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/supabase/" style="font-size: 10px;">supabase</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/terraform/" style="font-size: 11.3px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.13px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/vectors/" style="font-size: 10.87px;">vectors</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.09px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.7px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.3px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.3px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
