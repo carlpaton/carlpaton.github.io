@@ -2,25 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://carlpaton.github.io/2026/06/supa-base/</loc>
+    
+    <lastmod>2026-08-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://carlpaton.github.io/2026/06/mongo/</loc>
+    
+    <lastmod>2026-08-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://carlpaton.github.io/2026/07/vector-database-pgsql/</loc>
-    
-    <lastmod>2026-08-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://carlpaton.github.io/2026/08/supa-base/</loc>
-    
-    <lastmod>2026-08-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://carlpaton.github.io/2026/08/mongo/</loc>
     
     <lastmod>2026-08-22</lastmod>
     
