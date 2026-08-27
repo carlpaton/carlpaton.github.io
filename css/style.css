@@ -1105,6 +1105,139 @@ a.article-title:hover {
 #page-nav .space {
   color: #ddd;
 }
+.sponsored-wrap {
+  margin: 50px 0 0 0;
+}
+.sponsored-list {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-lines: multiple;
+  -moz-box-lines: multiple;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: 100%;
+}
+.sponsored-card {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 1 1 200px;
+  -ms-flex: 1 1 200px;
+  flex: 1 1 200px;
+  display: block;
+  padding: 15px;
+  border-radius: 6px;
+  background: -webkit-linear-gradient(315deg, #fbfdff, #eef6fb);
+  background: -moz-linear-gradient(315deg, #fbfdff, #eef6fb);
+  background: -ms-linear-gradient(315deg, #fbfdff, #eef6fb);
+  background: linear-gradient(135deg, #fbfdff, #eef6fb);
+  border: 1px solid #ddd;
+  border-left: 4px solid #258fb8;
+  -webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  text-decoration: none;
+  -webkit-transition: -webkit-transform 0.2s, box-shadow 0.2s;
+  -moz-transition: -moz-transform 0.2s, box-shadow 0.2s;
+  -ms-transition: -ms-transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.sponsored-card:hover {
+  -webkit-transform: translateY(-4px);
+  -moz-transform: translateY(-4px);
+  -ms-transform: translateY(-4px);
+  transform: translateY(-4px);
+  -webkit-box-shadow: 0 8px 18px rgba(0,0,0,0.14);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.14);
+}
+.sponsored-card:nth-child(4n+1) {
+  border-left-color: #2f6fed;
+  background: -webkit-linear-gradient(315deg, #f5f9ff, #e7effe);
+  background: -moz-linear-gradient(315deg, #f5f9ff, #e7effe);
+  background: -ms-linear-gradient(315deg, #f5f9ff, #e7effe);
+  background: linear-gradient(135deg, #f5f9ff, #e7effe);
+}
+.sponsored-card:nth-child(4n+1) .sponsored-card-label {
+  background: #2f6fed;
+}
+.sponsored-card:nth-child(4n+1):hover .sponsored-card-title {
+  color: #2f6fed;
+}
+.sponsored-card:nth-child(4n+2) {
+  border-left-color: #0fa574;
+  background: -webkit-linear-gradient(315deg, #f2fbf7, #e3f7ee);
+  background: -moz-linear-gradient(315deg, #f2fbf7, #e3f7ee);
+  background: -ms-linear-gradient(315deg, #f2fbf7, #e3f7ee);
+  background: linear-gradient(135deg, #f2fbf7, #e3f7ee);
+}
+.sponsored-card:nth-child(4n+2) .sponsored-card-label {
+  background: #0fa574;
+}
+.sponsored-card:nth-child(4n+2):hover .sponsored-card-title {
+  color: #0fa574;
+}
+.sponsored-card:nth-child(4n+3) {
+  border-left-color: #8a5cf6;
+  background: -webkit-linear-gradient(315deg, #f8f5ff, #eee6fe);
+  background: -moz-linear-gradient(315deg, #f8f5ff, #eee6fe);
+  background: -ms-linear-gradient(315deg, #f8f5ff, #eee6fe);
+  background: linear-gradient(135deg, #f8f5ff, #eee6fe);
+}
+.sponsored-card:nth-child(4n+3) .sponsored-card-label {
+  background: #8a5cf6;
+}
+.sponsored-card:nth-child(4n+3):hover .sponsored-card-title {
+  color: #8a5cf6;
+}
+.sponsored-card:nth-child(4n+4) {
+  border-left-color: #e08a1e;
+  background: -webkit-linear-gradient(315deg, #fff9f0, #fdedd6);
+  background: -moz-linear-gradient(315deg, #fff9f0, #fdedd6);
+  background: -ms-linear-gradient(315deg, #fff9f0, #fdedd6);
+  background: linear-gradient(135deg, #fff9f0, #fdedd6);
+}
+.sponsored-card:nth-child(4n+4) .sponsored-card-label {
+  background: #e08a1e;
+}
+.sponsored-card:nth-child(4n+4):hover .sponsored-card-title {
+  color: #e08a1e;
+}
+.sponsored-card-label {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 0.75em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #fff;
+  background: #258fb8;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+.sponsored-card-title {
+  text-decoration: none;
+  font-weight: bold;
+  color: #555;
+  -webkit-transition: color 0.2s;
+  -moz-transition: color 0.2s;
+  -ms-transition: color 0.2s;
+  transition: color 0.2s;
+  line-height: 1.1em;
+  display: block;
+  margin: 0 0 6px 0;
+}
+.sponsored-card-description {
+  font-size: 0.85em;
+  color: #555;
+  line-height: 1.4;
+  margin: 0;
+}
 #footer {
   background: #262a30;
   padding: 9px 0;

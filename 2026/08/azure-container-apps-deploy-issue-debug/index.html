@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Debugging an Azure Container Apps Deploy Failure in GitHub Actions | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Also see Azure Container Apps ImagePullBackOff Error I had a PROD GitHub Actions workflow that had been deploying fine, then suddenly started failing on the azure&#x2F;container-apps-deploy-action@v1 step">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debugging an Azure Container Apps Deploy Failure in GitHub Actions">
+<meta property="og:url" content="https://carlpaton.github.io/2026/08/azure-container-apps-deploy-issue-debug/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Also see Azure Container Apps ImagePullBackOff Error I had a PROD GitHub Actions workflow that had been deploying fine, then suddenly started failing on the azure&#x2F;container-apps-deploy-action@v1 step">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-08-27T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-27T21:05:31.438Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="azure">
+<meta property="article:tag" content="container-apps">
+<meta property="article:tag" content="github-actions">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+<section class="sponsored-wrap">
+  <div class="archive-year-wrap">
+    <span class="archive-year">Sponsored Content & Projects</span>
+  </div>
+  <div class="sponsored-list">
+    
+    <a class="sponsored-card" href="https://www.workbilling.app" target="_blank">
+      <span class="sponsored-card-label">Work Billing</span>
+      <h1 itemprop="name" class="sponsored-card-title">From agreed work to paid invoices</h1>
+      <p class="sponsored-card-description">Keep partners, clients, statements of work, invoices, margins, and payment progress together in one clear workspace.</p>
+    </a>
+    
+    <a class="sponsored-card" href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">
+      <span class="sponsored-card-label">Support</span>
+      <h1 itemprop="name" class="sponsored-card-title">Stripe Donation</h1>
+      <p class="sponsored-card-description">Does my content help you? Consider a small donation to support this blog. ❤️</p>
+    </a>
+    
+  </div>
+</section>
+
+
+
+<article id="post-azure-container-apps-deploy-issue-debug" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/08/azure-container-apps-deploy-issue-debug/" class="article-date">
+  <time datetime="2026-08-27T12:00:00.000Z" itemprop="datePublished">2026-Aug</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Debugging an Azure Container Apps Deploy Failure in GitHub Actions
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Also see <a href="/2026/01/azure-container-apps-image-pull-back-off-error/">Azure Container Apps ImagePullBackOff Error</a></p>
+<p>I had a PROD GitHub Actions workflow that had been deploying fine, then suddenly started failing on the <code>azure/container-apps-deploy-action@v1</code> step with an <code>UNAUTHORIZED</code> error when pulling the image. Here’s how I added temporary debug steps to the pipeline to pin down the actual cause instead of guessing.</p>
+<h2 id="The-failure"><a href="#The-failure" class="headerlink" title="The failure"></a>The failure</h2><p>The <code>az containerapp update</code> call the action runs under the hood failed with:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Failed to provision revision for container app &#x27;chatbot-worker-produk&#x27;. </span><br><span class="line">Error details: The following field(s) are either invalid or missing. </span><br><span class="line">Field &#x27;template.containers.chatbot-worker-produk.image&#x27; </span><br><span class="line">is invalid with details: &#x27;Invalid value: &quot;myregistry.azurecr.io/myapp:8489162&quot;: </span><br><span class="line">GET https:?scope=repository%3Amyapp%3Apull&amp;service=myregistry.azurecr.io: </span><br><span class="line">UNAUTHORIZED: authentication required, visit https://aka.ms/acr/authorization for more information. CorrelationId: ...&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>This is a pull error, not a push error - the build/push job earlier in the workflow succeeded, so the image was definitely in ACR. Something about how the Container App itself authenticates to pull was broken.</p>
+<h2 id="Add-debug-steps-instead-of-guessing"><a href="#Add-debug-steps-instead-of-guessing" class="headerlink" title="Add debug steps instead of guessing"></a>Add debug steps instead of guessing</h2><p>Rather than trying random fixes against a live PROD app, I added two extra steps after the deploy step with <code>if: always()</code>, so they run whether or not the deploy step succeeded:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Debug</span> <span class="bullet">-</span> <span class="string">show</span> <span class="string">current</span> <span class="string">ACR</span> <span class="string">registry</span> <span class="string">config</span> <span class="string">on</span> <span class="string">the</span> <span class="string">Container</span> <span class="string">App</span></span><br><span class="line">  <span class="attr">if:</span> <span class="string">always()</span></span><br><span class="line">  <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    az containerapp registry list \</span></span><br><span class="line"><span class="string">      -g chatbot-worker-produk-rg \</span></span><br><span class="line"><span class="string">      -n chatbot-worker-produk \</span></span><br><span class="line"><span class="string">      -o table</span></span><br><span class="line"><span class="string">    az containerapp show \</span></span><br><span class="line"><span class="string">      -g chatbot-worker-produk-rg \</span></span><br><span class="line"><span class="string">      -n chatbot-worker-produk \</span></span><br><span class="line"><span class="string">      --query &quot;properties.template.containers[0].image&quot; \</span></span><br><span class="line"><span class="string">      -o tsv</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Debug</span> <span class="bullet">-</span> <span class="string">check</span> <span class="string">AcrPull</span> <span class="string">role</span> <span class="string">assignment</span> <span class="string">for</span> <span class="string">the</span> <span class="string">deploy</span> <span class="string">service</span> <span class="string">principal</span></span><br><span class="line">  <span class="attr">if:</span> <span class="string">always()</span></span><br><span class="line">  <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    acrId=$(az acr list --query &quot;[?loginServer==&#x27;$&#123;&#123; vars.PRODUK_ACR_SERVER &#125;&#125;&#x27;].id&quot; -o tsv)</span></span><br><span class="line"><span class="string">    spClientId=$(az account show --query user.name -o tsv)</span></span><br><span class="line"><span class="string">    az role assignment list --assignee &quot;$spClientId&quot; --scope &quot;$acrId&quot; -o table</span></span><br></pre></td></tr></table></figure>
+
+<p>The first step dumps whatever registries are currently configured on the Container App plus the image it’s actually running. The second checks whether the service principal used by <code>azure/login</code> has an <code>AcrPull</code> role assignment scoped to the ACR.</p>
+<h2 id="What-the-debug-output-revealed"><a href="#What-the-debug-output-revealed" class="headerlink" title="What the debug output revealed"></a>What the debug output revealed</h2><p><code>az containerapp registry list</code> came back empty - no registries configured on the app at all. And the image query returned <code>mcr.microsoft.com/k8se/quickstart:latest</code>, the default placeholder Azure ships with new Container Apps. That told me this app had never successfully received an image from ACR, despite previous “successful” workflow runs.</p>
+<p>That’s the key detail: a Container App remembers its registry credentials on the resource itself, not just for the run that configured them. Once <code>az containerapp registry set</code> runs successfully, that config sticks around across every future deploy. This PROD app just never had it set in the first place.</p>
+<h2 id="The-fix"><a href="#The-fix" class="headerlink" title="The fix"></a>The fix</h2><p><code>azure/container-apps-deploy-action</code> needs <code>registryUsername</code>/<code>registryPassword</code> (or <code>acrUsername</code>/<code>acrPassword</code> if using <code>acrName</code>) to configure that registry the first time:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">with:</span></span><br><span class="line">  <span class="attr">registryUrl:</span> <span class="string">$&#123;&#123;</span> <span class="string">vars.PRODUK_ACR_SERVER</span> <span class="string">&#125;&#125;</span></span><br><span class="line">  <span class="attr">registryUsername:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.PRODUK_ACR_USER</span> <span class="string">&#125;&#125;</span></span><br><span class="line">  <span class="attr">registryPassword:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.PRODUK_ACR_PASSWORD</span> <span class="string">&#125;&#125;</span></span><br><span class="line">  <span class="attr">imageToDeploy:</span> <span class="string">$ACR_SERVER/$ACR_USER:$IMAGE_TAG</span></span><br><span class="line">  <span class="attr">containerAppName:</span> <span class="string">chatbot-worker-produk</span></span><br><span class="line">  <span class="attr">containerAppEnvironment:</span> <span class="string">chatbot-produk</span></span><br><span class="line">  <span class="attr">resourceGroup:</span> <span class="string">chatbot-worker-produk-rg</span></span><br></pre></td></tr></table></figure>
+
+<p>Running the workflow with these in place fixed the deploy immediately - the debug step’s registry list was no longer empty, and the image matched what had actually been pushed.</p>
+<p>This also explained something that had been bugging me: a sibling UAT workflow deploys fine <em>without</em> <code>registryUsername</code>/<code>registryPassword</code> at all. That’s because UAT’s Container App already had its registry configured from an earlier deploy, so it doesn’t need to be told again. Once I confirmed the same was now true for PROD, I removed the debug steps and the credentials from the workflow, and a follow-up deploy still succeeded - the config had persisted on the Container App resource itself.</p>
+<h2 id="Takeaway"><a href="#Takeaway" class="headerlink" title="Takeaway"></a>Takeaway</h2><p>If <code>azure/container-apps-deploy-action</code> fails with an ACR <code>UNAUTHORIZED</code> pull error, don’t assume it’s the service principal’s role assignment. Check what’s actually configured on the Container App with <code>az containerapp registry list</code> first - if it’s empty, the app has simply never had registry credentials set, and providing <code>registryUsername</code>/<code>registryPassword</code> once will fix it for good.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://github.com/Azure/container-apps-deploy-action">Azure Container Apps Build and Deploy action</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cli/azure/containerapp/registry">az containerapp registry</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2026/08/azure-container-apps-deploy-issue-debug/" data-id="cmtc0endi0000vdgabcfk8ap9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/azure/" rel="tag">azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/container-apps/" rel="tag">container-apps</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github-actions/" rel="tag">github-actions</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2026/08/three-picket-planter-box/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Three Picket Planter Box</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<section class="sponsored-wrap">
+  <div class="archive-year-wrap">
+    <span class="archive-year">Sponsored Content & Projects</span>
+  </div>
+  <div class="sponsored-list">
+    
+    <a class="sponsored-card" href="https://www.workbilling.app" target="_blank">
+      <span class="sponsored-card-label">Work Billing</span>
+      <h1 itemprop="name" class="sponsored-card-title">From agreed work to paid invoices</h1>
+      <p class="sponsored-card-description">Keep partners, clients, statements of work, invoices, margins, and payment progress together in one clear workspace.</p>
+    </a>
+    
+    <a class="sponsored-card" href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">
+      <span class="sponsored-card-label">Support</span>
+      <h1 itemprop="name" class="sponsored-card-title">Stripe Donation</h1>
+      <p class="sponsored-card-description">Does my content help you? Consider a small donation to support this blog. ❤️</p>
+    </a>
+    
+  </div>
+</section>
+
+
+<br /></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/08/azure-container-apps-deploy-issue-debug/">Debugging an Azure Container Apps Deploy Failure in GitHub Actions</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/three-picket-planter-box/">Three Picket Planter Box</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/azure-blob-storage/">Azure Blob Storage For Private Files And Public Web Assets</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/azure-cognative-account-with-deployments/">Azure AI Foundry And OpenAI Deployments For A Chatbot App</a>
+          </li>
+        
+          <li>
+            <a href="/2026/07/azure-private-endpoints-with-terraform/">Azure Private Endpoints With Terraform</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.25px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.83px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.42px;">agile</a> <a href="/tags/ai/" style="font-size: 13.75px;">ai</a> <a href="/tags/ai-foundry/" style="font-size: 10px;">ai-foundry</a> <a href="/tags/algorithms/" style="font-size: 11.67px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.58px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.83px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.42px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.42px;">asp.net</a> <a href="/tags/aspnet-core/" style="font-size: 11.25px;">aspnet-core</a> <a href="/tags/assembly/" style="font-size: 10.83px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.58px;">auth</a> <a href="/tags/aws/" style="font-size: 17.92px;">aws</a> <a href="/tags/azure/" style="font-size: 15.42px;">azure</a> <a href="/tags/azurite/" style="font-size: 10px;">azurite</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.17px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.42px;">benchmarks</a> <a href="/tags/blob-storage/" style="font-size: 10.42px;">blob-storage</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.42px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.67px;">cad</a> <a href="/tags/cam/" style="font-size: 11.67px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.25px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.42px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10.42px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.42px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.25px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.67px;">cryptography</a> <a href="/tags/csharp/" style="font-size: 10.83px;">csharp</a> <a href="/tags/css/" style="font-size: 11.67px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.67px;">data structures</a> <a href="/tags/database/" style="font-size: 10.42px;">database</a> <a href="/tags/ddd/" style="font-size: 10.83px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.92px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.42px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.42px;">dns</a> <a href="/tags/docker/" style="font-size: 17.5px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.83px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/embeddings/" style="font-size: 11.67px;">embeddings</a> <a href="/tags/entra/" style="font-size: 10.42px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.83px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.5px;">food</a> <a href="/tags/games/" style="font-size: 10.42px;">games</a> <a href="/tags/git/" style="font-size: 12.08px;">git</a> <a href="/tags/github-actions/" style="font-size: 10.42px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.83px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.42px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.92px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.67px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.33px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.33px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.83px;">jquery</a> <a href="/tags/json/" style="font-size: 11.67px;">json</a> <a href="/tags/kibana/" style="font-size: 10.42px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.25px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.33px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.67px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.67px;">linux</a> <a href="/tags/llm/" style="font-size: 10.83px;">llm</a> <a href="/tags/logging/" style="font-size: 11.25px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.42px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.17px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mongoose/" style="font-size: 10px;">mongoose</a> <a href="/tags/mvc/" style="font-size: 12.92px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.67px;">net core</a> <a href="/tags/networking/" style="font-size: 10px;">networking</a> <a href="/tags/newrelic/" style="font-size: 10.42px;">newrelic</a> <a href="/tags/nextjs/" style="font-size: 10.42px;">nextjs</a> <a href="/tags/nginx/" style="font-size: 10.83px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.25px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.83px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/openai/" style="font-size: 10px;">openai</a> <a href="/tags/orm/" style="font-size: 13.75px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.58px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/prisma/" style="font-size: 10px;">prisma</a> <a href="/tags/python/" style="font-size: 12.92px;">python</a> <a href="/tags/rag/" style="font-size: 11.25px;">rag</a> <a href="/tags/random/" style="font-size: 11.67px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 17.08px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.5px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.42px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.83px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.67px;">reporting</a> <a href="/tags/retrieval/" style="font-size: 10px;">retrieval</a> <a href="/tags/rosetta-code/" style="font-size: 15px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.5px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.75px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.42px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.67px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.42px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.83px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.25px;">static code analysis</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/structural-patterns/" style="font-size: 13.33px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/supabase/" style="font-size: 10px;">supabase</a> <a href="/tags/swagger/" style="font-size: 10.42px;">swagger</a> <a href="/tags/terraform/" style="font-size: 11.25px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 12.92px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.17px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.42px;">validation</a> <a href="/tags/vectors/" style="font-size: 10.83px;">vectors</a> <a href="/tags/virtualization/" style="font-size: 10.42px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.25px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.75px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.25px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.25px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
