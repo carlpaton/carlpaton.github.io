@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://carlpaton.github.io/favicon.ico" />
+<title>Write settings.py - Bobgame</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a href="index.html">&larr; All steps</a><span>Bobgame: make a Python game</span></header>
+<main>
+<p class="stepno">Step 6 of 12</p><h1>Write settings.py</h1>
+<p>Open <code>bobgame/settings.py</code> and type this in</p>
+<pre><code class="language-python">WIDTH = <span class="hljs-number">800</span>
+HEIGHT = <span class="hljs-number">600</span>
+FPS = <span class="hljs-number">60</span>
+BG_COLOR = (<span class="hljs-number">30</span>, <span class="hljs-number">32</span>, <span class="hljs-number">38</span>)
+
+BOB_RADIUS = <span class="hljs-number">20</span>
+BOB_SPEED = <span class="hljs-number">250</span>  <span class="hljs-comment"># pixels per second</span>
+SKIN_COLOR = (<span class="hljs-number">233</span>, <span class="hljs-number">189</span>, <span class="hljs-number">150</span>)
+HAIR_COLOR = (<span class="hljs-number">70</span>, <span class="hljs-number">45</span>, <span class="hljs-number">25</span>)
+ARROW_COLOR = (<span class="hljs-number">240</span>, <span class="hljs-number">80</span>, <span class="hljs-number">60</span>)
+</code></pre>
+<p>Each line is a <strong>variable</strong>: a name with a value stored in it, like a labelled box. We write the names in CAPITAL LETTERS because they are settings that never change while the game runs.</p>
+<ul>
+<li><code>WIDTH</code> and <code>HEIGHT</code> are the size of the window in <strong>pixels</strong> (the tiny dots your screen is made of).</li>
+<li><code>FPS</code> is <em>frames per second</em>. A game is like a flipbook, it draws a new picture many times a second. 60 looks smooth.</li>
+<li>Colours are three numbers: how much <strong>red, green and blue</strong> (0 to 255). <code>(0, 0, 0)</code> is black, <code>(255, 255, 255)</code> is white, and <code>(30, 32, 38)</code> is a dark grey-blue.</li>
+<li><code>BOB_SPEED</code> is how many pixels Bob moves each second. The <code>#</code> starts a <strong>comment</strong>, a note for humans that Python ignores.</li>
+</ul>
+<p>Try changing a colour later and see what happens. Pick colours with any &quot;RGB colour picker&quot; on the web.</p>
+
+<nav class="pager">
+<a class="btn ghost" href="05-plan-the-files.html">&larr; Plan the files</a>
+<a class="btn" href="07-write-game-py-and-open-a-window.html">Next: Write game.py and open a window &rarr;</a>
+</nav>
+</main>
+<script src="copy.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://carlpaton.github.io/favicon.ico" />
+<title>Write player.py and draw Bob - Bobgame</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a href="index.html">&larr; All steps</a><span>Bobgame: make a Python game</span></header>
+<main>
+<p class="stepno">Step 9 of 12</p><h1>Write player.py and draw Bob</h1>
+<p>Time to make Bob. Open <code>bobgame/player.py</code></p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> pygame
+
+<span class="hljs-keyword">from</span> .settings <span class="hljs-keyword">import</span> (
+    ARROW_COLOR, BOB_RADIUS, BOB_SPEED, HAIR_COLOR, HEIGHT, SKIN_COLOR, WIDTH,
+)
+
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Bob</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-literal">None</span>:
+        <span class="hljs-variable language_">self</span>.pos = pygame.Vector2(WIDTH / <span class="hljs-number">2</span>, HEIGHT / <span class="hljs-number">2</span>)
+        <span class="hljs-variable language_">self</span>.facing = pygame.Vector2(<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params">self, surface: pygame.Surface</span>) -&gt; <span class="hljs-literal">None</span>:
+        center = (<span class="hljs-built_in">round</span>(<span class="hljs-variable language_">self</span>.pos.x), <span class="hljs-built_in">round</span>(<span class="hljs-variable language_">self</span>.pos.y))
+        pygame.draw.circle(surface, SKIN_COLOR, center, BOB_RADIUS)
+        <span class="hljs-comment"># Hair: ring around the head plus a cap on the back half.</span>
+        pygame.draw.circle(surface, HAIR_COLOR, center, BOB_RADIUS, <span class="hljs-number">4</span>)
+        back = <span class="hljs-variable language_">self</span>.pos - <span class="hljs-variable language_">self</span>.facing * (BOB_RADIUS * <span class="hljs-number">0.35</span>)
+        pygame.draw.circle(
+            surface, HAIR_COLOR, (<span class="hljs-built_in">round</span>(back.x), <span class="hljs-built_in">round</span>(back.y)), BOB_RADIUS * <span class="hljs-number">0.6</span>
+        )
+</code></pre>
+<p>Bob is another class, another blueprint.</p>
+<ul>
+<li><code>self.pos</code> is Bob&#39;s position. A <code>Vector2</code> is a pair of numbers, <code>x</code> (how far across) and <code>y</code> (how far down). In games, <code>(0, 0)</code> is the <strong>top-left</strong> corner and <code>y</code> gets bigger as you go <strong>down</strong>, which is the opposite of the maths you do at school. We start Bob in the middle of the window, <code>WIDTH / 2</code> across and <code>HEIGHT / 2</code> down.</li>
+<li><code>self.facing</code> is the direction Bob looks. It is also a <code>Vector2</code>, but this time think of it as an arrow with a length of 1 that points somewhere. <code>(0, -1)</code> means 0 across and 1 <em>up</em> (remember, up is negative), so he starts looking at the top of the screen.</li>
+<li><code>draw</code> paints Bob onto a <code>surface</code> (the canvas, in our case the window). <code>pygame.draw.circle</code> takes a canvas, a colour, a centre and a size. </li>
+<li>First we draw a skin coloured circle. Then we draw a hair coloured circle with a <code>4</code> on the end, which means &quot;only draw the outline, 4 pixels thick&quot;. That gives a ring of hair. Lastly we draw a smaller hair circle slightly towards Bob&#39;s <em>back</em>. We find that spot by going from his centre in the opposite direction (the minus sign) of where he faces. From above, it looks like he has hair on the back of his head.</li>
+<li><code>round(...)</code> turns a decimal like <code>400.4</code> into a whole number, because pixels can&#39;t be cut in half.</li>
+</ul>
+<p>Now we need the game to make a Bob and draw him. Change <code>game.py</code> in three places</p>
+<pre><code class="language-python"><span class="hljs-keyword">from</span> .player <span class="hljs-keyword">import</span> Bob
+</code></pre>
+<p>add that near the top, below <code>import pygame</code>. Then in <code>__init__</code> add one line</p>
+<pre><code class="language-python">        <span class="hljs-variable language_">self</span>.bob = Bob()
+</code></pre>
+<p>below <code>self.clock = ...</code>. And in <code>step</code> draw him after the background is painted</p>
+<pre><code class="language-python">        <span class="hljs-variable language_">self</span>.screen.fill(BG_COLOR)
+        <span class="hljs-variable language_">self</span>.bob.draw(<span class="hljs-variable language_">self</span>.screen)
+        pygame.display.flip()
+</code></pre>
+<p>The order matters. If we drew Bob first and then painted the background, we&#39;d cover him up!</p>
+<p>Run it again. You should see a round head with hair in the middle of the window. He&#39;s not moving yet, so let&#39;s fix that.</p>
+
+<nav class="pager">
+<a class="btn ghost" href="08-write-main-py-and-run-it.html">&larr; Write main.py and run it</a>
+<a class="btn" href="10-move-bob-with-w-a-s-d.html">Next: Move Bob with W A S D &rarr;</a>
+</nav>
+</main>
+<script src="copy.js"></script>
+</body>
+</html>

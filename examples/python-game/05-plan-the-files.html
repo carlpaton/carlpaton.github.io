@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://carlpaton.github.io/favicon.ico" />
+<title>Plan the files - Bobgame</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a href="index.html">&larr; All steps</a><span>Bobgame: make a Python game</span></header>
+<main>
+<p class="stepno">Step 5 of 12</p><h1>Plan the files</h1>
+<p>A game gets messy fast if all the code is in one big file. We&#39;ll use four small files, each with one job. Create these now (empty is fine). The <code>bobgame</code> folder inside the <code>bobgame</code> folder is on purpose, it&#39;s called a <strong>package</strong>.</p>
+<pre><code>bobgame/
+  requirements.txt
+  main.py              &lt;- the start button
+  bobgame/
+    __init__.py        &lt;- empty, tells Python this folder is a package
+    settings.py        &lt;- numbers and colours we might want to tweak
+    player.py          &lt;- Bob: where he is, how he moves, how he looks
+    game.py            &lt;- the window and the game loop
+</code></pre>
+<p>In VS Code right-click in the left panel and choose <strong>New Folder</strong> / <strong>New File</strong>.</p>
+
+<nav class="pager">
+<a class="btn ghost" href="04-install-pygame-ce.html">&larr; Install pygame-ce</a>
+<a class="btn" href="06-write-settings-py.html">Next: Write settings.py &rarr;</a>
+</nav>
+</main>
+<script src="copy.js"></script>
+</body>
+</html>

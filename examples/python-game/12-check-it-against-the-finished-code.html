@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://carlpaton.github.io/favicon.ico" />
+<title>Check it against the finished code - Bobgame</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a href="index.html">&larr; All steps</a><span>Bobgame: make a Python game</span></header>
+<main>
+<p class="stepno">Step 12 of 12</p><h1>Check it against the finished code</h1>
+<p>Here is the finished <code>game.py</code> so you can check yours</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> pygame
+
+<span class="hljs-keyword">from</span> .player <span class="hljs-keyword">import</span> Bob
+<span class="hljs-keyword">from</span> .settings <span class="hljs-keyword">import</span> BG_COLOR, FPS, HEIGHT, WIDTH
+
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Game</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-literal">None</span>:
+        pygame.init()
+        <span class="hljs-variable language_">self</span>.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption(<span class="hljs-string">&quot;Bobgame&quot;</span>)
+        <span class="hljs-variable language_">self</span>.clock = pygame.time.Clock()
+        <span class="hljs-variable language_">self</span>.bob = Bob()
+        <span class="hljs-variable language_">self</span>.running = <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">step</span>(<span class="hljs-params">self, dt: <span class="hljs-built_in">float</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">for</span> event <span class="hljs-keyword">in</span> pygame.event.get():
+            <span class="hljs-keyword">if</span> event.<span class="hljs-built_in">type</span> == pygame.QUIT <span class="hljs-keyword">or</span> (
+                event.<span class="hljs-built_in">type</span> == pygame.KEYDOWN <span class="hljs-keyword">and</span> event.key == pygame.K_ESCAPE
+            ):
+                <span class="hljs-variable language_">self</span>.running = <span class="hljs-literal">False</span>
+        <span class="hljs-variable language_">self</span>.bob.update(dt, pygame.key.get_pressed(), pygame.mouse.get_pos())
+        <span class="hljs-variable language_">self</span>.screen.fill(BG_COLOR)
+        <span class="hljs-variable language_">self</span>.bob.draw(<span class="hljs-variable language_">self</span>.screen)
+        pygame.display.flip()
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">while</span> <span class="hljs-variable language_">self</span>.running:
+            <span class="hljs-variable language_">self</span>.step(<span class="hljs-variable language_">self</span>.clock.tick(FPS) / <span class="hljs-number">1000</span>)
+        pygame.quit()
+</code></pre>
+<p>Every frame the game loop does the same three things: <strong>handle input</strong>, <strong>update</strong> the world, then <strong>draw</strong> it. Almost every game ever made is built on that idea, from this one to the biggest ones you play.</p>
+<p>If something isn&#39;t working, compare your files with the ones in the <a href="https://github.com/carlpaton/bobgame">bobgame repo</a>. Common culprits are:</p>
+<ol>
+<li><strong>Indentation</strong>. Python cares about the spaces at the start of a line. Everything inside a class or a <code>def</code> is indented by 4 spaces.</li>
+<li><strong>Typos in names</strong>. <code>self.pos</code> and <code>self.Pos</code> are different things.</li>
+<li><strong>A missing colon</strong> at the end of a line starting with <code>def</code>, <code>class</code>, <code>if</code> or <code>while</code>.</li>
+<li><strong>Wrong folder</strong>. <code>main.py</code> must be in the top <code>bobgame</code> folder, with the inner <code>bobgame</code> folder beside it.</li>
+</ol>
+<p>The error message in the terminal tells you the file and the line number. Read it, it&#39;s usually trying to help.</p>
+<p>Docs: <a href="https://pyga.me/docs/ref/draw.html">pygame.draw</a> • <a href="https://pyga.me/docs/ref/math.html">pygame.math.Vector2</a> • <a href="https://pyga.me/docs/ref/time.html">pygame.time.Clock</a></p>
+
+<nav class="pager">
+<a class="btn ghost" href="11-make-the-arrow-follow-the-mouse.html">&larr; Make the arrow follow the mouse</a>
+<a class="btn" href="challenges.html">Next: Challenges &rarr;</a>
+</nav>
+</main>
+<script src="copy.js"></script>
+</body>
+</html>

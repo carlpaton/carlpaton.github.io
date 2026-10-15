@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://carlpaton.github.io/favicon.ico" />
+<title>Move Bob with W A S D - Bobgame</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a href="index.html">&larr; All steps</a><span>Bobgame: make a Python game</span></header>
+<main>
+<p class="stepno">Step 10 of 12</p><h1>Move Bob with W A S D</h1>
+<p>Add this <code>update</code> method to the <code>Bob</code> class in <code>player.py</code>, between <code>__init__</code> and <code>draw</code></p>
+<pre><code class="language-python">    <span class="hljs-keyword">def</span> <span class="hljs-title function_">update</span>(<span class="hljs-params">self, dt: <span class="hljs-built_in">float</span>, keys, mouse_pos</span>) -&gt; <span class="hljs-literal">None</span>:
+        direction = pygame.Vector2(
+            keys[pygame.K_d] - keys[pygame.K_a],
+            keys[pygame.K_s] - keys[pygame.K_w],
+        )
+        <span class="hljs-keyword">if</span> direction.length_squared() &gt; <span class="hljs-number">0</span>:
+            direction.normalize_ip()
+        <span class="hljs-variable language_">self</span>.pos += direction * BOB_SPEED * dt
+        <span class="hljs-variable language_">self</span>.pos.x = <span class="hljs-built_in">max</span>(BOB_RADIUS, <span class="hljs-built_in">min</span>(WIDTH - BOB_RADIUS, <span class="hljs-variable language_">self</span>.pos.x))
+        <span class="hljs-variable language_">self</span>.pos.y = <span class="hljs-built_in">max</span>(BOB_RADIUS, <span class="hljs-built_in">min</span>(HEIGHT - BOB_RADIUS, <span class="hljs-variable language_">self</span>.pos.y))
+</code></pre>
+<p><code>keys</code> is a list of every key on the keyboard, and each one is <code>True</code> if it&#39;s being held down or <code>False</code> if not. Python treats <code>True</code> as 1 and <code>False</code> as 0, so we can do maths with them.</p>
+<ul>
+<li>Across: <code>D</code> minus <code>A</code>. If you hold <code>D</code> that is <code>1 - 0 = 1</code> (right). Hold <code>A</code> and it&#39;s <code>0 - 1 = -1</code> (left). Hold both and they cancel out to <code>0</code>.</li>
+<li>Down: <code>S</code> minus <code>W</code>, the same trick. <code>W</code> is <code>-1</code> because up is negative.</li>
+<li>So <code>direction</code> ends up as a little arrow telling us which way you want to go. Hold <code>D</code> and <code>S</code> together and it&#39;s <code>(1, 1)</code>, down and to the right.</li>
+<li>There&#39;s a catch. <code>(1, 1)</code> is a longer arrow than <code>(1, 0)</code>, so going diagonally would be faster than going straight. That&#39;s a sneaky bug lots of games have. <code>normalize_ip()</code> fixes it by squashing any arrow to a length of exactly 1, while keeping the direction. We only do that <code>if</code> the arrow isn&#39;t zero length, because you can&#39;t squash nothing.</li>
+<li><code>self.pos += direction * BOB_SPEED * dt</code> is the actual move. Direction (which way) times speed (250 pixels per second) times <code>dt</code> (how many seconds this frame took). If a frame takes 1/60 of a second, Bob moves about 4 pixels. Using <code>dt</code> means he moves at the same speed on a fast computer or a slow one.</li>
+<li>The last two lines are a <strong>fence</strong>. <code>min</code> picks the smaller of two numbers and <code>max</code> picks the bigger, so together they trap <code>x</code> and <code>y</code> between the edges of the window. We leave a gap of <code>BOB_RADIUS</code> so the whole head stays in view.</li>
+</ul>
+<p>The <code>mouse_pos</code> isn&#39;t used yet, we&#39;ll use it in the next step. In <code>game.py</code> we need to call <code>update</code> on every frame. Add this to <code>step</code>, right before the line that paints the background</p>
+<pre><code class="language-python">        <span class="hljs-variable language_">self</span>.bob.update(dt, pygame.key.get_pressed(), pygame.mouse.get_pos())
+</code></pre>
+<p><code>pygame.key.get_pressed()</code> hands over the list of keys and <code>pygame.mouse.get_pos()</code> gives the mouse position. Run the game and use <code>W</code> <code>A</code> <code>S</code> <code>D</code>. Bob should glide around and stop at the edges.</p>
+
+<nav class="pager">
+<a class="btn ghost" href="09-write-player-py-and-draw-bob.html">&larr; Write player.py and draw Bob</a>
+<a class="btn" href="11-make-the-arrow-follow-the-mouse.html">Next: Make the arrow follow the mouse &rarr;</a>
+</nav>
+</main>
+<script src="copy.js"></script>
+</body>
+</html>

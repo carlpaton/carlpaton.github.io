@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://carlpaton.github.io/favicon.ico" />
+<title>Write main.py and run it - Bobgame</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a href="index.html">&larr; All steps</a><span>Bobgame: make a Python game</span></header>
+<main>
+<p class="stepno">Step 8 of 12</p><h1>Write main.py and run it</h1>
+<p>Open <code>main.py</code>, in the top folder (not inside the inner <code>bobgame</code> folder), and type</p>
+<pre><code class="language-python"><span class="hljs-keyword">from</span> bobgame.game <span class="hljs-keyword">import</span> Game
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:
+    Game().run()
+</code></pre>
+<p>This builds a <code>Game</code> from the blueprint and calls <code>run()</code> on it. The <code>if __name__ == &quot;__main__&quot;:</code> line just means &quot;only do this when I run this file directly&quot;.</p>
+<p>Run it in the VS Code terminal</p>
+<pre><code>.venv\Scripts\python main.py
+</code></pre>
+<p>On Ubuntu use <code>.venv/bin/python main.py</code>. You can also click the <strong>play</strong> button in the top right of VS Code while <code>main.py</code> is open.</p>
+<p>A dark 800 by 600 window should appear. Nothing is in it yet, but you&#39;ve made the window and the game loop. Press <code>Escape</code> to close it.</p>
+<p>If you get <code>ModuleNotFoundError: No module named &#39;pygame&#39;</code> then you probably didn&#39;t run it with the <code>.venv</code> python. Use the full command above.</p>
+
+<nav class="pager">
+<a class="btn ghost" href="07-write-game-py-and-open-a-window.html">&larr; Write game.py and open a window</a>
+<a class="btn" href="09-write-player-py-and-draw-bob.html">Next: Write player.py and draw Bob &rarr;</a>
+</nav>
+</main>
+<script src="copy.js"></script>
+</body>
+</html>

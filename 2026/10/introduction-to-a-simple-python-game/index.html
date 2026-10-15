@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Introduction To A Simple Python Game | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="New to programming? Follow along one step at a time with the step by step version, where every step is on its own page.  I wanted a tiny first game that someone who has never programmed can build in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction To A Simple Python Game">
+<meta property="og:url" content="https://carlpaton.github.io/2026/10/introduction-to-a-simple-python-game/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="New to programming? Follow along one step at a time with the step by step version, where every step is on its own page.  I wanted a tiny first game that someone who has never programmed can build in">
+<meta property="og:locale">
+<meta property="og:image" content="https://carlpaton.github.io/d/introduction-to-a-simple-python-game/bobgame-running.png">
+<meta property="article:published_time" content="2026-10-14T11:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-15T08:17:05.534Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="pygame">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://carlpaton.github.io/d/introduction-to-a-simple-python-game/bobgame-running.png">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+<section class="sponsored-wrap">
+  <div class="archive-year-wrap">
+    <span class="archive-year">Sponsored Content & Projects</span>
+  </div>
+  <div class="sponsored-list">
+    
+    <a class="sponsored-card" href="https://www.workbilling.app" target="_blank">
+      <span class="sponsored-card-label">Work Billing</span>
+      <h1 itemprop="name" class="sponsored-card-title">From agreed work to paid invoices</h1>
+      <p class="sponsored-card-description">Keep partners, clients, statements of work, invoices, margins, and payment progress together in one clear workspace.</p>
+    </a>
+    
+    <a class="sponsored-card" href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">
+      <span class="sponsored-card-label">Support</span>
+      <h1 itemprop="name" class="sponsored-card-title">Stripe Donation</h1>
+      <p class="sponsored-card-description">Does my content help you? Consider a small donation to support this blog. ❤️</p>
+    </a>
+    
+  </div>
+</section>
+
+
+
+<article id="post-introduction-to-a-simple-python-game" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/10/introduction-to-a-simple-python-game/" class="article-date">
+  <time datetime="2026-10-14T11:00:00.000Z" itemprop="datePublished">2026-Oct</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Introduction To A Simple Python Game
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><strong>New to programming?</strong> Follow along one step at a time with the <a href="/examples/python-game/">step by step version</a>, where every step is on its own page.</p>
+</blockquote>
+<p>I wanted a tiny first game that someone who has never programmed can build in an afternoon, and that actually <em>looks</em> like a game when it runs. This one is called <strong>Bobgame</strong>. Bob is a round head seen from above, you move him with the <code>W</code> <code>A</code> <code>S</code> <code>D</code> keys, and an arrow on him always points at your mouse. That’s it, but it’s the exact base that real top-down shooters start from.</p>
+<p>The finished code is open source, so you can always compare against mine: <a target="_blank" rel="noopener" href="https://github.com/carlpaton/bobgame">github.com/carlpaton/bobgame</a>. The whole game is only about 90 lines.</p>
+<p>This post is written so an 11 year old can follow it. If something doesn’t make sense, run the code anyway, change a number, and see what happens. That is how most programmers learn.</p>
+<p>This is what you’ll have at the end. Bob is the round head, and the red arrow points at the mouse.</p>
+<p><img src="/d/introduction-to-a-simple-python-game/bobgame-running.png" alt="Bobgame running"></p>
+<h2 id="1-Install-Python"><a href="#1-Install-Python" class="headerlink" title="1. Install Python"></a>1. Install Python</h2><p>Python is the language we write the game in. Your computer needs to understand it first.</p>
+<ol>
+<li>Go to <a target="_blank" rel="noopener" href="https://www.python.org/downloads/">python.org/downloads</a> and download the latest Python 3 (this game needs 3.10 or newer).</li>
+<li>Run the installer. On the very first screen, <strong>tick the box that says “Add python.exe to PATH”</strong> before you click Install. If you miss this, the commands below won’t work.</li>
+</ol>
+<p>Open a terminal (press the Windows key, type <code>cmd</code>, press Enter) and check it worked</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">py --version</span><br></pre></td></tr></table></figure>
+
+<p>You should see something like <code>Python 3.14.0</code>. </p>
+<p>On Ubuntu, Python is usually already installed, so use <code>python3 --version</code> instead, and if you’re missing the venv tool in step 3 run <code>sudo apt install python3-venv</code>.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://www.python.org/downloads/">Python downloads</a> • <a target="_blank" rel="noopener" href="https://docs.python.org/3/using/windows.html">Using Python on Windows</a></p>
+<h2 id="2-Install-VS-Code-and-the-Python-extension"><a href="#2-Install-VS-Code-and-the-Python-extension" class="headerlink" title="2. Install VS Code and the Python extension"></a>2. Install VS Code and the Python extension</h2><p>VS Code is the program we type our code into (an <em>editor</em>). It’s free.</p>
+<ol>
+<li>Download and install it from <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">code.visualstudio.com</a>.</li>
+<li>Open VS Code, click the <strong>Extensions</strong> icon on the left (it looks like four squares) or press <code>Ctrl+Shift+X</code>.</li>
+<li>Search for <strong>Python</strong> and install the one published by <strong>Microsoft</strong>. This is the only extension we need. It colours your code so it’s easier to read, points out mistakes, and lets you run your game with one click.</li>
+</ol>
+<p>Docs: <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/python/python-tutorial">Python in Visual Studio Code</a></p>
+<h2 id="3-Make-the-project-folder-and-a-virtual-environment"><a href="#3-Make-the-project-folder-and-a-virtual-environment" class="headerlink" title="3. Make the project folder and a virtual environment"></a>3. Make the project folder and a virtual environment</h2><p>Make a folder called <code>bobgame</code> somewhere easy to find, then in VS Code choose <strong>File &gt; Open Folder</strong> and open it. Open the built-in terminal with <code>Ctrl+`</code> (that’s the key above Tab).</p>
+<p>Now create a <strong>virtual environment</strong>. Think of it as a private toolbox just for this game, so the things we install for Bobgame don’t get mixed up with other projects.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">py -3 -m venv .venv</span><br></pre></td></tr></table></figure>
+
+<p>This makes a hidden folder called <code>.venv</code>. VS Code will usually pop up a message asking if you want to use it, click <strong>Yes</strong>. If it doesn’t, press <code>Ctrl+Shift+P</code>, type <strong>Python: Select Interpreter</strong>, and pick the one that has <code>.venv</code> in its path.</p>
+<p>On Ubuntu this is <code>python3 -m venv .venv</code>.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://docs.python.org/3/library/venv.html">venv - Creation of virtual environments</a></p>
+<h2 id="4-Install-pygame-ce"><a href="#4-Install-pygame-ce" class="headerlink" title="4. Install pygame-ce"></a>4. Install pygame-ce</h2><p><strong>pygame-ce</strong> is a library, which is code somebody else wrote and shared so we don’t have to start from nothing. It gives us a window, drawing shapes, the keyboard and the mouse. Even though we install <code>pygame-ce</code>, in our code we still write <code>import pygame</code>.</p>
+<p>In VS Code create a new file in the <code>bobgame</code> folder called <code>requirements.txt</code> with this single line in it</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pygame-ce</span><br></pre></td></tr></table></figure>
+
+<p>A <code>requirements.txt</code> is just a shopping list of libraries the project needs. Install everything on the list</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.venv\Scripts\pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>On Ubuntu use <code>.venv/bin/pip install -r requirements.txt</code>.</p>
+<p>You’ll see a lot of text scroll by. When it stops without a red error you’re done. </p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://pyga.me/docs/">pygame-ce documentation</a></p>
+<h2 id="5-Plan-the-files"><a href="#5-Plan-the-files" class="headerlink" title="5. Plan the files"></a>5. Plan the files</h2><p>A game gets messy fast if all the code is in one big file. We’ll use four small files, each with one job. Create these now (empty is fine). The <code>bobgame</code> folder inside the <code>bobgame</code> folder is on purpose, it’s called a <strong>package</strong>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bobgame/</span><br><span class="line">  requirements.txt</span><br><span class="line">  main.py              &lt;- the start button</span><br><span class="line">  bobgame/</span><br><span class="line">    __init__.py        &lt;- empty, tells Python this folder is a package</span><br><span class="line">    settings.py        &lt;- numbers and colours we might want to tweak</span><br><span class="line">    player.py          &lt;- Bob: where he is, how he moves, how he looks</span><br><span class="line">    game.py            &lt;- the window and the game loop</span><br></pre></td></tr></table></figure>
+
+<p>In VS Code right-click in the left panel and choose <strong>New Folder</strong> / <strong>New File</strong>.</p>
+<h2 id="6-Write-settings-py"><a href="#6-Write-settings-py" class="headerlink" title="6. Write settings.py"></a>6. Write settings.py</h2><p>Open <code>bobgame/settings.py</code> and type this in</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">WIDTH = <span class="number">800</span></span><br><span class="line">HEIGHT = <span class="number">600</span></span><br><span class="line">FPS = <span class="number">60</span></span><br><span class="line">BG_COLOR = (<span class="number">30</span>, <span class="number">32</span>, <span class="number">38</span>)</span><br><span class="line"></span><br><span class="line">BOB_RADIUS = <span class="number">20</span></span><br><span class="line">BOB_SPEED = <span class="number">250</span>  <span class="comment"># pixels per second</span></span><br><span class="line">SKIN_COLOR = (<span class="number">233</span>, <span class="number">189</span>, <span class="number">150</span>)</span><br><span class="line">HAIR_COLOR = (<span class="number">70</span>, <span class="number">45</span>, <span class="number">25</span>)</span><br><span class="line">ARROW_COLOR = (<span class="number">240</span>, <span class="number">80</span>, <span class="number">60</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Each line is a <strong>variable</strong>: a name with a value stored in it, like a labelled box. We write the names in CAPITAL LETTERS because they are settings that never change while the game runs.</p>
+<ul>
+<li><code>WIDTH</code> and <code>HEIGHT</code> are the size of the window in <strong>pixels</strong> (the tiny dots your screen is made of).</li>
+<li><code>FPS</code> is <em>frames per second</em>. A game is like a flipbook, it draws a new picture many times a second. 60 looks smooth.</li>
+<li>Colours are three numbers: how much <strong>red, green and blue</strong> (0 to 255). <code>(0, 0, 0)</code> is black, <code>(255, 255, 255)</code> is white, and <code>(30, 32, 38)</code> is a dark grey-blue.</li>
+<li><code>BOB_SPEED</code> is how many pixels Bob moves each second. The <code>#</code> starts a <strong>comment</strong>, a note for humans that Python ignores.</li>
+</ul>
+<p>Try changing a colour later and see what happens. Pick colours with any “RGB colour picker” on the web.</p>
+<h2 id="7-Write-game-py-and-open-a-window"><a href="#7-Write-game-py-and-open-a-window" class="headerlink" title="7. Write game.py and open a window"></a>7. Write game.py and open a window</h2><p>Now the most important file. Open <code>bobgame/game.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .settings <span class="keyword">import</span> BG_COLOR, FPS, HEIGHT, WIDTH</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Game</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        pygame.init()</span><br><span class="line">        <span class="variable language_">self</span>.screen = pygame.display.set_mode((WIDTH, HEIGHT))</span><br><span class="line">        pygame.display.set_caption(<span class="string">&quot;Bobgame&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.clock = pygame.time.Clock()</span><br><span class="line">        <span class="variable language_">self</span>.running = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">step</span>(<span class="params">self, dt: <span class="built_in">float</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">for</span> event <span class="keyword">in</span> pygame.event.get():</span><br><span class="line">            <span class="keyword">if</span> event.<span class="built_in">type</span> == pygame.QUIT <span class="keyword">or</span> (</span><br><span class="line">                event.<span class="built_in">type</span> == pygame.KEYDOWN <span class="keyword">and</span> event.key == pygame.K_ESCAPE</span><br><span class="line">            ):</span><br><span class="line">                <span class="variable language_">self</span>.running = <span class="literal">False</span></span><br><span class="line">        <span class="variable language_">self</span>.screen.fill(BG_COLOR)</span><br><span class="line">        pygame.display.flip()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">while</span> <span class="variable language_">self</span>.running:</span><br><span class="line">            <span class="variable language_">self</span>.step(<span class="variable language_">self</span>.clock.tick(FPS) / <span class="number">1000</span>)</span><br><span class="line">        pygame.quit()</span><br></pre></td></tr></table></figure>
+
+<p>That’s a lot, so here it is piece by piece.</p>
+<ul>
+<li><code>import pygame</code> brings in the library. The line <code>from .settings import ...</code> brings in our own numbers from <code>settings.py</code>. The dot means “from the same folder”.</li>
+<li><code>class Game</code> is a <strong>class</strong>, a blueprint. Imagine a blueprint for a house: it isn’t a house, but you can build a house from it. Our blueprint describes a game.</li>
+<li><code>__init__</code> runs once, the moment the game is built. It starts pygame, makes the window with <code>set_mode</code>, gives it a title, and creates a <code>Clock</code>, which keeps time so the game runs at the same speed on every computer. <code>self</code> just means “this game”. <code>self.running = True</code> is a switch that says the game is on.</li>
+<li><code>run</code> is the <strong>game loop</strong>, the heart of every game. <code>while self.running:</code> means “keep repeating this for as long as running is True”. Each lap of the loop is one frame, which is one picture of the flipbook. When the switch becomes <code>False</code>, the loop ends and <code>pygame.quit()</code> closes everything.</li>
+<li><code>self.clock.tick(FPS)</code> waits so we don’t go faster than 60 laps a second, and tells us how many milliseconds that lap took. Dividing by 1000 turns it into seconds. We call that number <strong>dt</strong> (short for “delta time”, or “the time since the last frame”). We’ll use it soon.</li>
+<li><code>step</code> is what happens on each lap. First it checks the <strong>events</strong>, things that happened like a key press or clicking the window’s close button. If you close the window (<code>QUIT</code>) or press <code>Escape</code>, we flip the switch to <code>False</code>. Then it paints the whole screen with the background colour, and <code>display.flip()</code> shows the finished picture. </li>
+</ul>
+<p>The <code>-&gt; None</code> and <code>: float</code> bits are called <strong>type hints</strong>. They are notes saying “this gives back nothing” and “this is a decimal number”. Python doesn’t need them, but they help you and VS Code understand the code.</p>
+<h2 id="8-Write-main-py-and-run-it"><a href="#8-Write-main-py-and-run-it" class="headerlink" title="8. Write main.py and run it"></a>8. Write main.py and run it</h2><p>Open <code>main.py</code>, in the top folder (not inside the inner <code>bobgame</code> folder), and type</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bobgame.game <span class="keyword">import</span> Game</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    Game().run()</span><br></pre></td></tr></table></figure>
+
+<p>This builds a <code>Game</code> from the blueprint and calls <code>run()</code> on it. The <code>if __name__ == &quot;__main__&quot;:</code> line just means “only do this when I run this file directly”.</p>
+<p>Run it in the VS Code terminal</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.venv\Scripts\python main.py</span><br></pre></td></tr></table></figure>
+
+<p>On Ubuntu use <code>.venv/bin/python main.py</code>. You can also click the <strong>play</strong> button in the top right of VS Code while <code>main.py</code> is open.</p>
+<p>A dark 800 by 600 window should appear. Nothing is in it yet, but you’ve made the window and the game loop. Press <code>Escape</code> to close it.</p>
+<p>If you get <code>ModuleNotFoundError: No module named &#39;pygame&#39;</code> then you probably didn’t run it with the <code>.venv</code> python. Use the full command above.</p>
+<h2 id="9-Write-player-py-and-draw-Bob"><a href="#9-Write-player-py-and-draw-Bob" class="headerlink" title="9. Write player.py and draw Bob"></a>9. Write player.py and draw Bob</h2><p>Time to make Bob. Open <code>bobgame/player.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .settings <span class="keyword">import</span> (</span><br><span class="line">    ARROW_COLOR, BOB_RADIUS, BOB_SPEED, HAIR_COLOR, HEIGHT, SKIN_COLOR, WIDTH,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bob</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="variable language_">self</span>.pos = pygame.Vector2(WIDTH / <span class="number">2</span>, HEIGHT / <span class="number">2</span>)</span><br><span class="line">        <span class="variable language_">self</span>.facing = pygame.Vector2(<span class="number">0</span>, -<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">draw</span>(<span class="params">self, surface: pygame.Surface</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        center = (<span class="built_in">round</span>(<span class="variable language_">self</span>.pos.x), <span class="built_in">round</span>(<span class="variable language_">self</span>.pos.y))</span><br><span class="line">        pygame.draw.circle(surface, SKIN_COLOR, center, BOB_RADIUS)</span><br><span class="line">        <span class="comment"># Hair: ring around the head plus a cap on the back half.</span></span><br><span class="line">        pygame.draw.circle(surface, HAIR_COLOR, center, BOB_RADIUS, <span class="number">4</span>)</span><br><span class="line">        back = <span class="variable language_">self</span>.pos - <span class="variable language_">self</span>.facing * (BOB_RADIUS * <span class="number">0.35</span>)</span><br><span class="line">        pygame.draw.circle(</span><br><span class="line">            surface, HAIR_COLOR, (<span class="built_in">round</span>(back.x), <span class="built_in">round</span>(back.y)), BOB_RADIUS * <span class="number">0.6</span></span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+
+<p>Bob is another class, another blueprint.</p>
+<ul>
+<li><code>self.pos</code> is Bob’s position. A <code>Vector2</code> is a pair of numbers, <code>x</code> (how far across) and <code>y</code> (how far down). In games, <code>(0, 0)</code> is the <strong>top-left</strong> corner and <code>y</code> gets bigger as you go <strong>down</strong>, which is the opposite of the maths you do at school. We start Bob in the middle of the window, <code>WIDTH / 2</code> across and <code>HEIGHT / 2</code> down.</li>
+<li><code>self.facing</code> is the direction Bob looks. It is also a <code>Vector2</code>, but this time think of it as an arrow with a length of 1 that points somewhere. <code>(0, -1)</code> means 0 across and 1 <em>up</em> (remember, up is negative), so he starts looking at the top of the screen.</li>
+<li><code>draw</code> paints Bob onto a <code>surface</code> (the canvas, in our case the window). <code>pygame.draw.circle</code> takes a canvas, a colour, a centre and a size. </li>
+<li>First we draw a skin coloured circle. Then we draw a hair coloured circle with a <code>4</code> on the end, which means “only draw the outline, 4 pixels thick”. That gives a ring of hair. Lastly we draw a smaller hair circle slightly towards Bob’s <em>back</em>. We find that spot by going from his centre in the opposite direction (the minus sign) of where he faces. From above, it looks like he has hair on the back of his head.</li>
+<li><code>round(...)</code> turns a decimal like <code>400.4</code> into a whole number, because pixels can’t be cut in half.</li>
+</ul>
+<p>Now we need the game to make a Bob and draw him. Change <code>game.py</code> in three places</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> .player <span class="keyword">import</span> Bob</span><br></pre></td></tr></table></figure>
+
+<p>add that near the top, below <code>import pygame</code>. Then in <code>__init__</code> add one line</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">self</span>.bob = Bob()</span><br></pre></td></tr></table></figure>
+
+<p>below <code>self.clock = ...</code>. And in <code>step</code> draw him after the background is painted</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">self</span>.screen.fill(BG_COLOR)</span><br><span class="line"><span class="variable language_">self</span>.bob.draw(<span class="variable language_">self</span>.screen)</span><br><span class="line">pygame.display.flip()</span><br></pre></td></tr></table></figure>
+
+<p>The order matters. If we drew Bob first and then painted the background, we’d cover him up!</p>
+<p>Run it again. You should see a round head with hair in the middle of the window. He’s not moving yet, so let’s fix that.</p>
+<h2 id="10-Move-Bob-with-W-A-S-D"><a href="#10-Move-Bob-with-W-A-S-D" class="headerlink" title="10. Move Bob with W A S D"></a>10. Move Bob with W A S D</h2><p>Add this <code>update</code> method to the <code>Bob</code> class in <code>player.py</code>, between <code>__init__</code> and <code>draw</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self, dt: <span class="built_in">float</span>, keys, mouse_pos</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    direction = pygame.Vector2(</span><br><span class="line">        keys[pygame.K_d] - keys[pygame.K_a],</span><br><span class="line">        keys[pygame.K_s] - keys[pygame.K_w],</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">if</span> direction.length_squared() &gt; <span class="number">0</span>:</span><br><span class="line">        direction.normalize_ip()</span><br><span class="line">    <span class="variable language_">self</span>.pos += direction * BOB_SPEED * dt</span><br><span class="line">    <span class="variable language_">self</span>.pos.x = <span class="built_in">max</span>(BOB_RADIUS, <span class="built_in">min</span>(WIDTH - BOB_RADIUS, <span class="variable language_">self</span>.pos.x))</span><br><span class="line">    <span class="variable language_">self</span>.pos.y = <span class="built_in">max</span>(BOB_RADIUS, <span class="built_in">min</span>(HEIGHT - BOB_RADIUS, <span class="variable language_">self</span>.pos.y))</span><br></pre></td></tr></table></figure>
+
+<p><code>keys</code> is a list of every key on the keyboard, and each one is <code>True</code> if it’s being held down or <code>False</code> if not. Python treats <code>True</code> as 1 and <code>False</code> as 0, so we can do maths with them.</p>
+<ul>
+<li>Across: <code>D</code> minus <code>A</code>. If you hold <code>D</code> that is <code>1 - 0 = 1</code> (right). Hold <code>A</code> and it’s <code>0 - 1 = -1</code> (left). Hold both and they cancel out to <code>0</code>.</li>
+<li>Down: <code>S</code> minus <code>W</code>, the same trick. <code>W</code> is <code>-1</code> because up is negative.</li>
+<li>So <code>direction</code> ends up as a little arrow telling us which way you want to go. Hold <code>D</code> and <code>S</code> together and it’s <code>(1, 1)</code>, down and to the right.</li>
+<li>There’s a catch. <code>(1, 1)</code> is a longer arrow than <code>(1, 0)</code>, so going diagonally would be faster than going straight. That’s a sneaky bug lots of games have. <code>normalize_ip()</code> fixes it by squashing any arrow to a length of exactly 1, while keeping the direction. We only do that <code>if</code> the arrow isn’t zero length, because you can’t squash nothing.</li>
+<li><code>self.pos += direction * BOB_SPEED * dt</code> is the actual move. Direction (which way) times speed (250 pixels per second) times <code>dt</code> (how many seconds this frame took). If a frame takes 1/60 of a second, Bob moves about 4 pixels. Using <code>dt</code> means he moves at the same speed on a fast computer or a slow one.</li>
+<li>The last two lines are a <strong>fence</strong>. <code>min</code> picks the smaller of two numbers and <code>max</code> picks the bigger, so together they trap <code>x</code> and <code>y</code> between the edges of the window. We leave a gap of <code>BOB_RADIUS</code> so the whole head stays in view.</li>
+</ul>
+<p>The <code>mouse_pos</code> isn’t used yet, we’ll use it in the next step. In <code>game.py</code> we need to call <code>update</code> on every frame. Add this to <code>step</code>, right before the line that paints the background</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">self</span>.bob.update(dt, pygame.key.get_pressed(), pygame.mouse.get_pos())</span><br></pre></td></tr></table></figure>
+
+<p><code>pygame.key.get_pressed()</code> hands over the list of keys and <code>pygame.mouse.get_pos()</code> gives the mouse position. Run the game and use <code>W</code> <code>A</code> <code>S</code> <code>D</code>. Bob should glide around and stop at the edges.</p>
+<h2 id="11-Make-the-arrow-follow-the-mouse"><a href="#11-Make-the-arrow-follow-the-mouse" class="headerlink" title="11. Make the arrow follow the mouse"></a>11. Make the arrow follow the mouse</h2><p>Add the rest of the <code>update</code> method, at the bottom of it, so Bob works out where to look</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">to_mouse = pygame.Vector2(mouse_pos) - <span class="variable language_">self</span>.pos</span><br><span class="line"><span class="keyword">if</span> to_mouse.length_squared() &gt; <span class="number">0</span>:</span><br><span class="line">    <span class="variable language_">self</span>.facing = to_mouse.normalize()</span><br></pre></td></tr></table></figure>
+
+<p>Subtracting Bob’s position from the mouse position gives an arrow that goes from Bob to the mouse. We squash it to length 1 with <code>normalize()</code> and store it as <code>facing</code>. The <code>if</code> stops us trying to squash an arrow of length 0, which happens if the mouse is exactly on Bob’s centre.</p>
+<p>Now draw the arrow. Add this to the bottom of the <code>draw</code> method</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Arrow: line from the head edge plus a triangle tip.</span></span><br><span class="line">start = <span class="variable language_">self</span>.pos + <span class="variable language_">self</span>.facing * (BOB_RADIUS * <span class="number">0.5</span>)</span><br><span class="line">tip = <span class="variable language_">self</span>.pos + <span class="variable language_">self</span>.facing * (BOB_RADIUS + <span class="number">18</span>)</span><br><span class="line">base = tip - <span class="variable language_">self</span>.facing * <span class="number">10</span></span><br><span class="line">side = pygame.Vector2(-<span class="variable language_">self</span>.facing.y, <span class="variable language_">self</span>.facing.x) * <span class="number">6</span></span><br><span class="line">pygame.draw.line(surface, ARROW_COLOR, start, base, <span class="number">3</span>)</span><br><span class="line">pygame.draw.polygon(surface, ARROW_COLOR, [tip, base + side, base - side])</span><br></pre></td></tr></table></figure>
+
+<p>It’s built from three points along the line Bob is facing:</p>
+<ul>
+<li><code>start</code> is a bit inside Bob’s head.</li>
+<li><code>tip</code> is the sharp point, 18 pixels past the edge of his head.</li>
+<li><code>base</code> is 10 pixels back from the tip, where the triangle begins.</li>
+<li><code>side</code> is a small arrow pointing <em>sideways</em> to the facing direction. Swapping the two numbers and flipping one sign turns an arrow by a quarter turn, which is a neat trick. We use it to find the two corners of the triangle either side of <code>base</code>.</li>
+<li><code>draw.line</code> draws the shaft (3 pixels thick) and <code>draw.polygon</code> fills in the triangle from the three corners: the tip, and the two sides.</li>
+</ul>
+<p>Run it and wiggle the mouse around. The arrow should spin to follow it while you walk around with the keyboard.</p>
+<h2 id="12-Check-it-against-the-finished-code"><a href="#12-Check-it-against-the-finished-code" class="headerlink" title="12. Check it against the finished code"></a>12. Check it against the finished code</h2><p>Here is the finished <code>game.py</code> so you can check yours</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .player <span class="keyword">import</span> Bob</span><br><span class="line"><span class="keyword">from</span> .settings <span class="keyword">import</span> BG_COLOR, FPS, HEIGHT, WIDTH</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Game</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        pygame.init()</span><br><span class="line">        <span class="variable language_">self</span>.screen = pygame.display.set_mode((WIDTH, HEIGHT))</span><br><span class="line">        pygame.display.set_caption(<span class="string">&quot;Bobgame&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.clock = pygame.time.Clock()</span><br><span class="line">        <span class="variable language_">self</span>.bob = Bob()</span><br><span class="line">        <span class="variable language_">self</span>.running = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">step</span>(<span class="params">self, dt: <span class="built_in">float</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">for</span> event <span class="keyword">in</span> pygame.event.get():</span><br><span class="line">            <span class="keyword">if</span> event.<span class="built_in">type</span> == pygame.QUIT <span class="keyword">or</span> (</span><br><span class="line">                event.<span class="built_in">type</span> == pygame.KEYDOWN <span class="keyword">and</span> event.key == pygame.K_ESCAPE</span><br><span class="line">            ):</span><br><span class="line">                <span class="variable language_">self</span>.running = <span class="literal">False</span></span><br><span class="line">        <span class="variable language_">self</span>.bob.update(dt, pygame.key.get_pressed(), pygame.mouse.get_pos())</span><br><span class="line">        <span class="variable language_">self</span>.screen.fill(BG_COLOR)</span><br><span class="line">        <span class="variable language_">self</span>.bob.draw(<span class="variable language_">self</span>.screen)</span><br><span class="line">        pygame.display.flip()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">while</span> <span class="variable language_">self</span>.running:</span><br><span class="line">            <span class="variable language_">self</span>.step(<span class="variable language_">self</span>.clock.tick(FPS) / <span class="number">1000</span>)</span><br><span class="line">        pygame.quit()</span><br></pre></td></tr></table></figure>
+
+<p>Every frame the game loop does the same three things: <strong>handle input</strong>, <strong>update</strong> the world, then <strong>draw</strong> it. Almost every game ever made is built on that idea, from this one to the biggest ones you play.</p>
+<p>If something isn’t working, compare your files with the ones in the <a target="_blank" rel="noopener" href="https://github.com/carlpaton/bobgame">bobgame repo</a>. Common culprits are:</p>
+<ol>
+<li><strong>Indentation</strong>. Python cares about the spaces at the start of a line. Everything inside a class or a <code>def</code> is indented by 4 spaces.</li>
+<li><strong>Typos in names</strong>. <code>self.pos</code> and <code>self.Pos</code> are different things.</li>
+<li><strong>A missing colon</strong> at the end of a line starting with <code>def</code>, <code>class</code>, <code>if</code> or <code>while</code>.</li>
+<li><strong>Wrong folder</strong>. <code>main.py</code> must be in the top <code>bobgame</code> folder, with the inner <code>bobgame</code> folder beside it.</li>
+</ol>
+<p>The error message in the terminal tells you the file and the line number. Read it, it’s usually trying to help.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://pyga.me/docs/ref/draw.html">pygame.draw</a> • <a target="_blank" rel="noopener" href="https://pyga.me/docs/ref/math.html">pygame.math.Vector2</a> • <a target="_blank" rel="noopener" href="https://pyga.me/docs/ref/time.html">pygame.time.Clock</a></p>
+<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><p>Now it’s yours. Change one thing at a time, run it, and see what happens.</p>
+<ol>
+<li>Change <code>BG_COLOR</code> to a different colour. Can you make the background white?</li>
+<li>Make Bob twice as fast by changing <code>BOB_SPEED</code>. Then make him very slow.</li>
+<li>Make Bob bigger or smaller with <code>BOB_RADIUS</code>. What happens to the arrow?</li>
+<li>Change <code>WIDTH</code> and <code>HEIGHT</code> to make a tall, thin window.</li>
+<li>Give Bob blonde hair, then green skin.</li>
+<li>Make the arrow longer by changing the <code>18</code> in <code>tip</code>.</li>
+<li>Make the game use the arrow keys instead of <code>W</code> <code>A</code> <code>S</code> <code>D</code>. Hint: look for <code>pygame.K_UP</code>.</li>
+<li>Change the <code>FPS</code> to 10. Does Bob still move at the same speed? Why?</li>
+</ol>
+<p>Have fun with it, and send me what you build.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2026/10/introduction-to-a-simple-python-game/" data-id="cmv99c9d10000jyga427r4nzn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pygame/" rel="tag">pygame</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2026/09/rotating-azure-service-principal-secret/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Rotating An Azure Service Principal Secret</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<section class="sponsored-wrap">
+  <div class="archive-year-wrap">
+    <span class="archive-year">Sponsored Content & Projects</span>
+  </div>
+  <div class="sponsored-list">
+    
+    <a class="sponsored-card" href="https://www.workbilling.app" target="_blank">
+      <span class="sponsored-card-label">Work Billing</span>
+      <h1 itemprop="name" class="sponsored-card-title">From agreed work to paid invoices</h1>
+      <p class="sponsored-card-description">Keep partners, clients, statements of work, invoices, margins, and payment progress together in one clear workspace.</p>
+    </a>
+    
+    <a class="sponsored-card" href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">
+      <span class="sponsored-card-label">Support</span>
+      <h1 itemprop="name" class="sponsored-card-title">Stripe Donation</h1>
+      <p class="sponsored-card-description">Does my content help you? Consider a small donation to support this blog. ❤️</p>
+    </a>
+    
+  </div>
+</section>
+
+
+<br /></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/10/introduction-to-a-simple-python-game/">Introduction To A Simple Python Game</a>
+          </li>
+        
+          <li>
+            <a href="/2026/09/rotating-azure-service-principal-secret/">Rotating An Azure Service Principal Secret</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/azure-container-apps-deploy-issue-debug/">Debugging an Azure Container Apps Deploy Failure in GitHub Actions</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/three-picket-planter-box/">Three Picket Planter Box</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/azure-blob-storage/">Azure Blob Storage For Private Files And Public Web Assets</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.25px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.83px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.42px;">agile</a> <a href="/tags/ai/" style="font-size: 13.75px;">ai</a> <a href="/tags/ai-foundry/" style="font-size: 10px;">ai-foundry</a> <a href="/tags/algorithms/" style="font-size: 11.67px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.58px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.83px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.42px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.42px;">asp.net</a> <a href="/tags/aspnet-core/" style="font-size: 11.25px;">aspnet-core</a> <a href="/tags/assembly/" style="font-size: 10.83px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.58px;">auth</a> <a href="/tags/aws/" style="font-size: 17.92px;">aws</a> <a href="/tags/azure/" style="font-size: 15.42px;">azure</a> <a href="/tags/azurite/" style="font-size: 10px;">azurite</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.17px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.42px;">benchmarks</a> <a href="/tags/blob-storage/" style="font-size: 10.42px;">blob-storage</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.42px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.67px;">cad</a> <a href="/tags/cam/" style="font-size: 11.67px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.25px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.42px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10.42px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.42px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.25px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.67px;">cryptography</a> <a href="/tags/csharp/" style="font-size: 10.83px;">csharp</a> <a href="/tags/css/" style="font-size: 11.67px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.67px;">data structures</a> <a href="/tags/database/" style="font-size: 10.42px;">database</a> <a href="/tags/ddd/" style="font-size: 10.83px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 12.92px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.42px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.42px;">dns</a> <a href="/tags/docker/" style="font-size: 17.5px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.83px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/embeddings/" style="font-size: 11.67px;">embeddings</a> <a href="/tags/entra/" style="font-size: 10.42px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.83px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.5px;">food</a> <a href="/tags/games/" style="font-size: 10.42px;">games</a> <a href="/tags/git/" style="font-size: 12.08px;">git</a> <a href="/tags/github-actions/" style="font-size: 10.42px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.83px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.42px;">hexo</a> <a href="/tags/ide/" style="font-size: 12.92px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.67px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.75px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.33px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.83px;">jquery</a> <a href="/tags/json/" style="font-size: 11.67px;">json</a> <a href="/tags/kibana/" style="font-size: 10.42px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.25px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.33px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.67px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.67px;">linux</a> <a href="/tags/llm/" style="font-size: 10.83px;">llm</a> <a href="/tags/logging/" style="font-size: 11.25px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.42px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.17px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.33px;">model airplanes</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mongoose/" style="font-size: 10px;">mongoose</a> <a href="/tags/mvc/" style="font-size: 12.92px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.67px;">net core</a> <a href="/tags/networking/" style="font-size: 10px;">networking</a> <a href="/tags/newrelic/" style="font-size: 10.42px;">newrelic</a> <a href="/tags/nextjs/" style="font-size: 10.42px;">nextjs</a> <a href="/tags/nginx/" style="font-size: 10.83px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.25px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.83px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/openai/" style="font-size: 10px;">openai</a> <a href="/tags/orm/" style="font-size: 13.75px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.58px;">patterns principles</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/prisma/" style="font-size: 10px;">prisma</a> <a href="/tags/pygame/" style="font-size: 10px;">pygame</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/rag/" style="font-size: 11.25px;">rag</a> <a href="/tags/random/" style="font-size: 11.67px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 17.08px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.5px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.42px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.83px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.67px;">reporting</a> <a href="/tags/retrieval/" style="font-size: 10px;">retrieval</a> <a href="/tags/rosetta-code/" style="font-size: 15px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.5px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.75px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.42px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.67px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.42px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.83px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.25px;">static code analysis</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/structural-patterns/" style="font-size: 13.33px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/supabase/" style="font-size: 10px;">supabase</a> <a href="/tags/swagger/" style="font-size: 10.42px;">swagger</a> <a href="/tags/terraform/" style="font-size: 11.25px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 12.92px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.17px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.42px;">validation</a> <a href="/tags/vectors/" style="font-size: 10.83px;">vectors</a> <a href="/tags/virtualization/" style="font-size: 10.42px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.25px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.75px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.25px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.25px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

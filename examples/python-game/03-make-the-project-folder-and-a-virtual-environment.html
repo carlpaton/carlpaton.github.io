@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://carlpaton.github.io/favicon.ico" />
+<title>Make the project folder and a virtual environment - Bobgame</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a href="index.html">&larr; All steps</a><span>Bobgame: make a Python game</span></header>
+<main>
+<p class="stepno">Step 3 of 12</p><h1>Make the project folder and a virtual environment</h1>
+<p>Make a folder called <code>bobgame</code> somewhere easy to find, then in VS Code choose <strong>File &gt; Open Folder</strong> and open it. Open the built-in terminal with <code>Ctrl+`</code> (that&#39;s the key above Tab).</p>
+<p>Now create a <strong>virtual environment</strong>. Think of it as a private toolbox just for this game, so the things we install for Bobgame don&#39;t get mixed up with other projects.</p>
+<pre><code>py -3 -m venv .venv
+</code></pre>
+<p>This makes a hidden folder called <code>.venv</code>. VS Code will usually pop up a message asking if you want to use it, click <strong>Yes</strong>. If it doesn&#39;t, press <code>Ctrl+Shift+P</code>, type <strong>Python: Select Interpreter</strong>, and pick the one that has <code>.venv</code> in its path.</p>
+<p>On Ubuntu this is <code>python3 -m venv .venv</code>.</p>
+<p>Docs: <a href="https://docs.python.org/3/library/venv.html">venv - Creation of virtual environments</a></p>
+
+<nav class="pager">
+<a class="btn ghost" href="02-install-vs-code-and-the-python-extension.html">&larr; Install VS Code and the Python extension</a>
+<a class="btn" href="04-install-pygame-ce.html">Next: Install pygame-ce &rarr;</a>
+</nav>
+</main>
+<script src="copy.js"></script>
+</body>
+</html>

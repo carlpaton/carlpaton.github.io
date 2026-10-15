@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://carlpaton.github.io/favicon.ico" />
+<title>Make the arrow follow the mouse - Bobgame</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a href="index.html">&larr; All steps</a><span>Bobgame: make a Python game</span></header>
+<main>
+<p class="stepno">Step 11 of 12</p><h1>Make the arrow follow the mouse</h1>
+<p>Add the rest of the <code>update</code> method, at the bottom of it, so Bob works out where to look</p>
+<pre><code class="language-python">        to_mouse = pygame.Vector2(mouse_pos) - <span class="hljs-variable language_">self</span>.pos
+        <span class="hljs-keyword">if</span> to_mouse.length_squared() &gt; <span class="hljs-number">0</span>:
+            <span class="hljs-variable language_">self</span>.facing = to_mouse.normalize()
+</code></pre>
+<p>Subtracting Bob&#39;s position from the mouse position gives an arrow that goes from Bob to the mouse. We squash it to length 1 with <code>normalize()</code> and store it as <code>facing</code>. The <code>if</code> stops us trying to squash an arrow of length 0, which happens if the mouse is exactly on Bob&#39;s centre.</p>
+<p>Now draw the arrow. Add this to the bottom of the <code>draw</code> method</p>
+<pre><code class="language-python">        <span class="hljs-comment"># Arrow: line from the head edge plus a triangle tip.</span>
+        start = <span class="hljs-variable language_">self</span>.pos + <span class="hljs-variable language_">self</span>.facing * (BOB_RADIUS * <span class="hljs-number">0.5</span>)
+        tip = <span class="hljs-variable language_">self</span>.pos + <span class="hljs-variable language_">self</span>.facing * (BOB_RADIUS + <span class="hljs-number">18</span>)
+        base = tip - <span class="hljs-variable language_">self</span>.facing * <span class="hljs-number">10</span>
+        side = pygame.Vector2(-<span class="hljs-variable language_">self</span>.facing.y, <span class="hljs-variable language_">self</span>.facing.x) * <span class="hljs-number">6</span>
+        pygame.draw.line(surface, ARROW_COLOR, start, base, <span class="hljs-number">3</span>)
+        pygame.draw.polygon(surface, ARROW_COLOR, [tip, base + side, base - side])
+</code></pre>
+<p>It&#39;s built from three points along the line Bob is facing:</p>
+<ul>
+<li><code>start</code> is a bit inside Bob&#39;s head.</li>
+<li><code>tip</code> is the sharp point, 18 pixels past the edge of his head.</li>
+<li><code>base</code> is 10 pixels back from the tip, where the triangle begins.</li>
+<li><code>side</code> is a small arrow pointing <em>sideways</em> to the facing direction. Swapping the two numbers and flipping one sign turns an arrow by a quarter turn, which is a neat trick. We use it to find the two corners of the triangle either side of <code>base</code>.</li>
+<li><code>draw.line</code> draws the shaft (3 pixels thick) and <code>draw.polygon</code> fills in the triangle from the three corners: the tip, and the two sides.</li>
+</ul>
+<p>Run it and wiggle the mouse around. The arrow should spin to follow it while you walk around with the keyboard.</p>
+
+<nav class="pager">
+<a class="btn ghost" href="10-move-bob-with-w-a-s-d.html">&larr; Move Bob with W A S D</a>
+<a class="btn" href="12-check-it-against-the-finished-code.html">Next: Check it against the finished code &rarr;</a>
+</nav>
+</main>
+<script src="copy.js"></script>
+</body>
+</html>

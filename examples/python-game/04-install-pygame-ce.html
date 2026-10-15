@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://carlpaton.github.io/favicon.ico" />
+<title>Install pygame-ce - Bobgame</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a href="index.html">&larr; All steps</a><span>Bobgame: make a Python game</span></header>
+<main>
+<p class="stepno">Step 4 of 12</p><h1>Install pygame-ce</h1>
+<p><strong>pygame-ce</strong> is a library, which is code somebody else wrote and shared so we don&#39;t have to start from nothing. It gives us a window, drawing shapes, the keyboard and the mouse. Even though we install <code>pygame-ce</code>, in our code we still write <code>import pygame</code>.</p>
+<p>In VS Code create a new file in the <code>bobgame</code> folder called <code>requirements.txt</code> with this single line in it</p>
+<pre><code>pygame-ce
+</code></pre>
+<p>A <code>requirements.txt</code> is just a shopping list of libraries the project needs. Install everything on the list</p>
+<pre><code>.venv\Scripts\pip install -r requirements.txt
+</code></pre>
+<p>On Ubuntu use <code>.venv/bin/pip install -r requirements.txt</code>.</p>
+<p>You&#39;ll see a lot of text scroll by. When it stops without a red error you&#39;re done. </p>
+<p>Docs: <a href="https://pyga.me/docs/">pygame-ce documentation</a></p>
+
+<nav class="pager">
+<a class="btn ghost" href="03-make-the-project-folder-and-a-virtual-environment.html">&larr; Make the project folder and a virtual environment</a>
+<a class="btn" href="05-plan-the-files.html">Next: Plan the files &rarr;</a>
+</nav>
+</main>
+<script src="copy.js"></script>
+</body>
+</html>

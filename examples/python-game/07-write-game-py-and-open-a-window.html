@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://carlpaton.github.io/favicon.ico" />
+<title>Write game.py and open a window - Bobgame</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a href="index.html">&larr; All steps</a><span>Bobgame: make a Python game</span></header>
+<main>
+<p class="stepno">Step 7 of 12</p><h1>Write game.py and open a window</h1>
+<p>Now the most important file. Open <code>bobgame/game.py</code></p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> pygame
+
+<span class="hljs-keyword">from</span> .settings <span class="hljs-keyword">import</span> BG_COLOR, FPS, HEIGHT, WIDTH
+
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Game</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-literal">None</span>:
+        pygame.init()
+        <span class="hljs-variable language_">self</span>.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption(<span class="hljs-string">&quot;Bobgame&quot;</span>)
+        <span class="hljs-variable language_">self</span>.clock = pygame.time.Clock()
+        <span class="hljs-variable language_">self</span>.running = <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">step</span>(<span class="hljs-params">self, dt: <span class="hljs-built_in">float</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">for</span> event <span class="hljs-keyword">in</span> pygame.event.get():
+            <span class="hljs-keyword">if</span> event.<span class="hljs-built_in">type</span> == pygame.QUIT <span class="hljs-keyword">or</span> (
+                event.<span class="hljs-built_in">type</span> == pygame.KEYDOWN <span class="hljs-keyword">and</span> event.key == pygame.K_ESCAPE
+            ):
+                <span class="hljs-variable language_">self</span>.running = <span class="hljs-literal">False</span>
+        <span class="hljs-variable language_">self</span>.screen.fill(BG_COLOR)
+        pygame.display.flip()
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">while</span> <span class="hljs-variable language_">self</span>.running:
+            <span class="hljs-variable language_">self</span>.step(<span class="hljs-variable language_">self</span>.clock.tick(FPS) / <span class="hljs-number">1000</span>)
+        pygame.quit()
+</code></pre>
+<p>That&#39;s a lot, so here it is piece by piece.</p>
+<ul>
+<li><code>import pygame</code> brings in the library. The line <code>from .settings import ...</code> brings in our own numbers from <code>settings.py</code>. The dot means &quot;from the same folder&quot;.</li>
+<li><code>class Game</code> is a <strong>class</strong>, a blueprint. Imagine a blueprint for a house: it isn&#39;t a house, but you can build a house from it. Our blueprint describes a game.</li>
+<li><code>__init__</code> runs once, the moment the game is built. It starts pygame, makes the window with <code>set_mode</code>, gives it a title, and creates a <code>Clock</code>, which keeps time so the game runs at the same speed on every computer. <code>self</code> just means &quot;this game&quot;. <code>self.running = True</code> is a switch that says the game is on.</li>
+<li><code>run</code> is the <strong>game loop</strong>, the heart of every game. <code>while self.running:</code> means &quot;keep repeating this for as long as running is True&quot;. Each lap of the loop is one frame, which is one picture of the flipbook. When the switch becomes <code>False</code>, the loop ends and <code>pygame.quit()</code> closes everything.</li>
+<li><code>self.clock.tick(FPS)</code> waits so we don&#39;t go faster than 60 laps a second, and tells us how many milliseconds that lap took. Dividing by 1000 turns it into seconds. We call that number <strong>dt</strong> (short for &quot;delta time&quot;, or &quot;the time since the last frame&quot;). We&#39;ll use it soon.</li>
+<li><code>step</code> is what happens on each lap. First it checks the <strong>events</strong>, things that happened like a key press or clicking the window&#39;s close button. If you close the window (<code>QUIT</code>) or press <code>Escape</code>, we flip the switch to <code>False</code>. Then it paints the whole screen with the background colour, and <code>display.flip()</code> shows the finished picture. </li>
+</ul>
+<p>The <code>-&gt; None</code> and <code>: float</code> bits are called <strong>type hints</strong>. They are notes saying &quot;this gives back nothing&quot; and &quot;this is a decimal number&quot;. Python doesn&#39;t need them, but they help you and VS Code understand the code.</p>
+
+<nav class="pager">
+<a class="btn ghost" href="06-write-settings-py.html">&larr; Write settings.py</a>
+<a class="btn" href="08-write-main-py-and-run-it.html">Next: Write main.py and run it &rarr;</a>
+</nav>
+</main>
+<script src="copy.js"></script>
+</body>
+</html>
