@@ -24,15 +24,15 @@ ga('send', 'pageview');
   
   <title>C# Delegates | Carl Paton | There are no silly questions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="A delegate is a type that represents references to methods with a particular parameter list and return type. When you instantiate a delegate, you can associate its instance with any method with a comp">
+  <meta name="description" content="Updated 12&#x2F;11&#x2F;2026 A delegate is a type that represents references to methods with a particular parameter list and return type. When you instantiate a delegate, you can associate its instance with any">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C# Delegates">
 <meta property="og:url" content="https://carlpaton.github.io/2020/04/c-sharp-delegates/index.html">
 <meta property="og:site_name" content="There are no silly questions">
-<meta property="og:description" content="A delegate is a type that represents references to methods with a particular parameter list and return type. When you instantiate a delegate, you can associate its instance with any method with a comp">
+<meta property="og:description" content="Updated 12&#x2F;11&#x2F;2026 A delegate is a type that represents references to methods with a particular parameter list and return type. When you instantiate a delegate, you can associate its instance with any">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-04-19T12:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-29T23:28:14.117Z">
+<meta property="article:modified_time" content="2026-11-12T00:09:32.991Z">
 <meta property="article:author" content="Carl Paton">
 <meta property="article:tag" content="c#">
 <meta name="twitter:card" content="summary">
@@ -163,7 +163,8 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>A <strong>delegate</strong> is a type that represents references to methods with a particular parameter list and return type. When you instantiate a delegate, you can associate its instance with any method with a compatible signature and return type. You can invoke (or call) the method through the delegate instance. </p>
+        <p><strong>Updated 12/11/2026</strong></p>
+<p>A <strong>delegate</strong> is a type that represents references to methods with a particular parameter list and return type. When you instantiate a delegate, you can associate its instance with any method with a compatible signature and return type. You can invoke (or call) the method through the delegate instance. </p>
 <p>Delegate types are <code>delegate</code>, <code>Action</code> and <code>Func</code>.</p>
 <h3 id="Multicast-Delegate"><a href="#Multicast-Delegate" class="headerlink" title="Multicast Delegate"></a>Multicast Delegate</h3><p>All C# delegates have <strong>multicast capability</strong>, this means a single delegate instance can reference more than one target method. You can add or remove target methods using operators <code>+=</code> or <code>-=</code>. Target methods are called in the order they were added to the delegate instance.</p>
 <ol>
@@ -213,6 +214,11 @@ ga('send', 'pageview');
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;EventLogModel&gt; <span class="title">Go</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">using</span> (<span class="keyword">var</span> reader = <span class="keyword">new</span> EventLogReader(_filePath, PathType.FilePath))</span><br><span class="line">	&#123;</span><br><span class="line">		ProcessReader(reader, Count); </span><br><span class="line">		ProcessReader(reader, Append);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> _returnValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Similar example from SO: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2019402/when-why-to-use-delegates">https://stackoverflow.com/questions/2019402/when-why-to-use-delegates</a></p>
+<h3 id="Func-vs-Action"><a href="#Func-vs-Action" class="headerlink" title="Func vs Action"></a>Func vs Action</h3><p><code>Action</code> is a void delegate, it performs a side effect and returns nothing. <code>Func</code> is a delegate that returns a value, the last type parameter is always the return type.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Action: write to DB, caller needs nothing back</span></span><br><span class="line">Action&lt;<span class="built_in">long</span>, <span class="built_in">string</span>&gt; logEvent = (id, message) =&gt; db.Insert(id, message);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Func: fetch from DB, caller needs the result</span></span><br><span class="line">Func&lt;<span class="built_in">long</span>, <span class="built_in">string</span>&gt; getLabel = (id) =&gt; db.QuerySingle&lt;<span class="built_in">string</span>&gt;(id);</span><br></pre></td></tr></table></figure>
+
+<p>Use <code>Action</code> when the operation is fire-and-forget (writes, notifications, logging). Use <code>Func</code> when the caller needs a value to continue (queries, lookups, calculations).</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/api/system.action">Action</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/api/system.func-1">Func</a></p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/">https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/csharp/csharp_delegates.htm">https://www.tutorialspoint.com/csharp/csharp_delegates.htm</a></li>
