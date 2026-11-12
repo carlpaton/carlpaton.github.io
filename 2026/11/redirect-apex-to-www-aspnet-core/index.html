@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Redirect The Apex Domain To www In ASP.NET Core | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I had both https:&#x2F;&#x2F;resolv.it.com&#x2F; and https:&#x2F;&#x2F;www.resolv.it.com&#x2F; pointing at the same Azure Container App, so the site worked on both but browsers saw two separate sites. This is how I made www the on">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redirect The Apex Domain To www In ASP.NET Core">
+<meta property="og:url" content="https://carlpaton.github.io/2026/11/redirect-apex-to-www-aspnet-core/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="I had both https:&#x2F;&#x2F;resolv.it.com&#x2F; and https:&#x2F;&#x2F;www.resolv.it.com&#x2F; pointing at the same Azure Container App, so the site worked on both but browsers saw two separate sites. This is how I made www the on">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-11-04T11:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-05T09:23:54.268Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="c#">
+<meta property="article:tag" content="dns">
+<meta property="article:tag" content="aspnet-core">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+<section class="sponsored-wrap">
+  <div class="archive-year-wrap">
+    <span class="archive-year">Sponsored Content & Projects</span>
+  </div>
+  <div class="sponsored-list">
+    
+    <a class="sponsored-card" href="https://www.workbilling.app" target="_blank">
+      <span class="sponsored-card-label">Work Billing</span>
+      <h1 itemprop="name" class="sponsored-card-title">From agreed work to paid invoices</h1>
+      <p class="sponsored-card-description">Keep partners, clients, statements of work, invoices, margins, and payment progress together in one clear workspace.</p>
+    </a>
+    
+    <a class="sponsored-card" href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">
+      <span class="sponsored-card-label">Support</span>
+      <h1 itemprop="name" class="sponsored-card-title">Stripe Donation</h1>
+      <p class="sponsored-card-description">Does my content help you? Consider a small donation to support this blog. ❤️</p>
+    </a>
+    
+  </div>
+</section>
+
+
+
+<article id="post-redirect-apex-to-www-aspnet-core" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/11/redirect-apex-to-www-aspnet-core/" class="article-date">
+  <time datetime="2026-11-04T11:00:00.000Z" itemprop="datePublished">2026-Nov</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redirect The Apex Domain To www In ASP.NET Core
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I had both <code>https://resolv.it.com/</code> and <code>https://www.resolv.it.com/</code> pointing at the same Azure Container App, so the site worked on both but browsers saw two separate sites. This is how I made <code>www</code> the one true host, in code, without touching UAT.</p>
+<p>Two things go wrong when both hosts serve the site:</p>
+<ul>
+<li>Cookies and saved passwords are per host, so a user who signs in on one host is signed out on the other.</li>
+<li>Search engines see two copies of the same site and rank each lower.</li>
+</ul>
+<h2 id="1-Pick-one-host"><a href="#1-Pick-one-host" class="headerlink" title="1. Pick one host"></a>1. Pick one host</h2><p>Either is fine, the point is picking one. I went with <code>www</code> because it works with a <code>CNAME</code> (the host can move without a DNS change) while the apex needs a fixed <code>A</code> record. The DNS side is in <a href="/2026/04/azure-container-app-extenal-dns/">Azure Container App With External DNS</a>.</p>
+<h2 id="2-Add-the-redirect-in-Program-cs"><a href="#2-Add-the-redirect-in-Program-cs" class="headerlink" title="2. Add the redirect in Program.cs"></a>2. Add the redirect in Program.cs</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Rewrite;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Redirect only the apex, anything else (www, UAT, localhost) is left alone</span></span><br><span class="line">app.UseRewriter(<span class="keyword">new</span> RewriteOptions().AddRedirectToWwwPermanent(<span class="string">&quot;resolv.it.com&quot;</span>));</span><br><span class="line"></span><br><span class="line">app.UseHttpsRedirection();</span><br><span class="line">app.UseRouting();</span><br></pre></td></tr></table></figure>
+
+<p><code>AddRedirectToWwwPermanent</code> ships with the framework (<code>Microsoft.AspNetCore.Rewrite</code>), so there is no package to add. The domain you pass is the important bit: without it every host without a <code>www.</code> prefix would be redirected, including my UAT <code>*.azurecontainerapps.io</code> host. With it, only <code>resolv.it.com</code> is redirected.</p>
+<p>I read the domain from config (<code>Environments:ProdHost</code> is <code>www.resolv.it.com</code>, so I strip the <code>www.</code>), but a hard-coded <code>&lt;your-apex-domain&gt;</code> works just as well.</p>
+<p>Put it <strong>before</strong> <code>UseHttpsRedirection()</code> so <code>http://resolv.it.com</code> is sorted out in the same pipeline.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/url-rewriting">URL Rewriting Middleware</a></p>
+<h2 id="3-Test-it"><a href="#3-Test-it" class="headerlink" title="3. Test it"></a>3. Test it</h2><p>You can fake the host with curl, no DNS needed:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">curl</span> <span class="literal">-i</span> <span class="literal">-H</span> <span class="string">&quot;Host: resolv.it.com&quot;</span> <span class="string">&quot;http://localhost:5000/a/b?x=1&quot;</span></span><br><span class="line"><span class="built_in">curl</span> <span class="literal">-i</span> <span class="literal">-H</span> <span class="string">&quot;Host: &lt;your-uat-host&gt;&quot;</span> <span class="string">&quot;http://localhost:5000/&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>The first returns <code>308 Permanent Redirect</code> with <code>Location: http://www.resolv.it.com/a/b?x=1</code>, so the path and query string survive. The second returns <code>200</code>, so UAT is untouched.</p>
+<h2 id="Things-to-know"><a href="#Things-to-know" class="headerlink" title="Things to know"></a>Things to know</h2><ul>
+<li>The status is <strong>308</strong>, not 301. Both are permanent and search engines treat them the same, 308 just keeps the HTTP method (a <code>POST</code> stays a <code>POST</code>).</li>
+<li>The redirect keeps the scheme of the request, so plain <code>http://resolv.it.com</code> takes two hops (to <code>http://www...</code> then up to <code>https://www...</code> via the HTTPS redirect). Only http requests to the apex pay for this.</li>
+<li>It only works if the app sees the original <code>Host</code> header. Azure Container Apps ingress passes it through, check with <code>curl -I https://resolv.it.com/</code> after deploying.</li>
+<li>If you would rather not do this in the app, the standard place is the edge (Front Door, Cloudflare, your registrar’s forwarding). I could not get the GoDaddy redirect working, which is why this lives in the app.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2026/11/redirect-apex-to-www-aspnet-core/" data-id="cmw5o1lw100044iga3n8w5obc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aspnet-core/" rel="tag">aspnet-core</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dns/" rel="tag">dns</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/11/environment-specific-error-pages-aspnet-core/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Environment Specific Error Pages In ASP.NET Core
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/10/introduction-to-a-simple-python-game/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Introduction To A Simple Python Game</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<section class="sponsored-wrap">
+  <div class="archive-year-wrap">
+    <span class="archive-year">Sponsored Content & Projects</span>
+  </div>
+  <div class="sponsored-list">
+    
+    <a class="sponsored-card" href="https://www.workbilling.app" target="_blank">
+      <span class="sponsored-card-label">Work Billing</span>
+      <h1 itemprop="name" class="sponsored-card-title">From agreed work to paid invoices</h1>
+      <p class="sponsored-card-description">Keep partners, clients, statements of work, invoices, margins, and payment progress together in one clear workspace.</p>
+    </a>
+    
+    <a class="sponsored-card" href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">
+      <span class="sponsored-card-label">Support</span>
+      <h1 itemprop="name" class="sponsored-card-title">Stripe Donation</h1>
+      <p class="sponsored-card-description">Does my content help you? Consider a small donation to support this blog. ❤️</p>
+    </a>
+    
+  </div>
+</section>
+
+
+<br /></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/11/environment-specific-error-pages-aspnet-core/">Environment Specific Error Pages In ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2026/11/redirect-apex-to-www-aspnet-core/">Redirect The Apex Domain To www In ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2026/10/introduction-to-a-simple-python-game/">Introduction To A Simple Python Game</a>
+          </li>
+        
+          <li>
+            <a href="/2026/09/rotating-azure-service-principal-secret/">Rotating An Azure Service Principal Secret</a>
+          </li>
+        
+          <li>
+            <a href="/2026/08/azure-container-apps-deploy-issue-debug/">Debugging an Azure Container Apps Deploy Failure in GitHub Actions</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.87px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/ai/" style="font-size: 13.91px;">ai</a> <a href="/tags/ai-foundry/" style="font-size: 10px;">ai-foundry</a> <a href="/tags/algorithms/" style="font-size: 11.74px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.65px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.43px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.43px;">asp.net</a> <a href="/tags/aspnet-core/" style="font-size: 12.17px;">aspnet-core</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.78px;">auth</a> <a href="/tags/aws/" style="font-size: 17.83px;">aws</a> <a href="/tags/azure/" style="font-size: 15.65px;">azure</a> <a href="/tags/azurite/" style="font-size: 10px;">azurite</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.43px;">benchmarks</a> <a href="/tags/blob-storage/" style="font-size: 10.43px;">blob-storage</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.74px;">cad</a> <a href="/tags/cam/" style="font-size: 11.74px;">cam</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.22px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10.43px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.74px;">cryptography</a> <a href="/tags/csharp/" style="font-size: 10.87px;">csharp</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3/" style="font-size: 10px;">d3</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.74px;">data structures</a> <a href="/tags/database/" style="font-size: 10.43px;">database</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.04px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.43px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.87px;">dns</a> <a href="/tags/docker/" style="font-size: 17.83px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/embeddings/" style="font-size: 11.74px;">embeddings</a> <a href="/tags/entra/" style="font-size: 10.43px;">entra</a> <a href="/tags/feature-management/" style="font-size: 10.87px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.61px;">food</a> <a href="/tags/games/" style="font-size: 10.43px;">games</a> <a href="/tags/git/" style="font-size: 12.17px;">git</a> <a href="/tags/github-actions/" style="font-size: 10.43px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.87px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.04px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.74px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.48px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kubernetes/" style="font-size: 11.3px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/llm/" style="font-size: 10.87px;">llm</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.43px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.35px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.26px;">model airplanes</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mongoose/" style="font-size: 10px;">mongoose</a> <a href="/tags/multivalue/" style="font-size: 10px;">multivalue</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.3px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/networking/" style="font-size: 10px;">networking</a> <a href="/tags/newrelic/" style="font-size: 10.43px;">newrelic</a> <a href="/tags/nextjs/" style="font-size: 10.43px;">nextjs</a> <a href="/tags/nginx/" style="font-size: 10.87px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.87px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/openai/" style="font-size: 10px;">openai</a> <a href="/tags/orm/" style="font-size: 13.91px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/pick/" style="font-size: 10px;">pick</a> <a href="/tags/postgresql/" style="font-size: 12.61px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/prisma/" style="font-size: 10px;">prisma</a> <a href="/tags/pygame/" style="font-size: 10px;">pygame</a> <a href="/tags/python/" style="font-size: 13.48px;">python</a> <a href="/tags/rag/" style="font-size: 11.3px;">rag</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.96px;">raspberry pi</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.87px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.74px;">reporting</a> <a href="/tags/retrieval/" style="font-size: 10px;">retrieval</a> <a href="/tags/rosetta-code/" style="font-size: 15.22px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.7px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.43px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.52px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.3px;">static code analysis</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/supabase/" style="font-size: 10px;">supabase</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/terraform/" style="font-size: 11.3px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.13px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/vectors/" style="font-size: 10.87px;">vectors</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.09px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/wip/" style="font-size: 18.7px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.3px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.3px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
