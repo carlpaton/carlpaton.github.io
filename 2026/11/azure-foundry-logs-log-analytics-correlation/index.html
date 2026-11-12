@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Finding Out Why An Azure OpenAI Chatbot Is Slow With Log Analytics | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Also see Azure AI Foundry And OpenAI Deployments For A Chatbot App A client said their chatbot “fails all the time”. I had a Foundry resource, a Container App and a pile of debug traces, but no way to">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Finding Out Why An Azure OpenAI Chatbot Is Slow With Log Analytics">
+<meta property="og:url" content="https://carlpaton.github.io/2026/11/azure-foundry-logs-log-analytics-correlation/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="Also see Azure AI Foundry And OpenAI Deployments For A Chatbot App A client said their chatbot “fails all the time”. I had a Foundry resource, a Container App and a pile of debug traces, but no way to">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-11-11T11:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-12T07:42:21.853Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="azure">
+<meta property="article:tag" content="ai-foundry">
+<meta property="article:tag" content="log-analytics">
+<meta property="article:tag" content="claude-code">
+<meta property="article:tag" content="kql">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+<section class="sponsored-wrap">
+  <div class="archive-year-wrap">
+    <span class="archive-year">Sponsored Content & Projects</span>
+  </div>
+  <div class="sponsored-list">
+    
+    <a class="sponsored-card" href="https://www.workbilling.app" target="_blank">
+      <span class="sponsored-card-label">Work Billing</span>
+      <h1 itemprop="name" class="sponsored-card-title">From agreed work to paid invoices</h1>
+      <p class="sponsored-card-description">Keep partners, clients, statements of work, invoices, margins, and payment progress together in one clear workspace.</p>
+    </a>
+    
+    <a class="sponsored-card" href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">
+      <span class="sponsored-card-label">Support</span>
+      <h1 itemprop="name" class="sponsored-card-title">Stripe Donation</h1>
+      <p class="sponsored-card-description">Does my content help you? Consider a small donation to support this blog. ❤️</p>
+    </a>
+    
+  </div>
+</section>
+
+
+
+<article id="post-azure-foundry-logs-log-analytics-correlation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/11/azure-foundry-logs-log-analytics-correlation/" class="article-date">
+  <time datetime="2026-11-11T11:00:00.000Z" itemprop="datePublished">2026-Nov</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Finding Out Why An Azure OpenAI Chatbot Is Slow With Log Analytics
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Also see <a href="/2026/08/azure-cognative-account-with-deployments/">Azure AI Foundry And OpenAI Deployments For A Chatbot App</a></p>
+<p>A client said their chatbot “fails all the time”. I had a Foundry resource, a Container App and a pile of debug traces, but no way to say how often it really failed or where the time went. This post is how I got from guessing to measuring: turn on Foundry request logs, write the app’s own traces to the same Log Analytics workspace, join the two on a correlation id, and wrap the lot in a Claude Code skill so I can re-run it after every change.</p>
+<h2 id="The-problem"><a href="#The-problem" class="headerlink" title="The problem"></a>The problem</h2><p>Two things were true at once:</p>
+<ul>
+<li>Answers were slow. Typically 30 to 40 seconds, sometimes over 90.</li>
+<li>One assistant failed far more often than the others with “temporarily unavailable”.</li>
+</ul>
+<p>The Foundry metrics looked healthy (about 95% of gpt-5 calls succeeded, quota was nowhere near the limit) and the app’s debug traces were a small sample from people testing. The traces did show the cause of the failures: the chat service allows at most four model calls per answer, forces one search per call, and that assistant’s prompt searches one brand at a time. Questions covering several brands ran out of calls and threw. That is our code, not an Azure error.</p>
+<p>The slowness was harder. Nearly all the time was inside the model calls, but I couldn’t see Azure’s side of those calls, token usage, or the real failure rate. I wanted a baseline I could trust before changing any code, so I could tell if each change actually helped.</p>
+<h2 id="1-Send-Foundry-logs-to-Log-Analytics"><a href="#1-Send-Foundry-logs-to-Log-Analytics" class="headerlink" title="1. Send Foundry logs to Log Analytics"></a>1. Send Foundry logs to Log Analytics</h2><p>Foundry keeps no request logs unless you add a diagnostic setting. This goes next to the account in <code>foundry.tf</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;azurerm_monitor_diagnostic_setting&quot; &quot;foundry&quot; &#123;</span><br><span class="line">  name                       = &quot;foundry-to-log-analytics&quot;</span><br><span class="line">  target_resource_id         = azurerm_cognitive_account.main.id</span><br><span class="line">  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id</span><br><span class="line"></span><br><span class="line">  enabled_log &#123;</span><br><span class="line">    category = &quot;RequestResponse&quot;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  enabled_log &#123;</span><br><span class="line">    category = &quot;AzureOpenAIRequestUsage&quot;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  enabled_log &#123;</span><br><span class="line">    category = &quot;Audit&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>I put it in <code>foundry.tf</code> because it belongs to the account and goes away with it. The cost is log ingestion only.</p>
+<p>Logs only flow from the moment it is applied, and the first rows took about 30 minutes to show up. Before that the table doesn’t even exist, so an empty result in the first half hour isn’t a failure.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/ai-services/openai/how-to/monitor-openai">Monitor Azure OpenAI</a> • <a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting">azurerm_monitor_diagnostic_setting</a></p>
+<h2 id="2-Apply-just-that-one-resource"><a href="#2-Apply-just-that-one-resource" class="headerlink" title="2. Apply just that one resource"></a>2. Apply just that one resource</h2><p><code>terraform plan</code> also wanted to change the Container App, because my GitHub Actions pipeline sets the image, env vars and secrets on it and Terraform saw that as drift. Applying everything would have wiped that config until the next deploy.</p>
+<p>Terraform can’t apply “only the changes in <code>foundry.tf</code>“, because it treats every file in the folder as one configuration. What it understands is the resource address, so use <code>-target</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">terraform plan  -target=azurerm_monitor_diagnostic_setting.foundry -out=targeted.tfplan</span><br><span class="line">terraform apply targeted.tfplan</span><br><span class="line"><span class="built_in">rm</span> targeted.tfplan</span><br></pre></td></tr></table></figure>
+
+<p>The saved plan means apply does exactly what you reviewed. Plan output prints env var values in plain text, so keep it out of tickets and chat (and delete the plan file).</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/cli/commands/plan#resource-targeting">Resource targeting</a></p>
+<h2 id="3-What-the-Foundry-logs-give-you-and-what-they-don’t"><a href="#3-What-the-Foundry-logs-give-you-and-what-they-don’t" class="headerlink" title="3. What the Foundry logs give you, and what they don’t"></a>3. What the Foundry logs give you, and what they don’t</h2><p>Once traffic arrives the logs land in <code>AzureDiagnostics</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>RequestResponse</code></td>
+<td>One row per call: operation, status code, <code>DurationMs</code>, <code>CorrelationId</code>, caller IP</td>
+</tr>
+<tr>
+<td><code>AzureOpenAIRequestUsage</code></td>
+<td>Prompt, cached and generated tokens, time to first token, whether it streamed (in <code>properties_s</code>)</td>
+</tr>
+<tr>
+<td><code>Audit</code></td>
+<td>Management and key-access events, empty until something happens</td>
+</tr>
+</tbody></table>
+<p>They do not contain prompts or responses. I looked for a setting to turn that on and there isn’t one for this diagnostic setting. That’s actually fine for a baseline: I wanted timings, status codes and tokens for every call, not content.</p>
+<p>The usage rows arrive a minute or two after the request rows, so don’t query the last couple of minutes and conclude something is missing.</p>
+<h2 id="4-Write-the-app’s-traces-to-the-same-workspace"><a href="#4-Write-the-app’s-traces-to-the-same-workspace" class="headerlink" title="4. Write the app’s traces to the same workspace"></a>4. Write the app’s traces to the same workspace</h2><p>The app already wrote a debug trace per chat request to blob storage as JSON. Useful, but I’d have to download files to analyse them, and I couldn’t query them next to the Foundry rows.</p>
+<p>Container Apps ships stdout to <code>ContainerAppConsoleLogs_CL</code>, one row per line, so the cheapest way into Log Analytics is writing the trace to the console as single-line JSON. I added a setting so it can be switched off:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;ChatDebugTracing&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;Enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LogToConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>A few details that mattered:</p>
+<ul>
+<li><strong>One line per object.</strong> A multi-line message becomes several rows. A compact JSON string avoids that.</li>
+<li><strong>Long text is split.</strong> Prompts get big, so step detail over 6000 characters is written as numbered parts (<code>part</code> and <code>parts</code>) that you reassemble by trace id.</li>
+<li><strong>Two line types.</strong> <code>chat_trace</code> is one per request (status, total time, error). <code>chat_step</code> is one per step (name, start, duration, detail).</li>
+<li><strong>Content is in there.</strong> Prompts, responses and the user’s email land in the workspace, readable by anyone with access to it, so the setting is the off switch.</li>
+</ul>
+<p>The existing blob traces stayed as they were.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/container-apps/log-monitoring">Container Apps log monitoring</a></p>
+<h2 id="5-Record-an-id-that-joins-to-Foundry"><a href="#5-Record-an-id-that-joins-to-Foundry" class="headerlink" title="5. Record an id that joins to Foundry"></a>5. Record an id that joins to Foundry</h2><p>Every app line has the same <code>traceId</code>, so one chat is easy to pull. Linking it to Foundry is the clever part. Foundry’s <code>CorrelationId</code> is generated by Azure, so I can’t set it myself. But Azure returns request ids in the response headers, and the SDK exposes the raw response. For each model call I record the token usage and those headers on the step:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> headers = result.GetRawResponse().Headers;</span><br><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> header <span class="keyword">in</span> <span class="keyword">new</span>[] &#123; <span class="string">&quot;x-request-id&quot;</span>, <span class="string">&quot;apim-request-id&quot;</span>, <span class="string">&quot;x-ms-request-id&quot;</span>, <span class="string">&quot;x-ms-client-request-id&quot;</span> &#125;)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (headers.TryGetValue(header, <span class="keyword">out</span> <span class="keyword">var</span> <span class="keyword">value</span>) &amp;&amp; !<span class="built_in">string</span>.IsNullOrWhiteSpace(<span class="keyword">value</span>))</span><br><span class="line">        properties[header] = <span class="keyword">value</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>I didn’t know which header, if any, would match, so I deployed it and made a test chat. In my test it was <code>apim-request-id</code>: it equals <code>CorrelationId</code> in both <code>RequestResponse</code> and <code>AzureOpenAIRequestUsage</code>. The other headers didn’t match anything. The token counts the app recorded also equalled Foundry’s, which is a good sanity check that the join is right.</p>
+<h2 id="6-Join-them-in-KQL"><a href="#6-Join-them-in-KQL" class="headerlink" title="6. Join them in KQL"></a>6. Join them in KQL</h2><p>Pull a model-call step from the app lines, then join to the Foundry rows:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">let steps = ContainerAppConsoleLogs_CL</span><br><span class="line">| where Log_s startswith &#x27;&#123;&quot;evt&quot;:&quot;chat_step&quot;&#x27; and Log_s contains &#x27;complete-chat.attempt&#x27;</span><br><span class="line">| extend j = parse_json(Log_s)</span><br><span class="line">| where toint(j.part) == 1</span><br><span class="line">| project traceId = tostring(j.traceId), appMs = tolong(j.durationMs),</span><br><span class="line">          reqId = tostring(j.properties[&quot;apim-request-id&quot;]);</span><br><span class="line">steps</span><br><span class="line">| join kind=leftouter (</span><br><span class="line">    AzureDiagnostics</span><br><span class="line">    | where Category == &quot;RequestResponse&quot; and OperationName =~ &quot;chatcompletions_create&quot;</span><br><span class="line">    | project CorrelationId, azureMs = DurationMs, ResultSignature</span><br><span class="line">  ) on $left.reqId == $right.CorrelationId</span><br><span class="line">| extend overheadMs = appMs - azureMs</span><br></pre></td></tr></table></figure>
+
+<p><code>part == 1</code> matters because a long step is split across rows and the <code>properties</code> are only on the first part.</p>
+<p><code>appMs - azureMs</code> is the time spent outside the model (network, client). In my test it was 100 to 400 ms on calls that took 15 to 23 seconds, so the delay is inside Azure, not our code or the network. The same test showed that about 87% of the output tokens were reasoning tokens and the calls weren’t streamed, so nothing reached the user until the whole answer was done. That’s one chat, so it’s a lead, not a conclusion, but it tells me where to look first (lower reasoning effort and streaming).</p>
+<p>A failed call (408, 429) usually has no app step, because the app throws before recording it. Those show up as Foundry rows with no match, which is exactly the thing the Foundry logs add.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/kusto/query/join-operator">join operator</a> • <a target="_blank" rel="noopener" href="https://learn.microsoft.com/kusto/query/parse-json-function">parse_json</a></p>
+<h2 id="7-Make-it-repeatable-with-skills"><a href="#7-Make-it-repeatable-with-skills" class="headerlink" title="7. Make it repeatable with skills"></a>7. Make it repeatable with skills</h2><p>Typing that KQL after every change gets old, and I wanted a before and an after I could compare. Two things helped.</p>
+<p>First, my <code>azdebug</code> skills from my <a target="_blank" rel="noopener" href="https://github.com/carlpaton/skills">skills marketplace</a>. <code>/azdebug:loganalytics</code> finds the workspace and runs read-only KQL against Container Apps logs and the Foundry tables, and <code>/azdebug:foundry</code> reports status codes, failure timing and quota for model deployments. Both only use the Azure CLI and never print message bodies.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">claude plugin marketplace add carlpaton/skills</span><br><span class="line">claude plugin install azdebug@carlpaton</span><br></pre></td></tr></table></figure>
+
+<p>Second, a project skill in the app repo, <code>chat-performance-report</code>, that uses the same helper to do the whole job. I run it and say “give me the logs for the last 24 hours”. It asks which environment, pulls the app traces and the Foundry rows, joins them on <code>apim-request-id</code> and writes a report plus a <code>metrics.json</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reports/2026-11-12_07-23-50Z_&lt;env&gt;.md</span><br><span class="line">reports/2026-11-12_07-23-50Z_&lt;env&gt;.metrics.json</span><br></pre></td></tr></table></figure>
+
+<p>The report has the headline numbers:</p>
+<ul>
+<li>success, canceled and error rates</li>
+<li>request time p50, p90 and p95</li>
+<li>model calls per request, and how often the four-call cap was hit</li>
+<li>app-measured vs Azure-measured call time</li>
+<li>time to first token</li>
+<li>reasoning share of output tokens</li>
+</ul>
+<p>It also shows where the time goes (model, search, everything else) and a <strong>Data availability</strong> table. That table matters: an environment without the Foundry setting still produces a report, but it says which source is missing instead of guessing. After a change I run it again and compare the two metrics files:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -I chat_report.py compare &lt;before&gt;.metrics.json &lt;after&gt;.metrics.json</span><br></pre></td></tr></table></figure>
+
+<p>It prints each measure with better, same (within 5%) or worse. Because the files are named by time and environment, I can run it days apart. One caveat I kept in the skill: with a handful of requests none of the rates mean anything, so compare like with like (same environment, same assistant) and wait for real traffic before trusting a result.</p>
+<h2 id="What-I’d-do-again"><a href="#What-I’d-do-again" class="headerlink" title="What I’d do again"></a>What I’d do again</h2><p>Turn the logging on before touching the code. I now have numbers for every call, from both sides, and a way to join them, so the next change gets a real before and after instead of an argument. The changes themselves (parallel tool calls, a final answer when the cap is hit, skipping search for greetings, streaming and lower reasoning effort) come next, one at a time.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2026/11/azure-foundry-logs-log-analytics-correlation/" data-id="cmwd8u8si0000kdgad3hbegvg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ai-foundry/" rel="tag">ai-foundry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/azure/" rel="tag">azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/claude-code/" rel="tag">claude-code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kql/" rel="tag">kql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/log-analytics/" rel="tag">log-analytics</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/11/building-1-10-scale-rc-crawler-from-scratch/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Building 1/10 Scale RC Crawler From Scratch
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/11/environment-specific-error-pages-aspnet-core/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Environment Specific Error Pages In ASP.NET Core</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<section class="sponsored-wrap">
+  <div class="archive-year-wrap">
+    <span class="archive-year">Sponsored Content & Projects</span>
+  </div>
+  <div class="sponsored-list">
+    
+    <a class="sponsored-card" href="https://www.workbilling.app" target="_blank">
+      <span class="sponsored-card-label">Work Billing</span>
+      <h1 itemprop="name" class="sponsored-card-title">From agreed work to paid invoices</h1>
+      <p class="sponsored-card-description">Keep partners, clients, statements of work, invoices, margins, and payment progress together in one clear workspace.</p>
+    </a>
+    
+    <a class="sponsored-card" href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">
+      <span class="sponsored-card-label">Support</span>
+      <h1 itemprop="name" class="sponsored-card-title">Stripe Donation</h1>
+      <p class="sponsored-card-description">Does my content help you? Consider a small donation to support this blog. ❤️</p>
+    </a>
+    
+  </div>
+</section>
+
+
+<br /></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/11/building-1-10-scale-rc-crawler-from-scratch/">Building 1/10 Scale RC Crawler From Scratch</a>
+          </li>
+        
+          <li>
+            <a href="/2026/11/azure-foundry-logs-log-analytics-correlation/">Finding Out Why An Azure OpenAI Chatbot Is Slow With Log Analytics</a>
+          </li>
+        
+          <li>
+            <a href="/2026/11/environment-specific-error-pages-aspnet-core/">Environment Specific Error Pages In ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2026/11/redirect-apex-to-www-aspnet-core/">Redirect The Apex Domain To www In ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2026/10/introduction-to-a-simple-python-game/">Introduction To A Simple Python Game</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.87px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/ai/" style="font-size: 13.91px;">ai</a> <a href="/tags/ai-foundry/" style="font-size: 10.43px;">ai-foundry</a> <a href="/tags/algorithms/" style="font-size: 11.74px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.65px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.43px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.43px;">asp.net</a> <a href="/tags/aspnet-core/" style="font-size: 12.17px;">aspnet-core</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/auth/" style="font-size: 14.78px;">auth</a> <a href="/tags/aws/" style="font-size: 17.83px;">aws</a> <a href="/tags/azure/" style="font-size: 16.09px;">azure</a> <a href="/tags/azurite/" style="font-size: 10px;">azurite</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.43px;">benchmarks</a> <a href="/tags/blob-storage/" style="font-size: 10.43px;">blob-storage</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.74px;">cad</a> <a href="/tags/cam/" style="font-size: 11.74px;">cam</a> <a href="/tags/claude-code/" style="font-size: 10px;">claude-code</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.22px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10.43px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.74px;">cryptography</a> <a href="/tags/csharp/" style="font-size: 10.87px;">csharp</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3/" style="font-size: 10px;">d3</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.74px;">data structures</a> <a href="/tags/database/" style="font-size: 10.43px;">database</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.04px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.43px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.87px;">dns</a> <a href="/tags/docker/" style="font-size: 17.83px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/embeddings/" style="font-size: 11.74px;">embeddings</a> <a href="/tags/entra/" style="font-size: 10.43px;">entra</a> <a href="/tags/fabrication/" style="font-size: 10px;">fabrication</a> <a href="/tags/feature-management/" style="font-size: 10.87px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.61px;">food</a> <a href="/tags/games/" style="font-size: 10.43px;">games</a> <a href="/tags/git/" style="font-size: 12.17px;">git</a> <a href="/tags/github-actions/" style="font-size: 10.43px;">github-actions</a> <a href="/tags/health-checks/" style="font-size: 10.87px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.04px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.74px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.48px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kql/" style="font-size: 10px;">kql</a> <a href="/tags/kubernetes/" style="font-size: 11.3px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/llm/" style="font-size: 10.87px;">llm</a> <a href="/tags/log-analytics/" style="font-size: 10px;">log-analytics</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.43px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.35px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.26px;">model airplanes</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mongoose/" style="font-size: 10px;">mongoose</a> <a href="/tags/multivalue/" style="font-size: 10px;">multivalue</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.3px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/networking/" style="font-size: 10px;">networking</a> <a href="/tags/newrelic/" style="font-size: 10.43px;">newrelic</a> <a href="/tags/nextjs/" style="font-size: 10.43px;">nextjs</a> <a href="/tags/nginx/" style="font-size: 10.87px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/onshape/" style="font-size: 10.87px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/openai/" style="font-size: 10px;">openai</a> <a href="/tags/orm/" style="font-size: 13.91px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/pick/" style="font-size: 10px;">pick</a> <a href="/tags/postgresql/" style="font-size: 12.61px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/prisma/" style="font-size: 10px;">prisma</a> <a href="/tags/pygame/" style="font-size: 10px;">pygame</a> <a href="/tags/python/" style="font-size: 13.48px;">python</a> <a href="/tags/rag/" style="font-size: 11.3px;">rag</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.96px;">raspberry pi</a> <a href="/tags/rc/" style="font-size: 10px;">rc</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.87px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.74px;">reporting</a> <a href="/tags/retrieval/" style="font-size: 10px;">retrieval</a> <a href="/tags/rosetta-code/" style="font-size: 15.22px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.7px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.43px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.52px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.3px;">static code analysis</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/supabase/" style="font-size: 10px;">supabase</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/terraform/" style="font-size: 11.3px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.13px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/vectors/" style="font-size: 10.87px;">vectors</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.09px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/welding/" style="font-size: 10px;">welding</a> <a href="/tags/wip/" style="font-size: 18.7px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.3px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.3px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>

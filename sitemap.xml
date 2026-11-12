@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://carlpaton.github.io/2026/08/azure-cognative-account-with-deployments/</loc>
+    
+    <lastmod>2026-11-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://carlpaton.github.io/2026/11/azure-foundry-logs-log-analytics-correlation/</loc>
+    
+    <lastmod>2026-11-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://carlpaton.github.io/2026/11/building-1-10-scale-rc-crawler-from-scratch/</loc>
     
     <lastmod>2026-11-12</lastmod>
@@ -156,15 +174,6 @@
   
   <url>
     <loc>https://carlpaton.github.io/2026/07/azure-private-endpoints-with-terraform/</loc>
-    
-    <lastmod>2026-08-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://carlpaton.github.io/2026/08/azure-cognative-account-with-deployments/</loc>
     
     <lastmod>2026-08-22</lastmod>
     
@@ -5623,6 +5632,27 @@
   
   <url>
     <loc>https://carlpaton.github.io/tags/fabrication/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://carlpaton.github.io/tags/log-analytics/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://carlpaton.github.io/tags/claude-code/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://carlpaton.github.io/tags/kql/</loc>
     <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
