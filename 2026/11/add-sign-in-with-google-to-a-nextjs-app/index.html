@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-adsense-account" content="ca-pub-2204075991179473">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2204075991179473"
+     crossorigin="anonymous"></script>  
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="TN0ONB+Rzh+WjWrC8wjyqg" async></script>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-117029737-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Add Sign In With Google To A Next.js App | Carl Paton | There are no silly questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I wanted people to sign in to a small Next.js app with their Google account instead of a username and password. I already had my own session cookie, so I didn’t want to pull in a whole auth library an">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Add Sign In With Google To A Next.js App">
+<meta property="og:url" content="https://carlpaton.github.io/2026/11/add-sign-in-with-google-to-a-nextjs-app/index.html">
+<meta property="og:site_name" content="There are no silly questions">
+<meta property="og:description" content="I wanted people to sign in to a small Next.js app with their Google account instead of a username and password. I already had my own session cookie, so I didn’t want to pull in a whole auth library an">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-11-12T11:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-13T03:58:31.454Z">
+<meta property="article:author" content="Carl Paton">
+<meta property="article:tag" content="auth">
+<meta property="article:tag" content="nextjs">
+<meta property="article:tag" content="google">
+<meta property="article:tag" content="oauth2">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="There are no silly questions" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <nav id="mobile-nav">
+  
+    <a href="/about/" class="mobile-nav-link">About and Contact</a>
+  
+    <a href="/tags/aws/" class="mobile-nav-link">AWS</a>
+  
+    <a href="/tags/c/" class="mobile-nav-link">C#</a>
+  
+    <a href="/tags/docker/" class="mobile-nav-link">Docker</a>
+  
+    <a href="/2020/02/design-patterns/" class="mobile-nav-link">Design Patterns</a>
+  
+    <a href="/tags/learning-resources/" class="mobile-nav-link">Learning</a>
+  
+    <a href="/tags/patterns-principles/" class="mobile-nav-link">Patterns Principles</a>
+  
+</nav>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a class="main-nav-link" href="/" id="logo" title="There are no silly questions"
+        >Carl Paton</a
+      >
+
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+        <a class="main-nav-link" href="/about/"
+          >About and Contact</a
+        >
+        
+        <a class="main-nav-link" href="/tags/aws/"
+          >AWS</a
+        >
+        
+        <a class="main-nav-link" href="/tags/c/"
+          >C#</a
+        >
+        
+        <a class="main-nav-link" href="/tags/docker/"
+          >Docker</a
+        >
+        
+        <a class="main-nav-link" href="/2020/02/design-patterns/"
+          >Design Patterns</a
+        >
+        
+        <a class="main-nav-link" href="/tags/learning-resources/"
+          >Learning</a
+        >
+        
+        <a class="main-nav-link" href="/tags/patterns-principles/"
+          >Patterns Principles</a
+        >
+        
+		<!--
+        <a class="main-nav-link" href="/about/">About</a>
+		-->
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+<section class="sponsored-wrap">
+  <div class="archive-year-wrap">
+    <span class="archive-year">Sponsored Content & Projects</span>
+  </div>
+  <div class="sponsored-list">
+    
+    <a class="sponsored-card" href="https://www.workbilling.app" target="_blank">
+      <span class="sponsored-card-label">Work Billing</span>
+      <h1 itemprop="name" class="sponsored-card-title">From agreed work to paid invoices</h1>
+      <p class="sponsored-card-description">Keep partners, clients, statements of work, invoices, margins, and payment progress together in one clear workspace.</p>
+    </a>
+    
+    <a class="sponsored-card" href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">
+      <span class="sponsored-card-label">Support</span>
+      <h1 itemprop="name" class="sponsored-card-title">Stripe Donation</h1>
+      <p class="sponsored-card-description">Does my content help you? Consider a small donation to support this blog. ❤️</p>
+    </a>
+    
+  </div>
+</section>
+
+
+
+<article id="post-add-sign-in-with-google-to-a-nextjs-app" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/11/add-sign-in-with-google-to-a-nextjs-app/" class="article-date">
+  <time datetime="2026-11-12T11:00:00.000Z" itemprop="datePublished">2026-Nov</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Add Sign In With Google To A Next.js App
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I wanted people to sign in to a small Next.js app with their Google account instead of a username and password. I already had my own session cookie, so I didn’t want to pull in a whole auth library and replace it. This post is the OpenID Connect authorization code flow with PKCE, written by hand with two route handlers and the <code>jose</code> package. If you want the theory first, see <a href="/2020/12/oauth2-authorization-code-flow/">OAuth2 Authorization Code Flow</a>, and for the Microsoft equivalent see <a href="/2025/07/add-microsoft-identity-platform-to-existing-app/">Adding Microsoft Identity Platform To An Existing App</a>.</p>
+<h2 id="1-Create-a-Google-Cloud-project"><a href="#1-Create-a-Google-Cloud-project" class="headerlink" title="1. Create a Google Cloud project"></a>1. Create a Google Cloud project</h2><p>This part is all UI, there is no CLI or API for creating a standard web OAuth client.</p>
+<ol>
+<li>Open the <a target="_blank" rel="noopener" href="https://console.cloud.google.com/apis/credentials">Credentials page</a> in Google Cloud Console.</li>
+<li>Click the project picker at the top left, then <strong>New project</strong>, and name it after your app.</li>
+<li>Make sure the new project is selected in the picker before carrying on, the console quietly picks an old project for you.</li>
+</ol>
+<h2 id="2-Configure-the-consent-screen"><a href="#2-Configure-the-consent-screen" class="headerlink" title="2. Configure the consent screen"></a>2. Configure the consent screen</h2><ol>
+<li>Open <strong>Google Auth Platform</strong> and click <strong>Get started</strong>.</li>
+<li>Set the <strong>App name</strong> and <strong>User support email</strong>.</li>
+<li>Set <strong>Audience</strong> to <strong>External</strong> and add your contact email.</li>
+<li>Accept the policy and click <strong>Create</strong>.</li>
+</ol>
+<p>The app starts in <strong>Testing</strong> status, so only emails you add under <strong>Audience</strong> then <strong>Test users</strong> can sign in. Add yourself now. The default scopes (<code>openid</code>, <code>email</code>, <code>profile</code>) are all you need, so there is nothing to submit for verification.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://developers.google.com/workspace/guides/configure-oauth-consent">Configure the OAuth consent screen</a></p>
+<h2 id="3-Create-the-OAuth-client"><a href="#3-Create-the-OAuth-client" class="headerlink" title="3. Create the OAuth client"></a>3. Create the OAuth client</h2><ol>
+<li>Go to <strong>Clients</strong> then <strong>Create client</strong>.</li>
+<li>Set <strong>Application type</strong> to <strong>Web application</strong>.</li>
+<li>Under <strong>Authorized redirect URIs</strong> add the local callback, and the production one if you know it:</li>
+</ol>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:3000/api/auth/google/callback</span><br><span class="line">https://&lt;your-host&gt;/api/auth/google/callback</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Click <strong>Create</strong> and copy the <strong>Client ID</strong> and <strong>Client secret</strong> straight into your env file. Don’t paste the secret into chat or commit it.</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .env.local</span></span><br><span class="line">GOOGLE_CLIENT_ID=&lt;client-id&gt;</span><br><span class="line">GOOGLE_CLIENT_SECRET=&lt;client-secret&gt;</span><br></pre></td></tr></table></figure>
+
+<p>The redirect URI is matched exactly, including scheme, host, port and path. Changes can take a few minutes to apply.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://support.google.com/cloud/answer/6158849">Setting up OAuth 2.0</a></p>
+<h2 id="4-Redirect-to-Google"><a href="#4-Redirect-to-Google" class="headerlink" title="4. Redirect to Google"></a>4. Redirect to Google</h2><p>This route builds the authorization URL. It makes a random <code>state</code>, a <code>nonce</code>, and a PKCE verifier, then keeps all three in a short-lived <code>httpOnly</code> cookie so the callback can check them.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/app/api/auth/google/route.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NextRequest</span>, <span class="title class_">NextResponse</span> &#125; <span class="keyword">from</span> <span class="string">&quot;next/server&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; randomBytes, createHash &#125; <span class="keyword">from</span> <span class="string">&quot;node:crypto&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">base64url</span> = (<span class="params"><span class="attr">buffer</span>: <span class="title class_">Buffer</span></span>) =&gt; buffer.<span class="title function_">toString</span>(<span class="string">&quot;base64url&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">GET</span>(<span class="params"><span class="attr">request</span>: <span class="title class_">NextRequest</span></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> state = <span class="title function_">base64url</span>(<span class="title function_">randomBytes</span>(<span class="number">16</span>));</span><br><span class="line">  <span class="keyword">const</span> nonce = <span class="title function_">base64url</span>(<span class="title function_">randomBytes</span>(<span class="number">16</span>));</span><br><span class="line">  <span class="keyword">const</span> verifier = <span class="title function_">base64url</span>(<span class="title function_">randomBytes</span>(<span class="number">32</span>));</span><br><span class="line">  <span class="keyword">const</span> challenge = <span class="title function_">base64url</span>(<span class="title function_">createHash</span>(<span class="string">&quot;sha256&quot;</span>).<span class="title function_">update</span>(verifier).<span class="title function_">digest</span>());</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> url = <span class="keyword">new</span> <span class="title function_">URL</span>(<span class="string">&quot;https://accounts.google.com/o/oauth2/v2/auth&quot;</span>);</span><br><span class="line">  url.<span class="property">searchParams</span>.<span class="title function_">set</span>(<span class="string">&quot;client_id&quot;</span>, process.<span class="property">env</span>.<span class="property">GOOGLE_CLIENT_ID</span>!);</span><br><span class="line">  url.<span class="property">searchParams</span>.<span class="title function_">set</span>(<span class="string">&quot;redirect_uri&quot;</span>, <span class="string">`<span class="subst">$&#123;request.nextUrl.origin&#125;</span>/api/auth/google/callback`</span>);</span><br><span class="line">  url.<span class="property">searchParams</span>.<span class="title function_">set</span>(<span class="string">&quot;response_type&quot;</span>, <span class="string">&quot;code&quot;</span>);</span><br><span class="line">  url.<span class="property">searchParams</span>.<span class="title function_">set</span>(<span class="string">&quot;scope&quot;</span>, <span class="string">&quot;openid email profile&quot;</span>);</span><br><span class="line">  url.<span class="property">searchParams</span>.<span class="title function_">set</span>(<span class="string">&quot;state&quot;</span>, state);</span><br><span class="line">  url.<span class="property">searchParams</span>.<span class="title function_">set</span>(<span class="string">&quot;nonce&quot;</span>, nonce);</span><br><span class="line">  url.<span class="property">searchParams</span>.<span class="title function_">set</span>(<span class="string">&quot;code_challenge&quot;</span>, challenge);</span><br><span class="line">  url.<span class="property">searchParams</span>.<span class="title function_">set</span>(<span class="string">&quot;code_challenge_method&quot;</span>, <span class="string">&quot;S256&quot;</span>);</span><br><span class="line">  url.<span class="property">searchParams</span>.<span class="title function_">set</span>(<span class="string">&quot;prompt&quot;</span>, <span class="string">&quot;select_account&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> response = <span class="title class_">NextResponse</span>.<span class="title function_">redirect</span>(url);</span><br><span class="line">  response.<span class="property">cookies</span>.<span class="title function_">set</span>(<span class="string">&quot;google_oauth&quot;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; state, nonce, verifier &#125;), &#123;</span><br><span class="line">    <span class="attr">httpOnly</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">secure</span>: process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&quot;production&quot;</span>,</span><br><span class="line">    <span class="attr">sameSite</span>: <span class="string">&quot;lax&quot;</span>,</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&quot;/api/auth/google&quot;</span>,</span><br><span class="line">    <span class="attr">maxAge</span>: <span class="number">600</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The cookie is scoped to <code>/api/auth/google</code> so it is sent to the callback and nowhere else. <code>sameSite: &quot;lax&quot;</code> matters here, the callback is a top-level redirect back from Google and a <code>strict</code> cookie would not be sent.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://developers.google.com/identity/openid-connect/openid-connect">OpenID Connect | Google Identity</a></p>
+<h2 id="5-Handle-the-callback"><a href="#5-Handle-the-callback" class="headerlink" title="5. Handle the callback"></a>5. Handle the callback</h2><p>The callback checks <code>state</code>, swaps the <code>code</code> for tokens, then verifies the ID token signature against Google’s public keys. Verifying the token is the step people skip, don’t.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/app/api/auth/google/callback/route.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NextRequest</span>, <span class="title class_">NextResponse</span> &#125; <span class="keyword">from</span> <span class="string">&quot;next/server&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createRemoteJWKSet, jwtVerify &#125; <span class="keyword">from</span> <span class="string">&quot;jose&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> jwks = <span class="title function_">createRemoteJWKSet</span>(<span class="keyword">new</span> <span class="title function_">URL</span>(<span class="string">&quot;https://www.googleapis.com/oauth2/v3/certs&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">GET</span>(<span class="params"><span class="attr">request</span>: <span class="title class_">NextRequest</span></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> code = request.<span class="property">nextUrl</span>.<span class="property">searchParams</span>.<span class="title function_">get</span>(<span class="string">&quot;code&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> state = request.<span class="property">nextUrl</span>.<span class="property">searchParams</span>.<span class="title function_">get</span>(<span class="string">&quot;state&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> saved = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(request.<span class="property">cookies</span>.<span class="title function_">get</span>(<span class="string">&quot;google_oauth&quot;</span>)?.<span class="property">value</span> ?? <span class="string">&quot;null&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!code || !saved || saved.<span class="property">state</span> !== state) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">NextResponse</span>.<span class="title function_">redirect</span>(<span class="keyword">new</span> <span class="title function_">URL</span>(<span class="string">&quot;/?error=google&quot;</span>, request.<span class="property">nextUrl</span>.<span class="property">origin</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> tokenResponse = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&quot;https://oauth2.googleapis.com/token&quot;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">    <span class="attr">headers</span>: &#123; <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/x-www-form-urlencoded&quot;</span> &#125;,</span><br><span class="line">    <span class="attr">body</span>: <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(&#123;</span><br><span class="line">      code,</span><br><span class="line">      <span class="attr">client_id</span>: process.<span class="property">env</span>.<span class="property">GOOGLE_CLIENT_ID</span>!,</span><br><span class="line">      <span class="attr">client_secret</span>: process.<span class="property">env</span>.<span class="property">GOOGLE_CLIENT_SECRET</span>!,</span><br><span class="line">      <span class="attr">redirect_uri</span>: <span class="string">`<span class="subst">$&#123;request.nextUrl.origin&#125;</span>/api/auth/google/callback`</span>,</span><br><span class="line">      <span class="attr">grant_type</span>: <span class="string">&quot;authorization_code&quot;</span>,</span><br><span class="line">      <span class="attr">code_verifier</span>: saved.<span class="property">verifier</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">const</span> &#123; id_token &#125; = <span class="keyword">await</span> tokenResponse.<span class="title function_">json</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> &#123; payload &#125; = <span class="keyword">await</span> <span class="title function_">jwtVerify</span>(id_token, jwks, &#123;</span><br><span class="line">    <span class="attr">issuer</span>: [<span class="string">&quot;https://accounts.google.com&quot;</span>, <span class="string">&quot;accounts.google.com&quot;</span>],</span><br><span class="line">    <span class="attr">audience</span>: process.<span class="property">env</span>.<span class="property">GOOGLE_CLIENT_ID</span>!,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">if</span> (payload.<span class="property">nonce</span> !== saved.<span class="property">nonce</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">NextResponse</span>.<span class="title function_">redirect</span>(<span class="keyword">new</span> <span class="title function_">URL</span>(<span class="string">&quot;/?error=google&quot;</span>, request.<span class="property">nextUrl</span>.<span class="property">origin</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// payload.sub, payload.email, payload.email_verified, payload.name are now trustworthy</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Treat anything that fails as a generic error and send the user back to the start. The real code should wrap the token exchange and <code>jwtVerify</code> in <code>try/catch</code> and redirect on failure, I left it out so the flow is easy to read.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://github.com/panva/jose/blob/main/docs/jwt/verify/functions/jwtVerify.md">jose jwtVerify</a> • <a target="_blank" rel="noopener" href="https://developers.google.com/identity/protocols/oauth2/web-server">Google OAuth 2.0 for web server apps</a></p>
+<h2 id="6-Find-or-create-the-user-then-start-your-session"><a href="#6-Find-or-create-the-user-then-start-your-session" class="headerlink" title="6. Find or create the user, then start your session"></a>6. Find or create the user, then start your session</h2><p>Key your user on <code>sub</code>, the stable Google account id, and never on the email, which can change. Store <code>sub</code> on your user record with a unique, sparse index.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = <span class="keyword">await</span> <span class="title class_">User</span>.<span class="title function_">findOne</span>(&#123; <span class="attr">googleSub</span>: payload.<span class="property">sub</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!user) &#123;</span><br><span class="line">  user = <span class="keyword">await</span> <span class="title class_">User</span>.<span class="title function_">create</span>(&#123;</span><br><span class="line">    <span class="attr">googleSub</span>: payload.<span class="property">sub</span>,</span><br><span class="line">    <span class="attr">name</span>: payload.<span class="property">name</span> ?? payload.<span class="property">email</span>,</span><br><span class="line">    <span class="attr">email</span>: payload.<span class="property">email</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> response = <span class="title class_">NextResponse</span>.<span class="title function_">redirect</span>(<span class="keyword">new</span> <span class="title function_">URL</span>(<span class="string">&quot;/home&quot;</span>, request.<span class="property">nextUrl</span>.<span class="property">origin</span>));</span><br><span class="line"><span class="comment">// reuse whatever you already do for sessions</span></span><br><span class="line">response.<span class="property">cookies</span>.<span class="title function_">set</span>(<span class="string">&quot;session&quot;</span>, <span class="keyword">await</span> <span class="title function_">createSessionToken</span>(user.<span class="property">id</span>), &#123;</span><br><span class="line">  <span class="attr">httpOnly</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">secure</span>: process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&quot;production&quot;</span>,</span><br><span class="line">  <span class="attr">sameSite</span>: <span class="string">&quot;lax&quot;</span>,</span><br><span class="line">  <span class="attr">path</span>: <span class="string">&quot;/&quot;</span>,</span><br><span class="line">  <span class="attr">maxAge</span>: <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">7</span>,</span><br><span class="line">&#125;);</span><br><span class="line">response.<span class="property">cookies</span>.<span class="title function_">delete</span>(&#123; <span class="attr">name</span>: <span class="string">&quot;google_oauth&quot;</span>, <span class="attr">path</span>: <span class="string">&quot;/api/auth/google&quot;</span> &#125;);</span><br><span class="line"><span class="keyword">return</span> response;</span><br></pre></td></tr></table></figure>
+
+<p>If you already have users, you need a way to attach a Google account to them or everyone gets a second empty account on their first sign in. The safe option is matching on <code>email</code>, but only when <code>payload.email_verified === true</code>, and only when that user has no <code>googleSub</code> yet. Matching on an unverified email lets someone take over an account.</p>
+<h2 id="7-Add-the-button"><a href="#7-Add-the-button" class="headerlink" title="7. Add the button"></a>7. Add the button</h2><p>A plain anchor is enough. It is a full page redirect to Google, so there is no need for a client side <code>Link</code>.</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">&quot;/api/auth/google&quot;</span>&gt;<span class="title class_">Sign</span> <span class="keyword">in</span> <span class="keyword">with</span> <span class="title class_">Google</span>&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-Going-live"><a href="#8-Going-live" class="headerlink" title="8. Going live"></a>8. Going live</h2><ul>
+<li>Add <code>GOOGLE_CLIENT_ID</code> and <code>GOOGLE_CLIENT_SECRET</code> to your host. On Vercel that is <strong>Settings</strong> then <strong>Environment Variables</strong>, and they only apply to new deployments, so redeploy.</li>
+<li>Add the production <code>https://&lt;your-host&gt;/api/auth/google/callback</code> to the client’s redirect URIs.</li>
+<li>While the app is in <strong>Testing</strong>, every person who signs in must be on the test user list. Publish the app when you want anyone with a Google account to be able to sign in.</li>
+</ul>
+<h2 id="If-something-goes-wrong"><a href="#If-something-goes-wrong" class="headerlink" title="If something goes wrong"></a>If something goes wrong</h2><p><strong>redirect_uri_mismatch</strong>: the URI sent in step 4 isn’t in the client’s list. Check scheme, host, port and the trailing path, and give Google a few minutes after saving.</p>
+<p><strong>access_denied or “app not verified”</strong>: the account isn’t a test user and the app is still in Testing.</p>
+<p><strong>Sent back with an error and no detail</strong>: <code>state</code> or <code>nonce</code> didn’t match, usually because the cookie was dropped. Check the cookie <code>path</code>, that you are using the same host for the start and the callback (<code>localhost</code> and <code>127.0.0.1</code> are different), and that <code>secure</code> isn’t set on plain <code>http</code>.</p>
+<p><strong>Signed in as a brand new user</strong>: the <code>sub</code> wasn’t known and nothing matched, see the end of step 6.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://developers.google.com/identity/protocols/oauth2/web-server#error-codes-for-authorization">Google OAuth 2.0 error reference</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://carlpaton.github.io/2026/11/add-sign-in-with-google-to-a-nextjs-app/" data-id="cmweg8b4r0000jbga5pu8c7dc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/auth/" rel="tag">auth</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/google/" rel="tag">google</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nextjs/" rel="tag">nextjs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oauth2/" rel="tag">oauth2</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2026/11/building-1-10-scale-rc-crawler-from-scratch/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Building 1/10 Scale RC Crawler From Scratch</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<section class="sponsored-wrap">
+  <div class="archive-year-wrap">
+    <span class="archive-year">Sponsored Content & Projects</span>
+  </div>
+  <div class="sponsored-list">
+    
+    <a class="sponsored-card" href="https://www.workbilling.app" target="_blank">
+      <span class="sponsored-card-label">Work Billing</span>
+      <h1 itemprop="name" class="sponsored-card-title">From agreed work to paid invoices</h1>
+      <p class="sponsored-card-description">Keep partners, clients, statements of work, invoices, margins, and payment progress together in one clear workspace.</p>
+    </a>
+    
+    <a class="sponsored-card" href="https://donate.stripe.com/00w28safIfrw016dgWawo03" target="_blank">
+      <span class="sponsored-card-label">Support</span>
+      <h1 itemprop="name" class="sponsored-card-title">Stripe Donation</h1>
+      <p class="sponsored-card-description">Does my content help you? Consider a small donation to support this blog. ❤️</p>
+    </a>
+    
+  </div>
+</section>
+
+
+<br /></section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" class="widget-wrap">
+  <div id="site_search">
+    <h3 class="widget-title">Search</h3>
+    <input
+      type="text"
+      id="local-search-input"
+      name="q"
+      results="0"
+      placeholder="Search..."
+      class="form-control"
+    />
+    <div id="local-search-result"></div>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/11/add-sign-in-with-google-to-a-nextjs-app/">Add Sign In With Google To A Next.js App</a>
+          </li>
+        
+          <li>
+            <a href="/2026/11/building-1-10-scale-rc-crawler-from-scratch/">Building 1/10 Scale RC Crawler From Scratch</a>
+          </li>
+        
+          <li>
+            <a href="/2026/11/azure-foundry-logs-log-analytics-correlation/">Finding Out Why An Azure OpenAI Chatbot Is Slow With Log Analytics</a>
+          </li>
+        
+          <li>
+            <a href="/2026/11/environment-specific-error-pages-aspnet-core/">Environment Specific Error Pages In ASP.NET Core</a>
+          </li>
+        
+          <li>
+            <a href="/2026/11/redirect-apex-to-www-aspnet-core/">Redirect The Apex Domain To www In ASP.NET Core</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net-library/" style="font-size: 11.3px;">.net library</a> <a href="/tags/3d-printing/" style="font-size: 10.87px;">3d printing</a> <a href="/tags/agile/" style="font-size: 10.43px;">agile</a> <a href="/tags/ai/" style="font-size: 13.91px;">ai</a> <a href="/tags/ai-foundry/" style="font-size: 10.43px;">ai-foundry</a> <a href="/tags/algorithms/" style="font-size: 11.74px;">algorithms</a> <a href="/tags/angular/" style="font-size: 14.78px;">angular</a> <a href="/tags/ansible/" style="font-size: 10px;">ansible</a> <a href="/tags/anti-pattern/" style="font-size: 10px;">anti pattern</a> <a href="/tags/architecture/" style="font-size: 15.65px;">architecture</a> <a href="/tags/arduino/" style="font-size: 10.43px;">arduino</a> <a href="/tags/asp-net/" style="font-size: 10.43px;">asp.net</a> <a href="/tags/aspnet-core/" style="font-size: 12.17px;">aspnet-core</a> <a href="/tags/assembly/" style="font-size: 10.87px;">assembly</a> <a href="/tags/auth/" style="font-size: 15.22px;">auth</a> <a href="/tags/aws/" style="font-size: 17.83px;">aws</a> <a href="/tags/azure/" style="font-size: 16.09px;">azure</a> <a href="/tags/azurite/" style="font-size: 10px;">azurite</a> <a href="/tags/beer/" style="font-size: 10px;">beer</a> <a href="/tags/behavioural-patterns/" style="font-size: 14.35px;">behavioural patterns</a> <a href="/tags/benchmarks/" style="font-size: 10.43px;">benchmarks</a> <a href="/tags/blob-storage/" style="font-size: 10.43px;">blob-storage</a> <a href="/tags/board-games/" style="font-size: 10px;">board games</a> <a href="/tags/browser-utilities/" style="font-size: 10.43px;">browser utilities</a> <a href="/tags/c/" style="font-size: 20px;">c#</a> <a href="/tags/cad/" style="font-size: 11.74px;">cad</a> <a href="/tags/cam/" style="font-size: 11.74px;">cam</a> <a href="/tags/claude-code/" style="font-size: 10px;">claude-code</a> <a href="/tags/client-side/" style="font-size: 11.3px;">client side</a> <a href="/tags/cloud-events/" style="font-size: 10.43px;">cloud events</a> <a href="/tags/cnc/" style="font-size: 15.22px;">cnc</a> <a href="/tags/container-apps/" style="font-size: 10.43px;">container-apps</a> <a href="/tags/continuous-integration/" style="font-size: 10.43px;">continuous integration</a> <a href="/tags/creational-patterns/" style="font-size: 11.3px;">creational patterns</a> <a href="/tags/cryptography/" style="font-size: 11.74px;">cryptography</a> <a href="/tags/csharp/" style="font-size: 10.87px;">csharp</a> <a href="/tags/css/" style="font-size: 11.74px;">css</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/d3/" style="font-size: 10px;">d3</a> <a href="/tags/dapper/" style="font-size: 10px;">dapper</a> <a href="/tags/data-structures/" style="font-size: 11.74px;">data structures</a> <a href="/tags/database/" style="font-size: 10.43px;">database</a> <a href="/tags/ddd/" style="font-size: 10.87px;">ddd</a> <a href="/tags/dependency-injection/" style="font-size: 13.04px;">dependency injection</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/dirt-bike/" style="font-size: 10.43px;">dirt bike</a> <a href="/tags/dns/" style="font-size: 10.87px;">dns</a> <a href="/tags/docker/" style="font-size: 17.83px;">docker</a> <a href="/tags/docker-compose/" style="font-size: 10.87px;">docker compose</a> <a href="/tags/dynamics-business-central/" style="font-size: 10px;">dynamics business central</a> <a href="/tags/elk-stack/" style="font-size: 10px;">elk stack</a> <a href="/tags/embeddings/" style="font-size: 11.74px;">embeddings</a> <a href="/tags/entra/" style="font-size: 10.43px;">entra</a> <a href="/tags/fabrication/" style="font-size: 10px;">fabrication</a> <a href="/tags/feature-management/" style="font-size: 10.87px;">feature management</a> <a href="/tags/filters/" style="font-size: 10px;">filters</a> <a href="/tags/food/" style="font-size: 12.61px;">food</a> <a href="/tags/games/" style="font-size: 10.43px;">games</a> <a href="/tags/git/" style="font-size: 12.17px;">git</a> <a href="/tags/github-actions/" style="font-size: 10.43px;">github-actions</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/health-checks/" style="font-size: 10.87px;">health checks</a> <a href="/tags/hexo/" style="font-size: 10.43px;">hexo</a> <a href="/tags/ide/" style="font-size: 13.04px;">ide</a> <a href="/tags/indymill/" style="font-size: 11.74px;">indymill</a> <a href="/tags/infrastructure-as-code/" style="font-size: 13.91px;">infrastructure as code</a> <a href="/tags/iot/" style="font-size: 13.48px;">iot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 13.48px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10.87px;">jquery</a> <a href="/tags/json/" style="font-size: 11.74px;">json</a> <a href="/tags/kibana/" style="font-size: 10.43px;">kibana</a> <a href="/tags/kql/" style="font-size: 10px;">kql</a> <a href="/tags/kubernetes/" style="font-size: 11.3px;">kubernetes</a> <a href="/tags/learning-resources/" style="font-size: 13.48px;">learning resources</a> <a href="/tags/life-hacks/" style="font-size: 11.74px;">life-hacks</a> <a href="/tags/linux/" style="font-size: 11.74px;">linux</a> <a href="/tags/llm/" style="font-size: 10.87px;">llm</a> <a href="/tags/log-analytics/" style="font-size: 10px;">log-analytics</a> <a href="/tags/logging/" style="font-size: 11.3px;">logging</a> <a href="/tags/mcp/" style="font-size: 10.43px;">mcp</a> <a href="/tags/mocking/" style="font-size: 14.35px;">mocking</a> <a href="/tags/model-airplanes/" style="font-size: 18.26px;">model airplanes</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mongoose/" style="font-size: 10px;">mongoose</a> <a href="/tags/multivalue/" style="font-size: 10px;">multivalue</a> <a href="/tags/mvc/" style="font-size: 13.04px;">mvc</a> <a href="/tags/mysql/" style="font-size: 11.3px;">mysql</a> <a href="/tags/net-core/" style="font-size: 11.74px;">net core</a> <a href="/tags/networking/" style="font-size: 10px;">networking</a> <a href="/tags/newrelic/" style="font-size: 10.43px;">newrelic</a> <a href="/tags/nextjs/" style="font-size: 10.87px;">nextjs</a> <a href="/tags/nginx/" style="font-size: 10.87px;">nginx</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/nuget/" style="font-size: 11.3px;">nuget</a> <a href="/tags/oauth2/" style="font-size: 10px;">oauth2</a> <a href="/tags/onshape/" style="font-size: 10.87px;">onshape</a> <a href="/tags/open-source/" style="font-size: 10px;">open source</a> <a href="/tags/openai/" style="font-size: 10px;">openai</a> <a href="/tags/orm/" style="font-size: 13.91px;">orm</a> <a href="/tags/patterns-principles/" style="font-size: 19.57px;">patterns principles</a> <a href="/tags/pick/" style="font-size: 10px;">pick</a> <a href="/tags/postgresql/" style="font-size: 12.61px;">postgresql</a> <a href="/tags/power-shell/" style="font-size: 10px;">power shell</a> <a href="/tags/prisma/" style="font-size: 10px;">prisma</a> <a href="/tags/pygame/" style="font-size: 10px;">pygame</a> <a href="/tags/python/" style="font-size: 13.48px;">python</a> <a href="/tags/rag/" style="font-size: 11.3px;">rag</a> <a href="/tags/random/" style="font-size: 11.74px;">random</a> <a href="/tags/raspberry-pi/" style="font-size: 16.96px;">raspberry pi</a> <a href="/tags/rc/" style="font-size: 10px;">rc</a> <a href="/tags/reactjs/" style="font-size: 17.39px;">reactjs</a> <a href="/tags/reactjs-class-based/" style="font-size: 10.43px;">reactjs class-based</a> <a href="/tags/redis/" style="font-size: 10.87px;">redis</a> <a href="/tags/reporting/" style="font-size: 11.74px;">reporting</a> <a href="/tags/retrieval/" style="font-size: 10px;">retrieval</a> <a href="/tags/rosetta-code/" style="font-size: 15.22px;">rosetta code</a> <a href="/tags/seo/" style="font-size: 10px;">seo</a> <a href="/tags/serialization/" style="font-size: 12.61px;">serialization</a> <a href="/tags/software-testing/" style="font-size: 18.7px;">software testing</a> <a href="/tags/sonarqube/" style="font-size: 10.43px;">sonarqube</a> <a href="/tags/sql/" style="font-size: 16.52px;">sql</a> <a href="/tags/sqlite/" style="font-size: 10.43px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10.87px;">ssh</a> <a href="/tags/static-code-analysis/" style="font-size: 11.3px;">static code analysis</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/structural-patterns/" style="font-size: 13.48px;">structural patterns</a> <a href="/tags/sumologic/" style="font-size: 10px;">sumologic</a> <a href="/tags/supabase/" style="font-size: 10px;">supabase</a> <a href="/tags/swagger/" style="font-size: 10.43px;">swagger</a> <a href="/tags/terraform/" style="font-size: 11.3px;">terraform</a> <a href="/tags/threading/" style="font-size: 10px;">threading</a> <a href="/tags/typescript/" style="font-size: 13.04px;">typescript</a> <a href="/tags/utilities/" style="font-size: 19.13px;">utilities</a> <a href="/tags/validation/" style="font-size: 10.43px;">validation</a> <a href="/tags/vectors/" style="font-size: 10.87px;">vectors</a> <a href="/tags/virtualization/" style="font-size: 10.43px;">virtualization</a> <a href="/tags/web-api/" style="font-size: 16.09px;">web api</a> <a href="/tags/web-forms/" style="font-size: 10px;">web forms</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/welding/" style="font-size: 10px;">welding</a> <a href="/tags/wip/" style="font-size: 18.7px;">wip</a> <a href="/tags/wood-work/" style="font-size: 11.3px;">wood work</a> <a href="/tags/wordpress/" style="font-size: 10px;">wordpress</a> <a href="/tags/workers/" style="font-size: 11.3px;">workers</a> <a href="/tags/xamarin/" style="font-size: 10px;">xamarin</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+    </div>
+  </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Carl Paton |
+      Powered by <a href="https://pages.github.com/" target="_blank">Github Pages</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+<script src="/js/search.js"></script>
+
+  <script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, "local-search-input", "local-search-result");
+  </script>
+
+</body>
+</html>
